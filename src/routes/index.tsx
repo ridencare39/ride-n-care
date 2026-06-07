@@ -4,6 +4,7 @@ import bike from "@/assets/bike-service.jpg";
 import car from "@/assets/car-service.jpg";
 import { AreasMarquee } from "@/components/AreasMarquee";
 import { Newsletter } from "@/components/Newsletter";
+import { BrandsMarquee } from "@/components/BrandsMarquee";
 
 const HOME_FAQS: [string, string][] = [
   ["Do you offer doorstep bike service in Bangalore?", "Yes — our certified mechanics arrive at your home or office anywhere in Bangalore with tools, diagnostics and genuine spares. Most bike services finish in 60–90 minutes."],
@@ -113,6 +114,9 @@ function Home() {
 
       {/* Areas We Serve */}
       <AreasMarquee />
+
+      {/* Brands We Service */}
+      <BrandsMarquee />
 
       {/* Services */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20">
