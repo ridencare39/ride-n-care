@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.jpg.asset.json";
 
 const links = [
   { to: "/", label: "Home" },
@@ -8,6 +8,7 @@ const links = [
   { to: "/cars", label: "Cars" },
   { to: "/pricing", label: "Pricing" },
   { to: "/about", label: "About" },
+  { to: "/blog", label: "Blog" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -18,8 +19,11 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="RideCare Plus logo" width={36} height={36} className="rounded" />
-          <span className="font-display font-bold text-lg tracking-tight">RideCare<span className="text-primary">Plus</span></span>
+          <img src={logo.url} alt="Ride N Care logo" width={40} height={40} className="rounded bg-white p-0.5" />
+          <span className="font-display font-bold text-lg tracking-tight leading-none flex flex-col">
+            <span>Ride N <span className="text-primary">Care</span></span>
+            <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-medium">Care in every mile</span>
+          </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm">
           {links.map((l) => (
