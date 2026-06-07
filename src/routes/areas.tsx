@@ -2,6 +2,16 @@ import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-route
 import { AREAS } from "@/lib/areas";
 
 export const Route = createFileRoute("/areas")({
+  head: () => ({
+    meta: [
+      { title: "Service Areas in Bangalore | Ride N Care" },
+      { name: "description", content: "Ride N Care offers doorstep bike & car service across 24+ Bangalore neighbourhoods — Whitefield, Koramangala, HSR, Indiranagar, Electronic City and more." },
+      { property: "og:title", content: "Doorstep Service Areas in Bangalore" },
+      { property: "og:description", content: "24+ Bangalore localities covered for at-home bike & car service." },
+      { property: "og:url", content: "/areas" },
+    ],
+    links: [{ rel: "canonical", href: "/areas" }],
+  }),
   component: AreasLayout,
 });
 
@@ -50,17 +60,3 @@ function AreasIndex() {
     </div>
   );
 }
-
-// Note: head() lives on the leaf route for SEO; index uses parent defaults.
-Route.update({
-  head: () => ({
-    meta: [
-      { title: "Service Areas in Bangalore | Ride N Care" },
-      { name: "description", content: "Ride N Care offers doorstep bike & car service across 24+ Bangalore neighbourhoods — Whitefield, Koramangala, HSR, Indiranagar, Electronic City and more." },
-      { property: "og:title", content: "Doorstep Service Areas in Bangalore" },
-      { property: "og:description", content: "24+ Bangalore localities covered for at-home bike & car service." },
-      { property: "og:url", content: "/areas" },
-    ],
-    links: [{ rel: "canonical", href: "/areas" }],
-  }),
-});
