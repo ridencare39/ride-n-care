@@ -2,14 +2,24 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import hero from "@/assets/hero-mechanic.jpg";
 import bike from "@/assets/bike-service.jpg";
 import car from "@/assets/car-service.jpg";
+import { AreasMarquee } from "@/components/AreasMarquee";
+import { Newsletter } from "@/components/Newsletter";
+
+const HOME_FAQS: [string, string][] = [
+  ["Do you offer doorstep bike service in Bangalore?", "Yes — our certified mechanics arrive at your home or office anywhere in Bangalore with tools, diagnostics and genuine spares. Most bike services finish in 60–90 minutes."],
+  ["What car services do you provide at home?", "Periodic maintenance, brake jobs, battery replacement, AC service, denting & painting, breakdown assistance and pre-buy inspections — all at your doorstep."],
+  ["Is doorstep car service in Bangalore cheaper than a garage?", "End-to-end it usually costs the same or less. You save on pickup-drop, half a day off, and there are zero hidden labour charges — every quote is upfront."],
+  ["Which Bangalore areas do you cover?", "All major Bangalore localities — Whitefield, Koramangala, HSR, Indiranagar, Electronic City, Hebbal, Marathahalli, Sarjapur, Jayanagar and 50+ more."],
+  ["Do you use genuine parts?", "Always. We fit OEM-grade spares with a printed invoice and standard manufacturer warranty."],
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Ride N Care — Doorstep Bike & Car Service in India" },
-      { name: "description", content: "Book expert at-home bike and car repair. Genuine parts, transparent pricing, free pickup & drop in Bangalore." },
+      { title: "Doorstep Bike & Car Service in Bangalore | Ride N Care" },
+      { name: "description", content: "Book #1 rated doorstep bike & car service in Bangalore. Expert mechanics, genuine parts, transparent pricing, free pickup & drop across 50+ localities. Care in every mile." },
       { property: "og:title", content: "Ride N Care — Doorstep Bike & Car Service" },
-      { property: "og:description", content: "Expert at-home bike & car repair. Genuine parts, transparent pricing, doorstep service." },
+      { property: "og:description", content: "Bangalore's trusted doorstep bike and car service — genuine parts, transparent pricing, certified mechanics at your home." },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -23,6 +33,18 @@ export const Route = createFileRoute("/")({
           provider: { "@type": "LocalBusiness", name: "Ride N Care" },
           areaServed: ["Bangalore"],
           offers: { "@type": "Offer", price: "499", priceCurrency: "INR" },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: HOME_FAQS.map(([q, a]) => ({
+            "@type": "Question",
+            name: q,
+            acceptedAnswer: { "@type": "Answer", text: a },
+          })),
         }),
       },
     ],
@@ -42,13 +64,13 @@ function Home() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-24 md:py-32 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary uppercase tracking-wider">
-              Doorstep Service
+              ⭐ Bangalore's Trusted Doorstep Garage
             </span>
             <h1 className="mt-6 text-5xl md:text-7xl font-bold leading-[1.05]">
-              Your garage, <span className="text-primary">at your door.</span>
+              Doorstep bike & car service, <span className="text-primary">delivered to your gate.</span>
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-lg">
-              Expert bike & car service brought to your home. Genuine parts, real mechanics, transparent rates.
+              From Whitefield to Kengeri — book a certified mechanic in 60 seconds. We service every two‑wheeler and four‑wheeler with OEM parts, live updates and a printed warranty. <span className="text-foreground font-medium">Care in every mile.</span>
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/contact" className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow hover:opacity-90">
@@ -58,6 +80,12 @@ function Home() {
                 View Pricing
               </Link>
             </div>
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
+              <li>✅ Same-day slots</li>
+              <li>✅ 7-day workmanship guarantee</li>
+              <li>✅ Free pickup & drop</li>
+              <li>✅ Cashless payments</li>
+            </ul>
             <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
               <Stat label="Years" value="5+" />
               <Stat label="Mechanics" value="60+" />
@@ -71,6 +99,20 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* SEO-rich intro */}
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 py-16 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold">Bangalore's friendliest doorstep mechanics</h2>
+        <p className="mt-4 text-muted-foreground leading-relaxed">
+          Stuck in traffic, juggling a hectic week, or simply tired of waiting at a service centre? Ride N Care brings the entire workshop to your driveway. Whether it's a routine bike oil change in <strong className="text-foreground">Koramangala</strong>, a car AC top-up in <strong className="text-foreground">HSR Layout</strong>, or a Sunday breakdown rescue in <strong className="text-foreground">Whitefield</strong> — we are 30 minutes away with the right tools and the right price.
+        </p>
+        <p className="mt-4 text-muted-foreground leading-relaxed">
+          Every service is performed by a background-verified, trained mechanic, uses genuine OEM-grade spares and ends with a digital invoice plus a 7-day workmanship guarantee. No upselling. No surprise bills. Just honest, on-time, doorstep care for your ride.
+        </p>
+      </section>
+
+      {/* Areas We Serve */}
+      <AreasMarquee />
 
       {/* Services */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20">
@@ -131,6 +173,30 @@ function Home() {
             </li>
           ))}
         </ol>
+      </section>
+
+      {/* FAQ */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-20">
+        <SectionHeading eyebrow="FAQ" title="Quick answers for first-time customers" />
+        <div className="mt-10 divide-y divide-border rounded-3xl border border-border bg-card">
+          {HOME_FAQS.map(([q, a]) => (
+            <details key={q} className="group p-6">
+              <summary className="cursor-pointer list-none flex justify-between items-center gap-4">
+                <span className="font-semibold">{q}</span>
+                <span className="text-primary text-2xl group-open:rotate-45 transition">+</span>
+              </summary>
+              <p className="mt-3 text-muted-foreground">{a}</p>
+            </details>
+          ))}
+        </div>
+        <div className="mt-6 text-center">
+          <Link to="/faq" className="text-primary font-semibold hover:underline">Read all FAQs →</Link>
+        </div>
+      </section>
+
+      {/* Newsletter */}
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 py-12">
+        <Newsletter />
       </section>
 
       {/* CTA */}

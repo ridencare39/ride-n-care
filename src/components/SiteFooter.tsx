@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import logo from "@/assets/logo.jpg.asset.json";
+import { Newsletter } from "@/components/Newsletter";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-card mt-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-5">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-6">
         <div>
           <div className="flex items-center gap-2">
             <img src={logo.url} alt="Ride N Care" width={36} height={36} className="rounded bg-white p-0.5" />
@@ -42,6 +43,10 @@ export function SiteFooter() {
         <div>
           <h4 className="text-sm font-semibold mb-3">Address</h4>
           <p className="text-sm text-muted-foreground">Bangalore, Karnataka<br />India</p>
+        </div>
+        <div className="md:col-span-1">
+          <h4 className="text-sm font-semibold mb-3">Newsletter</h4>
+          <Newsletter compact />
         </div>
       </div>
       <div className="border-t border-border py-4 text-center text-xs text-muted-foreground">

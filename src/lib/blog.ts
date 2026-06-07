@@ -5,9 +5,13 @@ export interface Post {
   date: string;
   author: string;
   readMins: number;
+  category: string;
   tags: string[];
   body: string[];
 }
+
+export const CATEGORIES = ["All", "Bike Care", "Car Care", "Doorstep Tips", "Bangalore Guides"] as const;
+export type Category = typeof CATEGORIES[number];
 
 export const posts: Post[] = [
   {
@@ -17,6 +21,7 @@ export const posts: Post[] = [
     date: "2026-05-22",
     author: "Ride N Care Team",
     readMins: 5,
+    category: "Bike Care",
     tags: ["Bike", "Maintenance", "Bangalore"],
     body: [
       "Bangalore traffic is unforgiving on a motorcycle — frequent stops, hot air, and dusty roads. A regular service routine extends your bike's life and keeps fuel bills predictable.",
@@ -33,6 +38,7 @@ export const posts: Post[] = [
     date: "2026-05-10",
     author: "Ride N Care Team",
     readMins: 6,
+    category: "Car Care",
     tags: ["Car", "AC", "Diagnostics"],
     body: [
       "Bangalore's mild climate hides a brutal truth: most car ACs are under-serviced because we 'don't really need them'. Then summer hits and the compressor gives up.",
@@ -49,6 +55,7 @@ export const posts: Post[] = [
     date: "2026-04-28",
     author: "Ride N Care Team",
     readMins: 4,
+    category: "Doorstep Tips",
     tags: ["Guide", "Doorstep"],
     body: [
       "Traditional garages are reliable but eat half your weekend. Doorstep services trade a small premium for convenience — but only if quality matches.",
