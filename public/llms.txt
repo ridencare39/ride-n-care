@@ -1,0 +1,21 @@
+# Ride N Care
+
+> Doorstep bike and car service in Bangalore. Care in every mile.
+
+Ride N Care is a doorstep two-wheeler and four-wheeler repair service based in Bangalore, Karnataka, India. Certified mechanics arrive at the customer's home with genuine parts, diagnostic tools, and transparent pricing. Contact: 080 6940 9289 / WhatsApp +91 82969 50339 / ridencareinfo@gmail.com.
+
+## Pages
+
+- [Home](/): Overview of doorstep bike and car service, packages and booking
+- [Bike Service](/bikes): Bike service packages by CC tier and supported brands
+- [Car Service](/cars): Car service categories including AC, brakes, battery, denting
+- [Pricing](/pricing): Transparent flat-rate pricing for bike and car packages
+- [About](/about): Company background and service promise
+- [FAQ](/faq): Common questions about doorstep service, parts, payments
+- [Contact](/contact): Booking form and contact details
+
+## Blog
+
+- [Bike Service Checklist Every Bangalore Rider Should Follow](/blog/bike-service-checklist-bangalore)
+- [Why Your Car AC Stops Cooling in Bangalore (and How to Fix It)](/blog/car-ac-not-cooling-bangalore)
+- [Doorstep Service vs Traditional Garage: Which Is Better in 2026?](/blog/doorstep-vs-garage-service)
