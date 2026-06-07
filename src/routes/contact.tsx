@@ -4,9 +4,9 @@ import { useState } from "react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Book a Service — RideCare Plus" },
+      { title: "Book a Service — Ride N Care" },
       { name: "description", content: "Book your bike or car service in 60 seconds. Doorstep pickup, drop, and on-the-spot repair across major Indian cities." },
-      { property: "og:title", content: "Book a Service — RideCare Plus" },
+      { property: "og:title", content: "Book a Service — Ride N Care" },
       { property: "og:description", content: "Book bike or car service. Doorstep, fast, transparent." },
       { property: "og:url", content: "/contact" },
     ],
@@ -45,9 +45,12 @@ function Contact() {
       </form>
 
       <div className="mt-10 grid sm:grid-cols-3 gap-4 text-sm">
-        <Info t="Phone" v="+91 90000 00000" />
-        <Info t="Email" v="hello@ridecareplus.in" />
-        <Info t="Cities" v="Hyderabad · Chennai · Pune · Vizag" />
+        <a href="tel:08069409289"><Info t="Phone" v="080 6940 9289" /></a>
+        <a href="https://wa.me/918296950339"><Info t="WhatsApp" v="+91 82969 50339" /></a>
+        <a href="mailto:ridencareinfo@gmail.com"><Info t="Email" v="ridencareinfo@gmail.com" /></a>
+      </div>
+      <div className="mt-4 text-sm">
+        <Info t="Address" v="Bangalore, Karnataka, India" />
       </div>
     </div>
   );

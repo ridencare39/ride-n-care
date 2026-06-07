@@ -6,9 +6,9 @@ import car from "@/assets/car-service.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "RideCare Plus — Doorstep Bike & Car Service in India" },
-      { name: "description", content: "Book expert at-home bike and car repair. Genuine parts, transparent pricing, free pickup & drop in Hyderabad, Chennai, Pune & Vizag." },
-      { property: "og:title", content: "RideCare Plus — Doorstep Bike & Car Service" },
+      { title: "Ride N Care — Doorstep Bike & Car Service in India" },
+      { name: "description", content: "Book expert at-home bike and car repair. Genuine parts, transparent pricing, free pickup & drop in Bangalore." },
+      { property: "og:title", content: "Ride N Care — Doorstep Bike & Car Service" },
       { property: "og:description", content: "Expert at-home bike & car repair. Genuine parts, transparent pricing, doorstep service." },
       { property: "og:url", content: "/" },
     ],
@@ -20,8 +20,8 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "Service",
           serviceType: "Bike and Car Repair",
-          provider: { "@type": "LocalBusiness", name: "RideCare Plus" },
-          areaServed: ["Hyderabad", "Chennai", "Pune", "Visakhapatnam"],
+          provider: { "@type": "LocalBusiness", name: "Ride N Care" },
+          areaServed: ["Bangalore"],
           offers: { "@type": "Offer", price: "499", priceCurrency: "INR" },
         }),
       },
@@ -94,7 +94,7 @@ function Home() {
       {/* Why us */}
       <section className="bg-card border-y border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-20">
-          <SectionHeading eyebrow="Why RideCare Plus" title="Quality, precision & honesty" />
+          <SectionHeading eyebrow="Why Ride N Care" title="Quality, precision & honesty" />
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               ["Doorstep", "Repairs at your home — no garage runs."],

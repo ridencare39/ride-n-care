@@ -16,9 +16,9 @@ const carTiers = [
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Transparent Pricing — RideCare Plus" },
+      { title: "Transparent Pricing — Ride N Care" },
       { name: "description", content: "Honest, upfront pricing for bike & car servicing. No hidden charges. Pay only after the job is done." },
-      { property: "og:title", content: "Transparent Pricing — RideCare Plus" },
+      { property: "og:title", content: "Transparent Pricing — Ride N Care" },
       { property: "og:description", content: "Honest, upfront pricing for bike & car servicing." },
       { property: "og:url", content: "/pricing" },
     ],
