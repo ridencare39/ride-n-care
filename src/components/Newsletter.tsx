@@ -1,21 +1,29 @@
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { subscribeNewsletter } from "@/lib/newsletter.functions";
 
 export function Newsletter({ compact = false }: { compact?: boolean }) {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const subscribe = useServerFn(subscribeNewsletter);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     const trimmed = email.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed) || trimmed.length > 254) return;
-    // Stored locally for now — connect to your CRM/Mailchimp/Cloud later.
+    setLoading(true);
     try {
-      const list = JSON.parse(localStorage.getItem("rnc_newsletter") || "[]");
-      if (!list.includes(trimmed)) list.push(trimmed);
-      localStorage.setItem("rnc_newsletter", JSON.stringify(list));
-    } catch {}
-    setDone(true);
-    setEmail("");
+      await subscribe({ data: { email: trimmed, source: compact ? "footer" : "page" } });
+      setDone(true);
+      setEmail("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Subscription failed. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (compact) {
@@ -35,11 +43,12 @@ export function Newsletter({ compact = false }: { compact?: boolean }) {
               placeholder="you@email.com"
               className="flex-1 rounded-full bg-background border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             />
-            <button className="rounded-full bg-grad-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow">
-              Join
+            <button disabled={loading} className="rounded-full bg-grad-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow disabled:opacity-60">
+              {loading ? "…" : "Join"}
             </button>
           </div>
         )}
+        {error && <p className="text-xs text-destructive">{error}</p>}
       </form>
     );
   }
@@ -66,11 +75,12 @@ export function Newsletter({ compact = false }: { compact?: boolean }) {
             placeholder="Enter your email"
             className="flex-1 rounded-full bg-background border border-border px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
-          <button className="rounded-full bg-foreground text-background px-6 py-3 text-sm font-semibold hover:opacity-90">
-            Subscribe
+          <button disabled={loading} className="rounded-full bg-foreground text-background px-6 py-3 text-sm font-semibold hover:opacity-90 disabled:opacity-60">
+            {loading ? "Subscribing…" : "Subscribe"}
           </button>
         </form>
       )}
+      {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
     </div>
   );
 }

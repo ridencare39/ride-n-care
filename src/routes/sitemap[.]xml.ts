@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { posts } from "@/lib/blog";
+import { AREAS } from "@/lib/areas";
 
 // TODO: replace with your project URL once a project name or custom domain is set.
 const BASE_URL = "";
@@ -14,6 +15,12 @@ const entries = [
   { path: "/blog", priority: "0.8", changefreq: "weekly" as const },
   { path: "/faq", priority: "0.7", changefreq: "monthly" as const },
   { path: "/contact", priority: "0.8", changefreq: "yearly" as const },
+  { path: "/areas", priority: "0.8", changefreq: "monthly" as const },
+  ...AREAS.map((a) => ({
+    path: `/areas/${a.slug}`,
+    priority: "0.7",
+    changefreq: "monthly" as const,
+  })),
   ...posts.map((p) => ({
     path: `/blog/${p.slug}`,
     priority: "0.7",
