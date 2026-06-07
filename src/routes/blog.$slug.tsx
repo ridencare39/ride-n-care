@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { getPost, posts } from "@/lib/blog";
+import { getPost, posts, type Post } from "@/lib/blog";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
@@ -67,7 +67,7 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function Post() {
-  const { post } = Route.useLoaderData();
+  const { post } = Route.useLoaderData() as { post: Post };
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
   return (
     <article className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
