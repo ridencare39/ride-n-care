@@ -13,9 +13,9 @@ const tiers = [
 export const Route = createFileRoute("/bikes")({
   head: () => ({
     meta: [
-      { title: "Bike Service at Home — RideCare Plus" },
+      { title: "Bike Service at Home — Ride N Care" },
       { name: "description", content: "Doorstep bike servicing for all CCs — from TVS to Harley Davidson. Genuine parts, certified mechanics, 60-min service." },
-      { property: "og:title", content: "Bike Service at Home — RideCare Plus" },
+      { property: "og:title", content: "Bike Service at Home — Ride N Care" },
       { property: "og:description", content: "Doorstep bike servicing for all CCs. Genuine parts, certified mechanics." },
       { property: "og:url", content: "/bikes" },
       { property: "og:image", content: "/bike-service.jpg" },

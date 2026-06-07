@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — RideCare Plus" },
-      { name: "description", content: "RideCare Plus brings expert bike and car repair to your doorstep across India. Skilled mechanics, genuine parts, fair prices." },
-      { property: "og:title", content: "About — RideCare Plus" },
+      { title: "About — Ride N Care" },
+      { name: "description", content: "Ride N Care brings expert bike and car repair to your doorstep across India. Skilled mechanics, genuine parts, fair prices." },
+      { property: "og:title", content: "About — Ride N Care" },
       { property: "og:description", content: "Doorstep bike and car repair across India." },
       { property: "og:url", content: "/about" },
     ],
@@ -17,9 +17,9 @@ export const Route = createFileRoute("/about")({
 function About() {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-      <h1 className="text-5xl font-bold">About RideCare Plus</h1>
+      <h1 className="text-5xl font-bold">About Ride N Care</h1>
       <p className="mt-6 text-lg text-muted-foreground">
-        We started RideCare Plus with one simple belief — getting your bike or car serviced shouldn't take a day off your week. Our certified, background-verified mechanics arrive at your doorstep with genuine parts and modern tools, finishing most jobs while you finish your coffee.
+        We started Ride N Care with one simple belief — getting your bike or car serviced shouldn't take a day off your week. Our certified, background-verified mechanics arrive at your doorstep with genuine parts and modern tools, finishing most jobs while you finish your coffee.
       </p>
       <div className="mt-10 grid sm:grid-cols-3 gap-6">
         <Stat v="5+" l="Years" />

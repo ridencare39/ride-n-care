@@ -13,9 +13,9 @@ const services = [
 export const Route = createFileRoute("/cars")({
   head: () => ({
     meta: [
-      { title: "Car Service at Home — RideCare Plus" },
+      { title: "Car Service at Home — Ride N Care" },
       { name: "description", content: "Hassle-free car service at your doorstep. Periodic maintenance, AC, brakes, battery, denting — handled by certified mechanics." },
-      { property: "og:title", content: "Car Service at Home — RideCare Plus" },
+      { property: "og:title", content: "Car Service at Home — Ride N Care" },
       { property: "og:description", content: "Hassle-free car service at your doorstep with certified mechanics." },
       { property: "og:url", content: "/cars" },
       { property: "og:image", content: "/car-service.jpg" },

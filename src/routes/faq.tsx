@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 const faqs = [
-  ["Do you really come to my home?", "Yes. Our mechanics arrive at your doorstep with tools, diagnostics and genuine spares — across Hyderabad, Chennai, Pune and Visakhapatnam."],
+  ["Do you really come to my home?", "Yes. Our mechanics arrive at your doorstep with tools, diagnostics and genuine spares — across Bangalore."],
   ["How long does a service take?", "Most bike services are done in 45–90 minutes. Car periodic service typically takes 90–150 minutes."],
   ["Are parts genuine?", "Always. We use OEM-grade parts and provide a printed invoice with warranty details."],
   ["What if a problem appears after service?", "We offer a 7-day post-service guarantee — we'll revisit and fix any issue free of cost."],
@@ -12,10 +12,10 @@ const faqs = [
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "Frequently Asked Questions — RideCare Plus" },
+      { title: "Frequently Asked Questions — Ride N Care" },
       { name: "description", content: "Answers about doorstep bike & car service: timing, parts, payments, pickup & drop, warranty and more." },
-      { property: "og:title", content: "FAQ — RideCare Plus" },
-      { property: "og:description", content: "Common questions about RideCare Plus doorstep service." },
+      { property: "og:title", content: "FAQ — Ride N Care" },
+      { property: "og:description", content: "Common questions about Ride N Care doorstep service." },
       { property: "og:url", content: "/faq" },
     ],
     links: [{ rel: "canonical", href: "/faq" }],
