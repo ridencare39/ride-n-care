@@ -16,34 +16,74 @@ export const Route = createFileRoute("/contact")({
 });
 
 function Contact() {
+  type Booking = {
+    name: string; phone: string; vehicle: string; area: string;
+    service: string; pickup: string; issue: string;
+  };
+  const [review, setReview] = useState<Booking | null>(null);
   const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    const name = String(fd.get("name") || "").trim();
-    const phone = String(fd.get("phone") || "").trim();
-    const service = String(fd.get("service") || "").trim();
-    const pickup = String(fd.get("pickup") || "").trim();
-    const issue = String(fd.get("issue") || "").trim();
-    const vehicle = String(fd.get("vehicle") || "").trim();
-    const area = String(fd.get("area") || "").trim();
+    setReview({
+      name: String(fd.get("name") || "").trim(),
+      phone: String(fd.get("phone") || "").trim(),
+      vehicle: String(fd.get("vehicle") || "").trim(),
+      area: String(fd.get("area") || "").trim(),
+      service: String(fd.get("service") || "").trim(),
+      pickup: String(fd.get("pickup") || "").trim(),
+      issue: String(fd.get("issue") || "").trim(),
+    });
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-    const text = [
-      `*New Booking — Ride N Care*`,
-      `Name: ${name}`,
-      `Phone: ${phone}`,
-      `Service: ${service}`,
-      vehicle && `Vehicle: ${vehicle}`,
-      area && `Area: ${area}`,
-      `Pickup & Drop: ${pickup}`,
-      issue && `Issue: ${issue}`,
-    ].filter(Boolean).join("\n");
+  const buildMessage = (b: Booking) => [
+    `*New Booking — Ride N Care*`,
+    `Name: ${b.name}`,
+    `Phone: ${b.phone}`,
+    `Service: ${b.service}`,
+    b.vehicle && `Vehicle: ${b.vehicle}`,
+    b.area && `Area: ${b.area}`,
+    `Pickup & Drop: ${b.pickup}`,
+    b.issue && `Issue: ${b.issue}`,
+  ].filter(Boolean).join("\n");
 
-    const url = `https://wa.me/918296950339?text=${encodeURIComponent(text)}`;
+  const confirmAndSend = () => {
+    if (!review) return;
+    const url = `https://wa.me/918296950339?text=${encodeURIComponent(buildMessage(review))}`;
     window.open(url, "_blank", "noopener");
     setSent(true);
   };
+
+  if (review) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 py-16">
+        <h1 className="text-4xl font-bold">Review your booking</h1>
+        <p className="mt-2 text-muted-foreground">Please confirm the details below. We'll open WhatsApp with this message pre-filled — just hit send.</p>
+        <div className="mt-6 rounded-3xl border border-border bg-card p-6 space-y-3">
+          <Row k="Name" v={review.name} />
+          <Row k="Phone" v={review.phone} />
+          {review.vehicle && <Row k="Vehicle" v={review.vehicle} />}
+          {review.area && <Row k="Area" v={review.area} />}
+          <Row k="Service" v={review.service} />
+          <Row k="Pickup & Drop" v={review.pickup} />
+          {review.issue && <Row k="Issue" v={review.issue} />}
+        </div>
+        <div className="mt-6 rounded-2xl border border-border bg-background p-4 text-sm whitespace-pre-wrap font-mono text-muted-foreground">
+          {buildMessage(review)}
+        </div>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <button onClick={confirmAndSend} className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">
+            {sent ? "Opened WhatsApp ✓ — tap send" : "Confirm & send on WhatsApp"}
+          </button>
+          <button onClick={() => { setReview(null); setSent(false); }} className="rounded-full border border-border px-6 py-3 font-semibold">
+            Edit details
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-16">
@@ -79,6 +119,14 @@ function Contact() {
       <div className="mt-4 text-sm">
         <Info t="Address" v="Bangalore, Karnataka, India" />
       </div>
+    </div>
+  );
+}
+function Row({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="flex justify-between gap-4 border-b border-border/50 pb-2 last:border-0 last:pb-0">
+      <span className="text-xs uppercase tracking-wider text-muted-foreground">{k}</span>
+      <span className="font-semibold text-right">{v}</span>
     </div>
   );
 }
