@@ -88,9 +88,9 @@ function Home() {
               <li>✅ Cashless payments</li>
             </ul>
             <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
-              <Stat label="Years" value="5+" />
-              <Stat label="Mechanics" value="60+" />
-              <Stat label="Happy Riders" value="3,200+" />
+              <Stat label="Years" value="12+" />
+              <Stat label="Mechanics" value="150+" />
+              <Stat label="Happy Riders" value="12,000+" />
             </div>
           </div>
           <div className="hidden md:block">

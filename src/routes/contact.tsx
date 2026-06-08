@@ -17,20 +17,47 @@ export const Route = createFileRoute("/contact")({
 
 function Contact() {
   const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const name = String(fd.get("name") || "").trim();
+    const phone = String(fd.get("phone") || "").trim();
+    const service = String(fd.get("service") || "").trim();
+    const pickup = String(fd.get("pickup") || "").trim();
+    const issue = String(fd.get("issue") || "").trim();
+    const vehicle = String(fd.get("vehicle") || "").trim();
+    const area = String(fd.get("area") || "").trim();
+
+    const text = [
+      `*New Booking — Ride N Care*`,
+      `Name: ${name}`,
+      `Phone: ${phone}`,
+      `Service: ${service}`,
+      vehicle && `Vehicle: ${vehicle}`,
+      area && `Area: ${area}`,
+      `Pickup & Drop: ${pickup}`,
+      issue && `Issue: ${issue}`,
+    ].filter(Boolean).join("\n");
+
+    const url = `https://wa.me/918296950339?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener");
+    setSent(true);
+  };
+
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-16">
       <h1 className="text-5xl font-bold">Book your service</h1>
-      <p className="mt-3 text-muted-foreground">Tell us about your vehicle. We'll confirm by WhatsApp within minutes.</p>
+      <p className="mt-3 text-muted-foreground">Fill the form — it opens WhatsApp with your booking details pre-filled. We'll confirm in minutes.</p>
 
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSent(true);
-        }}
+        onSubmit={handleSubmit}
         className="mt-8 grid sm:grid-cols-2 gap-4 rounded-3xl border border-border bg-card p-6"
       >
         <Field label="Your name" name="name" required />
         <Field label="Phone (WhatsApp)" name="phone" type="tel" required />
+        <Field label="Vehicle (make & model)" name="vehicle" placeholder="e.g. Honda Activa 6G" />
+        <Field label="Area in Bangalore" name="area" placeholder="e.g. Koramangala" />
         <div className="sm:col-span-2 grid sm:grid-cols-2 gap-4">
           <Select label="Service" name="service" options={["Bike service", "Car service", "Battery / breakdown", "Denting & paint"]} />
           <Select label="Pickup & drop" name="pickup" options={["Yes, please", "No, I'll wait"]} />
@@ -40,7 +67,7 @@ function Contact() {
           <textarea name="issue" rows={4} className="mt-1 w-full rounded-xl bg-background border border-border px-3 py-2 text-sm" />
         </div>
         <button className="sm:col-span-2 rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">
-          {sent ? "Booked! We'll WhatsApp you shortly." : "Submit booking"}
+          {sent ? "Opened WhatsApp — send the message to confirm ✓" : "Send booking on WhatsApp"}
         </button>
       </form>
 
