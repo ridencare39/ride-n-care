@@ -137,43 +137,50 @@ function Home() {
         </div>
       </section>
 
-      {/* Why us */}
+      {/* Why us — compact */}
       <section className="bg-card border-y border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-20">
-          <SectionHeading eyebrow="Why Ride N Care" title="Quality, precision & honesty" />
-          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
+          <div className="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Why Ride N Care</div>
+              <h2 className="mt-1 text-2xl md:text-3xl font-bold">Quality, precision & honesty</h2>
+            </div>
+          </div>
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {[
-              ["Doorstep", "Repairs at your home — no garage runs."],
-              ["Expert Mechanics", "Certified, background-verified pros."],
-              ["Quick Turnaround", "Most services done in 60–90 mins."],
-              ["Transparent Pricing", "Quote upfront. Zero surprises."],
-              ["Genuine Parts", "OEM-grade spares with warranty."],
-              ["All Vehicles", "Bikes, scooters, sedans, SUVs."],
+              ["Doorstep", "At your home"],
+              ["Expert", "Certified pros"],
+              ["Quick", "60–90 mins"],
+              ["Transparent", "Upfront quote"],
+              ["Genuine", "OEM parts"],
+              ["All Vehicles", "2W & 4W"],
             ].map(([t, d]) => (
-              <div key={t} className="rounded-2xl border border-border bg-background p-6 hover:border-primary/50 transition">
-                <div className="h-10 w-10 rounded-lg bg-grad-primary mb-4" />
-                <h3 className="font-semibold text-lg">{t}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{d}</p>
+              <div key={t} className="rounded-xl border border-border bg-background p-3">
+                <h3 className="font-semibold text-sm">{t}</h3>
+                <p className="text-xs text-muted-foreground">{d}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20">
-        <SectionHeading eyebrow="How it works" title="From booking to keys-back in 4 steps" />
-        <ol className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* How it works — compact */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
+        <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">How it works</div>
+        <h2 className="mt-1 text-2xl md:text-3xl font-bold">Booking to keys-back in 4 steps</h2>
+        <ol className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            ["01", "Book online", "Pick your vehicle & service. 60 seconds."],
-            ["02", "Mechanic arrives", "Trained pro at your doorstep, on time."],
-            ["03", "Service on the spot", "Live updates, genuine parts."],
-            ["04", "Pay & rate", "Cashless payment. Rate your mechanic."],
+            ["01", "Book online", "60 seconds."],
+            ["02", "Mechanic arrives", "On time, at home."],
+            ["03", "Service on the spot", "Live updates."],
+            ["04", "Pay & rate", "Cashless."],
           ].map(([n, t, d]) => (
-            <li key={n} className="rounded-2xl border border-border p-6 bg-card">
-              <div className="text-primary font-display text-3xl font-bold">{n}</div>
-              <h3 className="mt-2 font-semibold">{t}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{d}</p>
+            <li key={n} className="rounded-xl border border-border p-3 bg-card flex gap-3 items-start">
+              <div className="text-primary font-display text-xl font-bold">{n}</div>
+              <div>
+                <h3 className="font-semibold text-sm">{t}</h3>
+                <p className="text-xs text-muted-foreground">{d}</p>
+              </div>
             </li>
           ))}
         </ol>
