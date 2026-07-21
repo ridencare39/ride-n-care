@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import car from "@/assets/car-service.jpg";
+import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const services = [
   ["Periodic Service", "Oil change, filters, brake check"],
@@ -13,14 +14,31 @@ const services = [
 export const Route = createFileRoute("/cars")({
   head: () => ({
     meta: [
-      { title: "Car Service at Home — Ride N Care" },
-      { name: "description", content: "Hassle-free car service at your doorstep. Periodic maintenance, AC, brakes, battery, denting — handled by certified mechanics." },
-      { property: "og:title", content: "Car Service at Home — Ride N Care" },
-      { property: "og:description", content: "Hassle-free car service at your doorstep with certified mechanics." },
-      { property: "og:url", content: "/cars" },
-      { property: "og:image", content: "/car-service.jpg" },
+      { title: "Doorstep Car Service in Bangalore — Periodic, AC, Brakes | Ride N Care" },
+      { name: "description", content: "Book doorstep car service in Bangalore — periodic maintenance, AC gas refill, battery, brakes, denting & painting. Genuine parts, transparent pricing, certified mechanics at your gate." },
+      { property: "og:title", content: "Doorstep Car Service in Bangalore | Ride N Care" },
+      { property: "og:description", content: "At-home car service in Bangalore: periodic, AC, brakes, battery, denting — done by certified mechanics with OEM parts." },
+      { property: "og:url", content: `${SITE_URL}/cars` },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "/cars" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/cars` }],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(LOCAL_BUSINESS_JSONLD) },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          serviceType: "Doorstep Car Service",
+          areaServed: { "@type": "City", name: "Bangalore" },
+          provider: { "@type": "AutoRepair", name: "Ride N Care", telephone: "+91-82969-50339" },
+          offers: { "@type": "Offer", price: "1499", priceCurrency: "INR" },
+        }),
+      },
+    ],
   }),
   component: Cars,
 });

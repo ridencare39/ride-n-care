@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getPost, posts, type Post } from "@/lib/blog";
+import { OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
@@ -10,18 +11,27 @@ export const Route = createFileRoute("/blog/$slug")({
   head: ({ loaderData, params }) => {
     const p = loaderData?.post;
     if (!p) return { meta: [{ title: "Post not found" }] };
+    const title = `${p.title} | Ride N Care Blog`;
+    const desc = p.excerpt.length > 160 ? `${p.excerpt.slice(0, 157)}...` : p.excerpt;
     return {
       meta: [
-        { title: `${p.title} — Ride N Care` },
-        { name: "description", content: p.excerpt },
+        { title },
+        { name: "description", content: desc },
+        { name: "keywords", content: p.tags.join(", ") },
         { property: "og:title", content: p.title },
-        { property: "og:description", content: p.excerpt },
+        { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: `/blog/${params.slug}` },
+        { property: "og:url", content: `${SITE_URL}/blog/${params.slug}` },
+        { property: "og:image", content: OG_IMAGE },
+        { property: "article:section", content: p.category },
         { property: "article:published_time", content: p.date },
         { property: "article:author", content: p.author },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: p.title },
+        { name: "twitter:description", content: desc },
+        { name: "twitter:image", content: OG_IMAGE },
       ],
-      links: [{ rel: "canonical", href: `/blog/${params.slug}` }],
+      links: [{ rel: "canonical", href: `${SITE_URL}/blog/${params.slug}` }],
       scripts: [
         {
           type: "application/ld+json",
