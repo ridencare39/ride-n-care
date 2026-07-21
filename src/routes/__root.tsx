@@ -93,7 +93,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@RideNCare" },
       { name: "twitter:title", content: "Ride N Care — Doorstep Bike & Car Service in Bangalore" },
       { name: "twitter:description", content: "Care in every mile. Expert at-home bike and car repair in Bangalore. Genuine parts, transparent pricing, doorstep pickup & drop." },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {

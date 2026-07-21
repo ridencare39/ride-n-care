@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getArea, AREAS, type Area } from "@/lib/areas";
+import { OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/areas/$slug")({
   loader: ({ params }) => {
@@ -10,8 +11,9 @@ export const Route = createFileRoute("/areas/$slug")({
   head: ({ loaderData, params }) => {
     const a = loaderData?.area;
     if (!a) return { meta: [{ title: "Area not found" }] };
-    const title = `Doorstep Bike & Car Service in ${a.name}, Bangalore | Ride N Care`;
-    const desc = `Book at-home bike & car service in ${a.name} (${a.pincode ?? "Bangalore"}). Certified mechanics, genuine parts, transparent pricing. Same-day slots, 7-day workmanship guarantee.`;
+    const nearby = a.nearby?.slice(0, 2).join(" & ");
+    const title = `Bike & Car Service in ${a.name} ${a.pincode ?? ""} — Doorstep | Ride N Care`;
+    const desc = `Doorstep bike & car service in ${a.name}${a.pincode ? ` (${a.pincode})` : ""}, ${a.zone} Bangalore${nearby ? `, near ${nearby}` : ""}. Same-day slots, OEM parts, certified mechanics and a 7-day workmanship guarantee.`;
     return {
       meta: [
         { title },
@@ -19,9 +21,13 @@ export const Route = createFileRoute("/areas/$slug")({
         { name: "keywords", content: `bike service ${a.name}, car service ${a.name}, doorstep mechanic ${a.name} Bangalore, ${a.name} car repair` },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
-        { property: "og:url", content: `/areas/${params.slug}` },
+        { property: "og:url", content: `${SITE_URL}/areas/${params.slug}` },
+        { property: "og:type", content: "website" },
+        { property: "og:image", content: OG_IMAGE },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: OG_IMAGE },
       ],
-      links: [{ rel: "canonical", href: `/areas/${params.slug}` }],
+      links: [{ rel: "canonical", href: `${SITE_URL}/areas/${params.slug}` }],
       scripts: [
         {
           type: "application/ld+json",

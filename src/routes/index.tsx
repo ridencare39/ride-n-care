@@ -5,6 +5,7 @@ import car from "@/assets/car-service.jpg";
 import { AreasMarquee } from "@/components/AreasMarquee";
 import { Newsletter } from "@/components/Newsletter";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
+import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const HOME_FAQS: [string, string][] = [
   ["Do you offer doorstep bike service in Bangalore?", "Yes — our certified mechanics arrive at your home or office anywhere in Bangalore with tools, diagnostics and genuine spares. Most bike services finish in 60–90 minutes."],
@@ -22,9 +23,17 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Ride N Care — Doorstep Bike & Car Service" },
       { property: "og:description", content: "Bangalore's trusted doorstep bike and car service — genuine parts, transparent pricing, certified mechanics at your home." },
       { property: "og:url", content: "/" },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(LOCAL_BUSINESS_JSONLD),
+      },
       {
         type: "application/ld+json",
         children: JSON.stringify({

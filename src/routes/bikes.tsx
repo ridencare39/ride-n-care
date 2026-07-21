@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import bike from "@/assets/bike-service.jpg";
+import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const brands = ["TVS","Bajaj","Royal Enfield","Yamaha","Honda","Hero","Suzuki","KTM","Jawa","Harley Davidson","Ducati","Kawasaki","Benelli","Triumph","BMW","Aprilia","Yezdi","Husqvarna"];
 const tiers = [
@@ -13,14 +14,31 @@ const tiers = [
 export const Route = createFileRoute("/bikes")({
   head: () => ({
     meta: [
-      { title: "Bike Service at Home — Ride N Care" },
-      { name: "description", content: "Doorstep bike servicing for all CCs — from TVS to Harley Davidson. Genuine parts, certified mechanics, 60-min service." },
-      { property: "og:title", content: "Bike Service at Home — Ride N Care" },
-      { property: "og:description", content: "Doorstep bike servicing for all CCs. Genuine parts, certified mechanics." },
-      { property: "og:url", content: "/bikes" },
-      { property: "og:image", content: "/bike-service.jpg" },
+      { title: "Doorstep Bike Service in Bangalore — All CCs | Ride N Care" },
+      { name: "description", content: "Book at-home bike service in Bangalore for every CC — TVS, Bajaj, Royal Enfield, KTM, Harley. Genuine OEM parts, certified mechanics, 60–90 min service and a 7-day workmanship guarantee." },
+      { property: "og:title", content: "Doorstep Bike Service in Bangalore | Ride N Care" },
+      { property: "og:description", content: "At-home bike service in Bangalore for all CCs with genuine parts, transparent pricing and certified mechanics." },
+      { property: "og:url", content: `${SITE_URL}/bikes` },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "/bikes" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/bikes` }],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(LOCAL_BUSINESS_JSONLD) },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          serviceType: "Doorstep Bike Service",
+          areaServed: { "@type": "City", name: "Bangalore" },
+          provider: { "@type": "AutoRepair", name: "Ride N Care", telephone: "+91-82969-50339" },
+          offers: { "@type": "Offer", price: "499", priceCurrency: "INR" },
+        }),
+      },
+    ],
   }),
   component: Bikes,
 });
