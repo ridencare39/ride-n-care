@@ -13,3 +13,15 @@ export const CAR_FAQS: [string, string][] = [
   ["Do you offer pickup and drop for car service?", "Yes — free pickup and drop is included with our full car service packages within Bangalore city limits."],
   ["Are your car mechanics certified?", "All our technicians are OEM-trained, police-verified and uniformed, with 8+ years average experience."],
 ];
+
+export const GENERAL_FAQS: [string, string][] = [
+  ["Which Bangalore areas do you serve?", "We cover 24+ localities including Whitefield, Koramangala, HSR, Indiranagar, Marathahalli, Electronic City, Hebbal, Jayanagar, JP Nagar, Bellandur, Sarjapur Road and more."],
+  ["Do you offer same-day service?", "Yes — slots booked before 4 PM are typically completed the same day across Bangalore."],
+  ["Is there a warranty on the work done?", "Every job carries a 7-day workmanship guarantee. If a related issue reappears, we revisit and fix it at zero cost."],
+];
+
+export function faqsForPostCategory(category: string): [string, string][] {
+  if (category === "Bike Care") return BIKE_FAQS.slice(0, 3);
+  if (category === "Car Care") return CAR_FAQS.slice(0, 3);
+  return GENERAL_FAQS;
+}
