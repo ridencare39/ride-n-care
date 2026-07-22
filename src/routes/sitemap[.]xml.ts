@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { posts } from "@/lib/blog";
 import { AREAS } from "@/lib/areas";
+import { SITE_URL } from "@/lib/seo";
 
-// TODO: replace with your project URL once a project name or custom domain is set.
-const BASE_URL = "";
+const BASE_URL = SITE_URL;
 
 const entries = [
   { path: "/", priority: "1.0", changefreq: "weekly" as const },
