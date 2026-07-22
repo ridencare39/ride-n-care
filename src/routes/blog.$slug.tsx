@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getPost, posts, type Post } from "@/lib/blog";
 import { OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { faqsForPostCategory } from "@/lib/service-faqs";
+import { AREAS } from "@/lib/areas";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
@@ -13,6 +15,7 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!p) return { meta: [{ title: "Post not found" }] };
     const title = `${p.title} | Ride N Care Blog`;
     const desc = p.excerpt.length > 160 ? `${p.excerpt.slice(0, 157)}...` : p.excerpt;
+    const faqs = faqsForPostCategory(p.category);
     return {
       meta: [
         { title },
@@ -64,6 +67,18 @@ export const Route = createFileRoute("/blog/$slug")({
             ],
           }),
         },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map(([q, a]) => ({
+              "@type": "Question",
+              name: q,
+              acceptedAnswer: { "@type": "Answer", text: a },
+            })),
+          }),
+        },
       ],
     };
   },
@@ -79,6 +94,10 @@ export const Route = createFileRoute("/blog/$slug")({
 function Post() {
   const { post } = Route.useLoaderData() as { post: Post };
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
+  const faqs = faqsForPostCategory(post.category);
+  const relatedAreas = AREAS.slice(0, 6);
+  const serviceLink = post.category === "Car Care" ? "/cars" : "/bikes";
+  const serviceLabel = post.category === "Car Care" ? "doorstep car service" : "doorstep bike service";
   return (
     <article className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
       <nav className="text-xs text-muted-foreground">
@@ -96,6 +115,60 @@ function Post() {
       <div className="mt-10 space-y-5 text-lg leading-relaxed text-foreground/90">
         {post.body.map((para, i) => <p key={i}>{para}</p>)}
       </div>
+
+      <section className="mt-16">
+        <h2 className="text-2xl font-bold">Related services</h2>
+        <p className="mt-2 text-muted-foreground">
+          Ready to act on this? Book a{" "}
+          <Link to={serviceLink} className="text-primary font-medium">{serviceLabel} in Bangalore</Link>
+          {" "}or explore our{" "}
+          <Link to="/pricing" className="text-primary font-medium">transparent pricing</Link>.
+        </p>
+        <div className="mt-4 grid sm:grid-cols-2 gap-3">
+          <Link to="/bikes" className="rounded-2xl border border-border bg-card p-4 hover:border-primary">
+            <div className="font-semibold">🏍 Doorstep Bike Service</div>
+            <p className="mt-1 text-sm text-muted-foreground">All CCs — TVS, Royal Enfield, KTM, Harley and more.</p>
+          </Link>
+          <Link to="/cars" className="rounded-2xl border border-border bg-card p-4 hover:border-primary">
+            <div className="font-semibold">🚗 Doorstep Car Service</div>
+            <p className="mt-1 text-sm text-muted-foreground">Periodic, AC, brakes, battery and detailing at home.</p>
+          </Link>
+        </div>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-bold">We serve these Bangalore areas</h2>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {relatedAreas.map((a) => (
+            <Link
+              key={a.slug}
+              to="/areas/$slug"
+              params={{ slug: a.slug }}
+              className="rounded-full border border-border bg-card px-4 py-1.5 text-sm hover:border-primary hover:text-primary"
+            >
+              📍 {a.name}
+            </Link>
+          ))}
+          <Link to="/areas" className="rounded-full bg-grad-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground">
+            All areas →
+          </Link>
+        </div>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-bold">Frequently asked questions</h2>
+        <div className="mt-4 divide-y divide-border rounded-3xl border border-border bg-card">
+          {faqs.map(([q, a]) => (
+            <details key={q} className="group p-6">
+              <summary className="cursor-pointer list-none flex justify-between items-center gap-4">
+                <span className="font-semibold">{q}</span>
+                <span className="text-primary text-2xl group-open:rotate-45 transition">+</span>
+              </summary>
+              <p className="mt-3 text-muted-foreground">{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
 
       <div className="mt-16 rounded-2xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Need a service done?</h2>
