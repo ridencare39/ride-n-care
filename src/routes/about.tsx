@@ -39,13 +39,13 @@ function About() {
       <span className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Our Story</span>
       <h1 className="mt-2 text-5xl font-bold">About Ride N Care</h1>
       <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-        Ride N Care was founded in <strong className="text-foreground">Bangalore in 2021</strong> with one stubborn belief — getting your bike or car serviced should not eat up an entire weekend. What began as two friends fixing neighbours' scooters in a Koramangala parking lot has grown into the city's most trusted doorstep automotive service brand, with <strong className="text-foreground">60+ certified mechanics</strong> covering <strong className="text-foreground">50+ Bangalore localities</strong> and over <strong className="text-foreground">3,200 happy customers</strong>.
+        Ride N Care was founded in <strong className="text-foreground">Bangalore</strong> with one stubborn belief — getting your bike or car serviced should not eat up an entire weekend. What began as two friends fixing neighbours' scooters in a Koramangala parking lot has grown into the city's most trusted doorstep automotive service brand, with <strong className="text-foreground">150+ certified mechanics</strong> covering <strong className="text-foreground">50+ Bangalore localities</strong> and over <strong className="text-foreground">12,000 happy riders</strong> across <strong className="text-foreground">12+ years</strong> on the road.
       </p>
 
       <div className="mt-10 grid sm:grid-cols-3 gap-6">
-        <Stat v="5+" l="Years in business" />
-        <Stat v="60+" l="Certified mechanics" />
-        <Stat v="3,200+" l="Happy riders" />
+        <Stat v="12+" l="Years in business" />
+        <Stat v="150+" l="Certified mechanics" />
+        <Stat v="12,000+" l="Happy riders" />
       </div>
 
       <h2 className="mt-14 text-3xl font-bold">Why Bangalore loves us</h2>
