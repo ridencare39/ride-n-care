@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import car from "@/assets/car-service.jpg";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { CAR_FAQS } from "@/lib/service-faqs";
 
 const services = [
   ["Periodic Service", "Oil change, filters, brake check"],
@@ -38,6 +39,29 @@ export const Route = createFileRoute("/cars")({
           offers: { "@type": "Offer", price: "1499", priceCurrency: "INR" },
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: CAR_FAQS.map(([q, a]) => ({
+            "@type": "Question",
+            name: q,
+            acceptedAnswer: { "@type": "Answer", text: a },
+          })),
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+            { "@type": "ListItem", position: 2, name: "Car Service", item: `${SITE_URL}/cars` },
+          ],
+        }),
+      },
     ],
   }),
   component: Cars,
@@ -64,6 +88,19 @@ function Cars() {
             <h3 className="font-semibold">{t}</h3>
             <p className="mt-1 text-sm text-muted-foreground">{d}</p>
           </div>
+        ))}
+      </div>
+
+      <h2 className="mt-20 text-3xl font-bold">Car service FAQs</h2>
+      <div className="mt-6 divide-y divide-border rounded-3xl border border-border bg-card">
+        {CAR_FAQS.map(([q, a]) => (
+          <details key={q} className="group p-6">
+            <summary className="cursor-pointer list-none flex justify-between items-center gap-4">
+              <span className="font-semibold">{q}</span>
+              <span className="text-primary text-2xl group-open:rotate-45 transition">+</span>
+            </summary>
+            <p className="mt-3 text-muted-foreground">{a}</p>
+          </details>
         ))}
       </div>
     </div>
