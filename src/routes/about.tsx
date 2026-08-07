@@ -116,6 +116,40 @@ function About() {
         We currently serve Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, BTM Layout, Jayanagar, JP Nagar, Bellandur, Sarjapur Road, Electronic City, Banashankari, Rajajinagar, Malleshwaram, Yelahanka, Hebbal, Kalyan Nagar, CV Raman Nagar, MG Road, Brigade Road, Mahadevapura, KR Puram, Kadugodi, Varthur, Hoskote, Bannerghatta Road, Kanakapura Road, Yeshwanthpur, Peenya and 20+ more neighbourhoods. New areas added every month — call us if you don't see yours.
       </p>
 
+      {/* Testimonials / trust */}
+      <section className="mt-14">
+        <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Trusted by riders</div>
+        <h2 className="mt-1 text-2xl md:text-3xl font-bold">What Bangalore says about us</h2>
+        <div className="mt-6 grid sm:grid-cols-3 gap-3">
+          {[
+            ["Priya S.", "HSR Layout", "Booked a car service at 9am, mechanic showed up at 10 sharp. Watched the whole job from my balcony — zero upselling."],
+            ["Arjun M.", "Whitefield", "My Duke's chain and brakes were done in my parking lot in 75 minutes. Printed bill, genuine parts, fair price."],
+            ["Rakesh N.", "Jayanagar", "Battery died on a Sunday. They reached in 30 minutes and replaced it on the spot. Now my default garage."],
+          ].map(([name, area, quote]) => (
+            <figure key={name} className="rounded-xl border border-border bg-card p-4">
+              <div className="text-primary text-sm">★★★★★</div>
+              <blockquote className="mt-2 text-sm text-muted-foreground">“{quote}”</blockquote>
+              <figcaption className="mt-3 text-xs font-semibold">
+                {name} <span className="text-muted-foreground font-normal">· {area}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            ["4.8★", "Average rating"],
+            ["7-day", "Workmanship guarantee"],
+            ["OEM", "Genuine parts only"],
+            ["50+", "Areas covered"],
+          ].map(([t, d]) => (
+            <div key={t} className="rounded-xl border border-border bg-background p-3">
+              <h3 className="font-semibold text-sm text-primary">{t}</h3>
+              <p className="text-xs text-muted-foreground">{d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <div className="mt-12 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Ready to try doorstep service?</h2>
         <p className="mt-2 text-primary-foreground/90">Get a free quote on WhatsApp in under 2 minutes.</p>
