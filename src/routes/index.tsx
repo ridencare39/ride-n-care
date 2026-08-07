@@ -5,6 +5,7 @@ import car from "@/assets/car-service.jpg";
 import { AreasMarquee } from "@/components/AreasMarquee";
 import { Newsletter } from "@/components/Newsletter";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
+import { StatsRow } from "@/components/StatsRow";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const HOME_FAQS: [string, string][] = [
@@ -96,11 +97,7 @@ function Home() {
               <li>✅ Free pickup & drop</li>
               <li>✅ Cashless payments</li>
             </ul>
-            <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
-              <Stat label="Years" value="12+" />
-              <Stat label="Mechanics" value="150+" />
-              <Stat label="Happy Riders" value="12,000+" />
-            </div>
+            <StatsRow className="mt-10 max-w-md" />
           </div>
           <div className="hidden md:block">
             <div className="relative rounded-3xl overflow-hidden border border-border shadow-glow">
@@ -232,15 +229,6 @@ function Home() {
         </div>
       </section>
     </>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <div className="text-2xl font-display font-bold text-primary">{value}</div>
-      <div className="text-xs uppercase tracking-wider text-muted-foreground">{label}</div>
-    </div>
   );
 }
 
