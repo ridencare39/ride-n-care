@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { StatsRow } from "@/components/StatsRow";
-import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, OG_IMAGE_ABOUT, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -10,10 +10,14 @@ export const Route = createFileRoute("/about")({
       { property: "og:title", content: "About Ride N Care — Care in every mile" },
       { property: "og:description", content: "Bangalore's trusted doorstep bike & car service. Certified mechanics, OEM parts, transparent pricing." },
       { property: "og:url", content: "/about" },
-      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image", content: OG_IMAGE_ABOUT },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "About Ride N Care — Care in every mile, Bangalore doorstep bike & car service" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: OG_IMAGE },
+      { name: "twitter:image", content: OG_IMAGE_ABOUT },
+      { name: "twitter:image:alt", content: "About Ride N Care — Care in every mile" },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/about` }],
     scripts: [
