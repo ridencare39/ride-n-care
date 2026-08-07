@@ -173,6 +173,18 @@
   animation: marquee 40s linear infinite;
 }
 
+@utility float-slow {
+  animation: float-y 9s ease-in-out infinite;
+}
+@utility float-slower {
+  animation: float-y 14s ease-in-out infinite;
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -14px, 0); }
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

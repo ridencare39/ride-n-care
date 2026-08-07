@@ -68,10 +68,26 @@ function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-hero">
-        <div className="absolute inset-0 opacity-30">
-          <img src={hero} alt="" width={1600} height={1200} className="h-full w-full object-cover" />
+        {/* 3D mechanic background */}
+        <div className="absolute inset-0">
+          <img
+            src={hero3d}
+            alt=""
+            aria-hidden="true"
+            width={1920}
+            height={1088}
+            className="h-full w-full object-cover object-right scale-105"
+          />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+        <div className="absolute inset-0 opacity-15 mix-blend-luminosity">
+          <img src={hero} alt="" aria-hidden="true" width={1600} height={1200} className="h-full w-full object-cover" />
+        </div>
+        {/* readability scrims */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
+        {/* soft 3D glow orbs */}
+        <div className="pointer-events-none absolute -top-24 right-1/4 h-72 w-72 rounded-full bg-primary/25 blur-3xl float-slow" />
+        <div className="pointer-events-none absolute bottom-0 right-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl float-slower" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-24 md:py-32 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary uppercase tracking-wider">
@@ -100,8 +116,14 @@ function Home() {
             <StatsRow className="mt-10 max-w-md" />
           </div>
           <div className="hidden md:block">
-            <div className="relative rounded-3xl overflow-hidden border border-border shadow-glow">
-              <img src={hero} alt="Mechanic servicing a sport bike at home" width={1600} height={1200} className="w-full h-[520px] object-cover" />
+            <div className="relative rounded-3xl overflow-hidden border border-border shadow-glow float-slow">
+              <img
+                src={hero3d}
+                alt="3D illustration of a mechanic repairing a two-wheeler at the customer's doorstep"
+                width={1920}
+                height={1088}
+                className="w-full h-[520px] object-cover"
+              />
             </div>
           </div>
         </div>
