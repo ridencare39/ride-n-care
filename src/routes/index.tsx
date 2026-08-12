@@ -1,12 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import hero from "@/assets/hero-mechanic.jpg";
-import hero3d from "@/assets/hero-3d-mechanic.jpg";
 import bike from "@/assets/bike-service.jpg";
 import car from "@/assets/car-service.jpg";
 import { AreasMarquee } from "@/components/AreasMarquee";
 import { Newsletter } from "@/components/Newsletter";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
 import { StatsRow } from "@/components/StatsRow";
+import { HeroBackground, HeroCardImage } from "@/components/HeroBackground";
+import { Testimonials, REVIEW_JSONLD } from "@/components/Testimonials";
+import { AreasSection } from "@/components/AreasSection";
+import { AREAS } from "@/lib/areas";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const HOME_FAQS: [string, string][] = [
@@ -34,7 +37,15 @@ export const Route = createFileRoute("/")({
     scripts: [
       {
         type: "application/ld+json",
-        children: JSON.stringify(LOCAL_BUSINESS_JSONLD),
+        children: JSON.stringify({
+          ...LOCAL_BUSINESS_JSONLD,
+          areaServed: [
+            ...LOCAL_BUSINESS_JSONLD.areaServed,
+            ...AREAS.map((a) => ({ "@type": "Place", name: `${a.name}, Bangalore`, ...(a.pincode ? { address: { "@type": "PostalAddress", postalCode: a.pincode, addressLocality: "Bangalore", addressCountry: "IN" } } : {}) })),
+          ],
+          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", reviewCount: "1200" },
+          review: REVIEW_JSONLD,
+        }),
       },
       {
         type: "application/ld+json",
@@ -70,18 +81,9 @@ function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-hero">
         {/* 3D mechanic background */}
-        <div className="absolute inset-0">
-          <img
-            src={hero3d}
-            alt=""
-            aria-hidden="true"
-            width={1920}
-            height={1088}
-            className="h-full w-full object-cover object-right scale-105"
-          />
-        </div>
+        <HeroBackground />
         <div className="absolute inset-0 opacity-15 mix-blend-luminosity">
-          <img src={hero} alt="" aria-hidden="true" width={1600} height={1200} className="h-full w-full object-cover" />
+          <img src={hero} alt="" aria-hidden="true" width={1600} height={1200} loading="lazy" decoding="async" className="h-full w-full object-cover" />
         </div>
         {/* readability scrims */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/10" />
@@ -118,13 +120,7 @@ function Home() {
           </div>
           <div className="hidden md:block">
             <div className="relative rounded-3xl overflow-hidden border border-border shadow-glow float-slow">
-              <img
-                src={hero3d}
-                alt="3D illustration of a mechanic repairing a two-wheeler at the customer's doorstep"
-                width={1920}
-                height={1088}
-                className="w-full h-[520px] object-cover"
-              />
+              <HeroCardImage />
             </div>
           </div>
         </div>
@@ -143,6 +139,12 @@ function Home() {
 
       {/* Areas We Serve */}
       <AreasMarquee />
+
+      {/* Service areas / locations */}
+      <AreasSection />
+
+      {/* Trust & testimonials */}
+      <Testimonials />
 
       {/* Brands We Service */}
       <BrandsMarquee />
