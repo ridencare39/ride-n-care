@@ -81,18 +81,9 @@ function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-hero">
         {/* 3D mechanic background */}
-        <div className="absolute inset-0">
-          <img
-            src={hero3d}
-            alt=""
-            aria-hidden="true"
-            width={1920}
-            height={1088}
-            className="h-full w-full object-cover object-right scale-105"
-          />
-        </div>
+        <HeroBackground />
         <div className="absolute inset-0 opacity-15 mix-blend-luminosity">
-          <img src={hero} alt="" aria-hidden="true" width={1600} height={1200} className="h-full w-full object-cover" />
+          <img src={hero} alt="" aria-hidden="true" width={1600} height={1200} loading="lazy" decoding="async" className="h-full w-full object-cover" />
         </div>
         {/* readability scrims */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/10" />
@@ -129,13 +120,7 @@ function Home() {
           </div>
           <div className="hidden md:block">
             <div className="relative rounded-3xl overflow-hidden border border-border shadow-glow float-slow">
-              <img
-                src={hero3d}
-                alt="3D illustration of a mechanic repairing a two-wheeler at the customer's doorstep"
-                width={1920}
-                height={1088}
-                className="w-full h-[520px] object-cover"
-              />
+              <HeroCardImage />
             </div>
           </div>
         </div>
@@ -154,6 +139,12 @@ function Home() {
 
       {/* Areas We Serve */}
       <AreasMarquee />
+
+      {/* Service areas / locations */}
+      <AreasSection />
+
+      {/* Trust & testimonials */}
+      <Testimonials />
 
       {/* Brands We Service */}
       <BrandsMarquee />
