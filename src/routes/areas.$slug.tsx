@@ -11,9 +11,9 @@ export const Route = createFileRoute("/areas/$slug")({
   head: ({ loaderData, params }) => {
     const a = loaderData?.area;
     if (!a) return { meta: [{ title: "Area not found" }] };
-    const nearby = a.nearby?.slice(0, 2).join(" & ");
-    const title = `Bike & Car Service in ${a.name} ${a.pincode ?? ""} — Doorstep | Ride N Care`;
-    const desc = `Doorstep bike & car service in ${a.name}${a.pincode ? ` (${a.pincode})` : ""}, ${a.zone} Bangalore${nearby ? `, near ${nearby}` : ""}. Same-day slots, OEM parts, certified mechanics and a 7-day workmanship guarantee.`;
+    const nearby = a.nearby?.[0];
+    const title = `Bike & Car Service in ${a.name} | Ride N Care`;
+    const desc = `Doorstep bike & car service in ${a.name}${a.pincode ? ` ${a.pincode}` : ""}, ${a.zone} Bangalore${nearby ? `, near ${nearby}` : ""}. Same-day slots, OEM parts, 7-day guarantee.`;
     return {
       meta: [
         { title },
