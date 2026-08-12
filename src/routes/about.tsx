@@ -6,7 +6,7 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About Ride N Care — Bangalore's Doorstep Bike & Car Service" },
-      { name: "description", content: "Founded in 2021, Ride N Care is Bangalore's most trusted doorstep mechanic service. 60+ certified pros, 3,200+ happy customers, genuine parts, transparent pricing across 50+ city localities." },
+      { name: "description", content: "Bangalore's trusted doorstep mechanic service — 150+ certified pros, 12,000+ happy riders, genuine parts and upfront pricing across 50+ localities." },
       { property: "og:title", content: "About Ride N Care — Care in every mile" },
       { property: "og:description", content: "Bangalore's trusted doorstep bike & car service. Certified mechanics, OEM parts, transparent pricing." },
       { property: "og:url", content: "/about" },
