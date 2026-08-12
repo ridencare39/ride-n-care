@@ -16,7 +16,7 @@ export const Route = createFileRoute("/bikes")({
   head: () => ({
     meta: [
       { title: "Doorstep Bike Service in Bangalore — All CCs | Ride N Care" },
-      { name: "description", content: "Book at-home bike service in Bangalore for every CC — TVS, Bajaj, Royal Enfield, KTM, Harley. Genuine OEM parts, certified mechanics, 60–90 min service and a 7-day workmanship guarantee." },
+      { name: "description", content: "At-home bike service in Bangalore for every CC — TVS, Bajaj, Royal Enfield, KTM, Harley. OEM parts, certified mechanics, 60–90 min service." },
       { property: "og:title", content: "Doorstep Bike Service in Bangalore | Ride N Care" },
       { property: "og:description", content: "At-home bike service in Bangalore for all CCs with genuine parts, transparent pricing and certified mechanics." },
       { property: "og:url", content: `${SITE_URL}/bikes` },

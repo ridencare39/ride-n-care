@@ -40,6 +40,7 @@ export function Newsletter({ compact = false }: { compact?: boolean }) {
               maxLength={254}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              aria-label="Email address"
               placeholder="you@email.com"
               className="flex-1 rounded-full bg-background border border-border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -72,6 +73,7 @@ export function Newsletter({ compact = false }: { compact?: boolean }) {
             maxLength={254}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            aria-label="Email address"
             placeholder="Enter your email"
             className="flex-1 rounded-full bg-background border border-border px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />

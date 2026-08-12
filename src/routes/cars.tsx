@@ -15,8 +15,8 @@ const services = [
 export const Route = createFileRoute("/cars")({
   head: () => ({
     meta: [
-      { title: "Doorstep Car Service in Bangalore — Periodic, AC, Brakes | Ride N Care" },
-      { name: "description", content: "Book doorstep car service in Bangalore — periodic maintenance, AC gas refill, battery, brakes, denting & painting. Genuine parts, transparent pricing, certified mechanics at your gate." },
+      { title: "Doorstep Car Service in Bangalore | Ride N Care" },
+      { name: "description", content: "Doorstep car service in Bangalore — periodic maintenance, AC refill, battery, brakes, denting & painting by certified mechanics with genuine parts." },
       { property: "og:title", content: "Doorstep Car Service in Bangalore | Ride N Care" },
       { property: "og:description", content: "At-home car service in Bangalore: periodic, AC, brakes, battery, denting — done by certified mechanics with OEM parts." },
       { property: "og:url", content: `${SITE_URL}/cars` },
