@@ -1,12 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import hero from "@/assets/hero-mechanic.jpg";
-import hero3d from "@/assets/hero-3d-mechanic.jpg";
 import bike from "@/assets/bike-service.jpg";
 import car from "@/assets/car-service.jpg";
 import { AreasMarquee } from "@/components/AreasMarquee";
 import { Newsletter } from "@/components/Newsletter";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
 import { StatsRow } from "@/components/StatsRow";
+import { HeroBackground, HeroCardImage } from "@/components/HeroBackground";
+import { Testimonials, REVIEW_JSONLD } from "@/components/Testimonials";
+import { AreasSection } from "@/components/AreasSection";
+import { AREAS } from "@/lib/areas";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const HOME_FAQS: [string, string][] = [
@@ -34,7 +37,15 @@ export const Route = createFileRoute("/")({
     scripts: [
       {
         type: "application/ld+json",
-        children: JSON.stringify(LOCAL_BUSINESS_JSONLD),
+        children: JSON.stringify({
+          ...LOCAL_BUSINESS_JSONLD,
+          areaServed: [
+            ...LOCAL_BUSINESS_JSONLD.areaServed,
+            ...AREAS.map((a) => ({ "@type": "Place", name: `${a.name}, Bangalore`, ...(a.pincode ? { address: { "@type": "PostalAddress", postalCode: a.pincode, addressLocality: "Bangalore", addressCountry: "IN" } } : {}) })),
+          ],
+          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", reviewCount: "1200" },
+          review: REVIEW_JSONLD,
+        }),
       },
       {
         type: "application/ld+json",
