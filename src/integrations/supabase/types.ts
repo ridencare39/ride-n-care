@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      gsc_daily_snapshots: {
+        Row: {
+          created_at: string
+          day: string
+          home_coverage_state: string | null
+          home_verdict: string | null
+          indexed_pages: number
+          site_url: string
+          sitemap_errors: number
+          sitemap_warnings: number
+          submitted_pages: number
+        }
+        Insert: {
+          created_at?: string
+          day: string
+          home_coverage_state?: string | null
+          home_verdict?: string | null
+          indexed_pages?: number
+          site_url: string
+          sitemap_errors?: number
+          sitemap_warnings?: number
+          submitted_pages?: number
+        }
+        Update: {
+          created_at?: string
+          day?: string
+          home_coverage_state?: string | null
+          home_verdict?: string | null
+          indexed_pages?: number
+          site_url?: string
+          sitemap_errors?: number
+          sitemap_warnings?: number
+          submitted_pages?: number
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           confirmed_at: string | null
