@@ -83,6 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Ride N Care — Doorstep Bike & Car Service in Bangalore" },
       { name: "description", content: "Care in every mile. Expert at-home bike and car repair in Bangalore. Genuine parts, transparent pricing, doorstep pickup & drop." },
       { name: "author", content: "Ride N Care" },
+      { name: "google-site-verification", content: "jhsltMlL-d9OJM2WUXyxdkL6RnJLEpaoQWPUI5qKflc" },
       { name: "theme-color", content: "#2563eb" },
       { name: "keywords", content: "doorstep bike service Bangalore, car repair at home Bangalore, two wheeler mechanic, car mechanic home, ride n care" },
       { property: "og:title", content: "Ride N Care — Doorstep Bike & Car Service in Bangalore" },
