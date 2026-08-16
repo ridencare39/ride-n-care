@@ -34,7 +34,10 @@ export const Route = createFileRoute("/areas/$slug")({
           children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AutoRepair",
+            "@id": `${SITE_URL}/areas/${params.slug}#business`,
             name: `Ride N Care — ${a.name}`,
+            branchOf: { "@type": "AutoRepair", "@id": `${SITE_URL}/#business`, name: "Ride N Care" },
+            url: `${SITE_URL}/areas/${params.slug}`,
             areaServed: { "@type": "Place", name: `${a.name}, Bangalore` },
             address: {
               "@type": "PostalAddress",

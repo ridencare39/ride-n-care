@@ -53,7 +53,7 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "Service",
           serviceType: "Bike and Car Repair",
-          provider: { "@type": "LocalBusiness", name: "Ride N Care" },
+          provider: { "@type": "AutoRepair", "@id": `${SITE_URL}/#business`, name: "Ride N Care" },
           areaServed: ["Bangalore"],
           offers: { "@type": "Offer", price: "499", priceCurrency: "INR" },
         }),

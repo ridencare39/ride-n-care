@@ -35,7 +35,7 @@ export const Route = createFileRoute("/bikes")({
           "@type": "Service",
           serviceType: "Doorstep Bike Service",
           areaServed: { "@type": "City", name: "Bangalore" },
-          provider: { "@type": "AutoRepair", name: "Ride N Care", telephone: "+91-82969-50339" },
+          provider: { "@type": "AutoRepair", "@id": `${SITE_URL}/#business`, name: "Ride N Care", telephone: "+91-82969-50339" },
           offers: { "@type": "Offer", price: "499", priceCurrency: "INR" },
         }),
       },

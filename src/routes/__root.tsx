@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { FloatingActions } from "@/components/FloatingActions";
+import { LOCAL_BUSINESS_JSONLD } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -117,33 +118,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     scripts: [
       {
         type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "AutoRepair",
-          "@id": "https://ridencare.in/#business",
-          name: "Ride N Care",
-          alternateName: "Ride N Care - Care in every mile",
-          slogan: "Care in every mile",
-          description: "Doorstep bike and car repair, service and maintenance in Bangalore, India.",
-          areaServed: { "@type": "City", name: "Bangalore" },
-          priceRange: "₹₹",
-          telephone: ["+91-80-6940-9289", "+91-82969-50339"],
-          email: "ridencareinfo@gmail.com",
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "Bangalore",
-            addressLocality: "Bangalore",
-            addressRegion: "Karnataka",
-            addressCountry: "IN",
-          },
-          openingHoursSpecification: {
-            "@type": "OpeningHoursSpecification",
-            dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-            opens: "08:00",
-            closes: "21:00",
-          },
-          sameAs: ["https://wa.me/918296950339"],
-        }),
+        children: JSON.stringify(LOCAL_BUSINESS_JSONLD),
       },
     ],
   }),
