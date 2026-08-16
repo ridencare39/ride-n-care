@@ -53,7 +53,6 @@ export const Route = createFileRoute("/blog/$slug")({
             },
             keywords: p.tags.join(", "),
             mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${params.slug}` },
-            publisherOrganization: undefined,
             about: { "@id": `${SITE_URL}/#business` },
           }),
         },
