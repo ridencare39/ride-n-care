@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SeoMonitorRouteImport } from './routes/seo-monitor'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -25,6 +26,11 @@ import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SeoMonitorRoute = SeoMonitorRouteImport.update({
+  id: '/seo-monitor',
+  path: '/seo-monitor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/pricing': typeof PricingRoute
+  '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/pricing': typeof PricingRoute
+  '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/pricing': typeof PricingRoute
+  '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -138,6 +147,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/pricing'
+    | '/seo-monitor'
     | '/sitemap.xml'
     | '/areas/$slug'
     | '/blog/$slug'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/pricing'
+    | '/seo-monitor'
     | '/sitemap.xml'
     | '/areas/$slug'
     | '/blog/$slug'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/pricing'
+    | '/seo-monitor'
     | '/sitemap.xml'
     | '/areas/$slug'
     | '/blog/$slug'
@@ -181,6 +193,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   PricingRoute: typeof PricingRoute
+  SeoMonitorRoute: typeof SeoMonitorRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seo-monitor': {
+      id: '/seo-monitor'
+      path: '/seo-monitor'
+      fullPath: '/seo-monitor'
+      preLoaderRoute: typeof SeoMonitorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -303,6 +323,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   PricingRoute: PricingRoute,
+  SeoMonitorRoute: SeoMonitorRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
