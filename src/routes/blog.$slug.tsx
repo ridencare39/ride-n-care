@@ -52,7 +52,9 @@ export const Route = createFileRoute("/blog/$slug")({
               logo: { "@type": "ImageObject", url: "/__l5e/assets-v1/760c4f79-dc2d-4a56-a959-0c73577c8f73/ride-n-care-logo.jpg" },
             },
             keywords: p.tags.join(", "),
-            mainEntityOfPage: { "@type": "WebPage", "@id": `/blog/${params.slug}` },
+            mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${params.slug}` },
+            publisherOrganization: undefined,
+            about: { "@id": `${SITE_URL}/#business` },
           }),
         },
         {
