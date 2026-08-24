@@ -95,8 +95,8 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function Post() {
-  const { post } = Route.useLoaderData() as { post: Post };
-  const related = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
+  const { post, related } = Route.useLoaderData() as { post: Post; related: Post[] };
+
   const faqs = faqsForPostCategory(post.category);
   const relatedAreas = AREAS.slice(0, 6);
   const serviceLink = post.category === "Car Care" ? "/cars" : "/bikes";
