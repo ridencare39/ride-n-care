@@ -1,15 +1,17 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { getPost, posts, type Post } from "@/lib/blog";
+import { type Post } from "@/lib/blog";
+import { getPublishedPost } from "@/lib/blog.functions";
 import { OG_IMAGE, SITE_URL } from "@/lib/seo";
 import { faqsForPostCategory } from "@/lib/service-faqs";
 import { AREAS } from "@/lib/areas";
 
 export const Route = createFileRoute("/blog/$slug")({
-  loader: ({ params }) => {
-    const post = getPost(params.slug);
+  loader: async ({ params }) => {
+    const { post, related } = await getPublishedPost({ data: { slug: params.slug } });
     if (!post) throw notFound();
-    return { post };
+    return { post, related };
   },
+
   head: ({ loaderData, params }) => {
     const p = loaderData?.post;
     if (!p) return { meta: [{ title: "Post not found" }] };
