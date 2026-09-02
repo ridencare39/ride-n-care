@@ -1,42 +1,44 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-import { posts } from "@/lib/blog";
+import { dbListPosts } from "@/lib/blog.db";
 import { AREAS } from "@/lib/areas";
 import { SITE_URL } from "@/lib/seo";
 
 const BASE_URL = SITE_URL;
 
-const entries = [
-  { path: "/", priority: "1.0", changefreq: "weekly" as const },
-  { path: "/bikes", priority: "0.9", changefreq: "monthly" as const },
-  { path: "/cars", priority: "0.9", changefreq: "monthly" as const },
-  { path: "/pricing", priority: "0.8", changefreq: "monthly" as const },
-  { path: "/about", priority: "0.6", changefreq: "yearly" as const },
-  { path: "/blog", priority: "0.8", changefreq: "weekly" as const },
-  { path: "/faq", priority: "0.7", changefreq: "monthly" as const },
-  { path: "/contact", priority: "0.8", changefreq: "yearly" as const },
-  { path: "/areas", priority: "0.8", changefreq: "monthly" as const },
-  ...AREAS.map((a) => ({
-    path: `/areas/${a.slug}`,
-    priority: "0.7",
-    changefreq: "monthly" as const,
-  })),
-  ...posts.map((p) => ({
-    path: `/blog/${p.slug}`,
-    priority: "0.7",
-    changefreq: "monthly" as const,
-    lastmod: p.date,
-  })),
+type Entry = { path: string; priority: string; changefreq: string; lastmod?: string };
+
+const staticEntries: Entry[] = [
+  { path: "/", priority: "1.0", changefreq: "weekly" },
+  { path: "/bikes", priority: "0.9", changefreq: "monthly" },
+  { path: "/cars", priority: "0.9", changefreq: "monthly" },
+  { path: "/pricing", priority: "0.8", changefreq: "monthly" },
+  { path: "/about", priority: "0.6", changefreq: "yearly" },
+  { path: "/blog", priority: "0.8", changefreq: "weekly" },
+  { path: "/faq", priority: "0.7", changefreq: "monthly" },
+  { path: "/contact", priority: "0.8", changefreq: "yearly" },
+  { path: "/areas", priority: "0.8", changefreq: "monthly" },
+  ...AREAS.map((a) => ({ path: `/areas/${a.slug}`, priority: "0.7", changefreq: "monthly" })),
 ];
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const posts = await dbListPosts({ limit: 500 });
+        const entries: Entry[] = [
+          ...staticEntries,
+          ...posts.map((p) => ({
+            path: `/blog/${p.slug}`,
+            priority: "0.7",
+            changefreq: "monthly",
+            lastmod: p.date,
+          })),
+        ];
         const urls = entries
           .map(
             (e) =>
-              `  <url>\n    <loc>${BASE_URL}${e.path}</loc>\n${"lastmod" in e && e.lastmod ? `    <lastmod>${e.lastmod}</lastmod>\n` : ""}    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`,
+              `  <url>\n    <loc>${BASE_URL}${e.path}</loc>\n${e.lastmod ? `    <lastmod>${e.lastmod}</lastmod>\n` : ""}    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`,
           )
           .join("\n");
         const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;

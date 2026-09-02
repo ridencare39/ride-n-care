@@ -1,6 +1,6 @@
 import { defineTool, ToolError } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { getPost } from "@/lib/blog";
+import { dbGetPost } from "@/lib/blog.db";
 
 export default defineTool({
   name: "get_blog_post",
@@ -8,8 +8,8 @@ export default defineTool({
   description: "Get the full text of a Ride N Care blog post by its slug (use search_blog_posts to find slugs).",
   inputSchema: { slug: z.string().trim().min(1).describe("Blog post slug, e.g. bike-service-checklist-bangalore.") },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
-  handler: ({ slug }) => {
-    const post = getPost(slug);
+  handler: async ({ slug }) => {
+    const post = await dbGetPost(slug);
     if (!post) throw new ToolError(`No blog post found with slug "${slug}".`);
     const payload = {
       slug: post.slug,
