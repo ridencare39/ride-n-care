@@ -1,6 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { posts } from "@/lib/blog";
+import { dbListPosts } from "@/lib/blog.db";
 
 export default defineTool({
   name: "search_blog_posts",
@@ -12,27 +12,18 @@ export default defineTool({
     limit: z.number().int().min(1).max(50).default(10).describe("Maximum number of posts to return."),
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
-  handler: ({ query, category, limit }) => {
-    const q = query?.toLowerCase();
-    const cat = category?.toLowerCase();
-    const results = posts
-      .filter((p) => {
-        if (cat && cat !== "all" && p.category.toLowerCase() !== cat) return false;
-        if (!q) return true;
-        const haystack = `${p.title} ${p.excerpt} ${p.tags.join(" ")} ${p.category}`.toLowerCase();
-        return haystack.includes(q);
-      })
-      .slice(0, limit)
-      .map((p) => ({
-        slug: p.slug,
-        title: p.title,
-        excerpt: p.excerpt,
-        category: p.category,
-        tags: p.tags,
-        date: p.date,
-        readMins: p.readMins,
-        url: `/blog/${p.slug}`,
-      }));
+  handler: async ({ query, category, limit }) => {
+    const posts = await dbListPosts({ query, category, limit: 200 });
+    const results = posts.slice(0, limit).map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      excerpt: p.excerpt,
+      category: p.category,
+      tags: p.tags,
+      date: p.date,
+      readMins: p.readMins,
+      url: `/blog/${p.slug}`,
+    }));
     const payload = { count: results.length, posts: results };
     return {
       content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],

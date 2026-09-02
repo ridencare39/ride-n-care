@@ -1,18 +1,25 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { posts, CATEGORIES, type Category } from "@/lib/blog";
+import { CATEGORIES, type Category } from "@/lib/blog";
+import { listPublishedPosts } from "@/lib/blog.functions";
 import { Newsletter } from "@/components/Newsletter";
+import { SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/blog")({
-  head: () => ({
+  loader: async () => await listPublishedPosts(),
+  head: ({ loaderData }) => ({
     meta: [
       { title: "Blog — Ride N Care | Bike & Car Care Tips" },
       { name: "description", content: "Expert tips on bike and car maintenance, doorstep service guides, and Bangalore-specific car care advice from Ride N Care mechanics." },
       { property: "og:title", content: "Ride N Care Blog — Bike & Car Care Tips" },
       { property: "og:description", content: "Maintenance tips, doorstep service guides, and Bangalore car-care advice." },
-      { property: "og:url", content: "/blog" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/blog` },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Ride N Care Blog — Bike & Car Care Tips" },
+      { name: "twitter:description", content: "Maintenance tips, doorstep service guides, and Bangalore car-care advice." },
     ],
-    links: [{ rel: "canonical", href: "/blog" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/blog` }],
     scripts: [
       {
         type: "application/ld+json",
@@ -21,25 +28,37 @@ export const Route = createFileRoute("/blog")({
           "@type": "Blog",
           name: "Ride N Care Blog",
           description: "Bike and car maintenance tips by Ride N Care mechanics.",
-          blogPost: posts.map((p) => ({
+          blogPost: (loaderData?.posts ?? []).map((p) => ({
             "@type": "BlogPosting",
             headline: p.title,
             datePublished: p.date,
             author: { "@type": "Organization", name: "Ride N Care" },
-            url: `/blog/${p.slug}`,
+            url: `${SITE_URL}/blog/${p.slug}`,
           })),
         }),
       },
     ],
   }),
   component: Blog,
+  errorComponent: () => (
+    <div className="mx-auto max-w-5xl px-4 py-24 text-center">
+      <h1 className="text-3xl font-bold">Couldn’t load the blog</h1>
+      <p className="mt-2 text-muted-foreground">Please refresh in a moment.</p>
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="mx-auto max-w-5xl px-4 py-24 text-center">
+      <h1 className="text-3xl font-bold">No posts yet</h1>
+    </div>
+  ),
 });
 
 function Blog() {
+  const { posts } = Route.useLoaderData();
   const [cat, setCat] = useState<Category>("All");
   const filtered = useMemo(
     () => (cat === "All" ? posts : posts.filter((p) => p.category === cat)),
-    [cat],
+    [cat, posts],
   );
   const sitemapUrl = typeof window !== "undefined" ? `${window.location.origin}/sitemap.xml` : "/sitemap.xml";
   const gscUrl = `https://search.google.com/search-console/welcome?utm_source=ridencare`;
@@ -88,6 +107,9 @@ function Blog() {
             </div>
           </Link>
         ))}
+        {filtered.length === 0 && (
+          <p className="text-muted-foreground">No posts in this category yet.</p>
+        )}
       </div>
 
       {/* Newsletter */}
