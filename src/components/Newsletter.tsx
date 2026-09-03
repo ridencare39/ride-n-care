@@ -1,29 +1,27 @@
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { subscribeNewsletter } from "@/lib/newsletter.functions";
+
+const WHATSAPP_NUMBER = "918296950339";
+
+function buildWhatsAppLink(email: string, source: string) {
+  const text = encodeURIComponent(
+    `Hi Ride N Care,\n\nI'd like to join your newsletter.\nEmail: ${email}\nSource: ${source}`
+  );
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+}
 
 export function Newsletter({ compact = false }: { compact?: boolean }) {
   const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const subscribe = useServerFn(subscribeNewsletter);
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     const trimmed = email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed) || trimmed.length > 254) return;
-    setLoading(true);
-    try {
-      await subscribe({ data: { email: trimmed, source: compact ? "footer" : "page" } });
-      setDone(true);
-      setEmail("");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Subscription failed. Try again.");
-    } finally {
-      setLoading(false);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed) || trimmed.length > 254) {
+      setError("Please enter a valid email address.");
+      return;
     }
+    window.location.href = buildWhatsAppLink(trimmed, compact ? "footer" : "page");
   };
 
   if (compact) {
