@@ -18,6 +18,7 @@ const staticEntries: Entry[] = [
   { path: "/faq", priority: "0.7", changefreq: "monthly" },
   { path: "/contact", priority: "0.8", changefreq: "yearly" },
   { path: "/areas", priority: "0.8", changefreq: "monthly" },
+  { path: "/map", priority: "0.7", changefreq: "monthly" },
   ...AREAS.map((a) => ({ path: `/areas/${a.slug}`, priority: "0.7", changefreq: "monthly" })),
 ];
 
