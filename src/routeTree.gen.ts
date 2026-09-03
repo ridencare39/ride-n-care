@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SeoMonitorRouteImport } from './routes/seo-monitor'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as MapRouteImport } from './routes/map'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CarsRouteImport } from './routes/cars'
@@ -48,6 +49,11 @@ const PricingRoute = PricingRouteImport.update({
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/contact'
     | '/faq'
+    | '/map'
     | '/mcp'
     | '/pricing'
     | '/seo-monitor'
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/contact'
     | '/faq'
+    | '/map'
     | '/mcp'
     | '/pricing'
     | '/seo-monitor'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/contact'
     | '/faq'
+    | '/map'
     | '/mcp'
     | '/pricing'
     | '/seo-monitor'
@@ -276,6 +288,7 @@ export interface RootRouteChildren {
   CarsRoute: typeof CarsRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  MapRoute: typeof MapRoute
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
   SeoMonitorRoute: typeof SeoMonitorRoute
@@ -313,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -472,6 +492,7 @@ const rootRouteChildren: RootRouteChildren = {
   CarsRoute: CarsRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  MapRoute: MapRoute,
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
   SeoMonitorRoute: SeoMonitorRoute,
