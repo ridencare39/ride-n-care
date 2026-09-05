@@ -22,12 +22,15 @@ import { Route as BikesRouteImport } from './routes/bikes'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AreasRouteImport } from './routes/areas'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ServiceRouteImport } from './routes/$service'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServiceIndexRouteImport } from './routes/$service.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as ServiceAreaRouteImport } from './routes/$service.$area'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
@@ -96,6 +99,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServiceRoute = ServiceRouteImport.update({
+  id: '/$service',
+  path: '/$service',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
@@ -104,6 +112,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ServiceIndexRoute = ServiceIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ServiceRoute,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
@@ -127,6 +140,11 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ServiceAreaRoute = ServiceAreaRouteImport.update({
+  id: '/$area',
+  path: '/$area',
+  getParentRoute: () => ServiceRoute,
+} as any)
 const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
   id: '/admin/blog',
   path: '/admin/blog',
@@ -141,6 +159,7 @@ const Char91DotmcpChar93InvokeToolToolRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$service': typeof ServiceRouteWithChildren
   '/about': typeof AboutRoute
   '/areas': typeof AreasRouteWithChildren
   '/auth': typeof AuthRoute
@@ -154,10 +173,12 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/$service/': typeof ServiceIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
 }
@@ -176,10 +197,12 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/$service': typeof ServiceIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
 }
@@ -187,6 +210,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/$service': typeof ServiceRouteWithChildren
   '/about': typeof AboutRoute
   '/areas': typeof AreasRouteWithChildren
   '/auth': typeof AuthRoute
@@ -200,10 +224,12 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/$service/': typeof ServiceIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
 }
@@ -211,6 +237,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$service'
     | '/about'
     | '/areas'
     | '/auth'
@@ -224,10 +251,12 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/seo-monitor'
     | '/sitemap.xml'
+    | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
     | '/blog/$slug'
+    | '/$service/'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/blog'
   fileRoutesByTo: FileRoutesByTo
@@ -246,16 +275,19 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/seo-monitor'
     | '/sitemap.xml'
+    | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
     | '/blog/$slug'
+    | '/$service'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/blog'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/$service'
     | '/about'
     | '/areas'
     | '/auth'
@@ -269,10 +301,12 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/seo-monitor'
     | '/sitemap.xml'
+    | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
     | '/blog/$slug'
+    | '/$service/'
     | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/blog'
   fileRoutesById: FileRoutesById
@@ -280,6 +314,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  ServiceRoute: typeof ServiceRouteWithChildren
   AboutRoute: typeof AboutRoute
   AreasRoute: typeof AreasRouteWithChildren
   AuthRoute: typeof AuthRoute
@@ -391,6 +426,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$service': {
+      id: '/$service'
+      path: '/$service'
+      fullPath: '/$service'
+      preLoaderRoute: typeof ServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -404,6 +446,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/$service/': {
+      id: '/$service/'
+      path: '/'
+      fullPath: '/$service/'
+      preLoaderRoute: typeof ServiceIndexRouteImport
+      parentRoute: typeof ServiceRoute
     }
     '/blog/$slug': {
       id: '/blog/$slug'
@@ -433,6 +482,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$service/$area': {
+      id: '/$service/$area'
+      path: '/$area'
+      fullPath: '/$service/$area'
+      preLoaderRoute: typeof ServiceAreaRouteImport
+      parentRoute: typeof ServiceRoute
+    }
     '/_authenticated/admin/blog': {
       id: '/_authenticated/admin/blog'
       path: '/admin/blog'
@@ -461,6 +517,19 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface ServiceRouteChildren {
+  ServiceAreaRoute: typeof ServiceAreaRoute
+  ServiceIndexRoute: typeof ServiceIndexRoute
+}
+
+const ServiceRouteChildren: ServiceRouteChildren = {
+  ServiceAreaRoute: ServiceAreaRoute,
+  ServiceIndexRoute: ServiceIndexRoute,
+}
+
+const ServiceRouteWithChildren =
+  ServiceRoute._addFileChildren(ServiceRouteChildren)
+
 interface AreasRouteChildren {
   AreasSlugRoute: typeof AreasSlugRoute
 }
@@ -484,6 +553,7 @@ const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  ServiceRoute: ServiceRouteWithChildren,
   AboutRoute: AboutRoute,
   AreasRoute: AreasRouteWithChildren,
   AuthRoute: AuthRoute,

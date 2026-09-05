@@ -2,18 +2,20 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import logo from "@/assets/logo.jpg.asset.json";
 
-const links = [
+type NavLink = { to: "/$service"; params: { service: string }; label: string } | { to: string; params?: undefined; label: string };
+
+const links: NavLink[] = [
   { to: "/", label: "Home" },
-  { to: "/bikes", label: "Bikes" },
+  { to: "/$service", params: { service: "bike-service" }, label: "Bike Service" },
+  { to: "/$service", params: { service: "doorstep-bike-service" }, label: "Doorstep" },
+  { to: "/$service", params: { service: "bike-repair" }, label: "Bike Repair" },
   { to: "/cars", label: "Cars" },
   { to: "/pricing", label: "Pricing" },
   { to: "/areas", label: "Areas" },
-  { to: "/map", label: "Map" },
-  { to: "/about", label: "About" },
   { to: "/blog", label: "Blog" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
-] as const;
+];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -30,8 +32,9 @@ export function SiteHeader() {
         <nav className="hidden md:flex items-center gap-6 text-sm">
           {links.map((l) => (
             <Link
-              key={l.to}
-              to={l.to}
+              key={l.label}
+              to={l.to as never}
+              params={l.params as never}
               className="text-muted-foreground hover:text-foreground transition"
               activeProps={{ className: "text-primary font-semibold" }}
               activeOptions={{ exact: l.to === "/" }}
@@ -59,7 +62,7 @@ export function SiteHeader() {
       {open && (
         <nav className="md:hidden border-t border-border bg-background px-4 py-3 flex flex-col gap-3">
           {links.map((l) => (
-            <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="text-sm">
+            <Link key={l.label} to={l.to as never} params={l.params as never} onClick={() => setOpen(false)} className="text-sm">
               {l.label}
             </Link>
           ))}

@@ -18,7 +18,11 @@ export function SiteFooter() {
         <div>
           <h4 className="text-sm font-semibold mb-3">Services</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/bikes">Bike Service</Link></li>
+            <li><Link to="/$service" params={{ service: "bike-service" }}>Bike Service</Link></li>
+            <li><Link to="/$service" params={{ service: "doorstep-bike-service" }}>Doorstep Bike Service</Link></li>
+            <li><Link to="/$service" params={{ service: "bike-repair" }}>Bike Repair</Link></li>
+            <li><Link to="/$service" params={{ service: "scooter-service" }}>Scooter Service</Link></li>
+            <li><Link to="/$service" params={{ service: "emergency-bike-repair" }}>Emergency Repair</Link></li>
             <li><Link to="/cars">Car Service</Link></li>
             <li><Link to="/pricing">Pricing</Link></li>
           </ul>
