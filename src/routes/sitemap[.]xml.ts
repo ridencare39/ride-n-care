@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { dbListPosts } from "@/lib/blog.db";
-import { AREAS } from "@/lib/areas";
+import { AREAS, PRIORITY_AREAS } from "@/lib/areas";
+import { SERVICES, LOCAL_SERVICES } from "@/lib/services";
 import { SITE_URL } from "@/lib/seo";
 
 const BASE_URL = SITE_URL;
@@ -19,6 +20,10 @@ const staticEntries: Entry[] = [
   { path: "/contact", priority: "0.8", changefreq: "yearly" },
   { path: "/areas", priority: "0.8", changefreq: "monthly" },
   { path: "/map", priority: "0.7", changefreq: "monthly" },
+  ...SERVICES.map((s) => ({ path: `/${s.slug}`, priority: "0.9", changefreq: "monthly" })),
+  ...LOCAL_SERVICES.flatMap((s) =>
+    PRIORITY_AREAS.map((a) => ({ path: `/${s.slug}/${a.slug}`, priority: "0.7", changefreq: "monthly" })),
+  ),
   ...AREAS.map((a) => ({ path: `/areas/${a.slug}`, priority: "0.7", changefreq: "monthly" })),
 ];
 
