@@ -30,6 +30,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as ServiceAreaRouteImport } from './routes/$service.$area'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
@@ -139,6 +140,11 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ServiceAreaRoute = ServiceAreaRouteImport.update({
+  id: '/$area',
+  path: '/$area',
+  getParentRoute: () => ServiceRoute,
+} as any)
 const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
   id: '/admin/blog',
   path: '/admin/blog',
@@ -167,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
@@ -216,6 +224,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
@@ -242,6 +251,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/seo-monitor'
     | '/sitemap.xml'
+    | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
@@ -265,6 +275,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/seo-monitor'
     | '/sitemap.xml'
+    | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
@@ -290,6 +301,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/seo-monitor'
     | '/sitemap.xml'
+    | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
@@ -470,6 +482,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$service/$area': {
+      id: '/$service/$area'
+      path: '/$area'
+      fullPath: '/$service/$area'
+      preLoaderRoute: typeof ServiceAreaRouteImport
+      parentRoute: typeof ServiceRoute
+    }
     '/_authenticated/admin/blog': {
       id: '/_authenticated/admin/blog'
       path: '/admin/blog'
@@ -499,10 +518,12 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface ServiceRouteChildren {
+  ServiceAreaRoute: typeof ServiceAreaRoute
   ServiceIndexRoute: typeof ServiceIndexRoute
 }
 
 const ServiceRouteChildren: ServiceRouteChildren = {
+  ServiceAreaRoute: ServiceAreaRoute,
   ServiceIndexRoute: ServiceIndexRoute,
 }
 

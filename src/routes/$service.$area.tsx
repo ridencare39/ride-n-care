@@ -123,7 +123,7 @@ function LocalServicePage() {
       </div>
 
       <div className="mt-8 grid sm:grid-cols-3 gap-4">
-        <Stat v="≤30 min" l="Avg response in {n}".replace("{n}", a.name) />
+        <Stat v="≤30 min" l={`Avg response in ${a.name}`} />
         <Stat v="60–90 min" l="Typical job time" />
         <Stat v="7-day" l="Workmanship guarantee" />
       </div>
