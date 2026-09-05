@@ -4,12 +4,12 @@ import logo from "@/assets/logo.jpg.asset.json";
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/bikes", label: "Bikes" },
+  { to: "/bike-service", label: "Bike Service" },
+  { to: "/doorstep-bike-service", label: "Doorstep" },
+  { to: "/bike-repair", label: "Bike Repair" },
   { to: "/cars", label: "Cars" },
   { to: "/pricing", label: "Pricing" },
   { to: "/areas", label: "Areas" },
-  { to: "/map", label: "Map" },
-  { to: "/about", label: "About" },
   { to: "/blog", label: "Blog" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
