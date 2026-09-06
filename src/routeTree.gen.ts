@@ -14,18 +14,22 @@ import { Route as SeoMonitorRouteImport } from './routes/seo-monitor'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MapRouteImport } from './routes/map'
+import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CarsRouteImport } from './routes/cars'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BikesRouteImport } from './routes/bikes'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AreasRouteImport } from './routes/areas'
+import { Route as AnswersRouteImport } from './routes/answers'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ServiceRouteImport } from './routes/$service'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GuidesIndexRouteImport } from './routes/guides.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as AreasIndexRouteImport } from './routes/areas.index'
 import { Route as ServiceIndexRouteImport } from './routes/$service.index'
+import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -59,6 +63,11 @@ const MapRoute = MapRouteImport.update({
   path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesRoute = GuidesRouteImport.update({
+  id: '/guides',
+  path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
@@ -74,11 +83,6 @@ const CarsRoute = CarsRouteImport.update({
   path: '/cars',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BikesRoute = BikesRouteImport.update({
   id: '/bikes',
   path: '/bikes',
@@ -89,9 +93,9 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AreasRoute = AreasRouteImport.update({
-  id: '/areas',
-  path: '/areas',
+const AnswersRoute = AnswersRouteImport.update({
+  id: '/answers',
+  path: '/answers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -113,20 +117,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GuidesRoute,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AreasIndexRoute = AreasIndexRouteImport.update({
+  id: '/areas/',
+  path: '/areas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServiceIndexRoute = ServiceIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ServiceRoute,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
+const GuidesSlugRoute = GuidesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
-  getParentRoute: () => BlogRoute,
+  getParentRoute: () => GuidesRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AreasSlugRoute = AreasSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => AreasRoute,
+  id: '/areas/$slug',
+  path: '/areas/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
@@ -161,13 +185,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$service': typeof ServiceRouteWithChildren
   '/about': typeof AboutRoute
-  '/areas': typeof AreasRouteWithChildren
+  '/answers': typeof AnswersRoute
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
-  '/blog': typeof BlogRouteWithChildren
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/guides': typeof GuidesRouteWithChildren
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
@@ -178,17 +202,20 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/$service/': typeof ServiceIndexRoute
+  '/areas/': typeof AreasIndexRoute
+  '/blog/': typeof BlogIndexRoute
+  '/guides/': typeof GuidesIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/areas': typeof AreasRouteWithChildren
+  '/answers': typeof AnswersRoute
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
-  '/blog': typeof BlogRouteWithChildren
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -202,7 +229,11 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/$service': typeof ServiceIndexRoute
+  '/areas': typeof AreasIndexRoute
+  '/blog': typeof BlogIndexRoute
+  '/guides': typeof GuidesIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
 }
@@ -212,13 +243,13 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/$service': typeof ServiceRouteWithChildren
   '/about': typeof AboutRoute
-  '/areas': typeof AreasRouteWithChildren
+  '/answers': typeof AnswersRoute
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
-  '/blog': typeof BlogRouteWithChildren
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/guides': typeof GuidesRouteWithChildren
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
@@ -229,7 +260,11 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/$service/': typeof ServiceIndexRoute
+  '/areas/': typeof AreasIndexRoute
+  '/blog/': typeof BlogIndexRoute
+  '/guides/': typeof GuidesIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
 }
@@ -239,13 +274,13 @@ export interface FileRouteTypes {
     | '/'
     | '/$service'
     | '/about'
-    | '/areas'
+    | '/answers'
     | '/auth'
     | '/bikes'
-    | '/blog'
     | '/cars'
     | '/contact'
     | '/faq'
+    | '/guides'
     | '/map'
     | '/mcp'
     | '/pricing'
@@ -256,17 +291,20 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
     | '/blog/$slug'
+    | '/guides/$slug'
     | '/$service/'
+    | '/areas/'
+    | '/blog/'
+    | '/guides/'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/blog'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/areas'
+    | '/answers'
     | '/auth'
     | '/bikes'
-    | '/blog'
     | '/cars'
     | '/contact'
     | '/faq'
@@ -280,7 +318,11 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
     | '/blog/$slug'
+    | '/guides/$slug'
     | '/$service'
+    | '/areas'
+    | '/blog'
+    | '/guides'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/blog'
   id:
@@ -289,13 +331,13 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/$service'
     | '/about'
-    | '/areas'
+    | '/answers'
     | '/auth'
     | '/bikes'
-    | '/blog'
     | '/cars'
     | '/contact'
     | '/faq'
+    | '/guides'
     | '/map'
     | '/mcp'
     | '/pricing'
@@ -306,7 +348,11 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/areas/$slug'
     | '/blog/$slug'
+    | '/guides/$slug'
     | '/$service/'
+    | '/areas/'
+    | '/blog/'
+    | '/guides/'
     | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/blog'
   fileRoutesById: FileRoutesById
@@ -316,13 +362,13 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ServiceRoute: typeof ServiceRouteWithChildren
   AboutRoute: typeof AboutRoute
-  AreasRoute: typeof AreasRouteWithChildren
+  AnswersRoute: typeof AnswersRoute
   AuthRoute: typeof AuthRoute
   BikesRoute: typeof BikesRoute
-  BlogRoute: typeof BlogRouteWithChildren
   CarsRoute: typeof CarsRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  GuidesRoute: typeof GuidesRouteWithChildren
   MapRoute: typeof MapRoute
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
@@ -330,6 +376,10 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  AreasSlugRoute: typeof AreasSlugRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  AreasIndexRoute: typeof AreasIndexRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
@@ -370,6 +420,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides': {
+      id: '/guides'
+      path: '/guides'
+      fullPath: '/guides'
+      preLoaderRoute: typeof GuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/faq': {
       id: '/faq'
       path: '/faq'
@@ -391,13 +448,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CarsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/bikes': {
       id: '/bikes'
       path: '/bikes'
@@ -412,11 +462,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/areas': {
-      id: '/areas'
-      path: '/areas'
-      fullPath: '/areas'
-      preLoaderRoute: typeof AreasRouteImport
+    '/answers': {
+      id: '/answers'
+      path: '/answers'
+      fullPath: '/answers'
+      preLoaderRoute: typeof AnswersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -447,6 +497,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/': {
+      id: '/guides/'
+      path: '/'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
+      parentRoute: typeof GuidesRoute
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/areas/': {
+      id: '/areas/'
+      path: '/areas'
+      fullPath: '/areas/'
+      preLoaderRoute: typeof AreasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$service/': {
       id: '/$service/'
       path: '/'
@@ -454,19 +525,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceIndexRouteImport
       parentRoute: typeof ServiceRoute
     }
+    '/guides/$slug': {
+      id: '/guides/$slug'
+      path: '/$slug'
+      fullPath: '/guides/$slug'
+      preLoaderRoute: typeof GuidesSlugRouteImport
+      parentRoute: typeof GuidesRoute
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
-      path: '/$slug'
+      path: '/blog/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
+      parentRoute: typeof rootRouteImport
     }
     '/areas/$slug': {
       id: '/areas/$slug'
-      path: '/$slug'
+      path: '/areas/$slug'
       fullPath: '/areas/$slug'
       preLoaderRoute: typeof AreasSlugRouteImport
-      parentRoute: typeof AreasRoute
+      parentRoute: typeof rootRouteImport
     }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
@@ -530,38 +608,31 @@ const ServiceRouteChildren: ServiceRouteChildren = {
 const ServiceRouteWithChildren =
   ServiceRoute._addFileChildren(ServiceRouteChildren)
 
-interface AreasRouteChildren {
-  AreasSlugRoute: typeof AreasSlugRoute
+interface GuidesRouteChildren {
+  GuidesSlugRoute: typeof GuidesSlugRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
 }
 
-const AreasRouteChildren: AreasRouteChildren = {
-  AreasSlugRoute: AreasSlugRoute,
+const GuidesRouteChildren: GuidesRouteChildren = {
+  GuidesSlugRoute: GuidesSlugRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
 }
 
-const AreasRouteWithChildren = AreasRoute._addFileChildren(AreasRouteChildren)
-
-interface BlogRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+const GuidesRouteWithChildren =
+  GuidesRoute._addFileChildren(GuidesRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ServiceRoute: ServiceRouteWithChildren,
   AboutRoute: AboutRoute,
-  AreasRoute: AreasRouteWithChildren,
+  AnswersRoute: AnswersRoute,
   AuthRoute: AuthRoute,
   BikesRoute: BikesRoute,
-  BlogRoute: BlogRouteWithChildren,
   CarsRoute: CarsRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  GuidesRoute: GuidesRouteWithChildren,
   MapRoute: MapRoute,
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
@@ -570,6 +641,10 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  AreasSlugRoute: AreasSlugRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  AreasIndexRoute: AreasIndexRoute,
+  BlogIndexRoute: BlogIndexRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport

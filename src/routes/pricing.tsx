@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { bikeTiers, carTiers } from "@/lib/pricing";
+import { SITE_URL } from "@/lib/seo";
 
 
 export const Route = createFileRoute("/pricing")({
@@ -9,9 +10,9 @@ export const Route = createFileRoute("/pricing")({
       { name: "description", content: "Honest, upfront pricing for bike & car servicing. No hidden charges. Pay only after the job is done." },
       { property: "og:title", content: "Transparent Pricing — Ride N Care" },
       { property: "og:description", content: "Honest, upfront pricing for bike & car servicing." },
-      { property: "og:url", content: "/pricing" },
+      { property: "og:url", content: `${SITE_URL}/pricing` },
     ],
-    links: [{ rel: "canonical", href: "/pricing" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/pricing` }],
   }),
   component: Pricing,
 });

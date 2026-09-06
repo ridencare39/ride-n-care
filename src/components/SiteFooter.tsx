@@ -5,7 +5,7 @@ import { Newsletter } from "@/components/Newsletter";
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-card mt-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 grid gap-8 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
         <div>
           <div className="flex items-center gap-2">
             <img src={logo.url} alt="Ride N Care" width={36} height={36} className="rounded bg-plate p-0.5" />
@@ -34,6 +34,17 @@ export function SiteFooter() {
             <li><Link to="/blog">Blog</Link></li>
             <li><Link to="/faq">FAQ</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-sm font-semibold mb-3">Learn</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li><Link to="/answers">Answers</Link></li>
+            <li><Link to="/guides">Bike guides</Link></li>
+            <li><Link to="/guides/$slug" params={{ slug: "bike-service-guide-bangalore" }}>Bike service guide</Link></li>
+            <li><Link to="/guides/$slug" params={{ slug: "complete-bike-maintenance-guide" }}>Maintenance guide</Link></li>
+            <li><Link to="/guides/$slug" params={{ slug: "bike-breakdown-troubleshooting-guide" }}>Breakdown help</Link></li>
+            <li><Link to="/areas">Service areas</Link></li>
           </ul>
         </div>
         <div>

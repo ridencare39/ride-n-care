@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
 import { AREAS } from "@/lib/areas";
 
-export const Route = createFileRoute("/areas")({
+export const Route = createFileRoute("/areas/")({
   head: () => ({
     meta: [
       { title: "Service Areas in Bangalore | Ride N Care" },

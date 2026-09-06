@@ -5,7 +5,7 @@ import { listPublishedPosts } from "@/lib/blog.functions";
 import { Newsletter } from "@/components/Newsletter";
 import { SITE_URL } from "@/lib/seo";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   loader: async () => await listPublishedPosts(),
   head: ({ loaderData }) => ({
     meta: [
