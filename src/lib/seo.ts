@@ -40,4 +40,44 @@ export const LOCAL_BUSINESS_JSONLD = {
     },
   ],
   sameAs: ["https://wa.me/918296950339"],
+  paymentAccepted: ["Cash", "UPI", "Credit Card", "Debit Card"],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-82969-50339",
+      contactType: "customer service",
+      areaServed: "IN",
+      availableLanguage: ["English", "Hindi", "Kannada"],
+    },
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-80-6940-9289",
+      contactType: "booking",
+      areaServed: "IN",
+      availableLanguage: ["English", "Hindi", "Kannada"],
+    },
+  ],
+};
+
+export const ORGANIZATION_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
+  name: "Ride N Care",
+  url: SITE_URL,
+  logo: `${SITE_URL}/__l5e/assets-v1/760c4f79-dc2d-4a56-a959-0c73577c8f73/ride-n-care-logo.jpg`,
+  email: "ridencareinfo@gmail.com",
+  telephone: ["+91-82969-50339", "+91-80-6940-9289"],
+  sameAs: ["https://wa.me/918296950339"],
+  contactPoint: LOCAL_BUSINESS_JSONLD.contactPoint,
+};
+
+export const WEBSITE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: "Ride N Care",
+  publisher: { "@id": `${SITE_URL}/#organization` },
+  inLanguage: "en-IN",
 };
