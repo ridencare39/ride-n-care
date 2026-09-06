@@ -17,6 +17,9 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { FloatingActions } from "@/components/FloatingActions";
 import { LOCAL_BUSINESS_JSONLD, ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "@/lib/seo";
 
+const GA_ID = import.meta.env["VITE_GA_MEASUREMENT_ID"] as string | undefined;
+const GTM_ID = import.meta.env["VITE_GTM_ID"] as string | undefined;
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
