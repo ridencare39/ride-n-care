@@ -43,8 +43,6 @@ export const Route = createFileRoute("/")({
             ...LOCAL_BUSINESS_JSONLD.areaServed,
             ...AREAS.map((a) => ({ "@type": "Place", name: `${a.name}, Bangalore`, ...(a.pincode ? { address: { "@type": "PostalAddress", postalCode: a.pincode, addressLocality: "Bangalore", addressCountry: "IN" } } : {}) })),
           ],
-          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", reviewCount: "1200" },
-          review: REVIEW_JSONLD,
         }),
       },
       {
