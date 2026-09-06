@@ -135,6 +135,32 @@ function Home() {
         </p>
       </section>
 
+      {/* Bike services — internal links */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-6">
+        <SectionHeading eyebrow="Bike services" title="Pick the service your bike needs" />
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {SERVICES.map((s) => (
+            <Link
+              key={s.slug}
+              to="/$service"
+              params={{ service: s.slug }}
+              className="rounded-2xl border border-border bg-card p-5 hover:border-primary/50 transition"
+            >
+              <h3 className="font-semibold">{s.name}</h3>
+              <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{s.intro}</p>
+              <span className="mt-3 inline-block text-sm text-primary font-semibold">
+                {s.priceFrom ? `From ₹${s.priceFrom} →` : "Learn more →"}
+              </span>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href="tel:08296950339" className="rounded-full border border-border px-5 py-2.5 font-semibold text-sm hover:bg-card">Call 08296950339</a>
+          <a href="tel:08069409289" className="rounded-full border border-border px-5 py-2.5 font-semibold text-sm hover:bg-card">Call 08069409289</a>
+          <a href="https://wa.me/918296950339" className="rounded-full bg-grad-primary px-5 py-2.5 font-semibold text-sm text-primary-foreground shadow-glow">WhatsApp us</a>
+        </div>
+      </section>
+
       {/* Areas We Serve */}
       <AreasMarquee />
 
