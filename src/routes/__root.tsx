@@ -15,7 +15,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/sonner";
 import { SiteFooter } from "@/components/SiteFooter";
 import { FloatingActions } from "@/components/FloatingActions";
-import { LOCAL_BUSINESS_JSONLD } from "@/lib/seo";
+import { LOCAL_BUSINESS_JSONLD, ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
