@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getService, type ServiceDef } from "@/lib/services";
 import { AREAS, PRIORITY_AREAS } from "@/lib/areas";
 import { OG_IMAGE, SITE_URL } from "@/lib/seo";
