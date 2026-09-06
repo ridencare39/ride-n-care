@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-6">
         <div>
           <div className="flex items-center gap-2">
-            <img src={logo.url} alt="Ride N Care" width={36} height={36} className="rounded bg-white p-0.5" />
+            <img src={logo.url} alt="Ride N Care" width={36} height={36} className="rounded bg-plate p-0.5" />
             <h3 className="font-display font-bold text-lg">Ride N <span className="text-primary">Care</span></h3>
           </div>
           <p className="mt-2 text-sm text-muted-foreground">

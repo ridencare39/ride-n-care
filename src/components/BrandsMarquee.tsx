@@ -48,7 +48,7 @@ export function BrandsMarquee() {
           {loop.map((b, i) => (
             <div
               key={`${b.name}-${b.type}-${i}`}
-              className="shrink-0 flex items-center gap-3 rounded-2xl border border-border bg-white px-5 py-3 min-w-[200px]"
+              className="shrink-0 flex items-center gap-3 rounded-2xl border border-border bg-plate px-5 py-3 min-w-[200px]"
               aria-label={`${b.name} ${b.type} service`}
             >
               <img

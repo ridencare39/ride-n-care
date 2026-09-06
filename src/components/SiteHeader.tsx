@@ -23,7 +23,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo.url} alt="Ride N Care logo" width={40} height={40} className="rounded bg-white p-0.5" />
+          <img src={logo.url} alt="Ride N Care logo" width={40} height={40} className="rounded bg-plate p-0.5" />
           <span className="font-display font-bold text-lg tracking-tight leading-none flex flex-col">
             <span>Ride N <span className="text-primary">Care</span></span>
             <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-medium">Care in every mile</span>
