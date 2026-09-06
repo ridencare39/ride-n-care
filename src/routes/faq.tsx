@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
+import { SITE_URL } from "@/lib/seo";
 
 const SECTIONS: { id: string; title: string; faqs: [string, string][] }[] = [
   {
@@ -63,9 +64,9 @@ export const Route = createFileRoute("/faq")({
       { name: "description", content: "Answers about doorstep bike & car service: timing, parts, payments, pickup & drop, warranty and more." },
       { property: "og:title", content: "FAQ — Ride N Care" },
       { property: "og:description", content: "Common questions about Ride N Care doorstep service." },
-      { property: "og:url", content: "/faq" },
+      { property: "og:url", content: `${SITE_URL}/faq` },
     ],
-    links: [{ rel: "canonical", href: "/faq" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/faq` }],
     scripts: [
       {
         type: "application/ld+json",

@@ -4,6 +4,7 @@ import { dbListPosts } from "@/lib/blog.db";
 import { AREAS, PRIORITY_AREAS } from "@/lib/areas";
 import { SERVICES, LOCAL_SERVICES } from "@/lib/services";
 import { SITE_URL } from "@/lib/seo";
+import { GUIDES } from "@/lib/guides";
 
 const BASE_URL = SITE_URL;
 
@@ -20,6 +21,14 @@ const staticEntries: Entry[] = [
   { path: "/contact", priority: "0.8", changefreq: "yearly" },
   { path: "/areas", priority: "0.8", changefreq: "monthly" },
   { path: "/map", priority: "0.7", changefreq: "monthly" },
+  { path: "/answers", priority: "0.9", changefreq: "monthly" },
+  { path: "/guides", priority: "0.8", changefreq: "monthly" },
+  ...GUIDES.map((g) => ({
+    path: `/guides/${g.slug}`,
+    priority: "0.7",
+    changefreq: "monthly",
+    lastmod: g.published,
+  })),
   ...SERVICES.map((s) => ({ path: `/${s.slug}`, priority: "0.9", changefreq: "monthly" })),
   ...LOCAL_SERVICES.flatMap((s) =>
     PRIORITY_AREAS.map((a) => ({ path: `/${s.slug}/${a.slug}`, priority: "0.7", changefreq: "monthly" })),

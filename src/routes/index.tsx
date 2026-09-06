@@ -9,6 +9,9 @@ import { StatsRow } from "@/components/StatsRow";
 import { HeroBackground, HeroCardImage } from "@/components/HeroBackground";
 import { Testimonials } from "@/components/Testimonials";
 import { AreasSection } from "@/components/AreasSection";
+import { AnswerBlocks } from "@/components/AnswerBlocks";
+import { ANSWERS, BRAND, ENTITY_SUMMARY } from "@/lib/answers";
+import { GUIDES } from "@/lib/guides";
 import { AREAS } from "@/lib/areas";
 import { SERVICES } from "@/lib/services";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
@@ -28,7 +31,7 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Doorstep bike & car service in Bangalore. Certified mechanics, genuine parts, upfront pricing and free pickup & drop across 50+ localities." },
       { property: "og:title", content: "Ride N Care — Doorstep Bike & Car Service" },
       { property: "og:description", content: "Bangalore's trusted doorstep bike and car service — genuine parts, transparent pricing, certified mechanics at your home." },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:image", content: OG_IMAGE },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -162,6 +165,20 @@ function Home() {
         </div>
       </section>
 
+      {/* Answer-first entity summary for search & AI assistants */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-16">
+        <SectionHeading eyebrow="About the business" title="Who is Ride N Care?" />
+        <p className="mt-6 text-muted-foreground leading-relaxed">{ENTITY_SUMMARY}</p>
+        <p className="mt-4 text-sm text-muted-foreground">
+          Reach us on <a href={`tel:${BRAND.phonePrimary}`} className="text-primary hover:underline">{BRAND.phonePrimary}</a> or{" "}
+          <a href={`tel:${BRAND.phoneSecondary}`} className="text-primary hover:underline">{BRAND.phoneSecondary}</a>, open {BRAND.hours} in {BRAND.city}, {BRAND.region}.
+        </p>
+        <AnswerBlocks items={ANSWERS.slice(0, 7)} headingLevel={3} />
+        <div className="mt-6">
+          <Link to="/answers" className="text-primary font-semibold hover:underline">See all answers about Ride N Care →</Link>
+        </div>
+      </section>
+
       {/* Areas We Serve */}
       <AreasMarquee />
 
@@ -258,6 +275,28 @@ function Home() {
         </div>
         <div className="mt-6 text-center">
           <Link to="/faq" className="text-primary font-semibold hover:underline">Read all FAQs →</Link>
+        </div>
+      </section>
+
+      {/* Guides */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+        <SectionHeading eyebrow="Guides" title="Bike maintenance knowledge, free to read" />
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {GUIDES.slice(0, 6).map((g) => (
+            <Link
+              key={g.slug}
+              to="/guides/$slug"
+              params={{ slug: g.slug }}
+              className="rounded-2xl border border-border bg-card p-6 hover:border-primary/60 transition"
+            >
+              <h3 className="font-semibold">{g.h1}</h3>
+              <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{g.summary}</p>
+              <span className="mt-3 inline-block text-sm text-primary font-semibold">Read · {g.readMinutes} min →</span>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-6 text-center">
+          <Link to="/guides" className="text-primary font-semibold hover:underline">All bike guides →</Link>
         </div>
       </section>
 

@@ -1,21 +1,58 @@
 # Ride N Care
 
-> Doorstep bike and car service in Bangalore. Care in every mile.
+> Care in Every Mile — doorstep bike service and bike repair in Bangalore, Karnataka, India.
 
-Ride N Care is a doorstep two-wheeler and four-wheeler repair service based in Bangalore, Karnataka, India. Certified mechanics arrive at the customer's home with genuine parts, diagnostic tools, and transparent pricing. Contact: 080 6940 9289 / WhatsApp +91 82969 50339 / ridencareinfo@gmail.com.
+Ride N Care is a doorstep two-wheeler service and repair provider in Bangalore, Karnataka, India. Certified mechanics travel to the customer's home or office to service motorcycles, scooters and electric two-wheelers using OEM-grade parts, with the price agreed in writing before work starts. Car service is also offered.
+
+- Business name: Ride N Care
+- Tagline: Care in Every Mile
+- Website: https://ride-n-care.lovable.app
+- Phone: 08296950339 / 08069409289 (WhatsApp: +91 82969 50339)
+- Email: ridencareinfo@gmail.com
+- Location: Bangalore, Karnataka, India
+- Hours: 8:00 AM – 9:00 PM, all seven days
+- Payments: UPI, cards, net banking, cash. Digital invoice after every job.
+- Guarantee: 7-day workmanship guarantee on work performed.
+
+## What Ride N Care does
+
+Bike service Bangalore · Bike repair Bangalore · Doorstep bike service Bangalore · Two wheeler service Bangalore · Motorcycle repair Bangalore · Scooter repair Bangalore · Emergency bike repair and breakdown assistance.
+
+## Key answers
+
+- Does Ride N Care provide doorstep bike service? Yes — a mechanic comes to your address; a periodic service usually takes 60–90 minutes.
+- How do I book? Call or WhatsApp 08296950339 / 08069409289, or use the booking form at /contact. A written quote is shared before the visit.
+- How fast is a visit? Slots booked before 4:00 PM are usually served the same day; emergency calls are attended within hours in core areas.
+- What does a service include? Engine oil, oil and air filter, spark plug, brakes, chain, clutch and throttle play, battery check, tyres, lights, wash and a 25-point inspection report.
+- Price? Periodic bike service starts at ₹499 depending on engine capacity; parts are quoted separately.
+
+## Service areas in Bangalore
+
+HSR Layout, Koramangala, Indiranagar, Domlur, Ejipura, BTM Layout, Madiwala, Bommanahalli, Kudlu Gate, Singasandra, Parappana Agrahara, Electronic City, Marathahalli, Bellandur, HAL, Mahadevapura, KR Puram, Whitefield, Brookefield, Varthur, Gunjur, Harlur, Sarjapur Road, Kasavanahalli, Choodasandra, Panathur Road, Kadubeesanahalli, Banashankari, Jayanagar, JP Nagar and nearby localities.
 
 ## Pages
 
-- [Home](/): Overview of doorstep bike and car service, packages and booking
-- [Bike Service](/bikes): Bike service packages by CC tier and supported brands
-- [Car Service](/cars): Car service categories including AC, brakes, battery, denting
-- [Pricing](/pricing): Transparent flat-rate pricing for bike and car packages
-- [About](/about): Company background and service promise
-- [FAQ](/faq): Common questions about doorstep service, parts, payments
-- [Contact](/contact): Booking form and contact details
+- [Home](/): Doorstep bike service and repair overview, services, areas, booking
+- [Answers](/answers): Direct answers about the business, services, areas, brands, booking and pricing
+- [Guides](/guides): Original two-wheeler maintenance and troubleshooting reference guides
+- [Bike Service](/bike-service): Periodic bike service in Bangalore
+- [Doorstep Bike Service](/doorstep-bike-service): How doorstep service works and what it covers
+- [Bike Repair](/bike-repair): Complaint-based repair at your address
+- [Emergency Bike Repair](/emergency-bike-repair): Breakdown assistance in Bangalore
+- [Scooter Service](/scooter-service): Automatic scooter and EV service
+- [Pricing](/pricing): Service tiers and starting prices
+- [Service Areas](/areas): Bangalore localities with pincodes
+- [FAQ](/faq): Questions about service, parts, payments, warranty
+- [About](/about): Business background
+- [Contact](/contact): Booking form and phone numbers
+- [Blog](/blog): Bike and car care articles
 
-## Blog
+## Guides
 
-- [Bike Service Checklist Every Bangalore Rider Should Follow](/blog/bike-service-checklist-bangalore)
-- [Why Your Car AC Stops Cooling in Bangalore (and How to Fix It)](/blog/car-ac-not-cooling-bangalore)
-- [Doorstep Service vs Traditional Garage: Which Is Better in 2026?](/blog/doorstep-vs-garage-service)
+- [Bike Service Guide for Bangalore](/guides/bike-service-guide-bangalore)
+- [Complete Bike Maintenance Guide](/guides/complete-bike-maintenance-guide)
+- [Common Bike Problems and Solutions](/guides/common-bike-problems-and-solutions)
+- [When Should You Service Your Bike?](/guides/when-to-service-your-bike)
+- [Doorstep Bike Service Guide](/guides/doorstep-bike-service-guide)
+- [Motorcycle vs Scooter Maintenance Guide](/guides/motorcycle-vs-scooter-maintenance)
+- [Bike Breakdown Troubleshooting Guide](/guides/bike-breakdown-troubleshooting-guide)

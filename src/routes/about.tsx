@@ -9,7 +9,7 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "Bangalore's trusted doorstep mechanic service — 150+ certified pros, 12,000+ happy riders, genuine parts and upfront pricing across 50+ localities." },
       { property: "og:title", content: "About Ride N Care — Care in every mile" },
       { property: "og:description", content: "Bangalore's trusted doorstep bike & car service. Certified mechanics, OEM parts, transparent pricing." },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: `${SITE_URL}/about` },
       { property: "og:image", content: OG_IMAGE_ABOUT },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },

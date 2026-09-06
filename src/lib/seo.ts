@@ -40,7 +40,19 @@ export const LOCAL_BUSINESS_JSONLD = {
     },
   ],
   sameAs: ["https://wa.me/918296950339"],
-  paymentAccepted: ["Cash", "UPI", "Credit Card", "Debit Card"],
+  paymentAccepted: ["Cash", "UPI", "Credit Card", "Debit Card", "Net Banking"],
+  currenciesAccepted: "INR",
+  knowsAbout: [
+    "Bike service Bangalore",
+    "Bike repair Bangalore",
+    "Doorstep bike service Bangalore",
+    "Two wheeler service Bangalore",
+    "Motorcycle repair Bangalore",
+    "Scooter repair Bangalore",
+    "Emergency bike breakdown assistance Bangalore",
+  ],
+  knowsLanguage: ["en", "hi", "kn"],
+  subjectOf: { "@type": "WebPage", "@id": `${SITE_URL}/answers` },
   contactPoint: [
     {
       "@type": "ContactPoint",
@@ -81,3 +93,30 @@ export const WEBSITE_JSONLD = {
   publisher: { "@id": `${SITE_URL}/#organization` },
   inLanguage: "en-IN",
 };
+/** FAQPage JSON-LD from [question, answer] pairs. */
+export function faqPageJsonLd(faqs: [string, string][], id?: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    ...(id ? { "@id": id } : {}),
+    mainEntity: faqs.map(([q, a]) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
+}
+
+/** BreadcrumbList JSON-LD from [name, url] pairs. */
+export function breadcrumbJsonLd(items: [string, string][]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map(([name, item], i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name,
+      item,
+    })),
+  };
+}
