@@ -7,9 +7,10 @@ import { Newsletter } from "@/components/Newsletter";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
 import { StatsRow } from "@/components/StatsRow";
 import { HeroBackground, HeroCardImage } from "@/components/HeroBackground";
-import { Testimonials, REVIEW_JSONLD } from "@/components/Testimonials";
+import { Testimonials } from "@/components/Testimonials";
 import { AreasSection } from "@/components/AreasSection";
 import { AREAS } from "@/lib/areas";
+import { SERVICES } from "@/lib/services";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const HOME_FAQS: [string, string][] = [
@@ -43,8 +44,6 @@ export const Route = createFileRoute("/")({
             ...LOCAL_BUSINESS_JSONLD.areaServed,
             ...AREAS.map((a) => ({ "@type": "Place", name: `${a.name}, Bangalore`, ...(a.pincode ? { address: { "@type": "PostalAddress", postalCode: a.pincode, addressLocality: "Bangalore", addressCountry: "IN" } } : {}) })),
           ],
-          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", reviewCount: "1200" },
-          review: REVIEW_JSONLD,
         }),
       },
       {
@@ -96,8 +95,8 @@ function Home() {
             <span className="inline-flex items-center rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary uppercase tracking-wider">
               ⭐ Bangalore's Trusted Doorstep Garage
             </span>
-            <h1 className="mt-6 text-5xl md:text-7xl font-bold leading-[1.05]">
-              Doorstep bike & car service, <span className="text-primary">delivered to your gate.</span>
+            <h1 className="mt-6 text-4xl md:text-6xl font-bold leading-[1.05]">
+              Trusted Bike Service & <span className="text-primary">Doorstep Bike Repair in Bangalore</span>
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-lg">
               From Whitefield to Kengeri — book a certified mechanic in 60 seconds. We service every two‑wheeler and four‑wheeler with OEM parts, live updates and a printed warranty. <span className="text-foreground font-medium">Care in every mile.</span>
@@ -135,6 +134,32 @@ function Home() {
         <p className="mt-4 text-muted-foreground leading-relaxed">
           Every service is performed by a background-verified, trained mechanic, uses genuine OEM-grade spares and ends with a digital invoice plus a 7-day workmanship guarantee. No upselling. No surprise bills. Just honest, on-time, doorstep care for your ride.
         </p>
+      </section>
+
+      {/* Bike services — internal links */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-6">
+        <SectionHeading eyebrow="Bike services" title="Pick the service your bike needs" />
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {SERVICES.map((s) => (
+            <Link
+              key={s.slug}
+              to="/$service"
+              params={{ service: s.slug }}
+              className="rounded-2xl border border-border bg-card p-5 hover:border-primary/50 transition"
+            >
+              <h3 className="font-semibold">{s.name}</h3>
+              <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{s.intro}</p>
+              <span className="mt-3 inline-block text-sm text-primary font-semibold">
+                {s.priceFrom ? `From ₹${s.priceFrom} →` : "Learn more →"}
+              </span>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href="tel:08296950339" className="rounded-full border border-border px-5 py-2.5 font-semibold text-sm hover:bg-card">Call 08296950339</a>
+          <a href="tel:08069409289" className="rounded-full border border-border px-5 py-2.5 font-semibold text-sm hover:bg-card">Call 08069409289</a>
+          <a href="https://wa.me/918296950339" className="rounded-full bg-grad-primary px-5 py-2.5 font-semibold text-sm text-primary-foreground shadow-glow">WhatsApp us</a>
+        </div>
       </section>
 
       {/* Areas We Serve */}

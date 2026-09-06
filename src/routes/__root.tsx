@@ -15,7 +15,10 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/sonner";
 import { SiteFooter } from "@/components/SiteFooter";
 import { FloatingActions } from "@/components/FloatingActions";
-import { LOCAL_BUSINESS_JSONLD } from "@/lib/seo";
+import { LOCAL_BUSINESS_JSONLD, ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "@/lib/seo";
+
+const GA_ID = import.meta.env["VITE_GA_MEASUREMENT_ID"] as string | undefined;
+const GTM_ID = import.meta.env["VITE_GTM_ID"] as string | undefined;
 
 function NotFoundComponent() {
   return (
@@ -123,6 +126,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         type: "application/ld+json",
         children: JSON.stringify(LOCAL_BUSINESS_JSONLD),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(ORGANIZATION_JSONLD),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(WEBSITE_JSONLD),
+      },
+      // Analytics: set VITE_GA_MEASUREMENT_ID / VITE_GTM_ID to activate.
+      ...(GA_ID
+        ? [
+            { src: `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`, async: true },
+            {
+              children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`,
+            },
+          ]
+        : []),
+      ...(GTM_ID
+        ? [
+            {
+              children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`,
+            },
+          ]
+        : []),
     ],
   }),
   shellComponent: RootShell,
