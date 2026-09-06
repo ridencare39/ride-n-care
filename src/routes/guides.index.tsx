@@ -8,7 +8,7 @@ const URL = `${SITE_URL}/guides`;
 export const Route = createFileRoute("/guides/")({
   head: () => ({
     meta: [
-      { title: "Bike Maintenance & Service Guides for Bangalore Riders | Ride N Care" },
+      { title: "Bike Maintenance Guides for Bangalore | Ride N Care" },
       {
         name: "description",
         content:

@@ -11,7 +11,7 @@ const URL = `${SITE_URL}/answers`;
 export const Route = createFileRoute("/answers")({
   head: () => ({
     meta: [
-      { title: "Ride N Care Answers — Bike Service & Repair in Bangalore, Explained" },
+      { title: "Bike Service in Bangalore — Answers | Ride N Care" },
       {
         name: "description",
         content:
