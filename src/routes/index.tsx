@@ -7,7 +7,7 @@ import { Newsletter } from "@/components/Newsletter";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
 import { StatsRow } from "@/components/StatsRow";
 import { HeroBackground, HeroCardImage } from "@/components/HeroBackground";
-import { Testimonials, REVIEW_JSONLD } from "@/components/Testimonials";
+import { Testimonials } from "@/components/Testimonials";
 import { AreasSection } from "@/components/AreasSection";
 import { AREAS } from "@/lib/areas";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
