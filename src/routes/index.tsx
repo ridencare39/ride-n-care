@@ -10,6 +10,7 @@ import { HeroBackground, HeroCardImage } from "@/components/HeroBackground";
 import { Testimonials } from "@/components/Testimonials";
 import { AreasSection } from "@/components/AreasSection";
 import { AREAS } from "@/lib/areas";
+import { SERVICES } from "@/lib/services";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const HOME_FAQS: [string, string][] = [
