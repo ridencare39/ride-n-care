@@ -101,7 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: "Care in every mile. Expert at-home bike and car repair in Bangalore. Genuine parts, transparent pricing, doorstep pickup & drop." },
     ],
     links: [
-      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", type: "image/png", href: "/favicon.png", sizes: "64x64" },
       { rel: "apple-touch-icon", href: "/favicon.png" },
       {
         rel: "stylesheet",
