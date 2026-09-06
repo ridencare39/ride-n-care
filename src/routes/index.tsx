@@ -94,8 +94,8 @@ function Home() {
             <span className="inline-flex items-center rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary uppercase tracking-wider">
               ⭐ Bangalore's Trusted Doorstep Garage
             </span>
-            <h1 className="mt-6 text-5xl md:text-7xl font-bold leading-[1.05]">
-              Doorstep bike & car service, <span className="text-primary">delivered to your gate.</span>
+            <h1 className="mt-6 text-4xl md:text-6xl font-bold leading-[1.05]">
+              Trusted Bike Service & <span className="text-primary">Doorstep Bike Repair in Bangalore</span>
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-lg">
               From Whitefield to Kengeri — book a certified mechanic in 60 seconds. We service every two‑wheeler and four‑wheeler with OEM parts, live updates and a printed warranty. <span className="text-foreground font-medium">Care in every mile.</span>
