@@ -38,7 +38,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "bike-service",
     name: "Bike Service",
     h1: "Bike Service in Bangalore — At Your Doorstep",
-    title: "Bike Service in Bangalore | Doorstep Two-Wheeler Service | Ride N Care",
+    title: "Bike Service in Bangalore | Ride N Care",
     description:
       "Book bike service in Bangalore at your doorstep. Certified mechanics, OEM-grade parts, upfront pricing and a 7-day workmanship guarantee. Call 08296950339.",
     intro:
@@ -82,7 +82,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "doorstep-bike-service",
     name: "Doorstep Bike Service",
     h1: "Doorstep Bike Service in Bangalore",
-    title: "Doorstep Bike Service in Bangalore | At-Home Two-Wheeler Service",
+    title: "Doorstep Bike Service in Bangalore | Ride N Care",
     description:
       "Doorstep bike service in Bangalore — mechanic at your home or office, OEM parts, live updates and cashless payment. Same-day slots. Call 08296950339.",
     intro:
@@ -121,7 +121,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "bike-repair",
     name: "Bike Repair",
     h1: "Bike Repair in Bangalore — Diagnose, Quote, Fix",
-    title: "Bike Repair in Bangalore | Two-Wheeler Repair at Home | Ride N Care",
+    title: "Bike Repair in Bangalore | Ride N Care",
     description:
       "Bike repair in Bangalore for engine, brake, clutch, electrical and starting problems. Free diagnosis, written quote, OEM parts. Call 08296950339.",
     intro:
@@ -160,7 +160,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "doorstep-bike-repair",
     name: "Doorstep Bike Repair",
     h1: "Doorstep Bike Repair in Bangalore",
-    title: "Doorstep Bike Repair in Bangalore | Mechanic at Home | Ride N Care",
+    title: "Doorstep Bike Repair in Bangalore | Ride N Care",
     description:
       "Doorstep bike repair in Bangalore — a mechanic reaches your home or office, diagnoses free and repairs on the spot. Same-day slots. Call 08296950339.",
     intro:
@@ -199,7 +199,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "periodic-bike-service",
     name: "Periodic Bike Service",
     h1: "Periodic Bike Service in Bangalore",
-    title: "Periodic Bike Service in Bangalore | Scheduled Maintenance | Ride N Care",
+    title: "Periodic Bike Service in Bangalore | Ride N Care",
     description:
       "Scheduled periodic bike service in Bangalore at your doorstep — oil, filters, brakes, chain and a 25-point inspection with service reminders.",
     intro:
@@ -237,7 +237,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "motorcycle-service",
     name: "Motorcycle Service",
     h1: "Motorcycle Service in Bangalore — Commuter to Superbike",
-    title: "Motorcycle Service in Bangalore | Royal Enfield, KTM, Superbikes | Ride N Care",
+    title: "Motorcycle Service in Bangalore | Ride N Care",
     description:
       "Motorcycle service in Bangalore for Royal Enfield, KTM, Yamaha, Kawasaki, Triumph and more. Doorstep service by trained mechanics with OEM-grade parts.",
     intro:
@@ -275,7 +275,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "scooter-service",
     name: "Scooter Service",
     h1: "Scooter Service in Bangalore at Your Doorstep",
-    title: "Scooter Service in Bangalore | Activa, Jupiter, Access Service at Home",
+    title: "Scooter Service in Bangalore | Ride N Care",
     description:
       "Doorstep scooter service in Bangalore for Honda Activa, TVS Jupiter, Suzuki Access, Ather and Ola. CVT care, brakes and battery. Call 08296950339.",
     intro:
@@ -314,7 +314,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "emergency-bike-repair",
     name: "Emergency Bike Repair",
     h1: "Emergency Bike Repair in Bangalore",
-    title: "Emergency Bike Repair in Bangalore | Fast Roadside Help | Ride N Care",
+    title: "Emergency Bike Repair in Bangalore | Ride N Care",
     description:
       "Emergency bike repair in Bangalore — roadside mechanic for dead batteries, punctures and no-start problems. Fast response, 8 AM to 9 PM. Call 08296950339.",
     intro:
@@ -356,7 +356,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "bike-breakdown-assistance",
     name: "Bike Breakdown Assistance",
     h1: "Bike Breakdown Assistance in Bangalore",
-    title: "Bike Breakdown Assistance Bangalore | Roadside Rescue | Ride N Care",
+    title: "Bike Breakdown Assistance in Bangalore | Ride N Care",
     description:
       "Bike breakdown assistance across Bangalore — roadside diagnosis, on-spot repair and bike recovery to our workshop. Call 08296950339 or WhatsApp us.",
     intro:
@@ -398,7 +398,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "engine-repair",
     name: "Bike Engine Repair",
     h1: "Bike Engine Repair in Bangalore",
-    title: "Bike Engine Repair in Bangalore | Overhaul & Rebuild | Ride N Care",
+    title: "Bike Engine Repair in Bangalore | Ride N Care",
     description:
       "Bike engine repair in Bangalore — noise, smoke, overheating and power-loss diagnosis, top-end and full overhaul with OEM parts and written estimates.",
     intro:
@@ -435,7 +435,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "brake-service",
     name: "Bike Brake Service",
     h1: "Bike Brake Service & Repair in Bangalore",
-    title: "Bike Brake Service in Bangalore | Pads, Discs, Bleeding | Ride N Care",
+    title: "Bike Brake Service in Bangalore | Ride N Care",
     description:
       "Bike brake service in Bangalore at your doorstep — pad and shoe replacement, disc check, brake bleeding and squeal fixes with OEM parts.",
     intro:
@@ -472,7 +472,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "clutch-repair",
     name: "Bike Clutch Repair",
     h1: "Bike Clutch Repair in Bangalore",
-    title: "Bike Clutch Repair in Bangalore | Plates, Cable, Adjustment | Ride N Care",
+    title: "Bike Clutch Repair in Bangalore | Ride N Care",
     description:
       "Bike clutch repair in Bangalore — slipping clutch, hard lever and plate replacement done at your doorstep with OEM parts and a written quote.",
     intro:
@@ -509,7 +509,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "battery-service",
     name: "Bike Battery Service",
     h1: "Bike Battery Service & Replacement in Bangalore",
-    title: "Bike Battery Replacement in Bangalore | Doorstep Battery Service",
+    title: "Bike Battery Replacement in Bangalore | Ride N Care",
     description:
       "Bike battery service in Bangalore — free health test, jump-start and doorstep battery replacement with warranty. Same-day fitting. Call 08296950339.",
     intro:
@@ -546,7 +546,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "electrical-repair",
     name: "Bike Electrical Repair",
     h1: "Bike Electrical Repair in Bangalore",
-    title: "Bike Electrical Repair in Bangalore | Wiring, Self-Start, Lights",
+    title: "Bike Electrical Repair in Bangalore | Ride N Care",
     description:
       "Bike electrical repair in Bangalore — self-start failure, wiring faults, charging problems, lights and indicators fixed at your doorstep.",
     intro:
@@ -583,7 +583,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "general-two-wheeler-repair",
     name: "General Two-Wheeler Repair",
     h1: "General Two-Wheeler Repair in Bangalore",
-    title: "Two Wheeler Repair in Bangalore | General Bike & Scooter Repair",
+    title: "Two Wheeler Repair in Bangalore | Ride N Care",
     description:
       "General two-wheeler repair in Bangalore — bikes, scooters and EVs. Suspension, tyres, cables, punctures and washing at your doorstep. Call 08296950339.",
     intro:
