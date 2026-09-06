@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import logo from "@/assets/logo.jpg.asset.json";
+import logo from "@/assets/ride-n-care-logo.jpg.asset.json";
 
 type NavLink = { to: "/$service"; params: { service: string }; label: string } | { to: string; params?: undefined; label: string };
 

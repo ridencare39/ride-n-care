@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/logo.jpg.asset.json";
+import logo from "@/assets/ride-n-care-logo.jpg.asset.json";
 import { Newsletter } from "@/components/Newsletter";
 
 export function SiteFooter() {
