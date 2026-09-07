@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
 import { AREAS } from "@/lib/areas";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 
 export const Route = createFileRoute("/areas/")({
   head: () => ({
@@ -11,7 +11,9 @@ export const Route = createFileRoute("/areas/")({
       { property: "og:description", content: "24+ Bangalore localities covered for at-home bike & car service." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/areas` },
+      { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/areas` }],
   }),

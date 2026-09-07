@@ -7,7 +7,7 @@
 export const BRAND = {
   name: "Ride N Care",
   tagline: "Care in Every Mile",
-  website: "https://ride-n-care.lovable.app",
+  website: "https://ridencare.co.in",
   phonePrimary: "08296950339",
   phoneSecondary: "08069409289",
   whatsapp: "918296950339",

@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$service/$area")({
     const { service: s, area: a } = loaderData;
     const url = `${SITE_URL}/${s.slug}/${a.slug}`;
     const title = `${s.name} in ${a.name}, Bangalore | Ride N Care`;
-    const desc = `${s.name} in ${a.name}${a.pincode ? ` ${a.pincode}` : ""}, Bangalore at your doorstep. Certified mechanics, OEM parts, same-day slots and a 7-day guarantee. Call 08296950339.`;
+    const desc = `${s.name} near you in ${a.name}, Bangalore at your doorstep. Certified mechanics, OEM parts, same-day slots, 7-day guarantee. Call 08296950339.`;
     return {
       meta: [
         { title },

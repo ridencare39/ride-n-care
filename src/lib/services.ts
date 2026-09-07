@@ -38,7 +38,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "bike-service",
     name: "Bike Service",
     h1: "Bike Service in Bangalore — At Your Doorstep",
-    title: "Bike Service in Bangalore | Ride N Care",
+    title: "Bike Service Near Me in Bangalore | Ride N Care",
     description:
       "Book bike service in Bangalore at your doorstep. Certified mechanics, OEM-grade parts, upfront pricing and a 7-day workmanship guarantee. Call 08296950339.",
     intro:
@@ -82,7 +82,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "doorstep-bike-service",
     name: "Doorstep Bike Service",
     h1: "Doorstep Bike Service in Bangalore",
-    title: "Doorstep Bike Service in Bangalore | Ride N Care",
+    title: "Doorstep Bike Service Near Me, Bangalore | Ride N Care",
     description:
       "Doorstep bike service in Bangalore — mechanic at your home or office, OEM parts, live updates and cashless payment. Same-day slots. Call 08296950339.",
     intro:
@@ -121,7 +121,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "bike-repair",
     name: "Bike Repair",
     h1: "Bike Repair in Bangalore — Diagnose, Quote, Fix",
-    title: "Bike Repair in Bangalore | Ride N Care",
+    title: "Bike Repair Near Me in Bangalore | Ride N Care",
     description:
       "Bike repair in Bangalore for engine, brake, clutch, electrical and starting problems. Free diagnosis, written quote, OEM parts. Call 08296950339.",
     intro:
@@ -160,7 +160,7 @@ export const SERVICES: ServiceDef[] = [
     slug: "doorstep-bike-repair",
     name: "Doorstep Bike Repair",
     h1: "Doorstep Bike Repair in Bangalore",
-    title: "Doorstep Bike Repair in Bangalore | Ride N Care",
+    title: "Doorstep Bike Repair Near Me, Bangalore | Ride N Care",
     description:
       "Doorstep bike repair in Bangalore — a mechanic reaches your home or office, diagnoses free and repairs on the spot. Same-day slots. Call 08296950339.",
     intro:

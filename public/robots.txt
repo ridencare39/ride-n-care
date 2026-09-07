@@ -54,4 +54,4 @@ User-agent: YandexBot
 Allow: /
 
 # Sitemap
-Sitemap: https://ride-n-care.lovable.app/sitemap.xml
+Sitemap: https://ridencare.co.in/sitemap.xml
