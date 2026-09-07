@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { CATEGORIES, type Category } from "@/lib/blog";
 import { listPublishedPosts } from "@/lib/blog.functions";
 import { Newsletter } from "@/components/Newsletter";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 
 export const Route = createFileRoute("/blog/")({
   loader: async () => await listPublishedPosts(),
@@ -15,7 +15,9 @@ export const Route = createFileRoute("/blog/")({
       { property: "og:description", content: "Maintenance tips, doorstep service guides, and Bangalore car-care advice." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/blog` },
+      { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
       { name: "twitter:title", content: "Ride N Care Blog — Bike & Car Care Tips" },
       { name: "twitter:description", content: "Maintenance tips, doorstep service guides, and Bangalore car-care advice." },
     ],

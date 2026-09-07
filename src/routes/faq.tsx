@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 
 const SECTIONS: { id: string; title: string; faqs: [string, string][] }[] = [
   {
@@ -65,6 +65,10 @@ export const Route = createFileRoute("/faq")({
       { property: "og:title", content: "FAQ — Ride N Care" },
       { property: "og:description", content: "Common questions about Ride N Care doorstep service." },
       { property: "og:url", content: `${SITE_URL}/faq` },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/faq` }],
     scripts: [

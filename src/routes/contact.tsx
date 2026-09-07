@@ -1,15 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Book a Service — Ride N Care" },
-      { name: "description", content: "Book your bike or car service in 60 seconds. Doorstep pickup, drop, and on-the-spot repair across major Indian cities." },
+      { title: "Book Doorstep Bike Service in Bangalore | Ride N Care" },
+      { name: "description", content: "Book doorstep bike or car service in Bangalore in 60 seconds. Call 08296950339 or WhatsApp us — pickup, drop and on-the-spot repair." },
       { property: "og:title", content: "Book a Service — Ride N Care" },
       { property: "og:description", content: "Book bike or car service. Doorstep, fast, transparent." },
       { property: "og:url", content: `${SITE_URL}/contact` },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/contact` }],
   }),

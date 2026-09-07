@@ -33,7 +33,7 @@ export const GUIDES: Guide[] = [
     title: "Bike Service Guide for Bangalore (2026) | Ride N Care",
     h1: "Bike Service Guide for Bangalore",
     description:
-      "A practical bike service guide for Bangalore riders: service intervals for city traffic, what a service should include, realistic costs and how doorstep service works.",
+      "Bike service guide for Bangalore riders: service intervals for city traffic, what a service includes, realistic costs and how doorstep service works.",
     summary:
       "In Bangalore's stop-start traffic, most commuter bikes need a service every 2,500–3,500 km or every three months, whichever comes first. A correct service covers engine oil, both filters, brakes, chain, clutch and throttle play, battery and tyres, and ends with a written inspection report.",
     published: "2026-02-14",
@@ -114,7 +114,7 @@ export const GUIDES: Guide[] = [
     title: "Complete Bike Maintenance Guide | Ride N Care Bangalore",
     h1: "Complete Bike Maintenance Guide",
     description:
-      "A complete two-wheeler maintenance guide: weekly, monthly and yearly checks for chain, brakes, tyres, battery, oil and electricals, written for Indian city riding.",
+      "Two-wheeler maintenance guide: weekly, monthly and yearly checks for chain, brakes, tyres, battery, oil and electricals for Indian city riding.",
     summary:
       "Most two-wheeler breakdowns come from five neglected items: chain lubrication, tyre pressure, brake wear, battery terminals and engine oil. A five-minute weekly check and a monthly 15-minute check prevent the majority of roadside failures.",
     published: "2026-02-20",
@@ -188,7 +188,7 @@ export const GUIDES: Guide[] = [
     title: "Common Bike Problems and Solutions | Ride N Care Bangalore",
     h1: "Common Bike Problems and Solutions",
     description:
-      "Symptom-by-symptom guide to common two-wheeler problems — bike not starting, poor pickup, high fuel use, noises, smoke and electrical faults — with likely causes and fixes.",
+      "Common two-wheeler problems by symptom: bike not starting, poor pickup, high fuel use, noises, smoke and electrical faults, with causes and fixes.",
     summary:
       "Most two-wheeler complaints trace back to a small number of causes: a weak battery, a clogged air filter, an out-of-adjustment chain or clutch, worn brake pads, or dirty fuel delivery. Matching the symptom to the likely cause first avoids paying for parts you did not need.",
     published: "2026-02-26",
@@ -277,7 +277,7 @@ export const GUIDES: Guide[] = [
     title: "When Should You Service Your Bike? | Ride N Care Bangalore",
     h1: "When Should You Service Your Bike?",
     description:
-      "How to decide when your bike needs a service: kilometre and time intervals, warning symptoms, and how city riding, monsoon and long idle periods change the schedule.",
+      "When your bike needs a service: kilometre and time intervals, warning symptoms, and how city riding and monsoon change the schedule.",
     summary:
       "Service your bike at whichever comes first — the kilometre interval or the time interval. For Bangalore city riding, that is roughly every 2,500–3,500 km or every three months. Certain symptoms override the schedule and mean a service now, regardless of the odometer.",
     published: "2026-03-04",
@@ -417,7 +417,7 @@ export const GUIDES: Guide[] = [
     title: "Motorcycle vs Scooter Maintenance Guide | Ride N Care",
     h1: "Motorcycle vs Scooter Maintenance Guide",
     description:
-      "How maintenance differs between motorcycles and automatic scooters — transmission, brakes, tyres, oil intervals and cost — so you service each one correctly.",
+      "How maintenance differs for motorcycles and automatic scooters: transmission, brakes, tyres, oil intervals and cost, so you service each correctly.",
     summary:
       "Motorcycles and automatic scooters wear differently. Motorcycles need chain, sprocket and clutch attention; scooters need CVT belt, roller and gear-oil attention instead. Scooters usually need shorter oil intervals and wear front brakes and small tyres faster.",
     published: "2026-03-16",
@@ -491,7 +491,7 @@ export const GUIDES: Guide[] = [
     title: "Bike Breakdown Troubleshooting Guide | Ride N Care Bangalore",
     h1: "Bike Breakdown Troubleshooting Guide",
     description:
-      "Roadside troubleshooting for two-wheeler breakdowns: what to check safely, which faults you can fix yourself, and when to stop and call for emergency bike repair.",
+      "Roadside troubleshooting for bike breakdowns: what to check safely, which faults you can fix yourself, and when to call for emergency bike repair.",
     summary:
       "When a two-wheeler stops on the road, work through four checks in order — fuel, battery and switches, spark, and obvious mechanical damage. Most roadside failures are a flat battery, a fuse, a fuel-supply problem or a puncture, and only some are safe to fix yourself.",
     published: "2026-03-22",

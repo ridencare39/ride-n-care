@@ -1,4 +1,4 @@
-export const SITE_URL = "https://ride-n-care.lovable.app";
+export const SITE_URL = "https://ridencare.co.in";
 export const OG_IMAGE = `${SITE_URL}/__l5e/assets-v1/2cb2a7d0-57c5-42f3-9ebc-6e2a4ca0cccd/og-ridencare.jpg`;
 export const OG_IMAGE_ABOUT = `${SITE_URL}/__l5e/assets-v1/f4639b52-45f0-4f94-83ac-67b268204b29/og-about-ridencare.jpg`;
 

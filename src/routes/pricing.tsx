@@ -1,16 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { bikeTiers, carTiers } from "@/lib/pricing";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Transparent Pricing — Ride N Care" },
+      { title: "Bike & Car Service Price List in Bangalore | Ride N Care" },
       { name: "description", content: "Honest, upfront pricing for bike & car servicing. No hidden charges. Pay only after the job is done." },
       { property: "og:title", content: "Transparent Pricing — Ride N Care" },
       { property: "og:description", content: "Honest, upfront pricing for bike & car servicing." },
       { property: "og:url", content: `${SITE_URL}/pricing` },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/pricing` }],
   }),
