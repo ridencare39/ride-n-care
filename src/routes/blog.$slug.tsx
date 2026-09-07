@@ -15,7 +15,8 @@ export const Route = createFileRoute("/blog/$slug")({
   head: ({ loaderData, params }) => {
     const p = loaderData?.post;
     if (!p) return { meta: [{ title: "Post not found" }] };
-    const title = `${p.title} | Ride N Care Blog`;
+    const suffixed = `${p.title} | Ride N Care`;
+    const title = suffixed.length <= 60 ? suffixed : p.title.length <= 60 ? p.title : `${p.title.slice(0, 57)}...`;
     const desc = p.excerpt.length > 160 ? `${p.excerpt.slice(0, 157)}...` : p.excerpt;
     const faqs = faqsForPostCategory(p.category);
     return {
@@ -64,9 +65,9 @@ export const Route = createFileRoute("/blog/$slug")({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-              { "@type": "ListItem", position: 2, name: "Blog", item: "/blog" },
-              { "@type": "ListItem", position: 3, name: p.title, item: `/blog/${params.slug}` },
+              { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+              { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+              { "@type": "ListItem", position: 3, name: p.title, item: `${SITE_URL}/blog/${params.slug}` },
             ],
           }),
         },

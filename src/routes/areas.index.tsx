@@ -1,5 +1,6 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
 import { AREAS } from "@/lib/areas";
+import { SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/areas/")({
   head: () => ({
@@ -8,9 +9,11 @@ export const Route = createFileRoute("/areas/")({
       { name: "description", content: "Ride N Care offers doorstep bike & car service across 24+ Bangalore neighbourhoods — Whitefield, Koramangala, HSR, Indiranagar, Electronic City and more." },
       { property: "og:title", content: "Doorstep Service Areas in Bangalore" },
       { property: "og:description", content: "24+ Bangalore localities covered for at-home bike & car service." },
-      { property: "og:url", content: "/areas" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/areas` },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/areas" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/areas` }],
   }),
   component: AreasLayout,
 });
