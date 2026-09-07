@@ -1,4 +1,4 @@
-import { defineMcp } from "@lovable.dev/mcp-js";
+import { auth, defineMcp } from "@lovable.dev/mcp-js";
 import getBusinessInfo from "./tools/get-business-info";
 import getServicePricing from "./tools/get-service-pricing";
 import listServiceAreas from "./tools/list-service-areas";
