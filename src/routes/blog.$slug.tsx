@@ -15,7 +15,8 @@ export const Route = createFileRoute("/blog/$slug")({
   head: ({ loaderData, params }) => {
     const p = loaderData?.post;
     if (!p) return { meta: [{ title: "Post not found" }] };
-    const title = `${p.title} | Ride N Care Blog`;
+    const suffixed = `${p.title} | Ride N Care`;
+    const title = suffixed.length <= 60 ? suffixed : p.title.length <= 60 ? p.title : `${p.title.slice(0, 57)}...`;
     const desc = p.excerpt.length > 160 ? `${p.excerpt.slice(0, 157)}...` : p.excerpt;
     const faqs = faqsForPostCategory(p.category);
     return {
