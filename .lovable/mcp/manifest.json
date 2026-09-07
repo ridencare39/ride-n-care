@@ -3,7 +3,13 @@
   "sdk_version": "0.26.2",
   "path": "/mcp",
   "auth": {
-    "type": "none"
+    "type": "oauth",
+    "issuer": "https://ypofdfxqsaqqldotceme.supabase.co/auth/v1",
+    "resource_name": "Ride N Care",
+    "accepted_audiences": [
+      "authenticated"
+    ],
+    "jwks_uri": "https://ypofdfxqsaqqldotceme.supabase.co/auth/v1/.well-known/jwks.json"
   },
   "mcp": {
     "server": {
