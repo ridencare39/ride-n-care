@@ -72,7 +72,7 @@ export const Route = createFileRoute("/areas/$slug")({
             priceRange: "₹₹",
             currenciesAccepted: "INR",
             paymentAccepted: "Cash, UPI, Credit Card, Debit Card",
-            sameAs: ["https://wa.me/918296950339"],
+            sameAs: SAME_AS,
           }),
         },
         {

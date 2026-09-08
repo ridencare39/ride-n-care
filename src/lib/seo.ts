@@ -57,7 +57,7 @@ export const LOCAL_BUSINESS_JSONLD = {
       closes: "21:00",
     },
   ],
-  sameAs: ["https://wa.me/918296950339"],
+  sameAs: SAME_AS,
   paymentAccepted: ["Cash", "UPI", "Credit Card", "Debit Card", "Net Banking"],
   currenciesAccepted: "INR",
   knowsAbout: [
@@ -98,7 +98,7 @@ export const ORGANIZATION_JSONLD = {
   logo: `${SITE_URL}/__l5e/assets-v1/760c4f79-dc2d-4a56-a959-0c73577c8f73/ride-n-care-logo.jpg`,
   email: "ridencareinfo@gmail.com",
   telephone: ["+91-82969-50339", "+91-80-6940-9289"],
-  sameAs: ["https://wa.me/918296950339"],
+  sameAs: SAME_AS,
   contactPoint: LOCAL_BUSINESS_JSONLD.contactPoint,
 };
 
