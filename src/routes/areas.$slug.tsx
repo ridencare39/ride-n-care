@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getArea, AREAS, type Area } from "@/lib/areas";
-import { OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { OG_IMAGE, SITE_URL, SAME_AS } from "@/lib/seo";
 
 export const Route = createFileRoute("/areas/$slug")({
   loader: ({ params }) => {
