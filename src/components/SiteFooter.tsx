@@ -58,7 +58,15 @@ export function SiteFooter() {
         <div>
           <h4 className="text-sm font-semibold mb-3">Address</h4>
           <p className="text-sm text-muted-foreground">Bangalore, Karnataka<br />India</p>
+          <h4 className="text-sm font-semibold mt-6 mb-3">Follow us</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li><a href={SOCIAL.instagram} target="_blank" rel="noopener" className="hover:text-primary">Instagram</a></li>
+            <li><a href={SOCIAL.facebook} target="_blank" rel="noopener" className="hover:text-primary">Facebook</a></li>
+            <li><a href={SOCIAL.youtube} target="_blank" rel="noopener" className="hover:text-primary">YouTube</a></li>
+            <li><a href={SOCIAL.googleBusiness} target="_blank" rel="noopener" className="hover:text-primary">Google Business Profile</a></li>
+          </ul>
         </div>
+
         <div className="md:col-span-1">
           <h4 className="text-sm font-semibold mb-3">Newsletter</h4>
           <Newsletter compact />
