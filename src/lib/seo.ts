@@ -2,6 +2,24 @@ export const SITE_URL = "https://ridencare.co.in";
 export const OG_IMAGE = `${SITE_URL}/__l5e/assets-v1/2cb2a7d0-57c5-42f3-9ebc-6e2a4ca0cccd/og-ridencare.jpg`;
 export const OG_IMAGE_ABOUT = `${SITE_URL}/__l5e/assets-v1/f4639b52-45f0-4f94-83ac-67b268204b29/og-about-ridencare.jpg`;
 
+/** Official Ride N Care profiles — used for schema sameAs and footer links. */
+export const SOCIAL = {
+  instagram: "https://www.instagram.com/ride_n_care_care_in_every_mile",
+  facebook: "https://www.facebook.com/share/1DUdsHtp16/",
+  youtube: "https://youtube.com/@ridencare_care_with_every_mile",
+  googleBusiness: "https://maps.app.goo.gl/PHpPyTNBj9cmPf4w9",
+  whatsapp: "https://wa.me/918296950339",
+};
+
+export const SAME_AS = [
+  SOCIAL.instagram,
+  SOCIAL.facebook,
+  SOCIAL.youtube,
+  SOCIAL.googleBusiness,
+  SOCIAL.whatsapp,
+];
+
+
 export const LOCAL_BUSINESS_JSONLD = {
   "@context": "https://schema.org",
   "@type": "AutoRepair",
