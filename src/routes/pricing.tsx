@@ -24,8 +24,18 @@ export const Route = createFileRoute("/pricing")({
 function Pricing() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
-      <h1 className="text-5xl font-bold">Pricing</h1>
+      <h1 className="text-5xl font-bold">Bike &amp; Car Service Price List in Bangalore</h1>
       <p className="mt-3 text-muted-foreground max-w-2xl">Flat rates. No hidden charges. Parts billed at MRP with bill copy.</p>
+      <p className="mt-4 text-muted-foreground max-w-3xl">
+        Every Ride N Care package below is a doorstep service in Bangalore — a certified mechanic reaches your home or office
+        with genuine OEM parts, shows you the worn parts before replacing them, and you pay only once the job is done.
+        Bike servicing starts at ₹499 and is priced by engine capacity; car servicing starts at ₹1,499. Consumables and
+        spares, if needed, are billed separately at MRP with a printed bill, and every job carries our 7-day workmanship
+        guarantee. Most bike services finish in 60–90 minutes at your address, with no garage queue and no travel charge
+        inside our {""}
+        <Link to="/areas" className="text-primary underline">service areas</Link>.
+      </p>
+
 
       <h2 className="mt-12 text-2xl font-bold">Bike Service</h2>
       <div className="mt-4 grid md:grid-cols-3 lg:grid-cols-5 gap-4">

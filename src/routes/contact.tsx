@@ -92,8 +92,14 @@ function Contact() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-16">
-      <h1 className="text-5xl font-bold">Book your service</h1>
+      <h1 className="text-5xl font-bold">Book doorstep bike &amp; car service in Bangalore</h1>
       <p className="mt-3 text-muted-foreground">Fill the form — it opens WhatsApp with your booking details pre-filled. We'll confirm in minutes.</p>
+      <p className="mt-4 text-muted-foreground max-w-2xl">
+        Ride N Care serves Bangalore and nearby Karnataka localities, seven days a week from 8:00 AM to 9:00 PM. Tell us your
+        area and vehicle and a certified mechanic reaches your doorstep with genuine parts — periodic service, repairs,
+        battery help or an emergency breakdown. Prefer to talk? Call 080 6940 9289 or WhatsApp +91 82969 50339.
+      </p>
+
 
       <form
         onSubmit={handleSubmit}

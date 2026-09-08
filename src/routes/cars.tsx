@@ -74,8 +74,14 @@ function Cars() {
         <img src={car} alt="Car being serviced" loading="lazy" width={1200} height={900} className="rounded-3xl border border-border" />
         <div>
           <span className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Four Wheelers</span>
-          <h1 className="mt-2 text-5xl font-bold">Car Service at Home</h1>
+          <h1 className="mt-2 text-5xl font-bold">Car Service at Home in Bangalore</h1>
           <p className="mt-4 text-muted-foreground">From hatchbacks to SUVs, our mobile workshop arrives with diagnostic tools, genuine spares, and zero shortcuts.</p>
+          <p className="mt-3 text-muted-foreground">
+            Doorstep car service in Bangalore starts at ₹1,499 for a mini service and covers periodic maintenance, AC gas
+            refill, battery testing, brakes and suspension, denting and painting, and interior detailing. We work seven days
+            a week, 8:00 AM to 9:00 PM, show you every replaced part, and back the work with a 7-day guarantee.
+          </p>
+
           <Link to="/contact" className="mt-6 inline-block rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">Book a Car Service</Link>
         </div>
       </div>
