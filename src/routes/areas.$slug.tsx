@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getArea, AREAS, type Area } from "@/lib/areas";
-import { OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { OG_IMAGE, SITE_URL, SAME_AS } from "@/lib/seo";
 
 export const Route = createFileRoute("/areas/$slug")({
   loader: ({ params }) => {
@@ -72,7 +72,7 @@ export const Route = createFileRoute("/areas/$slug")({
             priceRange: "₹₹",
             currenciesAccepted: "INR",
             paymentAccepted: "Cash, UPI, Credit Card, Debit Card",
-            sameAs: ["https://wa.me/918296950339"],
+            sameAs: SAME_AS,
           }),
         },
         {
