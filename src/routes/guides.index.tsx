@@ -12,7 +12,7 @@ export const Route = createFileRoute("/guides/")({
       {
         name: "description",
         content:
-          "Free, factual bike guides from Ride N Care: service intervals, maintenance checklists, common problems, breakdown troubleshooting and doorstep service explained.",
+          "Free bike guides from Ride N Care: service intervals, maintenance checklists, common problems, breakdown troubleshooting and doorstep service explained.",
       },
       { property: "og:title", content: "Bike Maintenance & Service Guides | Ride N Care" },
       { property: "og:description", content: "Practical two-wheeler maintenance and repair guides written for Bangalore riding conditions." },

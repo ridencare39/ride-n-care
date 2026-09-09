@@ -5,7 +5,7 @@ import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, OG_IMAGE_ABOUT, SITE_URL } from "@/lib
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Ride N Care — Bangalore's Doorstep Bike & Car Service" },
+      { title: "About Ride N Care | Doorstep Bike & Car Service Bangalore" },
       { name: "description", content: "Bangalore's trusted doorstep mechanic service — 150+ certified pros, 12,000+ happy riders, genuine parts and upfront pricing across 50+ localities." },
       { property: "og:title", content: "About Ride N Care — Care in every mile" },
       { property: "og:description", content: "Bangalore's trusted doorstep bike & car service. Certified mechanics, OEM parts, transparent pricing." },
