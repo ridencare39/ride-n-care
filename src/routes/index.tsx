@@ -27,11 +27,12 @@ const HOME_FAQS: [string, string][] = [
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Doorstep Bike & Car Service in Bangalore | Ride N Care" },
+      { title: "Ride N Care | Doorstep Bike & Car Service in Bangalore" },
       { name: "description", content: "Doorstep bike & car service in Bangalore. Certified mechanics, genuine parts, upfront pricing and free pickup & drop across 50+ localities." },
-      { property: "og:title", content: "Ride N Care — Doorstep Bike & Car Service" },
+      { property: "og:title", content: "Ride N Care | Doorstep Bike & Car Service in Bangalore" },
       { property: "og:description", content: "Bangalore's trusted doorstep bike and car service — genuine parts, transparent pricing, certified mechanics at your home." },
       { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:site_name", content: "Ride N Care" },
       { property: "og:image", content: OG_IMAGE },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
