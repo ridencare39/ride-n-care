@@ -60,7 +60,7 @@ const allFaqs = SECTIONS.flatMap((s) => s.faqs);
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ | Doorstep Bike & Car Service Bangalore | Ride N Care" },
+      { title: "FAQ | Doorstep Bike Service Bangalore | Ride N Care" },
       { name: "description", content: "Answers about doorstep bike & car service: timing, parts, payments, pickup & drop, warranty and more." },
       { property: "og:title", content: "FAQ — Ride N Care" },
       { property: "og:description", content: "Common questions about Ride N Care doorstep service." },
