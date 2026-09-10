@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import heroAvif from "@/assets/hero-3d-mechanic.avif";
-import bike from "@/assets/bike-service.jpg";
-import car from "@/assets/car-service.jpg";
+import bike from "@/assets/bike-service.webp";
+import car from "@/assets/car-service.webp";
 import { AreasMarquee } from "@/components/AreasMarquee";
 import { Newsletter } from "@/components/Newsletter";
 import { BrandsMarquee } from "@/components/BrandsMarquee";

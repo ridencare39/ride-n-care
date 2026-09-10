@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import bike from "@/assets/bike-service.jpg";
+import bike from "@/assets/bike-service.webp";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 import { BIKE_FAQS } from "@/lib/service-faqs";
 
