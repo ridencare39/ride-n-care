@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/ride-n-care-logo.jpg.asset.json";
+import logo from "@/assets/logo-96.webp";
 import { Newsletter } from "@/components/Newsletter";
 import { SOCIAL } from "@/lib/seo";
 
@@ -9,7 +9,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 grid gap-8 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
         <div>
           <div className="flex items-center gap-2">
-            <img src={logo.url} alt="Ride N Care" width={36} height={36} className="rounded bg-plate p-0.5" />
+            <img src={logo} alt="Ride N Care" width={36} height={36} loading="lazy" decoding="async" className="rounded bg-plate p-0.5" />
             <h3 className="font-display font-bold text-lg">Ride N <span className="text-primary">Care</span></h3>
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
