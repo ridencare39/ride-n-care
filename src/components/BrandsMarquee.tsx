@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 const BRANDS = [
   // Bike brands
   { name: "Honda", type: "bike", domain: "honda.com" },
@@ -32,8 +34,33 @@ const BRANDS = [
 
 export function BrandsMarquee() {
   const loop = [...BRANDS, ...BRANDS];
+  const sectionRef = useRef<HTMLElement>(null);
+  const [showLogos, setShowLogos] = useState(false);
+
+  // Only fetch the 50+ remote brand logos once this strip is close to the viewport,
+  // so they never compete with the hero for bandwidth on first paint.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || showLogos) return;
+    if (!("IntersectionObserver" in window)) {
+      setShowLogos(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setShowLogos(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [showLogos]);
+
   return (
-    <section className="border-y border-border bg-background py-14 overflow-hidden">
+    <section ref={sectionRef} className="border-y border-border bg-background py-14 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center">
         <span className="text-xs uppercase tracking-[0.2em] text-accent font-semibold">Brands We Service</span>
         <h2 className="mt-2 text-3xl md:text-4xl font-bold">25+ bike & car brands, one trusted garage</h2>
@@ -51,17 +78,22 @@ export function BrandsMarquee() {
               className="shrink-0 flex items-center gap-3 rounded-2xl border border-border bg-plate px-5 py-3 min-w-[200px]"
               aria-label={`${b.name} ${b.type} service`}
             >
-              <img
-                src={`https://logo.clearbit.com/${b.domain}`}
-                alt={`${b.name} logo`}
-                width={40}
-                height={40}
-                loading="lazy"
-                className="h-10 w-10 object-contain"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = "none";
-                }}
-              />
+              {showLogos ? (
+                <img
+                  src={`https://logo.clearbit.com/${b.domain}`}
+                  alt={`${b.name} logo`}
+                  width={40}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-10 w-10 object-contain"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.visibility = "hidden";
+                  }}
+                />
+              ) : (
+                <span aria-hidden="true" className="h-10 w-10 shrink-0 rounded bg-slate-200/60" />
+              )}
               <div className="text-left">
                 <div className="text-sm font-semibold leading-tight text-slate-900">{b.name}</div>
                 <div className="text-[10px] uppercase tracking-wider text-slate-500">{b.type}</div>

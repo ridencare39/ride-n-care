@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import hero from "@/assets/hero-mechanic.jpg";
+import heroAvif from "@/assets/hero-3d-mechanic.avif";
 import bike from "@/assets/bike-service.jpg";
 import car from "@/assets/car-service.jpg";
 import { AreasMarquee } from "@/components/AreasMarquee";
@@ -38,7 +38,10 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    links: [
+      { rel: "canonical", href: `${SITE_URL}/` },
+      { rel: "preload", as: "image", href: heroAvif, type: "image/avif", fetchpriority: "high" },
+    ],
     scripts: [
       {
         type: "application/ld+json",
@@ -85,9 +88,6 @@ function Home() {
       <section className="relative overflow-hidden bg-hero">
         {/* 3D mechanic background */}
         <HeroBackground />
-        <div className="absolute inset-0 opacity-15 mix-blend-luminosity">
-          <img src={hero} alt="" aria-hidden="true" width={1600} height={1200} loading="lazy" decoding="async" className="h-full w-full object-cover" />
-        </div>
         {/* readability scrims */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
