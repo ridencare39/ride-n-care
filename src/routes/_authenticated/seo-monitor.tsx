@@ -15,7 +15,7 @@ import {
 import { getSeoMonitorReport } from "@/lib/gsc.functions";
 import { SITE_URL } from "@/lib/seo";
 
-export const Route = createFileRoute("/seo-monitor")({
+export const Route = createFileRoute("/_authenticated/seo-monitor")({
   head: () => ({
     meta: [
       { title: "SEO Monitoring — Search Console Coverage | Ride N Care" },

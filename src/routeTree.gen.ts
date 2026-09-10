@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as SeoMonitorRouteImport } from './routes/seo-monitor'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MapRouteImport } from './routes/map'
@@ -32,6 +31,7 @@ import { Route as ServiceIndexRouteImport } from './routes/$service.index'
 import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
+import { Route as AuthenticatedSeoMonitorRouteImport } from './routes/_authenticated/seo-monitor'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as ServiceAreaRouteImport } from './routes/$service.$area'
@@ -41,11 +41,6 @@ import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SeoMonitorRoute = SeoMonitorRouteImport.update({
-  id: '/seo-monitor',
-  path: '/seo-monitor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -152,6 +147,11 @@ const AreasSlugRoute = AreasSlugRouteImport.update({
   path: '/areas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedSeoMonitorRoute = AuthenticatedSeoMonitorRouteImport.update({
+  id: '/seo-monitor',
+  path: '/seo-monitor',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
     id: '/.well-known/oauth-protected-resource',
@@ -195,11 +195,11 @@ export interface FileRoutesByFullPath {
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
-  '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/seo-monitor': typeof AuthenticatedSeoMonitorRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
@@ -222,11 +222,11 @@ export interface FileRoutesByTo {
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
-  '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/seo-monitor': typeof AuthenticatedSeoMonitorRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
@@ -253,11 +253,11 @@ export interface FileRoutesById {
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
-  '/seo-monitor': typeof SeoMonitorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/_authenticated/seo-monitor': typeof AuthenticatedSeoMonitorRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
@@ -284,11 +284,11 @@ export interface FileRouteTypes {
     | '/map'
     | '/mcp'
     | '/pricing'
-    | '/seo-monitor'
     | '/sitemap.xml'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/seo-monitor'
     | '/areas/$slug'
     | '/blog/$slug'
     | '/guides/$slug'
@@ -311,11 +311,11 @@ export interface FileRouteTypes {
     | '/map'
     | '/mcp'
     | '/pricing'
-    | '/seo-monitor'
     | '/sitemap.xml'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/seo-monitor'
     | '/areas/$slug'
     | '/blog/$slug'
     | '/guides/$slug'
@@ -341,11 +341,11 @@ export interface FileRouteTypes {
     | '/map'
     | '/mcp'
     | '/pricing'
-    | '/seo-monitor'
     | '/sitemap.xml'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/_authenticated/seo-monitor'
     | '/areas/$slug'
     | '/blog/$slug'
     | '/guides/$slug'
@@ -372,7 +372,6 @@ export interface RootRouteChildren {
   MapRoute: typeof MapRoute
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
-  SeoMonitorRoute: typeof SeoMonitorRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -390,13 +389,6 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/seo-monitor': {
-      id: '/seo-monitor'
-      path: '/seo-monitor'
-      fullPath: '/seo-monitor'
-      preLoaderRoute: typeof SeoMonitorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -546,6 +538,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AreasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/seo-monitor': {
+      id: '/_authenticated/seo-monitor'
+      path: '/seo-monitor'
+      fullPath: '/seo-monitor'
+      preLoaderRoute: typeof AuthenticatedSeoMonitorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
       path: '/.well-known/oauth-protected-resource'
@@ -585,10 +584,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedSeoMonitorRoute: typeof AuthenticatedSeoMonitorRoute
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedSeoMonitorRoute: AuthenticatedSeoMonitorRoute,
   AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
 }
 
@@ -636,7 +637,6 @@ const rootRouteChildren: RootRouteChildren = {
   MapRoute: MapRoute,
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
-  SeoMonitorRoute: SeoMonitorRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
