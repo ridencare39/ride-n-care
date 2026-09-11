@@ -1,0 +1,83 @@
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { BookingFlow } from "@/components/booking/BookingFlow";
+import { AiBooking } from "@/components/booking/AiBooking";
+import { QuickWhatsAppBooking } from "@/components/booking/QuickWhatsAppBooking";
+
+type Mode = "flow" | "ai" | "quick";
+
+interface BookingApi {
+  openBooking: (opts?: { vehicle?: "bike" | "car"; packageId?: string }) => void;
+  openAiBooking: () => void;
+  openQuickBooking: () => void;
+}
+
+const BookingContext = createContext<BookingApi | null>(null);
+
+export function useBooking(): BookingApi {
+  const ctx = useContext(BookingContext);
+  if (!ctx) throw new Error("useBooking must be used inside BookingProvider");
+  return ctx;
+}
+
+export function BookingProvider({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<Mode>("flow");
+  const [vehicle, setVehicle] = useState<"bike" | "car" | undefined>();
+  const [packageId, setPackageId] = useState<string | undefined>();
+  const [seed, setSeed] = useState(0);
+
+  const api = useMemo<BookingApi>(
+    () => ({
+      openBooking: (opts) => {
+        setMode("flow");
+        setVehicle(opts?.vehicle);
+        setPackageId(opts?.packageId);
+        setSeed((s) => s + 1);
+        setOpen(true);
+      },
+      openAiBooking: () => {
+        setMode("ai");
+        setSeed((s) => s + 1);
+        setOpen(true);
+      },
+      openQuickBooking: () => {
+        setMode("quick");
+        setSeed((s) => s + 1);
+        setOpen(true);
+      },
+    }),
+    [],
+  );
+
+  const close = useCallback(() => setOpen(false), []);
+
+  const title = mode === "ai" ? "Book with AI" : mode === "quick" ? "Book Your Ride N Care Service" : "Book Your Ride N Care Service";
+
+  return (
+    <BookingContext.Provider value={api}>
+      {children}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-h-[92dvh] w-[calc(100vw-1.5rem)] max-w-lg overflow-y-auto rounded-2xl p-4 sm:p-6">
+          <DialogHeader>
+            <DialogTitle className="text-left text-xl">{title}</DialogTitle>
+          </DialogHeader>
+          <div key={`${mode}-${seed}`} className="min-w-0">
+            {mode === "flow" && <BookingFlow initialVehicle={vehicle} initialPackageId={packageId} onDone={close} />}
+            {mode === "ai" && <AiBooking />}
+            {mode === "quick" && (
+              <QuickWhatsAppBooking
+                onFullBooking={() => {
+                  setMode("flow");
+                  setVehicle(undefined);
+                  setPackageId(undefined);
+                  setSeed((s) => s + 1);
+                }}
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </BookingContext.Provider>
+  );
+}
