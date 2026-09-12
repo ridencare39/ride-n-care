@@ -42,7 +42,7 @@ export function QuickWhatsAppBooking({ onFullBooking }: { onFullBooking: () => v
         </div>
       </label>
       {error && <p className="mt-2 text-sm font-semibold text-destructive">{error}</p>}
-      <button className="mt-4 w-full min-h-12 rounded-full bg-[#25D366] px-6 py-3.5 font-bold text-white shadow-lg">
+      <button className="mt-4 w-full min-h-12 rounded-full bg-whatsapp px-6 py-3.5 font-bold text-whatsapp-foreground shadow-lg">
         BOOK ON WHATSAPP
       </button>
       <button type="button" onClick={onFullBooking} className="mt-3 w-full text-sm font-semibold text-primary">

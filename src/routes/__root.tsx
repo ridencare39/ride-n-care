@@ -15,6 +15,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/sonner";
 import { SiteFooter } from "@/components/SiteFooter";
 import { FloatingActions } from "@/components/FloatingActions";
+import { BookingProvider } from "@/components/booking/BookingProvider";
 import { LOCAL_BUSINESS_JSONLD, ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "@/lib/seo";
 
 const GA_ID = import.meta.env["VITE_GA_MEASUREMENT_ID"] as string | undefined;
@@ -180,15 +181,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col pb-24 sm:pb-28">
-        <SiteHeader />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <SiteFooter />
-        <FloatingActions />
-        <Toaster />
-      </div>
+      <BookingProvider>
+        <div className="flex min-h-screen min-w-0 flex-col overflow-x-clip pb-24 sm:pb-28">
+          <SiteHeader />
+          <main className="min-w-0 flex-1">
+            <Outlet />
+          </main>
+          <SiteFooter />
+          <FloatingActions />
+          <Toaster />
+        </div>
+      </BookingProvider>
 
     </QueryClientProvider>
   );

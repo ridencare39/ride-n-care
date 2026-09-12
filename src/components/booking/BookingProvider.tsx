@@ -58,7 +58,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
     <BookingContext.Provider value={api}>
       {children}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-h-[92dvh] w-[calc(100vw-1.5rem)] max-w-lg overflow-y-auto rounded-2xl p-4 sm:p-6">
+        <DialogContent className="max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-lg overflow-x-hidden overflow-y-auto rounded-2xl p-4 sm:max-h-[92dvh] sm:w-[calc(100vw-1.5rem)] sm:p-6">
           <DialogHeader>
             <DialogTitle className="text-left text-xl">{title}</DialogTitle>
           </DialogHeader>

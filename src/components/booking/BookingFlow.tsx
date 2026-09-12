@@ -482,7 +482,7 @@ export function Summary({ booking, onEdit, onDone }: { booking: Booking; onEdit?
           sendBookingToWhatsApp(booking);
           onDone?.();
         }}
-        className="mt-4 w-full min-h-12 rounded-full bg-[#25D366] px-6 py-3.5 font-bold text-white shadow-lg"
+        className="mt-4 w-full min-h-12 rounded-full bg-whatsapp px-6 py-3.5 font-bold text-whatsapp-foreground shadow-lg"
       >
         CONFIRM &amp; BOOK ON WHATSAPP
       </button>

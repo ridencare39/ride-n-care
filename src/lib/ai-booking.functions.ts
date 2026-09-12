@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { BIKE_PACKAGES, CAR_PACKAGES, formatPrice } from "@/lib/pricing";
 
 const messageSchema = z.object({
   role: z.enum(["user", "assistant"]),
@@ -17,6 +18,9 @@ export interface AiBookingReply {
   error?: string;
 }
 
+const bikePackagePrompt = BIKE_PACKAGES.map((p) => `- ${p.name}, ${p.cc}, MRP ${formatPrice(p.mrp)}, Price ${formatPrice(p.price)}`).join("\n");
+const carPackagePrompt = CAR_PACKAGES.map((p) => `- ${p.name}: ${formatPrice(p.price)}`).join("\n");
+
 const SYSTEM = `You are the Ride N Care booking assistant for a doorstep bike and car service in Bangalore ("Care in every mile").
 Collect a service booking by asking ONE short question at a time, in friendly plain English.
 
@@ -24,13 +28,10 @@ Fields to collect, in this order (skip what the user already gave):
 vehicle (Bike or Car), power (Electric or Non-Electric — bikes only), brand, model, variant (bike: CC range; car: fuel/variant), package, name, mobile, whatsapp, email (optional), registration, address, date, time, issue (optional).
 
 Bike packages and prices (use ONLY these):
-- At-Home Regular Service, Below 125 CC, MRP ₹899, Price ₹499
-- At-Home Classic Service, 125–199 CC, MRP ₹999, Price ₹799
-- At-Home Premium Service, 200–299 CC, MRP ₹1899, Price ₹1199
-- At-Home Royal Service, 300–349 CC, MRP ₹1699, Price ₹1399
-- At-Home Sports Service, Above 350 CC, MRP ₹2199, Price ₹1899
+${bikePackagePrompt}
 
-Car packages: Mini Service ₹1499, Standard Service ₹2999, Comprehensive Service ₹4999, AC Service (Price on Request), Denting & Painting (Price on Request).
+Car packages (use ONLY these):
+${carPackagePrompt}
 Never invent any other price. Pick the bike package from the CC the user gives.
 Mobile numbers must be 10-digit Indian numbers starting 6-9; ask again if invalid.
 
@@ -51,7 +52,8 @@ export const chatBookingAssistant = createServerFn({ method: "POST" })
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+        "Lovable-API-Key": apiKey,
+        "X-Lovable-AIG-SDK": "fetch",
       },
       body: JSON.stringify({
         model: "google/gemini-3.8-flash",
