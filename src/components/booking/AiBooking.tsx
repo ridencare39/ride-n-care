@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { chatBookingAssistant } from "@/lib/ai-booking.functions";
 import { Summary } from "@/components/booking/BookingFlow";
 import type { Booking } from "@/lib/booking";
+import { BIKE_PACKAGES, CAR_PACKAGES } from "@/lib/pricing";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -23,15 +24,22 @@ function toBooking(fields: Record<string, string>): Booking {
         ? "electric"
         : undefined
     : undefined;
+  const packages = vehicle === "car" ? CAR_PACKAGES : BIKE_PACKAGES;
+  const packageHint = (fields["packageName"] ?? fields["package"] ?? "").toLowerCase();
+  const matchedPackage = packages.find(
+    (item) => packageHint.includes(item.name.toLowerCase()) || item.name.toLowerCase().includes(packageHint),
+  );
   return {
     ...(vehicle ? { vehicle } : {}),
     ...(power ? { power } : {}),
     brand: fields["brand"],
     model: fields["model"],
     variant: fields["variant"],
-    packageName: fields["packageName"] ?? fields["package"],
-    mrp: num(fields["mrp"]) ?? null,
-    price: num(fields["price"]) ?? null,
+    packageId: matchedPackage?.id,
+    packageName: matchedPackage?.name ?? fields["packageName"] ?? fields["package"],
+    mrp: matchedPackage && "mrp" in matchedPackage ? matchedPackage.mrp ?? null : num(fields["mrp"]) ?? null,
+    price: matchedPackage?.price ?? null,
+    includes: matchedPackage?.includes,
     name: fields["name"],
     mobile: fields["mobile"],
     whatsapp: fields["whatsapp"],

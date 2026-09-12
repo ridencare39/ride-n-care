@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import logo from "@/assets/logo-96.webp";
+import { useBooking } from "@/components/booking/BookingProvider";
 
 type NavLink = { to: "/$service"; params: { service: string }; label: string } | { to: string; params?: undefined; label: string };
 
@@ -20,6 +21,7 @@ const links: NavLink[] = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { openBooking } = useBooking();
   return (
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between h-16">
@@ -44,12 +46,13 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Link
-          to="/contact"
+        <button
+          type="button"
+          onClick={() => openBooking()}
           className="hidden md:inline-flex items-center rounded-full bg-grad-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-glow hover:opacity-90 transition"
         >
           Book Now
-        </Link>
+        </button>
         <button
           aria-label="Toggle menu"
           className="md:hidden p-2 rounded border border-border"
@@ -67,9 +70,9 @@ export function SiteHeader() {
               {l.label}
             </Link>
           ))}
-          <Link to="/contact" onClick={() => setOpen(false)} className="rounded-full bg-grad-primary px-4 py-2 text-center text-sm font-semibold text-primary-foreground">
+          <button type="button" onClick={() => { setOpen(false); openBooking(); }} className="min-h-11 rounded-full bg-grad-primary px-4 py-2 text-center text-sm font-semibold text-primary-foreground">
             Book Now
-          </Link>
+          </button>
         </nav>
       )}
     </header>

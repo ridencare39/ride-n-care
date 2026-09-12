@@ -46,6 +46,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-plate: var(--plate);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
   --color-ring-offset-background: var(--background);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -85,6 +87,8 @@
   --input: oklch(0.28 0.03 25);
   --ring: oklch(0.62 0.26 25);
   --plate: oklch(1 0 0);
+  --whatsapp: oklch(0.72 0.2 145);
+  --whatsapp-foreground: oklch(1 0 0);
   --chart-1: oklch(0.62 0.26 25);
   --chart-2: oklch(0.7 0.24 28);
   --chart-3: oklch(0.55 0.2 15);
@@ -129,6 +133,8 @@
   --input: oklch(0.28 0.03 25);
   --ring: oklch(0.62 0.26 25);
   --plate: oklch(1 0 0);
+  --whatsapp: oklch(0.72 0.2 145);
+  --whatsapp-foreground: oklch(1 0 0);
   --chart-1: oklch(0.62 0.26 25);
   --chart-2: oklch(0.7 0.24 28);
   --chart-3: oklch(0.55 0.2 15);
@@ -160,6 +166,7 @@
     color: var(--color-foreground);
     font-family: var(--font-body);
     font-feature-settings: "ss01", "cv11";
+    overflow-x: clip;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
