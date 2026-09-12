@@ -1,8 +1,11 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, lazy, Suspense, useCallback, useContext, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { BookingFlow } from "@/components/booking/BookingFlow";
-import { AiBooking } from "@/components/booking/AiBooking";
-import { QuickWhatsAppBooking } from "@/components/booking/QuickWhatsAppBooking";
+
+const BookingFlow = lazy(() => import("@/components/booking/BookingFlow").then((module) => ({ default: module.BookingFlow })));
+const AiBooking = lazy(() => import("@/components/booking/AiBooking").then((module) => ({ default: module.AiBooking })));
+const QuickWhatsAppBooking = lazy(() =>
+  import("@/components/booking/QuickWhatsAppBooking").then((module) => ({ default: module.QuickWhatsAppBooking })),
+);
 
 type Mode = "flow" | "ai" | "quick";
 
@@ -63,18 +66,20 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
             <DialogTitle className="text-left text-xl">{title}</DialogTitle>
           </DialogHeader>
           <div key={`${mode}-${seed}`} className="min-w-0">
-            {mode === "flow" && <BookingFlow initialVehicle={vehicle} initialPackageId={packageId} onDone={close} />}
-            {mode === "ai" && <AiBooking />}
-            {mode === "quick" && (
-              <QuickWhatsAppBooking
-                onFullBooking={() => {
-                  setMode("flow");
-                  setVehicle(undefined);
-                  setPackageId(undefined);
-                  setSeed((s) => s + 1);
-                }}
-              />
-            )}
+            <Suspense fallback={<div className="py-10 text-center text-sm text-muted-foreground">Opening booking…</div>}>
+              {mode === "flow" && <BookingFlow initialVehicle={vehicle} initialPackageId={packageId} onDone={close} />}
+              {mode === "ai" && <AiBooking />}
+              {mode === "quick" && (
+                <QuickWhatsAppBooking
+                  onFullBooking={() => {
+                    setMode("flow");
+                    setVehicle(undefined);
+                    setPackageId(undefined);
+                    setSeed((s) => s + 1);
+                  }}
+                />
+              )}
+            </Suspense>
           </div>
         </DialogContent>
       </Dialog>

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import car from "@/assets/car-service.webp";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
 import { CAR_FAQS } from "@/lib/service-faqs";
+import { BookingButton } from "@/components/booking/BookingButton";
 
 const services = [
   ["Periodic Service", "Oil change, filters, brake check"],
@@ -82,7 +83,7 @@ function Cars() {
             a week, 8:00 AM to 9:00 PM, show you every replaced part, and back the work with a 7-day guarantee.
           </p>
 
-          <Link to="/contact" className="mt-6 inline-block rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">Book a Car Service</Link>
+          <BookingButton vehicle="car" className="mt-6 h-12 rounded-full bg-grad-primary px-6 font-semibold text-primary-foreground shadow-glow">Book a Car Service</BookingButton>
         </div>
       </div>
 

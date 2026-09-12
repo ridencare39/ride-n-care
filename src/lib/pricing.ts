@@ -6,7 +6,7 @@
  */
 
 export interface BikeTier { name: string; cc: string; price: number }
-export interface CarTier { name: string; desc: string; price: number }
+export interface CarTier { name: string; desc: string; price: number | null }
 
 export interface BikePackage {
   id: string;
@@ -205,9 +205,9 @@ export const bikeTiers: BikeTier[] = BIKE_PACKAGES.map((p) => ({
 }));
 
 export const carTiers: CarTier[] = [
-  { name: "Mini Service", desc: "Oil change + multipoint check", price: 1499 },
-  { name: "Standard", desc: "Mini + AC + brake clean", price: 2999 },
-  { name: "Comprehensive", desc: "Full service + diagnostics", price: 4999 },
+  { name: "Mini Service", desc: "Oil change + multipoint check", price: null },
+  { name: "Standard", desc: "Mini + AC + brake clean", price: null },
+  { name: "Comprehensive", desc: "Full service + diagnostics", price: null },
 ];
 
 export interface CarPackage {
@@ -226,7 +226,7 @@ export const CAR_PACKAGES: CarPackage[] = [
     id: "mini",
     name: "Mini Service",
     desc: "Oil change + multipoint check",
-    price: 1499,
+    price: null,
     mrp: null,
     duration: "3–4 hrs",
     includes: [
@@ -244,7 +244,7 @@ export const CAR_PACKAGES: CarPackage[] = [
     id: "standard",
     name: "Standard Service",
     desc: "Mini + AC + brake clean",
-    price: 2999,
+    price: null,
     mrp: null,
     duration: "4–5 hrs",
     includes: [
@@ -261,7 +261,7 @@ export const CAR_PACKAGES: CarPackage[] = [
     id: "comprehensive",
     name: "Comprehensive Service",
     desc: "Full service + diagnostics",
-    price: 4999,
+    price: null,
     mrp: null,
     duration: "5–6 hrs",
     includes: [

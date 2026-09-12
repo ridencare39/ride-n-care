@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { bikeTiers, carTiers } from "@/lib/pricing";
+import { BIKE_PACKAGES, CAR_PACKAGES, formatPrice } from "@/lib/pricing";
 import { SITE_URL, OG_IMAGE } from "@/lib/seo";
+import { BookingButton } from "@/components/booking/BookingButton";
 
 
 export const Route = createFileRoute("/pricing")({
@@ -39,24 +40,24 @@ function Pricing() {
 
       <h2 className="mt-12 text-2xl font-bold">Bike Service</h2>
       <div className="mt-4 grid md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {bikeTiers.map((t) => (
-          <div key={t.name} className="rounded-2xl border border-border bg-card p-5">
-            <div className="text-primary text-sm font-semibold">{t.name}</div>
+        {BIKE_PACKAGES.map((t) => (
+          <div key={t.id} className="rounded-2xl border border-border bg-card p-5">
+            <div className="text-primary text-sm font-semibold">{t.tier}</div>
             <div className="text-xs text-muted-foreground">{t.cc}</div>
-            <div className="mt-3 text-2xl font-bold">₹{t.price}</div>
-            <Link to="/contact" className="mt-4 inline-block w-full text-center rounded-full bg-grad-primary px-4 py-2 font-semibold text-primary-foreground">Book</Link>
+            <div className="mt-3 text-2xl font-bold">{formatPrice(t.price)}</div>
+            <BookingButton vehicle="bike" packageId={t.id} className="mt-4 h-11 w-full rounded-full bg-grad-primary font-semibold text-primary-foreground">Book</BookingButton>
           </div>
         ))}
       </div>
 
       <h2 className="mt-12 text-2xl font-bold">Car Service</h2>
       <div className="mt-4 grid md:grid-cols-3 gap-4">
-        {carTiers.map((t) => (
-          <div key={t.name} className="rounded-2xl border border-border bg-card p-6">
+        {CAR_PACKAGES.slice(0, 3).map((t) => (
+          <div key={t.id} className="rounded-2xl border border-border bg-card p-6">
             <div className="text-primary text-sm font-semibold">{t.name}</div>
             <p className="text-sm text-muted-foreground mt-1">{t.desc}</p>
-            <div className="mt-4 text-3xl font-bold">₹{t.price}</div>
-            <Link to="/contact" className="mt-5 inline-block rounded-full bg-grad-primary px-5 py-2 font-semibold text-primary-foreground">Book</Link>
+            <div className="mt-4 text-3xl font-bold">{formatPrice(t.price)}</div>
+            <BookingButton vehicle="car" packageId={t.id} className="mt-5 h-11 rounded-full bg-grad-primary px-5 font-semibold text-primary-foreground">Book</BookingButton>
           </div>
         ))}
       </div>
