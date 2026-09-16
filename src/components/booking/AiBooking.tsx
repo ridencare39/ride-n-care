@@ -38,7 +38,7 @@ function toBooking(fields: Record<string, string>): Booking {
     ...(power ? { power } : {}),
     brand: fields["brand"],
     model: fields["model"],
-    variant: fields["variant"] ?? matchedPackage && "cc" in matchedPackage ? (matchedPackage as { cc: string }).cc : undefined,
+    variant: fields["variant"] ?? (matchedPackage && "cc" in matchedPackage ? matchedPackage.cc : undefined),
     engineCc: engineCc ?? null,
     packageId: matchedPackage?.id,
     packageName: matchedPackage?.name ?? fields["packageName"] ?? fields["package"],

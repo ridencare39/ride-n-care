@@ -8,7 +8,7 @@ import { bikeCatalogBrands, bikeCatalogModels, getBikeModel } from "@/lib/vehicl
 import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, carModels, copyBookingDetails, isValidIndianMobile, sendBookingToWhatsApp, type Booking, type PowerType } from "@/lib/booking";
 import { createBooking } from "@/lib/bookings.functions";
 
-type Step = "vehicle" | "power" | "brand" | "model" | "cc" | "package" | "includes" | "location" | "details" | "payment" | "review" | "confirmation";
+type Step = "vehicle" | "power" | "brand" | "model" | "variant" | "cc" | "package" | "includes" | "location" | "details" | "payment" | "review" | "confirmation";
 const inputClass = "mt-1 h-12 w-full rounded-md border border-border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20";
 
 export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { initialVehicle?: "bike" | "car"; initialPackageId?: string; onDone?: () => void }) {
@@ -25,7 +25,7 @@ export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { init
   const set = (patch: Partial<Booking>) => setBooking((value) => ({ ...value, ...patch }));
   const go = (next: Step) => { setHistory((items) => [...items, step]); setStep(next); setSearch(""); };
   const back = () => setHistory((items) => { const copy = [...items]; const previous = copy.pop(); if (previous) setStep(previous); return copy; });
-  const progress = (["vehicle", "power", "brand", "model", "cc", "package", "includes", "location", "details", "payment", "review", "confirmation"].indexOf(step) + 1) / 12 * 100;
+  const progress = (["vehicle", "power", "brand", "model", "variant", "cc", "package", "includes", "location", "details", "payment", "review", "confirmation"].indexOf(step) + 1) / 13 * 100;
   const power = booking.power ?? "non-electric";
   const modelCc = booking.vehicle === "bike" && booking.brand && booking.model ? getBikeModel(power, booking.brand, booking.model)?.cc : null;
   const packages = booking.vehicle === "bike"
@@ -99,9 +99,13 @@ export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { init
           .filter((item) => item.name.toLowerCase().includes(search.toLowerCase())).map((item) =>
           <Choice key={item.name} label={item.name} note={item.cc ? `${item.cc}cc` : undefined} active={booking.model === item.name} onClick={() => {
             set({ model: item.name, engineCc: item.cc, variant: item.cc ? getBikeCcTier(item.cc)?.label : undefined });
-            if (booking.vehicle === "bike" && power === "non-electric") go(item.cc ? "cc" : "cc"); else go("package");
+            if (booking.vehicle === "bike" && power === "non-electric") go("cc"); else if (booking.vehicle === "car") go("variant"); else go("package");
           }} />)}
       </div>
+    </Screen>}
+
+    {step === "variant" && <Screen title="Fuel / Variant" note="Choose your car's fuel type">
+      <div className="grid grid-cols-2 gap-3">{CAR_FUEL_OPTIONS.map((fuel) => <Choice key={fuel} label={fuel} active={booking.variant === fuel} onClick={() => { set({ variant: fuel }); go("package"); }} />)}</div>
     </Screen>}
 
     {step === "cc" && <Screen title="Engine Capacity" note={modelCc ? "Detected automatically from your model" : "Enter the exact engine CC"}>
