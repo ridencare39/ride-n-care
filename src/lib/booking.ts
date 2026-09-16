@@ -4,6 +4,7 @@
  */
 
 import { BIKE_PACKAGES, CAR_PACKAGES, formatPrice } from "@/lib/pricing";
+import { bikeCatalogBrands, bikeCatalogModels } from "@/lib/vehicle-catalog";
 
 /** Edit this to change where every booking is sent. */
 export const WHATSAPP_NUMBER = "918296950339";
@@ -76,12 +77,14 @@ export const PREFERRED_TIME_SLOTS = [
 ];
 
 export interface Booking {
+  bookingId?: string;
   vehicle?: VehicleType;
   power?: PowerType;
   brand?: string;
   model?: string;
   /** CC bucket (bike) or fuel/variant (car) */
   variant?: string;
+  engineCc?: number | null;
   packageId?: string;
   packageName?: string;
   mrp?: number | null;
@@ -93,9 +96,15 @@ export interface Booking {
   email?: string;
   registration?: string;
   address?: string;
+  latitude?: number | null;
+  longitude?: number | null;
   date?: string;
   time?: string;
   issue?: string;
+  paymentMethod?: "pay_now" | "pay_later";
+  paymentStatus?: "pending" | "processing" | "paid" | "failed" | "refunded";
+  status?: "confirmed" | "assigned" | "technician_on_the_way" | "service_started" | "service_completed" | "cancelled";
+  source?: "normal" | "ai";
 }
 
 /** 10-digit Indian mobile, optionally with +91 / 0 prefix. */
@@ -120,11 +129,11 @@ export function getCarPackage(id?: string) {
 }
 
 export function bikeBrands(power: PowerType) {
-  return BIKE_BRANDS.filter((b) => b.power === power);
+  return bikeCatalogBrands(power).map((brand) => ({ name: brand.name, power: brand.power, models: brand.models.map((model) => model.name) }));
 }
 
 export function bikeModels(power: PowerType, brand: string) {
-  return BIKE_BRANDS.find((b) => b.power === power && b.name === brand)?.models ?? [];
+  return bikeCatalogModels(power, brand).map((model) => model.name);
 }
 
 export function carModels(brand: string) {
@@ -137,11 +146,12 @@ export function buildBookingMessage(b: Booking): string {
     "*New Booking — Ride N Care*",
     "Care in every mile",
     "",
+    b.bookingId && `Booking ID: ${b.bookingId}`,
     b.vehicle && `Vehicle Type: ${b.vehicle === "bike" ? "Bike" : "Car"}`,
     b.power && `Power: ${b.power === "electric" ? "Electric" : "Non-Electric"}`,
     b.brand && `Brand: ${b.brand}`,
     b.model && `Model: ${b.model}`,
-    b.variant && `${b.vehicle === "car" ? "Variant / Fuel" : "CC"}: ${b.variant}`,
+    b.vehicle === "bike" && b.engineCc ? `CC: ${b.engineCc}cc` : b.variant && `${b.vehicle === "car" ? "Variant / Fuel" : "CC Category"}: ${b.variant}`,
     b.packageName && `Package: ${b.packageName}`,
     b.mrp ? `MRP: ${formatPrice(b.mrp)}` : false,
     b.price !== undefined && `Offer Price: ${formatPrice(b.price ?? null)}`,
@@ -154,6 +164,9 @@ export function buildBookingMessage(b: Booking): string {
     b.address && `Address / Location: ${b.address}`,
     b.date && `Preferred Date: ${b.date}`,
     b.time && `Preferred Time: ${b.time}`,
+    b.paymentMethod && `Payment: ${b.paymentMethod === "pay_now" ? "Pay Now" : "Pay Later"}`,
+    b.paymentStatus && `Payment Status: ${b.paymentStatus.replaceAll("_", " ")}`,
+    b.status && `Booking Status: ${b.status.replaceAll("_", " ")}`,
     b.issue && `Additional Issue: ${b.issue}`,
     b.includes?.length ? `\nIncludes:\n${b.includes.map((i) => `• ${i}`).join("\n")}` : false,
   ];

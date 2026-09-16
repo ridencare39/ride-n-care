@@ -12,6 +12,7 @@ const links: NavLink[] = [
   { to: "/$service", params: { service: "bike-repair" }, label: "Bike Repair" },
   { to: "/cars", label: "Cars" },
   { to: "/pricing", label: "Pricing" },
+  { to: "/track-booking", label: "Track Booking" },
   { to: "/areas", label: "Areas" },
   { to: "/guides", label: "Guides" },
   { to: "/blog", label: "Blog" },

@@ -79,7 +79,7 @@ export const GUIDES: Guide[] = [
       {
         h: "What bike service costs in Bangalore",
         p: [
-          "Cost is driven by engine capacity, because oil quantity, filter and plug prices rise with it. Ride N Care periodic service starts at ₹499 for smaller-capacity bikes, with higher tiers for 150cc+, 200cc+ and premium motorcycles. Parts are billed separately and shown in the quote before the visit.",
+          "Cost is driven by engine capacity. Ride N Care General Service starts at ₹799 for bikes up to 199cc, with exact categories for 200–249cc, 250–400cc, 401–500cc, 501–800cc, and 801cc and above. Parts are billed separately after approval.",
           "Beware of quotes that exclude consumables. A genuine quote names the oil brand and grade, the filter, and the labour, so the final invoice matches what you agreed.",
         ],
       },
@@ -393,7 +393,7 @@ export const GUIDES: Guide[] = [
       {
         h: "Cost, guarantees and paperwork",
         p: [
-          "Doorstep pricing should not be higher than a comparable garage bill for the same parts and labour, and there should be no separate visiting charge hidden at the end. Ride N Care periodic service starts at ₹499 depending on engine capacity, with parts shown separately in the quote.",
+          "Doorstep pricing should not hide a visiting charge. Ride N Care Jump Start is ₹399, Running Repair is ₹450, and General Service starts at ₹799 for bikes up to 199cc, with parts shown separately before approval.",
           "Ask for three things every time: the quote in writing, the invoice listing parts fitted, and the workmanship guarantee period. Ride N Care provides a 7-day workmanship guarantee on work performed.",
         ],
       },

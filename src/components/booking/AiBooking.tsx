@@ -3,7 +3,10 @@ import { useServerFn } from "@tanstack/react-start";
 import { chatBookingAssistant } from "@/lib/ai-booking.functions";
 import { Summary } from "@/components/booking/BookingFlow";
 import type { Booking } from "@/lib/booking";
-import { BIKE_PACKAGES, CAR_PACKAGES } from "@/lib/pricing";
+import { createBooking } from "@/lib/bookings.functions";
+import { BIKE_PACKAGES, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, getBikePackagesForCc } from "@/lib/pricing";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -24,7 +27,8 @@ function toBooking(fields: Record<string, string>): Booking {
         ? "electric"
         : undefined
     : undefined;
-  const packages = vehicle === "car" ? CAR_PACKAGES : BIKE_PACKAGES;
+  const engineCc = num(fields["engineCc"]);
+  const packages = vehicle === "car" ? CAR_PACKAGES : power === "electric" ? ELECTRIC_BIKE_PACKAGES : engineCc ? getBikePackagesForCc(engineCc) : BIKE_PACKAGES;
   const packageHint = (fields["packageName"] ?? fields["package"] ?? "").toLowerCase();
   const matchedPackage = packages.find(
     (item) => packageHint.includes(item.name.toLowerCase()) || item.name.toLowerCase().includes(packageHint),
@@ -34,7 +38,8 @@ function toBooking(fields: Record<string, string>): Booking {
     ...(power ? { power } : {}),
     brand: fields["brand"],
     model: fields["model"],
-    variant: fields["variant"],
+    variant: fields["variant"] ?? matchedPackage && "cc" in matchedPackage ? (matchedPackage as { cc: string }).cc : undefined,
+    engineCc: engineCc ?? null,
     packageId: matchedPackage?.id,
     packageName: matchedPackage?.name ?? fields["packageName"] ?? fields["package"],
     mrp: matchedPackage && "mrp" in matchedPackage ? matchedPackage.mrp ?? null : num(fields["mrp"]) ?? null,
@@ -49,16 +54,20 @@ function toBooking(fields: Record<string, string>): Booking {
     date: fields["date"],
     time: fields["time"],
     issue: fields["issue"],
+    paymentMethod: fields["paymentMethod"]?.toLowerCase().includes("now") ? "pay_now" : "pay_later",
+    source: "ai",
   };
 }
 
 export function AiBooking() {
   const ask = useServerFn(chatBookingAssistant);
+  const create = useServerFn(createBooking);
   const [messages, setMessages] = useState<Msg[]>([{ role: "assistant", content: GREETING }]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [fields, setFields] = useState<Record<string, string>>({});
   const [complete, setComplete] = useState(false);
+  const [created, setCreated] = useState<Booking | null>(null);
   const [error, setError] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -94,8 +103,13 @@ export function AiBooking() {
     }
   };
 
+  if (created) return <Summary booking={created} />;
   if (complete) {
-    return <Summary booking={toBooking(fields)} />;
+    const booking = toBooking(fields);
+    return <div><Summary booking={booking} mode="review" /><Button className="mt-4 h-12 w-full rounded-full" disabled={busy} onClick={async () => {
+      if (!booking.vehicle || !booking.brand || !booking.model || !booking.packageId || !booking.name || !booking.mobile || !booking.whatsapp || !booking.address || !booking.date || !booking.time || !booking.paymentMethod) { setError("A required booking detail is missing. Please use the normal booking form."); setComplete(false); return; }
+      setBusy(true); try { const result = await create({ data: { vehicle: booking.vehicle, power: booking.power ?? null, brand: booking.brand, model: booking.model, engineCc: booking.engineCc ?? null, variant: booking.variant ?? null, packageId: booking.packageId, name: booking.name, mobile: booking.mobile, whatsapp: booking.whatsapp, email: booking.email ?? "", registration: booking.registration ?? "", address: booking.address, latitude: null, longitude: null, date: booking.date, time: booking.time, issue: booking.issue ?? "", paymentMethod: booking.paymentMethod, source: "ai" } }); setCreated(result.booking); } catch (e) { toast.error(e instanceof Error ? e.message : "Could not create booking."); } finally { setBusy(false); }
+    }}>{busy ? "Creating…" : "Create Confirmed Booking"}</Button>{error && <p className="mt-3 text-sm font-semibold text-destructive">{error}</p>}</div>;
   }
 
   return (

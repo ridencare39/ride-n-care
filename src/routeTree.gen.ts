@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrackBookingRouteImport } from './routes/track-booking'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as McpRouteImport } from './routes/mcp'
@@ -35,9 +36,15 @@ import { Route as AuthenticatedSeoMonitorRouteImport } from './routes/_authentic
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as ServiceAreaRouteImport } from './routes/$service.$area'
+import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
+const TrackBookingRoute = TrackBookingRouteImport.update({
+  id: '/track-booking',
+  path: '/track-booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -169,6 +176,12 @@ const ServiceAreaRoute = ServiceAreaRouteImport.update({
   path: '/$area',
   getParentRoute: () => ServiceRoute,
 } as any)
+const AuthenticatedAdminBookingsRoute =
+  AuthenticatedAdminBookingsRouteImport.update({
+    id: '/admin/bookings',
+    path: '/admin/bookings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
   id: '/admin/blog',
   path: '/admin/blog',
@@ -196,6 +209,7 @@ export interface FileRoutesByFullPath {
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/track-booking': typeof TrackBookingRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -209,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/guides/': typeof GuidesIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
+  '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -223,6 +238,7 @@ export interface FileRoutesByTo {
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/track-booking': typeof TrackBookingRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -236,6 +252,7 @@ export interface FileRoutesByTo {
   '/guides': typeof GuidesIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
+  '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -254,6 +271,7 @@ export interface FileRoutesById {
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/track-booking': typeof TrackBookingRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -267,6 +285,7 @@ export interface FileRoutesById {
   '/guides/': typeof GuidesIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
+  '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -285,6 +304,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/pricing'
     | '/sitemap.xml'
+    | '/track-booking'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -298,6 +318,7 @@ export interface FileRouteTypes {
     | '/guides/'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/blog'
+    | '/admin/bookings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -312,6 +333,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/pricing'
     | '/sitemap.xml'
+    | '/track-booking'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -325,6 +347,7 @@ export interface FileRouteTypes {
     | '/guides'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/blog'
+    | '/admin/bookings'
   id:
     | '__root__'
     | '/'
@@ -342,6 +365,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/pricing'
     | '/sitemap.xml'
+    | '/track-booking'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -355,6 +379,7 @@ export interface FileRouteTypes {
     | '/guides/'
     | '/.mcp/invoke-tool/$tool'
     | '/_authenticated/admin/blog'
+    | '/_authenticated/admin/bookings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -373,6 +398,7 @@ export interface RootRouteChildren {
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TrackBookingRoute: typeof TrackBookingRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AreasSlugRoute: typeof AreasSlugRoute
@@ -384,6 +410,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/track-booking': {
+      id: '/track-booking'
+      path: '/track-booking'
+      fullPath: '/track-booking'
+      preLoaderRoute: typeof TrackBookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -566,6 +599,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceAreaRouteImport
       parentRoute: typeof ServiceRoute
     }
+    '/_authenticated/admin/bookings': {
+      id: '/_authenticated/admin/bookings'
+      path: '/admin/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AuthenticatedAdminBookingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/blog': {
       id: '/_authenticated/admin/blog'
       path: '/admin/blog'
@@ -586,11 +626,13 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSeoMonitorRoute: typeof AuthenticatedSeoMonitorRoute
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
+  AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSeoMonitorRoute: AuthenticatedSeoMonitorRoute,
   AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
+  AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -638,6 +680,7 @@ const rootRouteChildren: RootRouteChildren = {
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TrackBookingRoute: TrackBookingRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,

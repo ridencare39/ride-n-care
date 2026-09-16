@@ -1,0 +1,23 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { adminListBookings, adminUpdateBookingStatus } from "@/lib/bookings.functions";
+import { getAdminStatus } from "@/lib/blog.functions";
+import { formatPrice } from "@/lib/pricing";
+
+export const Route = createFileRoute("/_authenticated/admin/bookings")({ head: () => ({ meta: [{ title: "Bookings | Ride N Care Admin" }, { name: "description", content: "Manage Ride N Care bookings." }, { name: "robots", content: "noindex, nofollow" }, { property: "og:title", content: "Bookings | Ride N Care Admin" }, { property: "og:description", content: "Manage Ride N Care bookings." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }), component: AdminBookings });
+const statuses = ["confirmed", "assigned", "technician_on_the_way", "service_started", "service_completed", "cancelled"] as const;
+const label = (value: string) => value.split("_").map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" ");
+
+function AdminBookings() {
+  const statusFn = useServerFn(getAdminStatus); const listFn = useServerFn(adminListBookings); const updateFn = useServerFn(adminUpdateBookingStatus); const queryClient = useQueryClient(); const [search, setSearch] = useState(""); const [activeSearch, setActiveSearch] = useState("");
+  const admin = useQuery({ queryKey: ["admin-status"], queryFn: () => statusFn() }); const list = useQuery({ queryKey: ["admin-bookings", activeSearch], queryFn: () => listFn({ data: { search: activeSearch } }), enabled: admin.data?.isAdmin === true });
+  const update = useMutation({ mutationFn: ({ bookingId, status }: { bookingId: string; status: typeof statuses[number] }) => updateFn({ data: { bookingId, status } }), onSuccess: () => { toast.success("Booking status updated."); queryClient.invalidateQueries({ queryKey: ["admin-bookings"] }); }, onError: (error: Error) => toast.error(error.message) });
+  if (admin.isLoading) return <div className="mx-auto max-w-6xl px-4 py-20">Loading…</div>; if (!admin.data?.isAdmin) return <div className="mx-auto max-w-xl px-4 py-20 text-center"><h1 className="text-3xl font-bold">Admin access needed</h1><p className="mt-3 text-muted-foreground">This page is available to Ride N Care administrators.</p></div>;
+  return <main className="mx-auto max-w-7xl px-4 py-16 sm:px-6"><h1 className="text-4xl font-bold">Bookings</h1><form className="mt-6 flex max-w-xl gap-2" onSubmit={(event) => { event.preventDefault(); setActiveSearch(search); }}><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Booking ID or mobile number" className="h-11 min-w-0 flex-1 rounded-md border border-border bg-background px-3"/><Button>Search</Button></form>
+    <div className="mt-8 space-y-4">{list.isLoading && <p>Loading bookings…</p>}{list.data?.bookings.map((booking: any) => <article key={booking.bookingId} className="rounded-md border border-border bg-card p-5"><div className="flex flex-wrap items-start justify-between gap-4"><div><p className="font-mono font-bold text-primary">{booking.bookingId}</p><h2 className="mt-1 text-lg font-bold">{booking.brand} {booking.model}{booking.engineCc ? ` · ${booking.engineCc}cc` : ""}</h2><p className="text-sm text-muted-foreground">{booking.packageName} · {formatPrice(booking.price)}</p></div><select aria-label={`Status for ${booking.bookingId}`} value={booking.status} onChange={(event) => update.mutate({ bookingId: booking.bookingId, status: event.target.value as typeof statuses[number] })} disabled={update.isPending} className="h-10 rounded-md border border-border bg-background px-3 text-sm font-semibold">{statuses.map((status) => <option key={status} value={status}>{label(status)}</option>)}</select></div><div className="mt-4 grid gap-2 border-t border-border pt-4 text-sm md:grid-cols-3"><p><span className="text-muted-foreground">Customer:</span> {booking.name}</p><p><span className="text-muted-foreground">Mobile:</span> {booking.mobile}</p><p><span className="text-muted-foreground">WhatsApp:</span> {booking.whatsapp}</p><p><span className="text-muted-foreground">Date:</span> {booking.date}, {booking.time}</p><p><span className="text-muted-foreground">Payment:</span> {label(booking.paymentStatus)}</p><p className="md:col-span-3"><span className="text-muted-foreground">Location:</span> {booking.address}</p></div></article>)}</div>
+  </main>;
+}
