@@ -12,4 +12,4 @@
 - [x] Validate booking paths and exact CC boundaries
 - [x] Test layouts at 360, 375, 390, 414, and 430px widths plus desktop
 - [x] Validate a live AI reply with missing-detail follow-up
-- [ ] Configure Pay Now after seller country is confirmed
+- [ ] Connect a supported Indian payment provider for Pay Now (built-in providers do not support this business type in India)

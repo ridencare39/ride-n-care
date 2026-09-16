@@ -66,6 +66,7 @@ function toDto(row: any, history: any[] = []): Booking & { createdAt: string; hi
 export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => bookingSchema.parse(data))
   .handler(async ({ data }) => {
+    if (data.paymentMethod === "pay_now") throw new Error("Online payment is not active yet. Please choose Pay Later.");
     const mobile = normalizeIndianMobile(data.mobile);
     const whatsapp = normalizeIndianMobile(data.whatsapp);
     if (!mobile || !whatsapp) throw new Error("Enter valid 10-digit Indian mobile numbers.");
