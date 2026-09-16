@@ -11,5 +11,5 @@
 - [x] Audit website-wide prices and inclusions
 - [x] Validate booking paths and exact CC boundaries
 - [x] Test layouts at 360, 375, 390, 414, and 430px widths plus desktop
-- [ ] Validate a live AI reply after the selected model is available
+- [x] Validate a live AI reply with missing-detail follow-up
 - [ ] Configure Pay Now after seller country is confirmed
