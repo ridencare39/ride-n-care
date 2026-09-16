@@ -1,207 +1,117 @@
-/**
- * SINGLE SOURCE OF TRUTH for Ride N Care service pricing.
- * Prices are the published Ride N Care rates (ridencare.in).
- * Package cards, booking flow, checkout, summary, AI booking and the
- * WhatsApp message all read from here.
- */
-
+/** One source of truth for every Ride N Care package, price and inclusion. */
 export interface BikeTier { name: string; cc: string; price: number }
 export interface CarTier { name: string; desc: string; price: number | null }
 
+export type BikeServiceId = "general-service" | "general-service-engine-oil" | "jump-start" | "running-repair";
+export interface BikeCcTier { id: string; label: string; minCc: number; maxCc: number | null }
 export interface BikePackage {
   id: string;
-  /** Card title, e.g. "At-Home Regular Service" */
+  serviceId: BikeServiceId;
   name: string;
-  /** Short tier label used in nav/cards */
   tier: string;
   cc: string;
   ccMin: number;
-  ccMax: number;
-  mrp: number;
+  ccMax: number | null;
+  mrp: number | null;
   price: number;
   duration: string;
   includes: string[];
 }
 
-const REGULAR_INCLUDES = [
-  "Basic Fork Inspection",
-  "Basic Hand Cleaning",
-  "Basic Engine Inspection",
-  "Minor Electrical Check-up",
-  "Battery General Check-up",
-  "Driven Chain Basic Cleaning",
-  "Carburettor Basic Check-up",
-  "Brakes – Front & Rear Adjust",
-  "Tightening of Screws, Bolts & Nuts",
-  "Average and Performance Check-up",
-  "Tyre Air Fill (only tubeless)",
-  "Engine oil topup (Price Extra)",
-  "Oil Filter Clean (if Replace Charges)",
-  "Air Filter Clean (if Replace Charges)",
-  "Spark Plug Clean (if Replace Charges)",
-  "Free Pick and Drop (if needed)",
+export const GENERAL_SERVICE_INCLUDES = [
+  "Air Filter Cleaning",
+  "Battery Voltage Check",
+  "Brakes Service",
+  "Cables & Levers Adjustment",
+  "Chain Tension Check",
+  "Clutch Adjustment",
+  "Dry Wash",
+  "Electrical Check-up",
+  "Engine Oil Check",
+  "Greasing & Lubrication",
+  "Oil Leakage Check",
+  "Spark Plug Cleaning",
 ];
 
-const CLASSIC_INCLUDES = [
-  "Coolant Check-up",
-  "Basic Hand Cleaning",
-  "Oiling and Greasing",
-  "Battery General Check-up",
-  "Basic Engine Inspection",
-  "Basic Fork Inspection",
-  "Carburettor Basic Check-up",
-  "Minor Electrical Check-up",
-  "Brakes – Front & Rear Adjust",
-  "Driven Chain Basic Cleaning",
-  "Tightening of Screws, Bolts & Nuts",
-  "Average and Performance Check-up",
-  "Engine oil topup (Price Extra)",
-  "Oil Filter Clean (if Replace Charges)",
-  "Air Filter Clean (if Replace Charges)",
-  "Spark Plug Clean (if Replace Charges)",
-  "Tyre Air Fill (only tubeless)",
-  "Free Pick and Drop (if needed)",
+export const GENERAL_SERVICE_OIL_INCLUDES = [
+  ...GENERAL_SERVICE_INCLUDES,
+  "Engine Oil Replacement",
 ];
 
-const PREMIUM_INCLUDES = [
-  "Coolant Check-up",
-  "Injector Check-up",
-  "Basic Hand Cleaning",
-  "Oiling and Greasing",
-  "Battery General Check-up",
-  "Basic Engine Inspection",
-  "Fuel Pump Motor Check-up",
-  "Basic Fork Inspection",
-  "Brakes – Front & Rear Adjust",
-  "Driven Chain Basic Cleaning",
-  "Carburettor Basic Check-up",
-  "Minor Electrical Check-up",
-  "Tightening of Screws, Bolts & Nuts",
-  "Average and Performance Check-up",
-  "Tyre Air Fill (only tubeless)",
-  "Engine oil topup (Price Extra)",
-  "Oil Filter Clean (if Replace Charges)",
-  "Air Filter Clean (if Replace Charges)",
-  "Spark Plug Clean (if Replace Charges)",
-  "Free Pick and Drop (if needed)",
+export const JUMP_START_INCLUDES = [
+  "Battery Condition Check",
+  "Battery Voltage Check",
+  "Safe Jump Start",
+  "Charging System Basic Check",
 ];
 
-const ROYAL_INCLUDES = [
-  "Injector Check-up",
-  "Coolant Check-up",
-  "Basic Fork Inspection",
-  "Basic Hand Cleaning",
-  "Oiling and Greasing",
-  "Minor Electrical Check-up",
-  "Battery General Check-up",
-  "Basic Engine Inspection",
-  "Fuel Pump Motor Check-up",
-  "Driven Chain Basic Cleaning",
-  "Carburettor Basic Check-up",
-  "Average and Performance Check-up",
-  "Brakes – Front & Rear Adjust",
-  "Tightening of Screws, Bolts & Nuts",
-  "Tyre Air Fill (only tubeless)",
-  "Engine oil topup (Price Extra)",
-  "Oil Filter Clean (if Replace Charges)",
-  "Air Filter Clean (if Replace Charges)",
-  "Spark Plug Clean (if Replace Charges)",
-  "Free Pick and Drop (if needed)",
+export const RUNNING_REPAIR_INCLUDES = [
+  "Initial Fault Inspection",
+  "Minor Running Repair Labour",
+  "Safety Check After Repair",
+  "Additional parts charged only after approval",
 ];
 
-const SPORTS_INCLUDES = [
-  "Injector Check-up",
-  "Coolant Check-up",
-  "Basic Hand Cleaning",
-  "Oiling and Greasing",
-  "Basic Engine Inspection",
-  "Fuel Pump Motor Check-up",
-  "Basic Fork Inspection",
-  "Minor Electrical Check-up",
-  "Battery General Check-up",
-  "Driven Chain Basic Cleaning",
-  "Carburettor Basic Check-up",
-  "Brakes – Front & Rear Adjust",
-  "Tightening of Screws, Bolts & Nuts",
-  "Average and Performance Check-up",
-  "Tyre Air Fill (only tubeless)",
-  "Engine oil topup (Price Extra)",
-  "Oil Filter Clean (if Replace Charges)",
-  "Air Filter Clean (if Replace Charges)",
-  "Spark Plug Clean (if Replace Charges)",
-  "Free Pick and Drop (if needed)",
+export const BIKE_CC_TIERS: BikeCcTier[] = [
+  { id: "upto-199", label: "Up to 199cc", minCc: 1, maxCc: 199 },
+  { id: "200-249", label: "200–249cc", minCc: 200, maxCc: 249 },
+  { id: "250-400", label: "250–400cc", minCc: 250, maxCc: 400 },
+  { id: "401-500", label: "401–500cc", minCc: 401, maxCc: 500 },
+  { id: "501-800", label: "501–800cc", minCc: 501, maxCc: 800 },
+  { id: "801-plus", label: "801cc and above", minCc: 801, maxCc: null },
 ];
 
-export const BIKE_PACKAGES: BikePackage[] = [
-  {
-    id: "regular",
-    name: "At-Home Regular Service",
-    tier: "Regular",
-    cc: "Below 125 CC",
-    ccMin: 0,
-    ccMax: 124,
-    mrp: 899,
-    price: 499,
-    duration: "60–90 mins",
-    includes: REGULAR_INCLUDES,
-  },
-  {
-    id: "classic",
-    name: "At-Home Classic Service",
-    tier: "Classic",
-    cc: "125 – 199 CC",
-    ccMin: 125,
-    ccMax: 199,
-    mrp: 999,
-    price: 799,
-    duration: "60–90 mins",
-    includes: CLASSIC_INCLUDES,
-  },
-  {
-    id: "premium",
-    name: "At-Home Premium Service",
-    tier: "Premium",
-    cc: "200 – 299 CC",
-    ccMin: 200,
-    ccMax: 299,
-    mrp: 1899,
-    price: 1199,
-    duration: "90–120 mins",
-    includes: PREMIUM_INCLUDES,
-  },
-  {
-    id: "royal",
-    name: "At-Home Royal Service",
-    tier: "Royal",
-    cc: "300 – 349 CC",
-    ccMin: 300,
-    ccMax: 349,
-    mrp: 1699,
-    price: 1399,
-    duration: "90–120 mins",
-    includes: ROYAL_INCLUDES,
-  },
-  {
-    id: "sports",
-    name: "At-Home Sports Service",
-    tier: "Sports",
-    cc: "Above 350 CC",
-    ccMin: 350,
-    ccMax: 2000,
-    mrp: 2199,
-    price: 1899,
-    duration: "2 hrs",
-    includes: SPORTS_INCLUDES,
-  },
+const PRICE_MATRIX: Record<string, Record<BikeServiceId, number>> = {
+  "upto-199": { "general-service": 799, "general-service-engine-oil": 1249, "jump-start": 399, "running-repair": 450 },
+  "200-249": { "general-service": 899, "general-service-engine-oil": 1549, "jump-start": 399, "running-repair": 450 },
+  "250-400": { "general-service": 1199, "general-service-engine-oil": 2449, "jump-start": 399, "running-repair": 450 },
+  "401-500": { "general-service": 1399, "general-service-engine-oil": 3849, "jump-start": 399, "running-repair": 450 },
+  "501-800": { "general-service": 1899, "general-service-engine-oil": 4149, "jump-start": 399, "running-repair": 450 },
+  "801-plus": { "general-service": 2499, "general-service-engine-oil": 5449, "jump-start": 399, "running-repair": 450 },
+};
+
+const SERVICES: Array<{ id: BikeServiceId; name: string; duration: string; includes: string[] }> = [
+  { id: "general-service", name: "General Service", duration: "60–90 mins", includes: GENERAL_SERVICE_INCLUDES },
+  { id: "general-service-engine-oil", name: "General Service + Engine Oil", duration: "75–120 mins", includes: GENERAL_SERVICE_OIL_INCLUDES },
+  { id: "jump-start", name: "Jump Start", duration: "20–40 mins", includes: JUMP_START_INCLUDES },
+  { id: "running-repair", name: "Running Repair", duration: "Depends on inspection", includes: RUNNING_REPAIR_INCLUDES },
 ];
 
-/** CC buckets shown in the booking flow — mapped 1:1 to a package. */
-export const BIKE_CC_OPTIONS = BIKE_PACKAGES.map((p) => ({ label: p.cc, packageId: p.id }));
+export const BIKE_PACKAGES: BikePackage[] = BIKE_CC_TIERS.flatMap((tier) =>
+  SERVICES.map((service) => ({
+    id: `${tier.id}-${service.id}`,
+    serviceId: service.id,
+    name: service.name,
+    tier: tier.label,
+    cc: tier.label,
+    ccMin: tier.minCc,
+    ccMax: tier.maxCc,
+    mrp: null,
+    price: PRICE_MATRIX[tier.id]?.[service.id] ?? 0,
+    duration: service.duration,
+    includes: service.includes,
+  })),
+);
 
-export const bikeTiers: BikeTier[] = BIKE_PACKAGES.map((p) => ({
-  name: p.tier,
-  cc: p.cc,
-  price: p.price,
+export function getBikeCcTier(cc: number): BikeCcTier | undefined {
+  if (!Number.isFinite(cc) || cc < 1) return undefined;
+  return BIKE_CC_TIERS.find((tier) => cc >= tier.minCc && (tier.maxCc === null || cc <= tier.maxCc));
+}
+
+export function getBikePackagesForCc(cc: number): BikePackage[] {
+  const tier = getBikeCcTier(cc);
+  return tier ? BIKE_PACKAGES.filter((item) => item.tier === tier.label) : [];
+}
+
+export function getBikePackage(packageId?: string): BikePackage | undefined {
+  return BIKE_PACKAGES.find((item) => item.id === packageId);
+}
+
+export const BIKE_CC_OPTIONS = BIKE_CC_TIERS.map((tier) => ({ label: tier.label, packageId: tier.id }));
+export const bikeTiers: BikeTier[] = BIKE_CC_TIERS.map((tier) => ({
+  name: tier.label,
+  cc: tier.label,
+  price: PRICE_MATRIX[tier.id]?.["general-service"] ?? 0,
 }));
 
 export const carTiers: CarTier[] = [
@@ -211,85 +121,15 @@ export const carTiers: CarTier[] = [
 ];
 
 export interface CarPackage {
-  id: string;
-  name: string;
-  desc: string;
-  /** null => "Price on Request" (no verified published price) */
-  price: number | null;
-  mrp?: number | null;
-  duration: string;
-  includes: string[];
+  id: string; name: string; desc: string; price: number | null; mrp?: number | null; duration: string; includes: string[];
 }
 
 export const CAR_PACKAGES: CarPackage[] = [
-  {
-    id: "mini",
-    name: "Mini Service",
-    desc: "Oil change + multipoint check",
-    price: null,
-    mrp: null,
-    duration: "3–4 hrs",
-    includes: [
-      "Engine Oil Change",
-      "Oil Filter Clean (if Replace Charges)",
-      "Air Filter Clean (if Replace Charges)",
-      "Battery General Check-up",
-      "Brakes – Front & Rear Check",
-      "Coolant Check-up",
-      "Multipoint Inspection",
-      "Free Pick and Drop (if needed)",
-    ],
-  },
-  {
-    id: "standard",
-    name: "Standard Service",
-    desc: "Mini + AC + brake clean",
-    price: null,
-    mrp: null,
-    duration: "4–5 hrs",
-    includes: [
-      "Everything in Mini Service",
-      "AC Cooling Check-up",
-      "Brake Cleaning – Front & Rear",
-      "Wheel Nut Torque Check",
-      "Suspension Basic Inspection",
-      "Interior Vacuum & Dry Wash",
-      "Free Pick and Drop (if needed)",
-    ],
-  },
-  {
-    id: "comprehensive",
-    name: "Comprehensive Service",
-    desc: "Full service + diagnostics",
-    price: null,
-    mrp: null,
-    duration: "5–6 hrs",
-    includes: [
-      "Everything in Standard Service",
-      "Computerised Diagnostics Scan",
-      "Spark Plug Clean (if Replace Charges)",
-      "Fuel System Check-up",
-      "Throttle Body Cleaning",
-      "Under-body Inspection",
-      "Free Pick and Drop (if needed)",
-    ],
-  },
-  {
-    id: "ac-service",
-    name: "AC Service",
-    desc: "Gas refill & cooling diagnostics",
-    price: null,
-    duration: "2–3 hrs",
-    includes: ["AC Gas Level Check", "Cooling Coil Cleaning", "Cabin Filter Check", "Compressor Check-up"],
-  },
-  {
-    id: "denting-painting",
-    name: "Denting & Painting",
-    desc: "Panel-wise, pick-up and drop",
-    price: null,
-    duration: "Depends on panels",
-    includes: ["Panel Inspection", "Dent Removal", "Paint Match & Finish", "Free Pick and Drop (if needed)"],
-  },
+  { id: "mini", name: "Mini Service", desc: "Oil change + multipoint check", price: null, mrp: null, duration: "3–4 hrs", includes: ["Engine Oil Change", "Oil Filter Clean (if replacement is needed, charges apply)", "Air Filter Clean (if replacement is needed, charges apply)", "Battery General Check-up", "Brakes – Front & Rear Check", "Coolant Check-up", "Multipoint Inspection", "Free Pick and Drop (if needed)"] },
+  { id: "standard", name: "Standard Service", desc: "Mini + AC + brake clean", price: null, mrp: null, duration: "4–5 hrs", includes: ["Everything in Mini Service", "AC Cooling Check-up", "Brake Cleaning – Front & Rear", "Wheel Nut Torque Check", "Suspension Basic Inspection", "Interior Vacuum & Dry Wash", "Free Pick and Drop (if needed)"] },
+  { id: "comprehensive", name: "Comprehensive Service", desc: "Full service + diagnostics", price: null, mrp: null, duration: "5–6 hrs", includes: ["Everything in Standard Service", "Computerised Diagnostics Scan", "Spark Plug Clean (if replacement is needed, charges apply)", "Fuel System Check-up", "Throttle Body Cleaning", "Under-body Inspection", "Free Pick and Drop (if needed)"] },
+  { id: "ac-service", name: "AC Service", desc: "Gas refill & cooling diagnostics", price: null, duration: "2–3 hrs", includes: ["AC Gas Level Check", "Cooling Coil Cleaning", "Cabin Filter Check", "Compressor Check-up"] },
+  { id: "denting-painting", name: "Denting & Painting", desc: "Panel-wise, pick-up and drop", price: null, duration: "Depends on panels", includes: ["Panel Inspection", "Dent Removal", "Paint Match & Finish", "Free Pick and Drop (if needed)"] },
 ];
 
 export function formatPrice(value: number | null): string {
