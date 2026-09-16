@@ -61,7 +61,7 @@ export const Route = createFileRoute("/")({
           serviceType: "Bike and Car Repair",
           provider: { "@type": "AutoRepair", "@id": `${SITE_URL}/#business`, name: "Ride N Care" },
           areaServed: ["Bangalore"],
-          offers: { "@type": "Offer", price: "499", priceCurrency: "INR" },
+          offers: { "@type": "AggregateOffer", lowPrice: "399", priceCurrency: "INR" },
         }),
       },
       {

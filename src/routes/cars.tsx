@@ -37,7 +37,7 @@ export const Route = createFileRoute("/cars")({
           serviceType: "Doorstep Car Service",
           areaServed: { "@type": "City", name: "Bangalore" },
           provider: { "@type": "AutoRepair", "@id": `${SITE_URL}/#business`, name: "Ride N Care", telephone: "+91-82969-50339" },
-          offers: { "@type": "Offer", price: "1499", priceCurrency: "INR" },
+          offers: { "@type": "Offer", description: "Price on Request", priceCurrency: "INR" },
         }),
       },
       {
@@ -78,7 +78,7 @@ function Cars() {
           <h1 className="mt-2 text-5xl font-bold">Car Service at Home in Bangalore</h1>
           <p className="mt-4 text-muted-foreground">From hatchbacks to SUVs, our mobile workshop arrives with diagnostic tools, genuine spares, and zero shortcuts.</p>
           <p className="mt-3 text-muted-foreground">
-            Doorstep car service in Bangalore starts at ₹1,499 for a mini service and covers periodic maintenance, AC gas
+            Doorstep car service in Bangalore is quoted after inspection and covers periodic maintenance, AC gas
             refill, battery testing, brakes and suspension, denting and painting, and interior detailing. We work seven days
             a week, 8:00 AM to 9:00 PM, show you every replaced part, and back the work with a 7-day guarantee.
           </p>

@@ -30,7 +30,7 @@ export const Route = createFileRoute("/bikes")({
           serviceType: "Doorstep Bike Service",
           areaServed: { "@type": "City", name: "Bangalore" },
           provider: { "@type": "AutoRepair", "@id": `${SITE_URL}/#business`, name: "Ride N Care", telephone: "+91-82969-50339" },
-          offers: { "@type": "Offer", price: "499", priceCurrency: "INR" },
+          offers: { "@type": "AggregateOffer", lowPrice: "399", priceCurrency: "INR" },
         }),
       },
       {
@@ -76,19 +76,15 @@ function Bikes() {
 
       <h2 className="mt-20 text-3xl font-bold">Service Packages</h2>
       <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {BIKE_PACKAGES.map((t) => (
+        {BIKE_PACKAGES.filter((item) => item.serviceId === "general-service").map((t) => (
           <div key={t.id} className="rounded-2xl border border-border bg-card p-6 hover:border-primary transition">
             <div className="text-primary text-sm font-semibold uppercase tracking-wider">At-Home {t.tier}</div>
             <div className="mt-1 text-muted-foreground text-sm">{t.cc}</div>
             <div className="mt-4">
-              <span className="text-3xl font-bold">₹{t.price}</span>
-              <span className="ml-2 text-muted-foreground line-through">₹{t.mrp}</span>
+              <span className="text-3xl font-bold">₹{t.price.toLocaleString("en-IN")}</span>
             </div>
             <ul className="mt-4 text-sm space-y-1 text-muted-foreground">
-              <li>• Engine oil top-up</li>
-              <li>• Oil filter clean</li>
-              <li>• Air filter clean</li>
-              <li>• Spark plug clean</li>
+              {t.includes.slice(0, 4).map((item) => <li key={item}>• {item}</li>)}
             </ul>
             <BookingButton vehicle="bike" packageId={t.id} className="mt-5 h-11 w-full rounded-full bg-grad-primary px-4 font-semibold text-primary-foreground">Book Now</BookingButton>
           </div>
