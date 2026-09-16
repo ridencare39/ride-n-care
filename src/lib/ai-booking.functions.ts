@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { BIKE_PACKAGES, CAR_PACKAGES, formatPrice } from "@/lib/pricing";
+import { BIKE_PACKAGES, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, formatPrice } from "@/lib/pricing";
 
 const messageSchema = z.object({
   role: z.enum(["user", "assistant"]),
@@ -20,25 +20,29 @@ export interface AiBookingReply {
 
 const bikePackagePrompt = BIKE_PACKAGES.map((p) => `- ${p.name}, ${p.cc}, MRP ${formatPrice(p.mrp)}, Price ${formatPrice(p.price)}`).join("\n");
 const carPackagePrompt = CAR_PACKAGES.map((p) => `- ${p.name}: ${formatPrice(p.price)}`).join("\n");
+const electricPackagePrompt = ELECTRIC_BIKE_PACKAGES.map((p) => `- ${p.name}: ${formatPrice(p.price)}`).join("\n");
 
 const SYSTEM = `You are the Ride N Care booking assistant for a doorstep bike and car service in Bangalore ("Care in every mile").
 Collect a service booking by asking ONE short question at a time, in friendly plain English.
 
 Fields to collect, in this order (skip what the user already gave):
-vehicle (Bike or Car), power (Electric or Non-Electric — bikes only), brand, model, variant (bike: CC range; car: fuel/variant), package, name, mobile, whatsapp, email (optional), registration, address, date, time, issue (optional).
+vehicle (Bike or Car), power (Electric or Non-Electric — bikes only), brand, model, engineCc as exact integer (non-electric bikes only), variant (car only), packageName, name, mobile, whatsapp, email (optional), registration (optional), address, date in YYYY-MM-DD, time, issue (optional), paymentMethod (Pay Now or Pay Later).
 
 Bike packages and prices (use ONLY these):
 ${bikePackagePrompt}
 
 Car packages (use ONLY these):
 ${carPackagePrompt}
+Electric bike packages (use ONLY these):
+${electricPackagePrompt}
 Never invent any other price. Pick the bike package from the CC the user gives.
 Mobile numbers must be 10-digit Indian numbers starting 6-9; ask again if invalid.
+Ask only for missing required details. Before setting complete=true, explicitly ask the customer to confirm the complete booking details. Set complete=true only after the customer clearly confirms.
 
 Reply ONLY with JSON of this shape:
 {"reply":"your next message","booking":{"vehicle":"Bike","brand":"Honda"},"complete":false}
-Put every collected value in "booking" (keys: vehicle, power, brand, model, variant, packageName, mrp, price, name, mobile, whatsapp, email, registration, address, date, time, issue). Keep prices as plain numbers in rupees.
-Set "complete": true only once name, mobile, address, package, brand, model and preferred date+time are collected; then "reply" should be a one-line confirmation that the summary is ready.`;
+Put every collected value in "booking" (keys: vehicle, power, brand, model, engineCc, variant, packageName, name, mobile, whatsapp, email, registration, address, date, time, issue, paymentMethod). Do not return a price; the server resolves the current price from the shared catalogue.
+Set "complete": true only after all required details, WhatsApp, payment method, and explicit customer confirmation are collected; then "reply" should say the booking is ready to create.`;
 
 export const chatBookingAssistant = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
@@ -56,7 +60,7 @@ export const chatBookingAssistant = createServerFn({ method: "POST" })
         "X-Lovable-AIG-SDK": "fetch",
       },
       body: JSON.stringify({
-        model: "google/gemini-3.8-flash",
+        model: "openai/gpt-6-astra",
         response_format: { type: "json_object" },
         messages: [{ role: "system", content: SYSTEM }, ...data.messages],
       }),
