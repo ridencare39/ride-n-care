@@ -115,6 +115,24 @@ export function getBikeServiceStartingPrice(serviceId: BikeServiceId): number {
   return Math.min(...BIKE_PACKAGES.filter((item) => item.serviceId === serviceId).map((item) => item.price));
 }
 
+const SERVICE_SLUG_TO_BOOKING_SERVICE: Partial<Record<string, BikeServiceId>> = {
+  "bike-service": "general-service",
+  "doorstep-bike-service": "general-service",
+  "periodic-bike-service": "general-service",
+  "motorcycle-service": "general-service",
+  "scooter-service": "general-service",
+  "bike-repair": "running-repair",
+  "doorstep-bike-repair": "running-repair",
+  "emergency-bike-repair": "running-repair",
+  "bike-breakdown-assistance": "running-repair",
+  "general-two-wheeler-repair": "running-repair",
+  "battery-service": "jump-start",
+};
+
+export function getBookingServiceIdForSlug(slug: string): BikeServiceId | undefined {
+  return SERVICE_SLUG_TO_BOOKING_SERVICE[slug];
+}
+
 export const BIKE_CC_OPTIONS = BIKE_CC_TIERS.map((tier) => ({ label: tier.label, packageId: tier.id }));
 export const bikeTiers: BikeTier[] = BIKE_CC_TIERS.map((tier) => ({
   name: tier.label,

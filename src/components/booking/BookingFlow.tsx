@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { BIKE_CC_TIERS, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, formatPrice, getBikeCcTier, getBikePackage, getBikePackageForServiceCc, getBikePackagesForCc, getServicePackage, type BikePackage, type BikeServiceId, type CarPackage } from "@/lib/pricing";
 import { bikeCatalogBrands, bikeCatalogModels, getBikeModel } from "@/lib/vehicle-catalog";
-import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, carModels, copyBookingDetails, isValidIndianMobile, sendBookingToWhatsApp, type Booking, type PowerType } from "@/lib/booking";
+import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, carModels, copyBookingDetails, isValidIndianMobile, sendBookingToWhatsApp, whatsappBookingUrl, type Booking, type PowerType } from "@/lib/booking";
 import { createBooking } from "@/lib/bookings.functions";
 
 type Step = "vehicle" | "power" | "brand" | "model" | "variant" | "cc" | "package" | "includes" | "location" | "details" | "payment" | "review" | "confirmation";
@@ -43,6 +43,7 @@ export function BookingFlow({ initialVehicle, initialPackageId, initialServiceId
 
   const submit = async () => {
     if (!booking.vehicle || !booking.brand || !booking.model || !booking.packageId || !booking.name || !booking.mobile || !booking.whatsapp || !booking.address || !booking.date || !booking.time || !booking.paymentMethod) return;
+    const whatsappWindow = typeof window !== "undefined" ? window.open("", "_blank") : null;
     setSubmitting(true);
     try {
       const result = await create({ data: {
@@ -56,8 +57,16 @@ export function BookingFlow({ initialVehicle, initialPackageId, initialServiceId
       setBooking(result.booking);
       setHistory((items) => [...items, step]);
       setStep("confirmation");
+      const url = whatsappBookingUrl(result.booking);
+      if (whatsappWindow) {
+        whatsappWindow.opener = null;
+        whatsappWindow.location.href = url;
+      } else if (typeof window !== "undefined") {
+        window.location.href = url;
+      }
       if (result.requiresPayment) toast.info("Your booking request is saved. Online payment remains pending.");
     } catch (error) {
+      whatsappWindow?.close();
       toast.error(error instanceof Error ? error.message : "Could not create booking.");
     } finally { setSubmitting(false); }
   };
@@ -177,7 +186,7 @@ function Field({ label, ...props }: { label: string } & React.InputHTMLAttribute
 
 export function Summary({ booking, mode = "confirmation", onEdit, onConfirm, submitting, onDone }: { booking: Booking; mode?: "review" | "confirmation"; onEdit?: () => void; onConfirm?: () => void; submitting?: boolean; onDone?: () => void }) {
   const rows = useMemo(() => ([
-    ["Booking ID", booking.bookingId], ["Vehicle", booking.vehicle === "bike" ? "Bike" : "Car"], ["Type", booking.power === "electric" ? "Electric" : booking.power ? "Non-Electric" : ""], ["Vehicle details", [booking.brand, booking.model].filter(Boolean).join(" ")], ["CC", booking.engineCc ? `${booking.engineCc}cc (${booking.variant})` : booking.variant], ["Service", booking.packageName], ["Price", formatPrice(booking.price ?? null)], ["Location", booking.address], ["Customer", booking.name], ["Mobile", booking.mobile], ["WhatsApp", booking.whatsapp], ["Date", booking.date], ["Time", booking.time], ["Payment", booking.paymentMethod === "pay_now" ? `Pay Now · ${booking.paymentStatus ?? "processing"}` : "Pay Later · Pending"], ["Status", booking.status ? titleCase(booking.status) : "Confirmed"],
+    ["Booking ID", booking.bookingId], ["Vehicle", booking.vehicle === "bike" ? "Bike" : "Car"], ["Type", booking.power === "electric" ? "Electric" : booking.power ? "Non-Electric" : ""], ["Vehicle details", [booking.brand, booking.model].filter(Boolean).join(" ")], ["CC", booking.engineCc ? `${booking.engineCc}cc (${booking.variant})` : booking.variant], ["Service", booking.packageName], ["Price", formatPrice(booking.price ?? null)], ["Location", booking.address], ["Customer", booking.name], ["Mobile", booking.mobile], ["WhatsApp", booking.whatsapp], ["Date", booking.date], ["Time", booking.time], ["Payment", booking.paymentMethod === "pay_now" ? `Pay Now · ${booking.paymentStatus ?? "processing"}` : "Pay Later · Pending"], ["Status", mode === "confirmation" ? "Awaiting Ride N Care confirmation" : undefined],
   ] as [string, string | undefined][]).filter(([, value]) => value), [booking]);
   return <section className="min-w-0"><div className="text-center">{mode === "confirmation" && <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground"><Check className="h-7 w-7"/></div>}<h3 className="mt-3 text-xl font-bold">{mode === "confirmation" ? "Booking Request Ready" : "Review Your Booking"}</h3>{mode === "confirmation" && <p className="mt-1 text-sm text-muted-foreground">Send the prepared WhatsApp message. Ride N Care will confirm your booking.</p>}{booking.bookingId && <p className="mt-1 font-mono text-lg font-bold text-primary">{booking.bookingId}</p>}</div>
     <div className="mt-4 divide-y divide-border rounded-md border border-border bg-card px-4">{rows.map(([key, value]) => <div key={key} className="grid grid-cols-[minmax(90px,0.7fr)_minmax(0,1.3fr)] gap-3 py-2.5 text-sm"><span className="text-muted-foreground">{key}</span><span className="break-words text-right font-semibold">{value}</span></div>)}</div>

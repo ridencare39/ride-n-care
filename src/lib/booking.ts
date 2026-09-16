@@ -3,7 +3,7 @@
  * Used by the booking flow, the mobile number popup and Book-with-AI.
  */
 
-import { BIKE_PACKAGES, CAR_PACKAGES, formatPrice } from "@/lib/pricing";
+import { formatPrice } from "@/lib/pricing";
 import { bikeCatalogBrands, bikeCatalogModels } from "@/lib/vehicle-catalog";
 
 /** Edit this to change where every booking is sent. */
@@ -118,14 +118,6 @@ export function normalizeIndianMobile(input: string): string | null {
 
 export function isValidIndianMobile(input: string): boolean {
   return normalizeIndianMobile(input) !== null;
-}
-
-export function getBikePackage(id?: string) {
-  return BIKE_PACKAGES.find((p) => p.id === id);
-}
-
-export function getCarPackage(id?: string) {
-  return CAR_PACKAGES.find((p) => p.id === id);
 }
 
 export function bikeBrands(power: PowerType) {
