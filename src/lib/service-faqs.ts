@@ -9,7 +9,7 @@ export const BIKE_FAQS: [string, string][] = [
 export const CAR_FAQS: [string, string][] = [
   ["What is included in a doorstep car service in Bangalore?", "Engine oil + filter change, brake check, coolant top-up, battery test, AC check, all fluid levels, lights, wipers and a multi-point inspection — completed at your home or office."],
   ["How long does a doorstep car service take?", "Periodic service takes 90–150 minutes, AC service 60–90 minutes, and a battery swap around 20 minutes."],
-  ["How much does a car AC gas refill cost in Bangalore?", "A standard R134a top-up with vacuum and leak-test starts at ₹1,499 for hatchbacks and sedans."],
+  ["How much does a car AC gas refill cost in Bangalore?", "Car AC service is priced after inspection because the refrigerant, leak condition and required parts vary by model. Ride N Care confirms the quote before work begins."],
   ["Do you offer pickup and drop for car service?", "Yes — free pickup and drop is included with our full car service packages within Bangalore city limits."],
   ["Are your car mechanics certified?", "All our technicians are OEM-trained, police-verified and uniformed, with 8+ years average experience."],
 ];

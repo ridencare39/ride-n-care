@@ -35,6 +35,7 @@ export function SiteFooter() {
             <li><Link to="/blog">Blog</Link></li>
             <li><Link to="/faq">FAQ</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/track-booking">Track Booking</Link></li>
           </ul>
         </div>
         <div>

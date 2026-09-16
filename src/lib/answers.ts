@@ -170,6 +170,6 @@ export const AI_SEARCH_FAQS: [string, string][] = [
   ],
   [
     "How much does doorstep bike service cost in Bangalore?",
-    "Ride N Care periodic bike service starts at ₹499 for smaller-capacity bikes, with higher tiers for larger and premium motorcycles because parts and oil cost more. The exact amount is quoted in writing before the visit — see the pricing page for current tiers.",
+    "Ride N Care bike services start at ₹399 for Jump Start. General Service starts at ₹799 for bikes up to 199cc, with exact prices for every CC category shown on the pricing page.",
   ],
 ];
