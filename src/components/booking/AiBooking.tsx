@@ -109,7 +109,7 @@ export function AiBooking() {
     return <div><Summary booking={booking} mode="review" /><Button className="mt-4 h-12 w-full rounded-full" disabled={busy} onClick={async () => {
       if (!booking.vehicle || !booking.brand || !booking.model || !booking.packageId || !booking.name || !booking.mobile || !booking.whatsapp || !booking.address || !booking.date || !booking.time || !booking.paymentMethod) { setError("A required booking detail is missing. Please use the normal booking form."); setComplete(false); return; }
       setBusy(true); try { const result = await create({ data: { vehicle: booking.vehicle, power: booking.power ?? null, brand: booking.brand, model: booking.model, engineCc: booking.engineCc ?? null, variant: booking.variant ?? null, packageId: booking.packageId, name: booking.name, mobile: booking.mobile, whatsapp: booking.whatsapp, email: booking.email ?? "", registration: booking.registration ?? "", address: booking.address, latitude: null, longitude: null, date: booking.date, time: booking.time, issue: booking.issue ?? "", paymentMethod: booking.paymentMethod, source: "ai" } }); setCreated(result.booking); } catch (e) { toast.error(e instanceof Error ? e.message : "Could not create booking."); } finally { setBusy(false); }
-    }}>{busy ? "Creating…" : "Create Confirmed Booking"}</Button>{error && <p className="mt-3 text-sm font-semibold text-destructive">{error}</p>}</div>;
+    }}>{busy ? "Preparing…" : "Continue to WhatsApp"}</Button>{error && <p className="mt-3 text-sm font-semibold text-destructive">{error}</p>}</div>;
   }
 
   return (

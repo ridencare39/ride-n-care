@@ -166,7 +166,7 @@ export function buildBookingMessage(b: Booking): string {
     b.time && `Preferred Time: ${b.time}`,
     b.paymentMethod && `Payment: ${b.paymentMethod === "pay_now" ? "Pay Now" : "Pay Later"}`,
     b.paymentStatus && `Payment Status: ${b.paymentStatus.replaceAll("_", " ")}`,
-    b.status && `Booking Status: ${b.status.replaceAll("_", " ")}`,
+    b.status && `Request Status: Awaiting Ride N Care confirmation`,
     b.issue && `Additional Issue: ${b.issue}`,
     b.includes?.length ? `\nIncludes:\n${b.includes.map((i) => `• ${i}`).join("\n")}` : false,
   ];

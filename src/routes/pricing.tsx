@@ -45,7 +45,8 @@ function Pricing() {
             <div className="text-primary text-sm font-semibold">{t.tier}</div>
             <div className="text-xs text-muted-foreground">{t.cc}</div>
             <div className="mt-3 text-2xl font-bold">{formatPrice(t.price)}</div>
-            <BookingButton vehicle="bike" packageId={t.id} className="mt-4 h-11 w-full rounded-full bg-grad-primary font-semibold text-primary-foreground">Book</BookingButton>
+            <ul className="mt-3 space-y-1 text-xs text-muted-foreground">{t.includes.slice(0, 4).map((item) => <li key={item}>✓ {item}</li>)}</ul>
+            <BookingButton vehicle="bike" packageId={t.id} className="mt-4 h-11 w-full rounded-full bg-grad-primary font-semibold text-primary-foreground">Book Now</BookingButton>
           </div>
         ))}
       </div>
@@ -57,7 +58,8 @@ function Pricing() {
             <div className="text-primary text-sm font-semibold">{t.name}</div>
             <p className="text-sm text-muted-foreground mt-1">{t.desc}</p>
             <div className="mt-4 text-3xl font-bold">{formatPrice(t.price)}</div>
-            <BookingButton vehicle="car" packageId={t.id} className="mt-5 h-11 rounded-full bg-grad-primary px-5 font-semibold text-primary-foreground">Book</BookingButton>
+            <ul className="mt-3 space-y-1 text-xs text-muted-foreground">{t.includes.slice(0, 4).map((item) => <li key={item}>✓ {item}</li>)}</ul>
+            <BookingButton vehicle="car" packageId={t.id} className="mt-5 h-11 rounded-full bg-grad-primary px-5 font-semibold text-primary-foreground">Book Now</BookingButton>
           </div>
         ))}
       </div>

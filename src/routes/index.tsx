@@ -15,6 +15,7 @@ import { GUIDES } from "@/lib/guides";
 import { AREAS } from "@/lib/areas";
 import { SERVICES } from "@/lib/services";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { BookingButton } from "@/components/booking/BookingButton";
 
 const HOME_FAQS: [string, string][] = [
   ["Do you offer doorstep bike service in Bangalore?", "Yes — our certified mechanics arrive at your home or office anywhere in Bangalore with tools, diagnostics and genuine spares. Most bike services finish in 60–90 minutes."],
@@ -106,9 +107,7 @@ function Home() {
               From Whitefield to Kengeri — book a certified mechanic in 60 seconds. We service every two‑wheeler and four‑wheeler with OEM parts, live updates and a printed warranty. <span className="text-foreground font-medium">Care in every mile.</span>
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/contact" className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow hover:opacity-90">
-                Book a Service
-              </Link>
+              <BookingButton className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow hover:opacity-90">Book Now</BookingButton>
               <Link to="/pricing" className="rounded-full border border-border px-6 py-3 font-semibold hover:bg-card">
                 View Pricing
               </Link>
@@ -313,9 +312,7 @@ function Home() {
             Ready for a smoother ride?
           </h2>
           <p className="mt-3 text-primary-foreground/90">Book now and get ₹200 off your first service.</p>
-          <Link to="/contact" className="mt-6 inline-block rounded-full bg-background px-6 py-3 font-semibold text-foreground">
-            Book Now
-          </Link>
+          <BookingButton className="mt-6 rounded-full bg-background px-6 py-3 font-semibold text-foreground">Book Now</BookingButton>
         </div>
       </section>
     </>

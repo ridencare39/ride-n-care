@@ -1,5 +1,6 @@
 import { createContext, lazy, Suspense, useCallback, useContext, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import type { BikeServiceId } from "@/lib/pricing";
 
 const BookingFlow = lazy(() => import("@/components/booking/BookingFlow").then((module) => ({ default: module.BookingFlow })));
 const AiBooking = lazy(() => import("@/components/booking/AiBooking").then((module) => ({ default: module.AiBooking })));
@@ -10,7 +11,7 @@ const QuickWhatsAppBooking = lazy(() =>
 type Mode = "flow" | "ai" | "quick";
 
 interface BookingApi {
-  openBooking: (opts?: { vehicle?: "bike" | "car"; packageId?: string }) => void;
+  openBooking: (opts?: { vehicle?: "bike" | "car"; packageId?: string; serviceId?: BikeServiceId }) => void;
   openAiBooking: () => void;
   openQuickBooking: () => void;
 }
@@ -28,6 +29,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
   const [mode, setMode] = useState<Mode>("flow");
   const [vehicle, setVehicle] = useState<"bike" | "car" | undefined>();
   const [packageId, setPackageId] = useState<string | undefined>();
+  const [serviceId, setServiceId] = useState<BikeServiceId | undefined>();
   const [seed, setSeed] = useState(0);
 
   const api = useMemo<BookingApi>(
@@ -36,6 +38,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
         setMode("flow");
         setVehicle(opts?.vehicle);
         setPackageId(opts?.packageId);
+        setServiceId(opts?.serviceId);
         setSeed((s) => s + 1);
         setOpen(true);
       },
@@ -67,7 +70,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
           </DialogHeader>
           <div key={`${mode}-${seed}`} className="min-w-0">
             <Suspense fallback={<div className="py-10 text-center text-sm text-muted-foreground">Opening booking…</div>}>
-              {mode === "flow" && <BookingFlow initialVehicle={vehicle} initialPackageId={packageId} onDone={close} />}
+              {mode === "flow" && <BookingFlow initialVehicle={vehicle} initialPackageId={packageId} initialServiceId={serviceId} onDone={close} />}
               {mode === "ai" && <AiBooking />}
               {mode === "quick" && (
                 <QuickWhatsAppBooking
