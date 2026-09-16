@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Bike, Car, Check, ChevronLeft, Crosshair, MapPin, Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { BIKE_CC_TIERS, CAR_PACKAGES, formatPrice, getBikeCcTier, getBikePackage, getBikePackagesForCc, type BikePackage, type CarPackage } from "@/lib/pricing";
+import { BIKE_CC_TIERS, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, formatPrice, getBikeCcTier, getBikePackage, getBikePackagesForCc, type BikePackage, type CarPackage } from "@/lib/pricing";
 import { bikeCatalogBrands, bikeCatalogModels, getBikeModel } from "@/lib/vehicle-catalog";
 import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, carModels, copyBookingDetails, isValidIndianMobile, sendBookingToWhatsApp, type Booking, type PowerType } from "@/lib/booking";
 import { createBooking } from "@/lib/bookings.functions";
@@ -28,7 +28,9 @@ export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { init
   const progress = (["vehicle", "power", "brand", "model", "cc", "package", "includes", "location", "details", "payment", "review", "confirmation"].indexOf(step) + 1) / 12 * 100;
   const power = booking.power ?? "non-electric";
   const modelCc = booking.vehicle === "bike" && booking.brand && booking.model ? getBikeModel(power, booking.brand, booking.model)?.cc : null;
-  const packages = booking.vehicle === "bike" && booking.engineCc ? getBikePackagesForCc(booking.engineCc) : CAR_PACKAGES;
+  const packages = booking.vehicle === "bike"
+    ? booking.power === "electric" ? ELECTRIC_BIKE_PACKAGES : booking.engineCc ? getBikePackagesForCc(booking.engineCc) : []
+    : CAR_PACKAGES;
 
   const submit = async () => {
     if (!booking.vehicle || !booking.brand || !booking.model || !booking.packageId || !booking.name || !booking.mobile || !booking.whatsapp || !booking.address || !booking.date || !booking.time || !booking.paymentMethod) return;

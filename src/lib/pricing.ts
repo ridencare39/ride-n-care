@@ -132,6 +132,15 @@ export const CAR_PACKAGES: CarPackage[] = [
   { id: "denting-painting", name: "Denting & Painting", desc: "Panel-wise, pick-up and drop", price: null, duration: "Depends on panels", includes: ["Panel Inspection", "Dent Removal", "Paint Match & Finish", "Free Pick and Drop (if needed)"] },
 ];
 
+export const ELECTRIC_BIKE_PACKAGES: CarPackage[] = [
+  { id: "electric-general-service", name: "Electric Bike General Service", desc: "Inspection and preventive maintenance", price: null, duration: "60–90 mins", includes: ["Battery Health Check", "Charging Port Inspection", "Brake Inspection & Adjustment", "Tyre & Wheel Check", "Electrical Check-up", "Controls & Lights Check", "Dry Wash", "Diagnostic Review"] },
+  { id: "electric-running-repair", name: "Electric Bike Running Repair", desc: "Diagnosis and minor repair", price: null, duration: "Depends on inspection", includes: ["Initial Fault Inspection", "Electrical Diagnostic Check", "Minor Running Repair Labour", "Safety Check After Repair", "Additional parts charged only after approval"] },
+];
+
+export function getServicePackage(packageId?: string): BikePackage | CarPackage | undefined {
+  return getBikePackage(packageId) ?? ELECTRIC_BIKE_PACKAGES.find((item) => item.id === packageId) ?? CAR_PACKAGES.find((item) => item.id === packageId);
+}
+
 export function formatPrice(value: number | null): string {
   return value === null ? "Price on Request" : `₹${value.toLocaleString("en-IN")}`;
 }

@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { CAR_PACKAGES, getBikePackage } from "@/lib/pricing";
+import { CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, getBikePackage } from "@/lib/pricing";
 import { normalizeIndianMobile, type Booking } from "@/lib/booking";
 
 const statusSchema = z.enum(["confirmed", "assigned", "technician_on_the_way", "service_started", "service_completed", "cancelled"]);
@@ -71,7 +71,9 @@ export const createBooking = createServerFn({ method: "POST" })
     if (!mobile || !whatsapp) throw new Error("Enter valid 10-digit Indian mobile numbers.");
 
     const bikePackage = data.vehicle === "bike" ? getBikePackage(data.packageId) : undefined;
-    const packageItem = bikePackage ?? (data.vehicle === "car" ? CAR_PACKAGES.find((item) => item.id === data.packageId) : undefined);
+    const packageItem = bikePackage ?? (data.vehicle === "bike" && data.power === "electric"
+      ? ELECTRIC_BIKE_PACKAGES.find((item) => item.id === data.packageId)
+      : CAR_PACKAGES.find((item) => item.id === data.packageId));
     if (!packageItem) throw new Error("This service package is no longer available. Please choose it again.");
     if (data.vehicle === "bike" && data.power === "non-electric" && bikePackage) {
       if (!data.engineCc || data.engineCc < bikePackage.ccMin || (bikePackage.ccMax !== null && data.engineCc > bikePackage.ccMax)) {
