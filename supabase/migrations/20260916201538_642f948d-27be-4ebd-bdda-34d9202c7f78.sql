@@ -1,0 +1,2 @@
+CREATE POLICY "Deny direct booking access" ON public.bookings FOR ALL TO anon, authenticated USING (false) WITH CHECK (false);
+CREATE POLICY "Deny direct booking history access" ON public.booking_status_history FOR ALL TO anon, authenticated USING (false) WITH CHECK (false);
