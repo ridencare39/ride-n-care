@@ -3,18 +3,19 @@ import { useServerFn } from "@tanstack/react-start";
 import { Bike, Car, Check, ChevronLeft, Crosshair, MapPin, Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { BIKE_CC_TIERS, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, formatPrice, getBikeCcTier, getBikePackage, getBikePackagesForCc, type BikePackage, type CarPackage } from "@/lib/pricing";
+import { BIKE_CC_TIERS, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, formatPrice, getBikeCcTier, getBikePackage, getBikePackageForServiceCc, getBikePackagesForCc, getServicePackage, type BikePackage, type BikeServiceId, type CarPackage } from "@/lib/pricing";
 import { bikeCatalogBrands, bikeCatalogModels, getBikeModel } from "@/lib/vehicle-catalog";
-import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, carModels, copyBookingDetails, isValidIndianMobile, sendBookingToWhatsApp, type Booking, type PowerType } from "@/lib/booking";
+import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, carModels, copyBookingDetails, isValidIndianMobile, sendBookingToWhatsApp, whatsappBookingUrl, type Booking, type PowerType } from "@/lib/booking";
 import { createBooking } from "@/lib/bookings.functions";
 
 type Step = "vehicle" | "power" | "brand" | "model" | "variant" | "cc" | "package" | "includes" | "location" | "details" | "payment" | "review" | "confirmation";
 const inputClass = "mt-1 h-12 w-full rounded-md border border-border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20";
 
-export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { initialVehicle?: "bike" | "car"; initialPackageId?: string; onDone?: () => void }) {
+export function BookingFlow({ initialVehicle, initialPackageId, initialServiceId, onDone }: { initialVehicle?: "bike" | "car"; initialPackageId?: string; initialServiceId?: BikeServiceId; onDone?: () => void }) {
   const create = useServerFn(createBooking);
-  const preset = initialPackageId ? getBikePackage(initialPackageId) : undefined;
-  const [booking, setBooking] = useState<Booking>({ vehicle: initialVehicle, ...(preset ? packageFields(preset) : {}) });
+  const preset = initialPackageId ? getServicePackage(initialPackageId) : undefined;
+  const intendedServiceId = initialServiceId ?? (preset && "serviceId" in preset ? preset.serviceId : undefined);
+  const [booking, setBooking] = useState<Booking>({ vehicle: initialVehicle, ...(preset ? seededPackageFields(preset) : {}) });
   const [step, setStep] = useState<Step>(initialVehicle ? (initialVehicle === "bike" ? "power" : "brand") : "vehicle");
   const [history, setHistory] = useState<Step[]>([]);
   const [search, setSearch] = useState("");
@@ -31,9 +32,18 @@ export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { init
   const packages = booking.vehicle === "bike"
     ? booking.power === "electric" ? ELECTRIC_BIKE_PACKAGES : booking.engineCc ? getBikePackagesForCc(booking.engineCc) : []
     : CAR_PACKAGES;
+  const continueFromCc = () => {
+    if (!booking.engineCc) return;
+    if (intendedServiceId) {
+      const exactPackage = getBikePackageForServiceCc(intendedServiceId, booking.engineCc);
+      if (exactPackage) { set(packageFields(exactPackage)); setShowAllIncludes(false); go("includes"); return; }
+    }
+    go("package");
+  };
 
   const submit = async () => {
     if (!booking.vehicle || !booking.brand || !booking.model || !booking.packageId || !booking.name || !booking.mobile || !booking.whatsapp || !booking.address || !booking.date || !booking.time || !booking.paymentMethod) return;
+    const whatsappWindow = typeof window !== "undefined" ? window.open("", "_blank") : null;
     setSubmitting(true);
     try {
       const result = await create({ data: {
@@ -47,8 +57,16 @@ export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { init
       setBooking(result.booking);
       setHistory((items) => [...items, step]);
       setStep("confirmation");
-      if (result.requiresPayment) toast.info("Your booking is saved. Online payment setup is being completed; payment remains pending.");
+      const url = whatsappBookingUrl(result.booking);
+      if (whatsappWindow) {
+        whatsappWindow.opener = null;
+        whatsappWindow.location.href = url;
+      } else if (typeof window !== "undefined") {
+        window.location.href = url;
+      }
+      if (result.requiresPayment) toast.info("Your booking request is saved. Online payment remains pending.");
     } catch (error) {
+      whatsappWindow?.close();
       toast.error(error instanceof Error ? error.message : "Could not create booking.");
     } finally { setSubmitting(false); }
   };
@@ -99,19 +117,19 @@ export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { init
           .filter((item) => item.name.toLowerCase().includes(search.toLowerCase())).map((item) =>
           <Choice key={item.name} label={item.name} note={item.cc ? `${item.cc}cc` : undefined} active={booking.model === item.name} onClick={() => {
             set({ model: item.name, engineCc: item.cc, variant: item.cc ? getBikeCcTier(item.cc)?.label : undefined });
-            if (booking.vehicle === "bike" && power === "non-electric") go("cc"); else if (booking.vehicle === "car") go("variant"); else go("package");
+            if (booking.vehicle === "bike" && power === "non-electric") go("cc"); else if (booking.vehicle === "car") go("variant"); else if (preset) go("includes"); else go("package");
           }} />)}
       </div>
     </Screen>}
 
     {step === "variant" && <Screen title="Fuel / Variant" note="Choose your car's fuel type">
-      <div className="grid grid-cols-2 gap-3">{CAR_FUEL_OPTIONS.map((fuel) => <Choice key={fuel} label={fuel} active={booking.variant === fuel} onClick={() => { set({ variant: fuel }); go("package"); }} />)}</div>
+      <div className="grid grid-cols-2 gap-3">{CAR_FUEL_OPTIONS.map((fuel) => <Choice key={fuel} label={fuel} active={booking.variant === fuel} onClick={() => { set({ variant: fuel }); go(preset ? "includes" : "package"); }} />)}</div>
     </Screen>}
 
     {step === "cc" && <Screen title="Engine Capacity" note={modelCc ? "Detected automatically from your model" : "Enter the exact engine CC"}>
       {modelCc ? <div className="rounded-md border border-primary bg-primary/5 p-5 text-center"><div className="text-3xl font-bold">{modelCc}cc</div><div className="mt-1 text-sm text-muted-foreground">{getBikeCcTier(modelCc)?.label}</div></div> : <label className="block"><span className="text-sm font-semibold">Engine CC</span><input type="number" min="1" max="2500" className={inputClass} placeholder="Example: 349" onChange={(event) => { const cc = Number(event.target.value); set({ engineCc: cc || null, variant: getBikeCcTier(cc)?.label }); }} /></label>}
       <div className="mt-4 grid grid-cols-2 gap-2">{BIKE_CC_TIERS.map((tier) => <div key={tier.id} className={`rounded-full border px-3 py-2 text-center text-xs font-semibold ${booking.variant === tier.label ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground"}`}>{tier.label}</div>)}</div>
-      <Button className="mt-5 h-12 w-full rounded-full" disabled={!booking.engineCc || !getBikeCcTier(booking.engineCc)} onClick={() => go("package")}>Continue</Button>
+      <Button className="mt-5 h-12 w-full rounded-full" disabled={!booking.engineCc || !getBikeCcTier(booking.engineCc)} onClick={continueFromCc}>Continue</Button>
     </Screen>}
 
     {step === "package" && <Screen title="Choose Service" note={booking.vehicle === "bike" ? `${booking.engineCc}cc · ${booking.variant}` : "Price confirmed after inspection"}>
@@ -120,7 +138,7 @@ export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { init
 
     {step === "includes" && <Screen title="What’s Included" note={booking.packageName}>
       <div className="rounded-md border border-border bg-card p-4"><div className="text-2xl font-bold">{formatPrice(booking.price ?? null)}</div><ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2">{(showAllIncludes ? booking.includes : booking.includes?.slice(0, 8))?.map((item) => <li key={item} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary"/><span>{item}</span></li>)}</ul>{(booking.includes?.length ?? 0) > 8 && <Button variant="link" className="mt-2 px-0" onClick={() => setShowAllIncludes((value) => !value)}>{showAllIncludes ? "Show less" : "View all"}</Button>}</div>
-      <Button className="mt-4 h-12 w-full rounded-full" onClick={() => go("location")}>Checkout</Button>
+      <Button className="mt-4 h-12 w-full rounded-full" onClick={() => go("location")}>Continue with this package</Button>
     </Screen>}
 
     {step === "location" && <Screen title="Service Location" note="Tell us where the mechanic should arrive">
@@ -150,6 +168,7 @@ function Choice({ label, note, icon, mark, active, disabled, onClick }: { label:
 function SearchBox({ value, onChange, placeholder }: { value: string; onChange: (value: string) => void; placeholder: string }) { return <label className="relative block"><Search className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground"/><input value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="h-11 w-full rounded-full border border-border bg-background pl-10 pr-4 text-sm outline-none focus:border-primary"/></label>; }
 function itemFields(item: BikePackage | CarPackage): Partial<Booking> { return { packageId: item.id, packageName: item.name, mrp: item.mrp ?? null, price: item.price, includes: item.includes }; }
 function packageFields(item: BikePackage): Partial<Booking> { return { ...itemFields(item), variant: item.cc }; }
+function seededPackageFields(item: BikePackage | CarPackage): Partial<Booking> { return "serviceId" in item ? packageFields(item) : itemFields(item); }
 
 function PackageCard({ item, active, onSelect }: { item: BikePackage | CarPackage; active: boolean; onSelect: () => void }) { return <article className={`rounded-md border bg-card p-4 ${active ? "border-primary" : "border-border"}`}><div className="flex items-start justify-between gap-3"><div><h4 className="font-bold">{item.name}</h4><p className="mt-1 text-xs text-muted-foreground">{"cc" in item ? item.cc : item.desc}</p></div><Sparkles className="h-5 w-5 text-primary"/></div><div className="mt-3 text-2xl font-bold">{formatPrice(item.price)}</div><p className="mt-1 text-xs text-muted-foreground">{item.duration}</p><ul className="mt-3 space-y-1 text-xs text-muted-foreground">{item.includes.slice(0, 4).map((text) => <li key={text}>✓ {text}</li>)}</ul><Button type="button" className="mt-4 h-11 w-full rounded-full" onClick={onSelect}>Select</Button></article>; }
 
@@ -167,12 +186,12 @@ function Field({ label, ...props }: { label: string } & React.InputHTMLAttribute
 
 export function Summary({ booking, mode = "confirmation", onEdit, onConfirm, submitting, onDone }: { booking: Booking; mode?: "review" | "confirmation"; onEdit?: () => void; onConfirm?: () => void; submitting?: boolean; onDone?: () => void }) {
   const rows = useMemo(() => ([
-    ["Booking ID", booking.bookingId], ["Vehicle", booking.vehicle === "bike" ? "Bike" : "Car"], ["Type", booking.power === "electric" ? "Electric" : booking.power ? "Non-Electric" : ""], ["Vehicle details", [booking.brand, booking.model].filter(Boolean).join(" ")], ["CC", booking.engineCc ? `${booking.engineCc}cc (${booking.variant})` : booking.variant], ["Service", booking.packageName], ["Price", formatPrice(booking.price ?? null)], ["Location", booking.address], ["Customer", booking.name], ["Mobile", booking.mobile], ["WhatsApp", booking.whatsapp], ["Date", booking.date], ["Time", booking.time], ["Payment", booking.paymentMethod === "pay_now" ? `Pay Now · ${booking.paymentStatus ?? "processing"}` : "Pay Later · Pending"], ["Status", booking.status ? titleCase(booking.status) : "Confirmed"],
+    ["Booking ID", booking.bookingId], ["Vehicle", booking.vehicle === "bike" ? "Bike" : "Car"], ["Type", booking.power === "electric" ? "Electric" : booking.power ? "Non-Electric" : ""], ["Vehicle details", [booking.brand, booking.model].filter(Boolean).join(" ")], ["CC", booking.engineCc ? `${booking.engineCc}cc (${booking.variant})` : booking.variant], ["Service", booking.packageName], ["Price", formatPrice(booking.price ?? null)], ["Location", booking.address], ["Customer", booking.name], ["Mobile", booking.mobile], ["WhatsApp", booking.whatsapp], ["Date", booking.date], ["Time", booking.time], ["Payment", booking.paymentMethod === "pay_now" ? `Pay Now · ${booking.paymentStatus ?? "processing"}` : "Pay Later · Pending"], ["Status", mode === "confirmation" ? "Awaiting Ride N Care confirmation" : undefined],
   ] as [string, string | undefined][]).filter(([, value]) => value), [booking]);
-  return <section className="min-w-0"><div className="text-center">{mode === "confirmation" && <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground"><Check className="h-7 w-7"/></div>}<h3 className="mt-3 text-xl font-bold">{mode === "confirmation" ? "Booking Confirmed" : "Review Your Booking"}</h3>{booking.bookingId && <p className="mt-1 font-mono text-lg font-bold text-primary">{booking.bookingId}</p>}</div>
+  return <section className="min-w-0"><div className="text-center">{mode === "confirmation" && <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground"><Check className="h-7 w-7"/></div>}<h3 className="mt-3 text-xl font-bold">{mode === "confirmation" ? "Booking Request Ready" : "Review Your Booking"}</h3>{mode === "confirmation" && <p className="mt-1 text-sm text-muted-foreground">Send the prepared WhatsApp message. Ride N Care will confirm your booking.</p>}{booking.bookingId && <p className="mt-1 font-mono text-lg font-bold text-primary">{booking.bookingId}</p>}</div>
     <div className="mt-4 divide-y divide-border rounded-md border border-border bg-card px-4">{rows.map(([key, value]) => <div key={key} className="grid grid-cols-[minmax(90px,0.7fr)_minmax(0,1.3fr)] gap-3 py-2.5 text-sm"><span className="text-muted-foreground">{key}</span><span className="break-words text-right font-semibold">{value}</span></div>)}</div>
     {!!booking.includes?.length && <details className="mt-3 rounded-md border border-border bg-card p-4"><summary className="cursor-pointer font-semibold">What’s Included ({booking.includes.length})</summary><ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">{booking.includes.map((item) => <li key={item}>✓ {item}</li>)}</ul></details>}
-    {mode === "review" ? <div className="mt-4 grid grid-cols-2 gap-2"><Button variant="outline" className="h-12 rounded-full" onClick={onEdit}>Edit</Button><Button className="h-12 rounded-full" onClick={onConfirm} disabled={submitting}>{submitting ? "Creating…" : "Confirm Booking"}</Button></div> : <><Button className="mt-4 h-12 w-full rounded-full bg-whatsapp text-whatsapp-foreground" onClick={() => sendBookingToWhatsApp(booking)}>Send Confirmation on WhatsApp</Button><div className="mt-2 grid grid-cols-2 gap-2"><Button variant="outline" onClick={async () => toast[(await copyBookingDetails(booking)) ? "success" : "error"]("Booking details copied")} className="rounded-full">Copy Details</Button><Button variant="outline" asChild className="rounded-full"><a href={`tel:${CALL_NUMBER}`}>Call Ride N Care</a></Button></div>{onDone && <Button variant="ghost" className="mt-2 w-full" onClick={onDone}>Done</Button>}</>}
+    {mode === "review" ? <div className="mt-4 grid grid-cols-2 gap-2"><Button variant="outline" className="h-12 rounded-full" onClick={onEdit}>Edit</Button><Button className="h-12 rounded-full" onClick={onConfirm} disabled={submitting}>{submitting ? "Preparing…" : "Continue to WhatsApp"}</Button></div> : <><Button className="mt-4 h-12 w-full rounded-full bg-whatsapp text-whatsapp-foreground" onClick={() => sendBookingToWhatsApp(booking)}>Open WhatsApp to Send</Button><div className="mt-2 grid grid-cols-2 gap-2"><Button variant="outline" onClick={async () => toast[(await copyBookingDetails(booking)) ? "success" : "error"]("Booking details copied")} className="rounded-full">Copy Details</Button><Button variant="outline" asChild className="rounded-full"><a href={`tel:${CALL_NUMBER}`}>Call Ride N Care</a></Button></div>{onDone && <Button variant="ghost" className="mt-2 w-full" onClick={onDone}>Done</Button>}</>}
   </section>;
 }
 function titleCase(value: string) { return value.split("_").map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" "); }

@@ -5,6 +5,7 @@ import { AREAS } from "@/lib/areas";
 import { SERVICES } from "@/lib/services";
 import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL, breadcrumbJsonLd, faqPageJsonLd } from "@/lib/seo";
 import { GUIDES } from "@/lib/guides";
+import { BookingButton } from "@/components/booking/BookingButton";
 
 const URL = `${SITE_URL}/answers`;
 
@@ -145,7 +146,7 @@ function Answers() {
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
           <a href={`tel:${BRAND.phonePrimary}`} className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Call {BRAND.phonePrimary}</a>
           <a href={`https://wa.me/${BRAND.whatsapp}`} className="rounded-full border border-background/40 px-6 py-3 font-semibold text-primary-foreground">WhatsApp</a>
-          <Link to="/contact" className="rounded-full border border-background/40 px-6 py-3 font-semibold text-primary-foreground">Booking form</Link>
+          <BookingButton variant="outline" className="rounded-full border-background/40 bg-transparent px-6 py-3 text-primary-foreground hover:bg-background hover:text-foreground">Book Now</BookingButton>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { bikeTiers, carTiers } from "@/lib/pricing";
+import { BIKE_PACKAGES, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES } from "@/lib/pricing";
 
 export default defineTool({
   name: "get_service_pricing",
@@ -14,8 +14,8 @@ export default defineTool({
     const payload = {
       currency: "INR",
       note: "Flat rates. No hidden charges. Parts billed at MRP with bill copy.",
-      ...(vehicle !== "car" ? { bikeService: bikeTiers } : {}),
-      ...(vehicle !== "bike" ? { carService: carTiers } : {}),
+      ...(vehicle !== "car" ? { bikeService: BIKE_PACKAGES, electricBikeService: ELECTRIC_BIKE_PACKAGES } : {}),
+      ...(vehicle !== "bike" ? { carService: CAR_PACKAGES } : {}),
     };
     return {
       content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],

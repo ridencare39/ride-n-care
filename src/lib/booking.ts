@@ -3,7 +3,7 @@
  * Used by the booking flow, the mobile number popup and Book-with-AI.
  */
 
-import { BIKE_PACKAGES, CAR_PACKAGES, formatPrice } from "@/lib/pricing";
+import { formatPrice } from "@/lib/pricing";
 import { bikeCatalogBrands, bikeCatalogModels } from "@/lib/vehicle-catalog";
 
 /** Edit this to change where every booking is sent. */
@@ -103,7 +103,7 @@ export interface Booking {
   issue?: string;
   paymentMethod?: "pay_now" | "pay_later";
   paymentStatus?: "pending" | "processing" | "paid" | "failed" | "refunded";
-  status?: "confirmed" | "assigned" | "technician_on_the_way" | "service_started" | "service_completed" | "cancelled";
+  status?: "awaiting_confirmation" | "confirmed" | "assigned" | "technician_on_the_way" | "service_started" | "service_completed" | "cancelled";
   source?: "normal" | "ai";
 }
 
@@ -118,14 +118,6 @@ export function normalizeIndianMobile(input: string): string | null {
 
 export function isValidIndianMobile(input: string): boolean {
   return normalizeIndianMobile(input) !== null;
-}
-
-export function getBikePackage(id?: string) {
-  return BIKE_PACKAGES.find((p) => p.id === id);
-}
-
-export function getCarPackage(id?: string) {
-  return CAR_PACKAGES.find((p) => p.id === id);
 }
 
 export function bikeBrands(power: PowerType) {
@@ -166,7 +158,7 @@ export function buildBookingMessage(b: Booking): string {
     b.time && `Preferred Time: ${b.time}`,
     b.paymentMethod && `Payment: ${b.paymentMethod === "pay_now" ? "Pay Now" : "Pay Later"}`,
     b.paymentStatus && `Payment Status: ${b.paymentStatus.replaceAll("_", " ")}`,
-    b.status && `Booking Status: ${b.status.replaceAll("_", " ")}`,
+    b.status && `Request Status: Awaiting Ride N Care confirmation`,
     b.issue && `Additional Issue: ${b.issue}`,
     b.includes?.length ? `\nIncludes:\n${b.includes.map((i) => `• ${i}`).join("\n")}` : false,
   ];

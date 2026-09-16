@@ -70,7 +70,7 @@ const PRICE_MATRIX: Record<string, Record<BikeServiceId, number>> = {
   "801-plus": { "general-service": 2499, "general-service-engine-oil": 5449, "jump-start": 399, "running-repair": 450 },
 };
 
-const SERVICES: Array<{ id: BikeServiceId; name: string; duration: string; includes: string[] }> = [
+export const BIKE_SERVICES: Array<{ id: BikeServiceId; name: string; duration: string; includes: string[] }> = [
   { id: "general-service", name: "General Service", duration: "60–90 mins", includes: GENERAL_SERVICE_INCLUDES },
   { id: "general-service-engine-oil", name: "General Service + Engine Oil", duration: "75–120 mins", includes: GENERAL_SERVICE_OIL_INCLUDES },
   { id: "jump-start", name: "Jump Start", duration: "20–40 mins", includes: JUMP_START_INCLUDES },
@@ -78,7 +78,7 @@ const SERVICES: Array<{ id: BikeServiceId; name: string; duration: string; inclu
 ];
 
 export const BIKE_PACKAGES: BikePackage[] = BIKE_CC_TIERS.flatMap((tier) =>
-  SERVICES.map((service) => ({
+  BIKE_SERVICES.map((service) => ({
     id: `${tier.id}-${service.id}`,
     serviceId: service.id,
     name: service.name,
@@ -105,6 +105,37 @@ export function getBikePackagesForCc(cc: number): BikePackage[] {
 
 export function getBikePackage(packageId?: string): BikePackage | undefined {
   return BIKE_PACKAGES.find((item) => item.id === packageId);
+}
+
+export function getBikePackageForServiceCc(serviceId: BikeServiceId, cc: number): BikePackage | undefined {
+  return getBikePackagesForCc(cc).find((item) => item.serviceId === serviceId);
+}
+
+export function getBikeServiceStartingPrice(serviceId: BikeServiceId): number {
+  return Math.min(...BIKE_PACKAGES.filter((item) => item.serviceId === serviceId).map((item) => item.price));
+}
+
+const SERVICE_SLUG_TO_BOOKING_SERVICE: Partial<Record<string, BikeServiceId>> = {
+  "bike-service": "general-service",
+  "doorstep-bike-service": "general-service",
+  "periodic-bike-service": "general-service",
+  "motorcycle-service": "general-service",
+  "scooter-service": "general-service",
+  "bike-repair": "running-repair",
+  "doorstep-bike-repair": "running-repair",
+  "emergency-bike-repair": "running-repair",
+  "bike-breakdown-assistance": "running-repair",
+  "general-two-wheeler-repair": "running-repair",
+  "battery-service": "jump-start",
+};
+
+export function getBookingServiceIdForSlug(slug: string): BikeServiceId | undefined {
+  return SERVICE_SLUG_TO_BOOKING_SERVICE[slug];
+}
+
+export function getBookingServiceForSlug(slug: string) {
+  const serviceId = getBookingServiceIdForSlug(slug);
+  return serviceId ? BIKE_SERVICES.find((item) => item.id === serviceId) : undefined;
 }
 
 export const BIKE_CC_OPTIONS = BIKE_CC_TIERS.map((tier) => ({ label: tier.label, packageId: tier.id }));

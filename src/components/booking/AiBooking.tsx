@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { chatBookingAssistant } from "@/lib/ai-booking.functions";
 import { Summary } from "@/components/booking/BookingFlow";
-import type { Booking } from "@/lib/booking";
+import { whatsappBookingUrl, type Booking } from "@/lib/booking";
 import { createBooking } from "@/lib/bookings.functions";
 import { BIKE_PACKAGES, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, getBikePackagesForCc } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
@@ -28,11 +28,11 @@ function toBooking(fields: Record<string, string>): Booking {
         : undefined
     : undefined;
   const engineCc = num(fields["engineCc"]);
-  const packages = vehicle === "car" ? CAR_PACKAGES : power === "electric" ? ELECTRIC_BIKE_PACKAGES : engineCc ? getBikePackagesForCc(engineCc) : BIKE_PACKAGES;
+  const packages = vehicle === "car" ? CAR_PACKAGES : power === "electric" ? ELECTRIC_BIKE_PACKAGES : engineCc ? getBikePackagesForCc(engineCc) : [];
   const packageHint = (fields["packageName"] ?? fields["package"] ?? "").toLowerCase();
-  const matchedPackage = packages.find(
+  const matchedPackage = packageHint ? packages.find(
     (item) => packageHint.includes(item.name.toLowerCase()) || item.name.toLowerCase().includes(packageHint),
-  );
+  ) : undefined;
   return {
     ...(vehicle ? { vehicle } : {}),
     ...(power ? { power } : {}),
@@ -108,8 +108,8 @@ export function AiBooking() {
     const booking = toBooking(fields);
     return <div><Summary booking={booking} mode="review" /><Button className="mt-4 h-12 w-full rounded-full" disabled={busy} onClick={async () => {
       if (!booking.vehicle || !booking.brand || !booking.model || !booking.packageId || !booking.name || !booking.mobile || !booking.whatsapp || !booking.address || !booking.date || !booking.time || !booking.paymentMethod) { setError("A required booking detail is missing. Please use the normal booking form."); setComplete(false); return; }
-      setBusy(true); try { const result = await create({ data: { vehicle: booking.vehicle, power: booking.power ?? null, brand: booking.brand, model: booking.model, engineCc: booking.engineCc ?? null, variant: booking.variant ?? null, packageId: booking.packageId, name: booking.name, mobile: booking.mobile, whatsapp: booking.whatsapp, email: booking.email ?? "", registration: booking.registration ?? "", address: booking.address, latitude: null, longitude: null, date: booking.date, time: booking.time, issue: booking.issue ?? "", paymentMethod: booking.paymentMethod, source: "ai" } }); setCreated(result.booking); } catch (e) { toast.error(e instanceof Error ? e.message : "Could not create booking."); } finally { setBusy(false); }
-    }}>{busy ? "Creating…" : "Create Confirmed Booking"}</Button>{error && <p className="mt-3 text-sm font-semibold text-destructive">{error}</p>}</div>;
+      const whatsappWindow = window.open("", "_blank"); setBusy(true); try { const result = await create({ data: { vehicle: booking.vehicle, power: booking.power ?? null, brand: booking.brand, model: booking.model, engineCc: booking.engineCc ?? null, variant: booking.variant ?? null, packageId: booking.packageId, name: booking.name, mobile: booking.mobile, whatsapp: booking.whatsapp, email: booking.email ?? "", registration: booking.registration ?? "", address: booking.address, latitude: null, longitude: null, date: booking.date, time: booking.time, issue: booking.issue ?? "", paymentMethod: booking.paymentMethod, source: "ai" } }); setCreated(result.booking); const url = whatsappBookingUrl(result.booking); if (whatsappWindow) { whatsappWindow.opener = null; whatsappWindow.location.href = url; } else { window.location.href = url; } } catch (e) { whatsappWindow?.close(); toast.error(e instanceof Error ? e.message : "Could not prepare booking."); } finally { setBusy(false); }
+    }}>{busy ? "Preparing…" : "Continue to WhatsApp"}</Button>{error && <p className="mt-3 text-sm font-semibold text-destructive">{error}</p>}</div>;
   }
 
   return (

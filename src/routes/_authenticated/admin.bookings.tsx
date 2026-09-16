@@ -9,7 +9,7 @@ import { getAdminStatus } from "@/lib/blog.functions";
 import { formatPrice } from "@/lib/pricing";
 
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ head: () => ({ meta: [{ title: "Bookings | Ride N Care Admin" }, { name: "description", content: "Manage Ride N Care bookings." }, { name: "robots", content: "noindex, nofollow" }, { property: "og:title", content: "Bookings | Ride N Care Admin" }, { property: "og:description", content: "Manage Ride N Care bookings." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }), component: AdminBookings });
-const statuses = ["confirmed", "assigned", "technician_on_the_way", "service_started", "service_completed", "cancelled"] as const;
+const statuses = ["awaiting_confirmation", "confirmed", "assigned", "technician_on_the_way", "service_started", "service_completed", "cancelled"] as const;
 const label = (value: string) => value.split("_").map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" ");
 
 function AdminBookings() {
