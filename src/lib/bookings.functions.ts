@@ -70,12 +70,11 @@ export const createBooking = createServerFn({ method: "POST" })
     const whatsapp = normalizeIndianMobile(data.whatsapp);
     if (!mobile || !whatsapp) throw new Error("Enter valid 10-digit Indian mobile numbers.");
 
-    const packageItem = data.vehicle === "bike"
-      ? getBikePackage(data.packageId)
-      : CAR_PACKAGES.find((item) => item.id === data.packageId);
+    const bikePackage = data.vehicle === "bike" ? getBikePackage(data.packageId) : undefined;
+    const packageItem = bikePackage ?? (data.vehicle === "car" ? CAR_PACKAGES.find((item) => item.id === data.packageId) : undefined);
     if (!packageItem) throw new Error("This service package is no longer available. Please choose it again.");
-    if (data.vehicle === "bike" && data.power === "non-electric") {
-      if (!data.engineCc || data.engineCc < packageItem.ccMin || (packageItem.ccMax !== null && data.engineCc > packageItem.ccMax)) {
+    if (data.vehicle === "bike" && data.power === "non-electric" && bikePackage) {
+      if (!data.engineCc || data.engineCc < bikePackage.ccMin || (bikePackage.ccMax !== null && data.engineCc > bikePackage.ccMax)) {
         throw new Error("The selected service price does not match this bike's CC. Please choose the package again.");
       }
     }
