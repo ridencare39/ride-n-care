@@ -103,7 +103,7 @@ export interface Booking {
   issue?: string;
   paymentMethod?: "pay_now" | "pay_later";
   paymentStatus?: "pending" | "processing" | "paid" | "failed" | "refunded";
-  status?: "confirmed" | "assigned" | "technician_on_the_way" | "service_started" | "service_completed" | "cancelled";
+  status?: "awaiting_confirmation" | "confirmed" | "assigned" | "technician_on_the_way" | "service_started" | "service_completed" | "cancelled";
   source?: "normal" | "ai";
 }
 

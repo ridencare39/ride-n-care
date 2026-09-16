@@ -2,6 +2,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getService, type ServiceDef } from "@/lib/services";
 import { getArea, AREAS, type Area } from "@/lib/areas";
 import { OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { BookingButton } from "@/components/booking/BookingButton";
+import { formatPrice, getBikePackagesForCc, getBookingServiceForSlug, getBookingServiceIdForSlug } from "@/lib/pricing";
 
 export const Route = createFileRoute("/$service/$area")({
   loader: ({ params }) => {
@@ -95,6 +97,9 @@ export const Route = createFileRoute("/$service/$area")({
 function LocalServicePage() {
   const { service: s, area: a } = Route.useLoaderData() as { service: ServiceDef; area: Area };
   const sameZone = AREAS.filter((x) => x.zone === a.zone && x.slug !== a.slug).slice(0, 6);
+  const bookingService = getBookingServiceForSlug(s.slug);
+  const bookingServiceId = getBookingServiceIdForSlug(s.slug);
+  const examplePackage = bookingServiceId ? getBikePackagesForCc(199).find((item) => item.serviceId === bookingServiceId) : undefined;
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-16">
       <nav className="text-xs text-muted-foreground">
@@ -115,9 +120,7 @@ function LocalServicePage() {
       </p>
 
       <div className="mt-6 flex flex-wrap gap-3">
-        <a href={`https://wa.me/918296950339?text=${encodeURIComponent(`Hi Ride N Care, I need ${s.name} in ${a.name}.`)}`} className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">
-          WhatsApp for {a.name}
-        </a>
+        <BookingButton vehicle="bike" serviceId={bookingServiceId} className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">Book Now</BookingButton>
         <a href="tel:08069409289" className="rounded-full border border-border px-6 py-3 font-semibold">Call 080 6940 9289</a>
         {s.priceFrom && <span className="rounded-full border border-border bg-card px-6 py-3 font-semibold">From ₹{s.priceFrom}</span>}
       </div>
@@ -128,12 +131,8 @@ function LocalServicePage() {
         <Stat v="7-day" l="Workmanship guarantee" />
       </div>
 
-      <h2 className="mt-12 text-2xl font-bold">What the {a.name} visit covers</h2>
-      <ul className="mt-4 grid sm:grid-cols-2 gap-2">
-        {s.includes.map((i) => (
-          <li key={i} className="rounded-xl border border-border bg-card px-4 py-3 text-sm">✔ {i}</li>
-        ))}
-      </ul>
+      <h2 className="mt-12 text-2xl font-bold">Booking package details</h2>
+      {bookingService && examplePackage ? <><div className="mt-3 flex flex-wrap items-center gap-3"><span className="font-semibold">{bookingService.name}</span><span className="rounded-full border border-border bg-card px-4 py-2 text-sm">From {formatPrice(examplePackage.price)}</span></div><ul className="mt-4 grid sm:grid-cols-2 gap-2">{bookingService.includes.map((i) => <li key={i} className="rounded-xl border border-border bg-card px-4 py-3 text-sm">✔ {i}</li>)}</ul></> : <p className="mt-3 text-muted-foreground">Select your vehicle and service in Book Now to see the exact verified package, price and inclusions available for your booking.</p>}
 
       <h2 className="mt-12 text-2xl font-bold">Why {a.name} riders book us</h2>
       <div className="mt-4 grid sm:grid-cols-2 gap-3">
@@ -183,7 +182,7 @@ function LocalServicePage() {
         <p className="mt-2 text-primary-foreground/90">Send your bike model and preferred time — quote in 2 minutes.</p>
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
           <a href="https://wa.me/918296950339" className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Chat on WhatsApp</a>
-          <Link to="/contact" className="rounded-full border border-background/40 px-6 py-3 font-semibold text-primary-foreground">Book online</Link>
+          <BookingButton vehicle="bike" serviceId={bookingServiceId} variant="outline" className="rounded-full border-background/40 bg-transparent px-6 py-3 text-primary-foreground hover:bg-background hover:text-foreground">Book Now</BookingButton>
         </div>
       </div>
 

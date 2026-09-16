@@ -12,7 +12,7 @@ export const Route = createFileRoute("/track-booking")({
   component: TrackBookingPage,
 });
 
-const stages = ["confirmed", "assigned", "technician_on_the_way", "service_started", "service_completed"];
+const stages = ["awaiting_confirmation", "confirmed", "assigned", "technician_on_the_way", "service_started", "service_completed"];
 function label(value: string) { return value.split("_").map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" "); }
 
 function TrackBookingPage() {

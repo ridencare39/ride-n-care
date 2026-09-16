@@ -4,7 +4,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, getBikePackage } from "@/lib/pricing";
 import { normalizeIndianMobile, type Booking } from "@/lib/booking";
 
-const statusSchema = z.enum(["confirmed", "assigned", "technician_on_the_way", "service_started", "service_completed", "cancelled"]);
+const statusSchema = z.enum(["awaiting_confirmation", "confirmed", "assigned", "technician_on_the_way", "service_started", "service_completed", "cancelled"]);
 
 const bookingSchema = z.object({
   vehicle: z.enum(["bike", "car"]),
@@ -109,7 +109,7 @@ export const createBooking = createServerFn({ method: "POST" })
       source: data.source,
       payment_method: data.paymentMethod,
       payment_status: "pending",
-      status: "confirmed",
+      status: "awaiting_confirmation",
     } as any).select("*").single();
     if (error || !row) throw new Error("We could not create the booking. Please try again.");
     return { booking: toDto(row), requiresPayment: false };

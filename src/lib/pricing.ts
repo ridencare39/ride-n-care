@@ -133,6 +133,11 @@ export function getBookingServiceIdForSlug(slug: string): BikeServiceId | undefi
   return SERVICE_SLUG_TO_BOOKING_SERVICE[slug];
 }
 
+export function getBookingServiceForSlug(slug: string) {
+  const serviceId = getBookingServiceIdForSlug(slug);
+  return serviceId ? BIKE_SERVICES.find((item) => item.id === serviceId) : undefined;
+}
+
 export const BIKE_CC_OPTIONS = BIKE_CC_TIERS.map((tier) => ({ label: tier.label, packageId: tier.id }));
 export const bikeTiers: BikeTier[] = BIKE_CC_TIERS.map((tier) => ({
   name: tier.label,
