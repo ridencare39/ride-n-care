@@ -62,6 +62,158 @@ export type Database = {
         }
         Relationships: []
       }
+      booking_counters: {
+        Row: {
+          booking_date: string
+          last_number: number
+        }
+        Insert: {
+          booking_date: string
+          last_number?: number
+        }
+        Update: {
+          booking_date?: string
+          last_number?: number
+        }
+        Relationships: []
+      }
+      booking_status_history: {
+        Row: {
+          booking_id: string
+          changed_by: string | null
+          created_at: string
+          id: string
+          note: string | null
+          status: string
+        }
+        Insert: {
+          booking_id: string
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          note?: string | null
+          status: string
+        }
+        Update: {
+          booking_id?: string
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          note?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_status_history_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bookings: {
+        Row: {
+          address: string
+          booking_id: string
+          brand: string
+          created_at: string
+          customer_mobile: string
+          customer_name: string
+          email: string | null
+          engine_cc: number | null
+          id: string
+          includes: string[]
+          issue: string | null
+          latitude: number | null
+          longitude: number | null
+          model: string
+          mrp: number | null
+          package_id: string
+          package_name: string
+          payment_method: string
+          payment_reference: string | null
+          payment_status: string
+          power_type: string | null
+          preferred_date: string
+          preferred_time: string
+          price: number | null
+          registration: string | null
+          source: string
+          status: string
+          updated_at: string
+          variant: string | null
+          vehicle_type: string
+          whatsapp_mobile: string
+        }
+        Insert: {
+          address: string
+          booking_id: string
+          brand: string
+          created_at?: string
+          customer_mobile: string
+          customer_name: string
+          email?: string | null
+          engine_cc?: number | null
+          id?: string
+          includes?: string[]
+          issue?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          model: string
+          mrp?: number | null
+          package_id: string
+          package_name: string
+          payment_method: string
+          payment_reference?: string | null
+          payment_status?: string
+          power_type?: string | null
+          preferred_date: string
+          preferred_time: string
+          price?: number | null
+          registration?: string | null
+          source?: string
+          status?: string
+          updated_at?: string
+          variant?: string | null
+          vehicle_type: string
+          whatsapp_mobile: string
+        }
+        Update: {
+          address?: string
+          booking_id?: string
+          brand?: string
+          created_at?: string
+          customer_mobile?: string
+          customer_name?: string
+          email?: string | null
+          engine_cc?: number | null
+          id?: string
+          includes?: string[]
+          issue?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          model?: string
+          mrp?: number | null
+          package_id?: string
+          package_name?: string
+          payment_method?: string
+          payment_reference?: string | null
+          payment_status?: string
+          power_type?: string | null
+          preferred_date?: string
+          preferred_time?: string
+          price?: number | null
+          registration?: string | null
+          source?: string
+          status?: string
+          updated_at?: string
+          variant?: string | null
+          vehicle_type?: string
+          whatsapp_mobile?: string
+        }
+        Relationships: []
+      }
       gsc_daily_snapshots: {
         Row: {
           created_at: string
@@ -155,6 +307,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      next_ride_n_care_booking_id: { Args: never; Returns: string }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
