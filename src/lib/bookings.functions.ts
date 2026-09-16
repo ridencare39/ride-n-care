@@ -66,6 +66,7 @@ function toDto(row: any, history: any[] = []): Booking & { createdAt: string; hi
 export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => bookingSchema.parse(data))
   .handler(async ({ data }) => {
+    if (data.paymentMethod === "pay_now") throw new Error("Online payment is not active yet. Please choose Pay Later.");
     const mobile = normalizeIndianMobile(data.mobile);
     const whatsapp = normalizeIndianMobile(data.whatsapp);
     if (!mobile || !whatsapp) throw new Error("Enter valid 10-digit Indian mobile numbers.");
@@ -107,11 +108,11 @@ export const createBooking = createServerFn({ method: "POST" })
       issue: data.issue || null,
       source: data.source,
       payment_method: data.paymentMethod,
-      payment_status: data.paymentMethod === "pay_now" ? "processing" : "pending",
+      payment_status: "pending",
       status: "confirmed",
     } as any).select("*").single();
     if (error || !row) throw new Error("We could not create the booking. Please try again.");
-    return { booking: toDto(row), requiresPayment: data.paymentMethod === "pay_now" };
+    return { booking: toDto(row), requiresPayment: false };
   });
 
 export const trackBooking = createServerFn({ method: "POST" })
