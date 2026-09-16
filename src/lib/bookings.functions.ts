@@ -153,6 +153,9 @@ export const adminUpdateBookingStatus = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: row, error } = await supabaseAdmin.from("bookings").update({ status: data.status }).eq("booking_id", data.bookingId).select("id").single();
     if (error || !row) throw new Error("Could not update this booking.");
-    if (data.note) await supabaseAdmin.from("booking_status_history").insert({ booking_id: row.id, status: data.status, note: data.note, changed_by: context.userId });
+    if (data.note) {
+      const { data: latest } = await supabaseAdmin.from("booking_status_history").select("id").eq("booking_id", row.id).eq("status", data.status).order("created_at", { ascending: false }).limit(1).maybeSingle();
+      if (latest) await supabaseAdmin.from("booking_status_history").update({ note: data.note, changed_by: context.userId }).eq("id", latest.id);
+    }
     return { ok: true };
   });
