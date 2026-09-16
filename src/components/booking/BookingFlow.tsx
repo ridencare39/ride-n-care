@@ -1,513 +1,172 @@
 import { useMemo, useState } from "react";
-import {
-  BIKE_PACKAGES,
-  CAR_PACKAGES,
-  formatPrice,
-  type BikePackage,
-  type CarPackage,
-} from "@/lib/pricing";
-import {
-  CALL_NUMBER,
-  CAR_BRANDS,
-  CAR_FUEL_OPTIONS,
-  PREFERRED_TIME_SLOTS,
-  bikeBrands,
-  bikeModels,
-  carModels,
-  copyBookingDetails,
-  isValidIndianMobile,
-  sendBookingToWhatsApp,
-  type Booking,
-  type PowerType,
-} from "@/lib/booking";
+import { useServerFn } from "@tanstack/react-start";
+import { Bike, Car, Check, ChevronLeft, Crosshair, MapPin, Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { BIKE_CC_TIERS, CAR_PACKAGES, formatPrice, getBikeCcTier, getBikePackage, getBikePackagesForCc, type BikePackage, type CarPackage } from "@/lib/pricing";
+import { bikeCatalogBrands, bikeCatalogModels, getBikeModel } from "@/lib/vehicle-catalog";
+import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, carModels, copyBookingDetails, isValidIndianMobile, sendBookingToWhatsApp, type Booking, type PowerType } from "@/lib/booking";
+import { createBooking } from "@/lib/bookings.functions";
 
-type Step =
-  | "vehicle"
-  | "power"
-  | "brand"
-  | "model"
-  | "variant"
-  | "package"
-  | "includes"
-  | "checkout"
-  | "summary";
+type Step = "vehicle" | "power" | "brand" | "model" | "cc" | "package" | "includes" | "location" | "details" | "payment" | "review" | "confirmation";
+const inputClass = "mt-1 h-12 w-full rounded-md border border-border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20";
 
-const chip =
-  "w-full min-h-12 rounded-xl border border-border bg-background px-4 py-3 text-left text-sm font-medium transition hover:border-primary hover:bg-card active:scale-[0.99]";
-const chipActive = "border-primary bg-card text-primary";
-
-export function BookingFlow({
-  initialVehicle,
-  initialPackageId,
-  onDone,
-}: {
-  initialVehicle?: "bike" | "car";
-  initialPackageId?: string;
-  onDone?: () => void;
-}) {
-  const [booking, setBooking] = useState<Booking>(() => {
-    const base: Booking = {};
-    if (initialVehicle) base.vehicle = initialVehicle;
-    if (initialVehicle === "bike" && initialPackageId) {
-      const p = BIKE_PACKAGES.find((x) => x.id === initialPackageId);
-      if (p) Object.assign(base, packageFields(p), { variant: p.cc });
-    }
-    if (initialVehicle === "car" && initialPackageId) {
-      const p = CAR_PACKAGES.find((x) => x.id === initialPackageId);
-      if (p) Object.assign(base, carPackageFields(p));
-    }
-    return base;
-  });
+export function BookingFlow({ initialVehicle, initialPackageId, onDone }: { initialVehicle?: "bike" | "car"; initialPackageId?: string; onDone?: () => void }) {
+  const create = useServerFn(createBooking);
+  const preset = initialPackageId ? getBikePackage(initialPackageId) : undefined;
+  const [booking, setBooking] = useState<Booking>({ vehicle: initialVehicle, ...(preset ? packageFields(preset) : {}) });
   const [step, setStep] = useState<Step>(initialVehicle ? (initialVehicle === "bike" ? "power" : "brand") : "vehicle");
+  const [history, setHistory] = useState<Step[]>([]);
+  const [search, setSearch] = useState("");
+  const [locating, setLocating] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [showAllIncludes, setShowAllIncludes] = useState(false);
 
-  const set = (patch: Partial<Booking>) => setBooking((b) => ({ ...b, ...patch }));
+  const set = (patch: Partial<Booking>) => setBooking((value) => ({ ...value, ...patch }));
+  const go = (next: Step) => { setHistory((items) => [...items, step]); setStep(next); setSearch(""); };
+  const back = () => setHistory((items) => { const copy = [...items]; const previous = copy.pop(); if (previous) setStep(previous); return copy; });
+  const progress = (["vehicle", "power", "brand", "model", "cc", "package", "includes", "location", "details", "payment", "review", "confirmation"].indexOf(step) + 1) / 12 * 100;
+  const power = booking.power ?? "non-electric";
+  const modelCc = booking.vehicle === "bike" && booking.brand && booking.model ? getBikeModel(power, booking.brand, booking.model)?.cc : null;
+  const packages = booking.vehicle === "bike" && booking.engineCc ? getBikePackagesForCc(booking.engineCc) : CAR_PACKAGES;
 
-  const bikeSelected = booking.vehicle === "bike";
-  const order: Step[] = bikeSelected
-    ? ["vehicle", "power", "brand", "model", "variant", "package", "includes", "checkout", "summary"]
-    : ["vehicle", "brand", "model", "variant", "package", "includes", "checkout", "summary"];
-  const idx = Math.max(0, order.indexOf(step));
-
-  const back = () => {
-    if (idx <= 0) return;
-    setStep(order[idx - 1] as Step);
+  const submit = async () => {
+    if (!booking.vehicle || !booking.brand || !booking.model || !booking.packageId || !booking.name || !booking.mobile || !booking.whatsapp || !booking.address || !booking.date || !booking.time || !booking.paymentMethod) return;
+    setSubmitting(true);
+    try {
+      const result = await create({ data: {
+        vehicle: booking.vehicle, power: booking.power ?? null, brand: booking.brand, model: booking.model,
+        engineCc: booking.engineCc ?? null, variant: booking.variant ?? null, packageId: booking.packageId,
+        name: booking.name, mobile: booking.mobile, whatsapp: booking.whatsapp, email: booking.email ?? "",
+        registration: booking.registration ?? "", address: booking.address, latitude: booking.latitude ?? null,
+        longitude: booking.longitude ?? null, date: booking.date, time: booking.time, issue: booking.issue ?? "",
+        paymentMethod: booking.paymentMethod, source: booking.source ?? "normal",
+      } });
+      setBooking(result.booking);
+      setHistory((items) => [...items, step]);
+      setStep("confirmation");
+      if (result.requiresPayment) toast.info("Your booking is saved. Online payment setup is being completed; payment remains pending.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not create booking.");
+    } finally { setSubmitting(false); }
   };
-  const next = () => setStep(order[Math.min(order.length - 1, idx + 1)] as Step);
 
-  const includes = booking.includes ?? [];
-  const visibleIncludes = showAllIncludes ? includes : includes.slice(0, 6);
+  const locate = () => {
+    if (!navigator.geolocation) { toast.error("Current location is not supported on this device."); return; }
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => { set({ latitude: coords.latitude, longitude: coords.longitude, address: `Current location (${coords.latitude.toFixed(5)}, ${coords.longitude.toFixed(5)})` }); setLocating(false); toast.success("Current location added."); },
+      () => { setLocating(false); toast.error("Location access was not available. Enter your address below."); },
+      { enableHighAccuracy: true, timeout: 12000 },
+    );
+  };
 
-  return (
-    <div className="min-w-0">
-      <div className="mb-4 flex items-center gap-3">
-        {idx > 0 && (
-          <button onClick={back} className="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-semibold">
-            ← Back
-          </button>
-        )}
-        <div className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-border">
-          <div
-            className="h-full rounded-full bg-grad-primary transition-all"
-            style={{ width: `${((idx + 1) / order.length) * 100}%` }}
-          />
-        </div>
+  return <div className="min-w-0">
+    {step !== "confirmation" && <div className="mb-5 flex items-center gap-3">
+      {history.length > 0 && <Button type="button" variant="outline" size="icon" onClick={back} aria-label="Go back" className="shrink-0 rounded-full"><ChevronLeft /></Button>}
+      <div className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-border"><div className="h-full rounded-full bg-primary transition-all" style={{ width: `${progress}%` }} /></div>
+    </div>}
+
+    {step === "vehicle" && <Screen title="Choose Your Vehicle" note="Select the vehicle you want serviced">
+      <div className="grid grid-cols-2 gap-3">
+        <Choice icon={<Car />} label="Car" onClick={() => { set({ vehicle: "car", power: undefined }); go("brand"); }} />
+        <Choice icon={<Bike />} label="Bike" onClick={() => { set({ vehicle: "bike" }); go("power"); }} />
       </div>
+    </Screen>}
 
-      {step === "vehicle" && (
-        <Section title="What do you want serviced?">
-          <div className="grid grid-cols-2 gap-3">
-            {(["bike", "car"] as const).map((v) => (
-              <button
-                key={v}
-                className={chip}
-                onClick={() => {
-                  set({ vehicle: v, power: undefined, brand: undefined, model: undefined, variant: undefined, packageId: undefined, packageName: undefined, includes: undefined });
-                  setStep(v === "bike" ? "power" : "brand");
-                }}
-              >
-                {v === "bike" ? "🏍️ Book Bike" : "🚗 Book Car"}
-              </button>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {step === "power" && (
-        <Section title="Is it electric?">
-          <div className="grid grid-cols-2 gap-3">
-            {(["non-electric", "electric"] as PowerType[]).map((p) => (
-              <button
-                key={p}
-                className={`${chip} ${booking.power === p ? chipActive : ""}`}
-                onClick={() => {
-                  set({ power: p, brand: undefined, model: undefined });
-                  setStep("brand");
-                }}
-              >
-                {p === "electric" ? "Electric" : "Non-Electric"}
-              </button>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {step === "brand" && (
-        <Section title="Select brand">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {(bikeSelected ? bikeBrands(booking.power ?? "non-electric").map((b) => b.name) : CAR_BRANDS.map((b) => b.name)).map(
-              (name) => (
-                <button
-                  key={name}
-                  className={`${chip} ${booking.brand === name ? chipActive : ""}`}
-                  onClick={() => {
-                    set({ brand: name, model: undefined });
-                    setStep("model");
-                  }}
-                >
-                  {name}
-                </button>
-              ),
-            )}
-          </div>
-        </Section>
-      )}
-
-      {step === "model" && (
-        <Section title="Select model">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {(bikeSelected
-              ? bikeModels(booking.power ?? "non-electric", booking.brand ?? "")
-              : carModels(booking.brand ?? "")
-            ).map((m) => (
-              <button
-                key={m}
-                className={`${chip} ${booking.model === m ? chipActive : ""}`}
-                onClick={() => {
-                  set({ model: m });
-                  setStep("variant");
-                }}
-              >
-                {m}
-              </button>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {step === "variant" && (
-        <Section title={bikeSelected ? "Engine capacity (CC)" : "Fuel / variant"}>
-          <div className="grid grid-cols-2 gap-3">
-            {(bikeSelected ? BIKE_PACKAGES.map((p) => p.cc) : CAR_FUEL_OPTIONS).map((v) => (
-              <button
-                key={v}
-                className={`${chip} ${booking.variant === v ? chipActive : ""}`}
-                onClick={() => {
-                  if (bikeSelected) {
-                    const p = BIKE_PACKAGES.find((x) => x.cc === v);
-                    set({ variant: v, ...(p ? packageFields(p) : {}) });
-                    setStep("package");
-                  } else {
-                    set({ variant: v });
-                    setStep("package");
-                  }
-                }}
-              >
-                {v}
-              </button>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {step === "package" && (
-        <Section title="Choose your package">
-          <div className="grid gap-3 sm:grid-cols-2">
-            {bikeSelected
-              ? BIKE_PACKAGES.map((p) => (
-                  <PackageCard
-                    key={p.id}
-                    title={p.name}
-                    sub={p.cc}
-                    mrp={p.mrp}
-                    price={p.price}
-                    duration={p.duration}
-                    active={booking.packageId === p.id}
-                    onSelect={() => {
-                      set({ variant: booking.variant ?? p.cc, ...packageFields(p) });
-                      setShowAllIncludes(false);
-                      setStep("includes");
-                    }}
-                  />
-                ))
-              : CAR_PACKAGES.map((p) => (
-                  <PackageCard
-                    key={p.id}
-                    title={p.name}
-                    sub={p.desc}
-                    mrp={p.mrp ?? null}
-                    price={p.price}
-                    duration={p.duration}
-                    active={booking.packageId === p.id}
-                    onSelect={() => {
-                      set(carPackageFields(p));
-                      setShowAllIncludes(false);
-                      setStep("includes");
-                    }}
-                  />
-                ))}
-          </div>
-        </Section>
-      )}
-
-      {step === "includes" && (
-        <Section title={`${booking.packageName ?? "Package"} includes`}>
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <div className="flex flex-wrap items-baseline gap-2">
-              {booking.mrp ? <span className="text-sm text-muted-foreground line-through">{formatPrice(booking.mrp)}</span> : null}
-              <span className="text-2xl font-bold">{formatPrice(booking.price ?? null)}</span>
-            </div>
-            <ul className="mt-3 space-y-1.5 text-sm">
-              {visibleIncludes.map((i) => (
-                <li key={i} className="flex gap-2">
-                  <span className="text-primary">✓</span>
-                  <span className="min-w-0">{i}</span>
-                </li>
-              ))}
-            </ul>
-            {includes.length > 6 && (
-              <button
-                onClick={() => setShowAllIncludes((v) => !v)}
-                className="mt-3 text-xs font-bold uppercase tracking-wider text-primary"
-              >
-                {showAllIncludes ? "Hide inclusions" : "View all inclusions"}
-              </button>
-            )}
-          </div>
-          <button onClick={next} className="mt-4 w-full rounded-full bg-grad-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-glow">
-            Continue to checkout
-          </button>
-        </Section>
-      )}
-
-      {step === "checkout" && (
-        <CheckoutForm
-          booking={booking}
-          onBack={back}
-          onSubmit={(values) => {
-            set(values);
-            setStep("summary");
-          }}
-        />
-      )}
-
-      {step === "summary" && <Summary booking={booking} onEdit={() => setStep("checkout")} onDone={onDone} />}
-    </div>
-  );
-}
-
-function packageFields(p: BikePackage): Partial<Booking> {
-  return { packageId: p.id, packageName: p.name, mrp: p.mrp, price: p.price, includes: p.includes };
-}
-function carPackageFields(p: CarPackage): Partial<Booking> {
-  return { packageId: p.id, packageName: p.name, mrp: p.mrp ?? null, price: p.price, includes: p.includes };
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="min-w-0">
-      <h3 className="text-lg font-bold">{title}</h3>
-      <div className="mt-4">{children}</div>
-    </div>
-  );
-}
-
-function PackageCard({
-  title,
-  sub,
-  mrp,
-  price,
-  duration,
-  active,
-  onSelect,
-}: {
-  title: string;
-  sub: string;
-  mrp: number | null;
-  price: number | null;
-  duration: string;
-  active: boolean;
-  onSelect: () => void;
-}) {
-  return (
-    <div className={`rounded-2xl border p-4 ${active ? "border-primary" : "border-border"} bg-card`}>
-      <div className="font-semibold">{title}</div>
-      <div className="text-xs text-muted-foreground">{sub}</div>
-      <div className="mt-2 flex flex-wrap items-baseline gap-2">
-        {mrp ? <span className="text-sm text-muted-foreground line-through">₹{mrp.toLocaleString("en-IN")}</span> : null}
-        <span className="text-xl font-bold">{formatPrice(price)}</span>
+    {step === "power" && <Screen title="Choose Bike Type" note="Select the power type">
+      <div className="grid grid-cols-2 gap-3">
+        <Choice label="Non-Electric" active={booking.power === "non-electric"} onClick={() => { set({ power: "non-electric", brand: undefined, model: undefined, engineCc: null }); go("brand"); }} />
+        <Choice label="Electric" active={booking.power === "electric"} onClick={() => { set({ power: "electric", brand: undefined, model: undefined, engineCc: null }); go("brand"); }} />
       </div>
-      <div className="mt-1 text-xs text-muted-foreground">{duration}</div>
-      <button onClick={onSelect} className="mt-3 w-full min-h-11 rounded-full bg-grad-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
-        Select
-      </button>
-    </div>
-  );
+    </Screen>}
+
+    {step === "brand" && <Screen title="Select Brand" note={`Choose your ${booking.vehicle === "car" ? "car" : "bike"} brand`}>
+      <SearchBox value={search} onChange={setSearch} placeholder="Search brand" />
+      <div className="mt-4 grid max-h-[48vh] grid-cols-2 gap-3 overflow-y-auto pr-1 sm:grid-cols-3">
+        {(booking.vehicle === "bike" ? bikeCatalogBrands(power) : CAR_BRANDS.map((item) => ({ ...item, mark: item.name.slice(0, 2).toUpperCase() })))
+          .filter((item) => item.name.toLowerCase().includes(search.toLowerCase())).map((item) =>
+          <Choice key={item.name} label={item.name} mark={item.mark} active={booking.brand === item.name} onClick={() => { set({ brand: item.name, model: undefined, engineCc: null }); go("model"); }} />)}
+      </div>
+    </Screen>}
+
+    {step === "model" && <Screen title="Select Model" note={booking.brand}>
+      <SearchBox value={search} onChange={setSearch} placeholder="Search model" />
+      <div className="mt-4 grid max-h-[48vh] grid-cols-2 gap-3 overflow-y-auto pr-1">
+        {(booking.vehicle === "bike" ? bikeCatalogModels(power, booking.brand ?? "") : carModels(booking.brand ?? "").map((name) => ({ name, cc: null })))
+          .filter((item) => item.name.toLowerCase().includes(search.toLowerCase())).map((item) =>
+          <Choice key={item.name} label={item.name} note={item.cc ? `${item.cc}cc` : undefined} active={booking.model === item.name} onClick={() => {
+            set({ model: item.name, engineCc: item.cc, variant: item.cc ? getBikeCcTier(item.cc)?.label : undefined });
+            if (booking.vehicle === "bike" && power === "non-electric") go(item.cc ? "cc" : "cc"); else go("package");
+          }} />)}
+      </div>
+    </Screen>}
+
+    {step === "cc" && <Screen title="Engine Capacity" note={modelCc ? "Detected automatically from your model" : "Enter the exact engine CC"}>
+      {modelCc ? <div className="rounded-md border border-primary bg-primary/5 p-5 text-center"><div className="text-3xl font-bold">{modelCc}cc</div><div className="mt-1 text-sm text-muted-foreground">{getBikeCcTier(modelCc)?.label}</div></div> : <label className="block"><span className="text-sm font-semibold">Engine CC</span><input type="number" min="1" max="2500" className={inputClass} placeholder="Example: 349" onChange={(event) => { const cc = Number(event.target.value); set({ engineCc: cc || null, variant: getBikeCcTier(cc)?.label }); }} /></label>}
+      <div className="mt-4 grid grid-cols-2 gap-2">{BIKE_CC_TIERS.map((tier) => <div key={tier.id} className={`rounded-full border px-3 py-2 text-center text-xs font-semibold ${booking.variant === tier.label ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground"}`}>{tier.label}</div>)}</div>
+      <Button className="mt-5 h-12 w-full rounded-full" disabled={!booking.engineCc || !getBikeCcTier(booking.engineCc)} onClick={() => go("package")}>Continue</Button>
+    </Screen>}
+
+    {step === "package" && <Screen title="Choose Service" note={booking.vehicle === "bike" ? `${booking.engineCc}cc · ${booking.variant}` : "Price confirmed after inspection"}>
+      <div className="grid max-h-[55vh] gap-3 overflow-y-auto pr-1 sm:grid-cols-2">{packages.map((item) => <PackageCard key={item.id} item={item} active={booking.packageId === item.id} onSelect={() => { set(itemFields(item)); setShowAllIncludes(false); go("includes"); }} />)}</div>
+    </Screen>}
+
+    {step === "includes" && <Screen title="What’s Included" note={booking.packageName}>
+      <div className="rounded-md border border-border bg-card p-4"><div className="text-2xl font-bold">{formatPrice(booking.price ?? null)}</div><ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2">{(showAllIncludes ? booking.includes : booking.includes?.slice(0, 8))?.map((item) => <li key={item} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary"/><span>{item}</span></li>)}</ul>{(booking.includes?.length ?? 0) > 8 && <Button variant="link" className="mt-2 px-0" onClick={() => setShowAllIncludes((value) => !value)}>{showAllIncludes ? "Show less" : "View all"}</Button>}</div>
+      <Button className="mt-4 h-12 w-full rounded-full" onClick={() => go("location")}>Checkout</Button>
+    </Screen>}
+
+    {step === "location" && <Screen title="Service Location" note="Tell us where the mechanic should arrive">
+      <Button type="button" variant="outline" className="h-14 w-full rounded-md border-primary text-primary" onClick={locate} disabled={locating}><Crosshair />{locating ? "Finding your location…" : "Use Current Location"}</Button>
+      <label className="mt-4 block"><span className="text-sm font-semibold">Complete address</span><textarea rows={4} value={booking.address ?? ""} onChange={(event) => set({ address: event.target.value })} className={`${inputClass} h-auto py-3`} placeholder="House, street, area and landmark" /></label>
+      {booking.latitude && <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" /> Location pin added</p>}
+      <Button className="mt-5 h-12 w-full rounded-full" disabled={!booking.address?.trim()} onClick={() => go("details")}>Continue</Button>
+    </Screen>}
+
+    {step === "details" && <CustomerDetails booking={booking} onSubmit={(values) => { set(values); go("payment"); }} />}
+
+    {step === "payment" && <Screen title="Choose Payment" note="Your booking is created only after final confirmation">
+      <div className="grid gap-3">
+        <Choice label="Pay Now" note="Online payment · booking saved as processing" active={booking.paymentMethod === "pay_now"} onClick={() => set({ paymentMethod: "pay_now", paymentStatus: "processing" })} />
+        <Choice label="Pay Later" note="Pay after service · payment remains pending" active={booking.paymentMethod === "pay_later"} onClick={() => set({ paymentMethod: "pay_later", paymentStatus: "pending" })} />
+      </div>
+      <Button className="mt-5 h-12 w-full rounded-full" disabled={!booking.paymentMethod} onClick={() => go("review")}>Review Booking</Button>
+    </Screen>}
+
+    {step === "review" && <Summary booking={booking} mode="review" onEdit={back} onConfirm={submit} submitting={submitting} />}
+    {step === "confirmation" && <Summary booking={booking} mode="confirmation" onDone={onDone} />}
+  </div>;
 }
 
-function CheckoutForm({
-  booking,
-  onSubmit,
-  onBack,
-}: {
-  booking: Booking;
-  onSubmit: (v: Partial<Booking>) => void;
-  onBack: () => void;
-}) {
-  const [sameWhatsapp, setSameWhatsapp] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+function Screen({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) { return <section><div className="mb-5 text-center"><h3 className="text-xl font-bold">{title}</h3>{note && <p className="mt-1 text-sm text-muted-foreground">{note}</p>}</div>{children}</section>; }
+function Choice({ label, note, icon, mark, active, onClick }: { label: string; note?: string; icon?: React.ReactNode; mark?: string; active?: boolean; onClick: () => void }) { return <Button type="button" variant="outline" onClick={onClick} className={`h-auto min-h-16 whitespace-normal rounded-md px-3 py-3 ${active ? "border-primary bg-primary/10 text-primary" : ""}`}><span className="flex min-w-0 flex-col items-center gap-1">{icon}{mark && <span className="flex h-8 min-w-8 items-center justify-center rounded-full bg-muted px-2 text-xs font-black text-foreground">{mark}</span>}<span className="font-semibold">{label}</span>{note && <span className="text-xs font-normal text-muted-foreground">{note}</span>}</span></Button>; }
+function SearchBox({ value, onChange, placeholder }: { value: string; onChange: (value: string) => void; placeholder: string }) { return <label className="relative block"><Search className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground"/><input value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="h-11 w-full rounded-full border border-border bg-background pl-10 pr-4 text-sm outline-none focus:border-primary"/></label>; }
+function itemFields(item: BikePackage | CarPackage): Partial<Booking> { return { packageId: item.id, packageName: item.name, mrp: item.mrp ?? null, price: item.price, includes: item.includes }; }
+function packageFields(item: BikePackage): Partial<Booking> { return { ...itemFields(item), variant: item.cc }; }
 
-  return (
-    <form
-      className="min-w-0 space-y-3"
-      onSubmit={(e) => {
-        e.preventDefault();
-        const fd = new FormData(e.currentTarget);
-        const get = (k: string) => String(fd.get(k) ?? "").trim();
-        const mobile = get("mobile");
-        if (!isValidIndianMobile(mobile)) {
-          setError("Enter a valid 10-digit Indian mobile number.");
-          return;
-        }
-        const whatsapp = sameWhatsapp ? mobile : get("whatsapp");
-        if (!sameWhatsapp && !isValidIndianMobile(whatsapp)) {
-          setError("Enter a valid 10-digit WhatsApp number.");
-          return;
-        }
-        setError(null);
-        onSubmit({
-          name: get("name"),
-          mobile: `+91 ${mobile}`,
-          whatsapp: `+91 ${whatsapp.replace(/\D/g, "").slice(-10)}`,
-          email: get("email"),
-          registration: get("registration"),
-          address: get("address"),
-          date: get("date"),
-          time: get("time"),
-          issue: get("issue"),
-        });
-      }}
-    >
-      <div className="rounded-2xl border border-border bg-card p-4 text-sm">
-        <div className="font-semibold">{booking.packageName}</div>
-        <div className="mt-1 text-muted-foreground">
-          {[booking.vehicle === "car" ? "Car" : "Bike", booking.brand, booking.model, booking.variant].filter(Boolean).join(" · ")}
-        </div>
-        <div className="mt-2 flex flex-wrap items-baseline gap-2">
-          {booking.mrp ? <span className="text-muted-foreground line-through">{formatPrice(booking.mrp)}</span> : null}
-          <span className="text-lg font-bold">{formatPrice(booking.price ?? null)}</span>
-        </div>
-      </div>
+function PackageCard({ item, active, onSelect }: { item: BikePackage | CarPackage; active: boolean; onSelect: () => void }) { return <article className={`rounded-md border bg-card p-4 ${active ? "border-primary" : "border-border"}`}><div className="flex items-start justify-between gap-3"><div><h4 className="font-bold">{item.name}</h4><p className="mt-1 text-xs text-muted-foreground">{"cc" in item ? item.cc : item.desc}</p></div><Sparkles className="h-5 w-5 text-primary"/></div><div className="mt-3 text-2xl font-bold">{formatPrice(item.price)}</div><p className="mt-1 text-xs text-muted-foreground">{item.duration}</p><ul className="mt-3 space-y-1 text-xs text-muted-foreground">{item.includes.slice(0, 4).map((text) => <li key={text}>✓ {text}</li>)}</ul><Button type="button" className="mt-4 h-11 w-full rounded-full" onClick={onSelect}>Select</Button></article>; }
 
-      <Input label="Full name" name="name" required defaultValue={booking.name} />
-      <Input label="Mobile number" name="mobile" type="tel" inputMode="numeric" required placeholder="10-digit mobile" />
-      <label className="flex items-center gap-2 text-sm">
-        <input type="checkbox" checked={sameWhatsapp} onChange={(e) => setSameWhatsapp(e.target.checked)} className="h-4 w-4" />
-        WhatsApp number is the same
-      </label>
-      {!sameWhatsapp && <Input label="WhatsApp number" name="whatsapp" type="tel" inputMode="numeric" placeholder="10-digit WhatsApp" />}
-      <Input label="Email (optional)" name="email" type="email" />
-      <Input label="Vehicle registration number" name="registration" placeholder="KA-01-AB-1234" />
-      <Input label="Address / location" name="address" required placeholder="Flat, street, area, Bangalore" />
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Input label="Preferred date" name="date" type="date" required />
-        <label className="block min-w-0">
-          <span className="text-sm font-semibold">Preferred time</span>
-          <select name="time" className="mt-1 h-12 w-full rounded-xl border border-border bg-background px-3 text-sm">
-            {PREFERRED_TIME_SLOTS.map((t) => (
-              <option key={t}>{t}</option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <label className="block min-w-0">
-        <span className="text-sm font-semibold">Additional issue (optional)</span>
-        <textarea name="issue" rows={3} className="mt-1 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm" />
-      </label>
-
-      {error && <p className="text-sm font-semibold text-destructive">{error}</p>}
-
-      <div className="flex flex-col gap-2 sm:flex-row">
-        <button type="button" onClick={onBack} className="min-h-12 rounded-full border border-border px-5 py-3 text-sm font-semibold">
-          Back
-        </button>
-        <button className="min-h-12 flex-1 rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">
-          Review booking
-        </button>
-      </div>
-    </form>
-  );
+function CustomerDetails({ booking, onSubmit }: { booking: Booking; onSubmit: (values: Partial<Booking>) => void }) {
+  const [sameWhatsapp, setSameWhatsapp] = useState(true); const [error, setError] = useState<string | null>(null);
+  return <Screen title="Customer Details" note="We’ll use these details for service updates"><form className="space-y-3" onSubmit={(event) => { event.preventDefault(); const form = new FormData(event.currentTarget); const get = (key: string) => String(form.get(key) ?? "").trim(); const mobile = get("mobile"); const whatsapp = sameWhatsapp ? mobile : get("whatsapp"); if (!isValidIndianMobile(mobile) || !isValidIndianMobile(whatsapp)) { setError("Enter valid 10-digit Indian mobile numbers."); return; } setError(null); onSubmit({ name: get("name"), mobile, whatsapp, email: get("email"), registration: get("registration"), date: get("date"), time: get("time"), issue: get("issue") }); }}>
+    <Field label="Full Name" name="name" required defaultValue={booking.name}/><Field label="Mobile Number" name="mobile" required inputMode="numeric" placeholder="10-digit mobile" defaultValue={booking.mobile}/>
+    <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={sameWhatsapp} onChange={(event) => setSameWhatsapp(event.target.checked)} className="h-4 w-4 accent-primary"/>WhatsApp number is the same</label>
+    {!sameWhatsapp && <Field label="WhatsApp Number" name="whatsapp" required inputMode="numeric" defaultValue={booking.whatsapp}/>}<Field label="Email (optional)" name="email" type="email" defaultValue={booking.email}/><Field label="Vehicle Registration (optional)" name="registration" defaultValue={booking.registration}/>
+    <div className="grid gap-3 sm:grid-cols-2"><Field label="Preferred Date" name="date" type="date" required defaultValue={booking.date}/><label className="block"><span className="text-sm font-semibold">Preferred Time</span><select name="time" className={inputClass} defaultValue={booking.time}>{PREFERRED_TIME_SLOTS.map((time) => <option key={time}>{time}</option>)}</select></label></div>
+    <label className="block"><span className="text-sm font-semibold">Additional Notes (optional)</span><textarea name="issue" rows={3} defaultValue={booking.issue} className={`${inputClass} h-auto py-3`}/></label>{error && <p className="text-sm font-semibold text-destructive">{error}</p>}<Button className="h-12 w-full rounded-full">Continue to Payment</Button>
+  </form></Screen>;
 }
+function Field({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) { return <label className="block"><span className="text-sm font-semibold">{label}</span><input {...props} className={inputClass}/></label>; }
 
-function Input({ label, ...p }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <label className="block min-w-0">
-      <span className="text-sm font-semibold">{label}</span>
-      <input {...p} className="mt-1 h-12 w-full rounded-xl border border-border bg-background px-3 text-sm" />
-    </label>
-  );
+export function Summary({ booking, mode = "confirmation", onEdit, onConfirm, submitting, onDone }: { booking: Booking; mode?: "review" | "confirmation"; onEdit?: () => void; onConfirm?: () => void; submitting?: boolean; onDone?: () => void }) {
+  const rows = useMemo(() => ([
+    ["Booking ID", booking.bookingId], ["Vehicle", booking.vehicle === "bike" ? "Bike" : "Car"], ["Type", booking.power === "electric" ? "Electric" : booking.power ? "Non-Electric" : ""], ["Vehicle details", [booking.brand, booking.model].filter(Boolean).join(" ")], ["CC", booking.engineCc ? `${booking.engineCc}cc (${booking.variant})` : booking.variant], ["Service", booking.packageName], ["Price", formatPrice(booking.price ?? null)], ["Location", booking.address], ["Customer", booking.name], ["Mobile", booking.mobile], ["WhatsApp", booking.whatsapp], ["Date", booking.date], ["Time", booking.time], ["Payment", booking.paymentMethod === "pay_now" ? `Pay Now · ${booking.paymentStatus ?? "processing"}` : "Pay Later · Pending"], ["Status", booking.status ? titleCase(booking.status) : "Confirmed"],
+  ] as [string, string | undefined][]).filter(([, value]) => value), [booking]);
+  return <section className="min-w-0"><div className="text-center">{mode === "confirmation" && <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground"><Check className="h-7 w-7"/></div>}<h3 className="mt-3 text-xl font-bold">{mode === "confirmation" ? "Booking Confirmed" : "Review Your Booking"}</h3>{booking.bookingId && <p className="mt-1 font-mono text-lg font-bold text-primary">{booking.bookingId}</p>}</div>
+    <div className="mt-4 divide-y divide-border rounded-md border border-border bg-card px-4">{rows.map(([key, value]) => <div key={key} className="grid grid-cols-[minmax(90px,0.7fr)_minmax(0,1.3fr)] gap-3 py-2.5 text-sm"><span className="text-muted-foreground">{key}</span><span className="break-words text-right font-semibold">{value}</span></div>)}</div>
+    {!!booking.includes?.length && <details className="mt-3 rounded-md border border-border bg-card p-4"><summary className="cursor-pointer font-semibold">What’s Included ({booking.includes.length})</summary><ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">{booking.includes.map((item) => <li key={item}>✓ {item}</li>)}</ul></details>}
+    {mode === "review" ? <div className="mt-4 grid grid-cols-2 gap-2"><Button variant="outline" className="h-12 rounded-full" onClick={onEdit}>Edit</Button><Button className="h-12 rounded-full" onClick={onConfirm} disabled={submitting}>{submitting ? "Creating…" : "Confirm Booking"}</Button></div> : <><Button className="mt-4 h-12 w-full rounded-full bg-whatsapp text-whatsapp-foreground" onClick={() => sendBookingToWhatsApp(booking)}>Send Confirmation on WhatsApp</Button><div className="mt-2 grid grid-cols-2 gap-2"><Button variant="outline" onClick={async () => toast[(await copyBookingDetails(booking)) ? "success" : "error"]("Booking details copied")} className="rounded-full">Copy Details</Button><Button variant="outline" asChild className="rounded-full"><a href={`tel:${CALL_NUMBER}`}>Call Ride N Care</a></Button></div>{onDone && <Button variant="ghost" className="mt-2 w-full" onClick={onDone}>Done</Button>}</>}
+  </section>;
 }
-
-export function Summary({ booking, onEdit, onDone }: { booking: Booking; onEdit?: () => void; onDone?: () => void }) {
-  const rows = useMemo(
-    () =>
-      (
-        [
-          ["Vehicle", booking.vehicle === "car" ? "Car" : booking.vehicle === "bike" ? "Bike" : ""],
-          ["Power", booking.power === "electric" ? "Electric" : booking.power ? "Non-Electric" : ""],
-          ["Brand", booking.brand],
-          ["Model", booking.model],
-          [booking.vehicle === "car" ? "Variant / Fuel" : "CC", booking.variant],
-          ["Package", booking.packageName],
-          ["MRP", booking.mrp ? formatPrice(booking.mrp) : ""],
-          ["Offer price", booking.price !== undefined ? formatPrice(booking.price ?? null) : ""],
-          ["Name", booking.name],
-          ["Mobile", booking.mobile],
-          ["WhatsApp", booking.whatsapp],
-          ["Email", booking.email],
-          ["Registration", booking.registration],
-          ["Address", booking.address],
-          ["Date", booking.date],
-          ["Time", booking.time],
-          ["Issue", booking.issue],
-        ] as [string, string | undefined][]
-      ).filter(([, v]) => v && v.length > 0),
-    [booking],
-  );
-
-  return (
-    <div className="min-w-0">
-      <h3 className="text-lg font-bold">Booking summary</h3>
-      <div className="mt-3 space-y-2 rounded-2xl border border-border bg-card p-4 text-sm">
-        {rows.map(([k, v]) => (
-          <div key={k} className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 border-b border-border/50 pb-2 last:border-0 last:pb-0">
-            <span className="text-xs uppercase tracking-wider text-muted-foreground">{k}</span>
-            <span className="min-w-0 break-words text-right font-semibold">{v}</span>
-          </div>
-        ))}
-      </div>
-      <button
-        onClick={() => {
-          sendBookingToWhatsApp(booking);
-          onDone?.();
-        }}
-        className="mt-4 w-full min-h-12 rounded-full bg-whatsapp px-6 py-3.5 font-bold text-whatsapp-foreground shadow-lg"
-      >
-        CONFIRM &amp; BOOK ON WHATSAPP
-      </button>
-      <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-        <button
-          onClick={async () => {
-            const ok = await copyBookingDetails(booking);
-            toast[ok ? "success" : "error"](ok ? "Booking details copied" : "Could not copy — please screenshot the summary");
-          }}
-          className="min-h-11 flex-1 rounded-full border border-border px-4 py-2.5 text-sm font-semibold"
-        >
-          Copy booking details
-        </button>
-        <a
-          href={`tel:${CALL_NUMBER}`}
-          className="min-h-11 flex-1 rounded-full border border-border px-4 py-2.5 text-center text-sm font-semibold"
-        >
-          Call Ride N Care
-        </a>
-        {onEdit && (
-          <button onClick={onEdit} className="min-h-11 flex-1 rounded-full border border-border px-4 py-2.5 text-sm font-semibold">
-            Edit details
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
+function titleCase(value: string) { return value.split("_").map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" "); }
