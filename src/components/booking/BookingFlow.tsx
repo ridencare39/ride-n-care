@@ -15,7 +15,7 @@ export function BookingFlow({ initialVehicle, initialPackageId, initialServiceId
   const create = useServerFn(createBooking);
   const preset = initialPackageId ? getServicePackage(initialPackageId) : undefined;
   const intendedServiceId = initialServiceId ?? (preset && "serviceId" in preset ? preset.serviceId : undefined);
-  const [booking, setBooking] = useState<Booking>({ vehicle: initialVehicle, ...(preset ? packageFields(preset) : {}) });
+  const [booking, setBooking] = useState<Booking>({ vehicle: initialVehicle, ...(preset ? seededPackageFields(preset) : {}) });
   const [step, setStep] = useState<Step>(initialVehicle ? (initialVehicle === "bike" ? "power" : "brand") : "vehicle");
   const [history, setHistory] = useState<Step[]>([]);
   const [search, setSearch] = useState("");
@@ -159,6 +159,7 @@ function Choice({ label, note, icon, mark, active, disabled, onClick }: { label:
 function SearchBox({ value, onChange, placeholder }: { value: string; onChange: (value: string) => void; placeholder: string }) { return <label className="relative block"><Search className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground"/><input value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="h-11 w-full rounded-full border border-border bg-background pl-10 pr-4 text-sm outline-none focus:border-primary"/></label>; }
 function itemFields(item: BikePackage | CarPackage): Partial<Booking> { return { packageId: item.id, packageName: item.name, mrp: item.mrp ?? null, price: item.price, includes: item.includes }; }
 function packageFields(item: BikePackage): Partial<Booking> { return { ...itemFields(item), variant: item.cc }; }
+function seededPackageFields(item: BikePackage | CarPackage): Partial<Booking> { return "serviceId" in item ? packageFields(item) : itemFields(item); }
 
 function PackageCard({ item, active, onSelect }: { item: BikePackage | CarPackage; active: boolean; onSelect: () => void }) { return <article className={`rounded-md border bg-card p-4 ${active ? "border-primary" : "border-border"}`}><div className="flex items-start justify-between gap-3"><div><h4 className="font-bold">{item.name}</h4><p className="mt-1 text-xs text-muted-foreground">{"cc" in item ? item.cc : item.desc}</p></div><Sparkles className="h-5 w-5 text-primary"/></div><div className="mt-3 text-2xl font-bold">{formatPrice(item.price)}</div><p className="mt-1 text-xs text-muted-foreground">{item.duration}</p><ul className="mt-3 space-y-1 text-xs text-muted-foreground">{item.includes.slice(0, 4).map((text) => <li key={text}>✓ {text}</li>)}</ul><Button type="button" className="mt-4 h-11 w-full rounded-full" onClick={onSelect}>Select</Button></article>; }
 
