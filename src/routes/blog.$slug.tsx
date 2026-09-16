@@ -4,6 +4,7 @@ import { getPublishedPost } from "@/lib/blog.functions";
 import { OG_IMAGE, SITE_URL } from "@/lib/seo";
 import { faqsForPostCategory } from "@/lib/service-faqs";
 import { AREAS } from "@/lib/areas";
+import { BookingButton } from "@/components/booking/BookingButton";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
@@ -177,7 +178,7 @@ function Post() {
       <div className="mt-16 rounded-2xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Need a service done?</h2>
         <p className="mt-2 text-primary-foreground/90">Book a doorstep visit in 60 seconds.</p>
-        <Link to="/contact" className="mt-4 inline-block rounded-full bg-background px-6 py-3 font-semibold">Book Now</Link>
+        <BookingButton className="mt-4 rounded-full bg-background px-6 py-3 font-semibold text-foreground hover:bg-background/90">Book Now</BookingButton>
       </div>
 
       {related.length > 0 && (

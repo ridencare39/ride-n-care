@@ -7,7 +7,7 @@ export const Route = createFileRoute("/contact")({
     meta: [
       { title: "Book Doorstep Bike Service in Bangalore | Ride N Care" },
       { name: "description", content: "Book doorstep bike or car service in Bangalore in 60 seconds. Call 08296950339 or WhatsApp us — pickup, drop and on-the-spot repair." },
-      { property: "og:title", content: "Book a Service — Ride N Care" },
+      { property: "og:title", content: "Book Now — Ride N Care" },
       { property: "og:description", content: "Book bike or car service. Doorstep, fast, transparent." },
       { property: "og:url", content: `${SITE_URL}/contact` },
       { property: "og:type", content: "website" },

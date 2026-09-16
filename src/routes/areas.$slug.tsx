@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getArea, AREAS, type Area } from "@/lib/areas";
 import { OG_IMAGE, SITE_URL, SAME_AS } from "@/lib/seo";
+import { BookingButton } from "@/components/booking/BookingButton";
 
 export const Route = createFileRoute("/areas/$slug")({
   loader: ({ params }) => {
@@ -155,7 +156,7 @@ function AreaPage() {
         <p className="mt-2 text-primary-foreground/90">WhatsApp us your model + service — quote in 2 minutes.</p>
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
           <a href="https://wa.me/918296950339" className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Chat on WhatsApp</a>
-          <Link to="/contact" className="rounded-full border border-background/40 px-6 py-3 font-semibold text-primary-foreground">Book Online</Link>
+          <BookingButton variant="outline" className="rounded-full border-background/40 bg-transparent px-6 py-3 text-primary-foreground hover:bg-background hover:text-foreground">Book Now</BookingButton>
         </div>
       </div>
 
