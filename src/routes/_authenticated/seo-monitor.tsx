@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -13,9 +13,14 @@ import {
   Area,
 } from "recharts";
 import { getSeoMonitorReport } from "@/lib/gsc.functions";
+import { getAdminStatus } from "@/lib/blog.functions";
 import { SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/_authenticated/seo-monitor")({
+  beforeLoad: async () => {
+    const { isAdmin } = await getAdminStatus();
+    if (!isAdmin) throw redirect({ to: "/" });
+  },
   head: () => ({
     meta: [
       { title: "SEO Monitoring — Search Console Coverage | Ride N Care" },
