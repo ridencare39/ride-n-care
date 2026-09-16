@@ -108,11 +108,11 @@ export const createBooking = createServerFn({ method: "POST" })
       issue: data.issue || null,
       source: data.source,
       payment_method: data.paymentMethod,
-      payment_status: data.paymentMethod === "pay_now" ? "processing" : "pending",
+      payment_status: "pending",
       status: "confirmed",
     } as any).select("*").single();
     if (error || !row) throw new Error("We could not create the booking. Please try again.");
-    return { booking: toDto(row), requiresPayment: data.paymentMethod === "pay_now" };
+    return { booking: toDto(row), requiresPayment: false };
   });
 
 export const trackBooking = createServerFn({ method: "POST" })
