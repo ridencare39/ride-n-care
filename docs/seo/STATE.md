@@ -124,6 +124,21 @@ Audit + baseline delivered:
 - **Live (Worker `a18a3e80`)**: raw-HTML checks all PASS (hamburger no lg:hidden, panel-root no lg:hidden, all 21 links, tel:+918069409289, wa.me/918296950339, inert+aria-hidden, "9 services"/"4 services", desktop nav aria-label=Primary present, float-bar class present); `validate-schema.py https://ridencare.co.in` → 42 pages / 80 blocks / 0 errors / 0 warnings. Purge token still lacks Cache Purge scope (401) — s-maxage=60 keeps staleness bounded.
 - Files: `src/components/SiteHeader.tsx`, `src/components/FloatingActions.tsx` (one class), `src/styles.css` (panel + svc-box/svc-list + reduced-motion), `package.json` (build:prod script), `scripts/test-panel.mjs` (new), `docs/seo/panel-*.png` (new).
 
+## Completed — Desktop top nav (Task A, 2026-09-20, commit `b77d4d8`)
+- 8-item single-line bar: Home, Our Services (dropdown trigger, real `<a href="/#services">`), Process (/#process), Franchise, Blog, FAQ, Contact, About Us. Bike Service / Doorstep / Bike Repair / Cars / Areas / Guides remain reachable via services menu, footer and panel.
+- Homepage anchors `id="services"` + `id="process"` with scroll-margin-top; Process highlights via IntersectionObserver while in view.
+- "Our Services" dropdown: 2-col bike (cyan) / car (violet) panel from nav.ts (data from services.ts + car-services.ts), breakdown strip → /breakdown-assistance, footer line Areas|Guides|Answers. 120 ms hover-intent, Escape/outside/link close with focus return, arrow-key nav, inert+aria-hidden closed (links stay in SSR DOM), near-solid navy glass.
+- Header 72→60 px on scroll, sliding pill (transform/width), Book Now solid + Book with AI glass (icon-only <1280 px), hamburger <1100 px. Shared data file src/lib/nav.ts drives bar + panel.
+- Fixed during testing: focus-open only on :focus-visible (click focus no longer re-opens after Escape); services trigger is an `<a>` so `href="/#services"` is real in SSR HTML.
+- VERIFY: Playwright `scripts/test-nav.mjs` 62/62 at 1024/1100/1280/1440/1920 (open/close via click+hover+Escape+outside, no wrap, no overflow, pill, scroll shrink, anchor scroll, SSR links); side-panel regression 124/124.
+
+## Completed — Breakdown hub + car breakdown page (Task B, 2026-09-20, commit `e6cd852`, Worker `276c186d`)
+- New `/breakdown-assistance` (H1 "Bike & Car Breakdown Assistance in Bangalore"): 47-word answer-first summary, Call 080 6940 9289 + WhatsApp 82969 50339 (message prefilled "Hi Ride N Care, my vehicle has broken down. Location: ") with data-ctc events, Bike/Car choice cards, Book Now, "What to do first" general safety advice, on-spot vs workshop split (sourced from the bike breakdown page), how-it-works (DISPATCH_STEPS), 6 FAQs, related answers + guide. NO response times, no 24x7, no free towing, no "X minutes away".
+- New `/car-breakdown-assistance`: same template, car-safe generic copy until owner answers Q35 (which car jobs are done on the spot) and Q36 (car recovery terms) — both logged in OWNER-QUESTIONS.md.
+- Hero Breakdown button + footer + services-menu strip now point to the hub; /bike-breakdown-assistance keeps all bike intent. Related-service module cross-links children ↔ hub. Cannibalisation ruling recorded in 03-keyword-map.csv (hub owns generic "breakdown assistance bangalore", children own vehicle modifiers; car row marked Y).
+- Sitemap includes both new URLs (breakdown 0.9, car 0.8); llms.txt updated; schema via src/lib/schema.ts: Service + BreadcrumbList + FAQPage (FAQs visible on-page).
+- VERIFY (live cache-busted): 1 H1 + 1 canonical each; tel/wa + prefilled message present; banned-claims grep CLEAN on hub/car/home (incl. 24x7, free towing, minutes away); sitemap has all 3 breakdown URLs; bike page 200; validate-schema.py 44 pages / 84 blocks / 0 errors / 0 warnings; panel 124/124 + nav 62/62 regression PASS.
+
 ## Pending (next sessions)
 - GBP, citations, events/AI tests and the remaining backlog parts.
 - BL-9 car vertical: core pages DONE; remaining: car×area pages (renderer ready — flip `local: true` per car service when the owner wants them indexed), car brand pages, car guides (see 03-content-calendar.md Weeks 5–9).
