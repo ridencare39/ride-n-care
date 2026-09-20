@@ -31,7 +31,7 @@ export const CAR_BRAND_LIST = [
 const CAR_BOOK_STEPS: [string, string][] = [
   ["1. Tell us your car", "Share the make, model and what it needs on WhatsApp or the booking form. Takes under a minute."],
   ["2. Get a written quote", "We confirm the work, parts and the slot in writing before anything is opened."],
-  ["3. Mechanic reaches you", "A uniformed Ride N Care mechanic arrives at your gate with tools, consumables and OEM-grade spares."],
+  ["3. Mechanic reaches you", "A background-verified Ride N Care mechanic arrives at your gate with tools, consumables and OEM-grade spares."],
   ["4. Pay after the check", "Inspect the work, take the car for a short drive, then pay by UPI, card or cash. Invoice on WhatsApp."],
 ];
 
@@ -79,7 +79,7 @@ export const CAR_SERVICES: ServiceDef[] = [
     steps: CAR_BOOK_STEPS,
     faqs: [
       ["What does a doorstep car service in Bangalore include?", "Engine oil and filter change, air filter cleaning, brake check, coolant and fluid top-ups, battery test, lights and wipers check, tyre check and a multi-point inspection — completed at your home or office."],
-      ["How long will the mechanic be at my place?", "The arrival window is confirmed when you book, and the visit runs until the checklist is complete and you have inspected the work — we do not quote job durations we cannot guarantee."],
+      ["How long will the mechanic be at my place?", "The arrival window is confirmed at booking, and the visit runs until the checklist is complete and you have inspected the work — we do not quote job durations we cannot guarantee."],
       ["How much does car service at home cost in Bangalore?", "It is priced by your car's make, model and engine — oil grade and capacity, filter type and brake condition change the quote. Share the model and we confirm the exact amount in writing before work starts. Call 080 6940 9289 or WhatsApp 82969 50339."],
       ["Will doorstep service affect my car warranty?", "Warranty on a specific part stays with the part maker. If your car is still inside the manufacturer's free-service period, we recommend using those free services first."],
       ["What do I need to provide?", "Parking space to work in and, ideally, a plug point. The mechanic records the odometer and registration number from the car itself."],
@@ -133,7 +133,7 @@ export const CAR_SERVICES: ServiceDef[] = [
     faqs: [
       ["How much does a car AC gas refill cost in Bangalore?", "It depends on the refrigerant type and quantity your model needs, and whether the system holds the gas. Share your car model and we confirm the exact quote in writing before work starts — Call 080 6940 9289 or WhatsApp 82969 50339."],
       ["Why is my car AC not cooling?", "Usually one of four causes: low refrigerant, a clogged cabin filter, a dirty cooling coil, or a compressor not engaging. We measure each of these at your doorstep before recommending a fix."],
-      ["How long does car AC service take?", "The arrival window is confirmed when you book, and the visit runs until the gas check, coil cleaning, cabin filter check and compressor test are complete and you have inspected the work."],
+      ["How long does car AC service take?", "The arrival window is confirmed at booking, and the visit runs until the gas check, coil cleaning, cabin filter check and compressor test are complete and you have inspected the work."],
       ["Do you check for gas leaks?", "Yes. If the system is not holding gas, we tell you before refilling — a top-up on a leaking system is money wasted, and we would rather quote the real repair."],
       ["Do you replace cabin filters?", "Yes — the filter's condition is shown to you and a replacement is quoted at MRP before fitting."],
       ["Can AC service be done in my basement parking?", "Yes — the work needs one parking bay and no lift. We bring drip trays and containment for the coil cleaning."],
@@ -227,9 +227,9 @@ export const CAR_SERVICES: ServiceDef[] = [
     pricing:
       "Brake inspection is free. Pads, discs and fluid are priced by your car's model and quoted at MRP before fitting — the total, including labour, is confirmed in writing before work starts. Call 080 6940 9289 or WhatsApp 82969 50339 with your model.",
     limits: [
-      "Disc skimming and caliper rebuilds on some models — workshop jobs; we arrange pickup and share the estimate first.",
+      "Disc skimming and caliper rebuilds on some models — workshop jobs; we arrange transport and share the estimate first.",
       "ABS module faults — diagnosed on site, repaired with the manufacturer network where needed.",
-      "Drum-brake shoe work on older models — done at the workshop with free pickup.",
+      "Drum-brake shoe work on older models — done at the workshop with free transport.",
     ],
     steps: CAR_BOOK_STEPS,
     faqs: [
@@ -257,7 +257,7 @@ export const CAR_HUB = {
   h1: "Car Service at Home in Bangalore",
   title: "Doorstep Car Service in Bangalore | Ride N Care",
   description:
-    "Doorstep car service in Bangalore — periodic service, AC, battery and brakes at your home or office by background-verified mechanics. Written quote first. Call 080 6940 9289.",
+    "Doorstep car service in Bangalore — periodic service, AC, battery and brakes at your home or office by background-verified mechanics. Written quote first.",
   summary:
     "Ride N Care services cars at your home or office across Bangalore — periodic maintenance, AC service, battery replacement and brakes — with a written quote before work starts and a 7-day workmanship guarantee on every job.",
   detail: [

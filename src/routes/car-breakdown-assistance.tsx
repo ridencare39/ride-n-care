@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bike, CarFront, TriangleAlert, MapPin, Lightbulb, Wrench, ArrowRight, LifeBuoy } from "lucide-react";
-import { pageHead } from "@/lib/head";
+import { formatDate, pageHead } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
@@ -10,7 +10,7 @@ const REVIEWED = "2026-09-20";
 
 const TITLE = "Car Breakdown Assistance in Bangalore | Ride N Care";
 const DESCRIPTION =
-  "Car breakdown assistance in Bangalore — a mechanic comes to your car, diagnoses the fault and confirms the price in writing before work starts. Call 080 6940 9289 or WhatsApp 82969 50339.";
+  "Car breakdown assistance in Bangalore — a mechanic comes to your car, diagnoses the fault and confirms the price in writing before work starts."
 
 /** 45 words — answer-first quick answer. */
 const SUMMARY =
@@ -31,7 +31,7 @@ const FAQS: [string, string][] = [
   ],
   [
     "Which areas do you cover?",
-    "All forty Ride N Care service localities across Bangalore — see the areas page for the full list.",
+    "All 33 confirmed Ride N Care service localities across east and south Bangalore — see the areas page for the full list.",
   ],
   [
     "What happens if my car cannot be fixed on the spot?",
@@ -259,7 +259,7 @@ function CarBreakdown() {
         </ul>
       </section>
 
-      <p className="mt-10 text-xs text-muted-foreground">Last reviewed: {REVIEWED}</p>
+      <p className="mt-10 text-xs text-muted-foreground">Last reviewed: {formatDate(REVIEWED)}</p>
 
       {/* CTA band */}
       <div className="mt-8 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">

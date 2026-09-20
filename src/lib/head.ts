@@ -105,6 +105,20 @@ export function nearbyAreasJsonLd(areas: { slug: string; name: string }[]) {
 }
 
 /**
+ * Format an ISO date (2026-09-20) for human display: "20 Sep 2026".
+ * Schema keeps the ISO form; only visible page text uses this.
+ */
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] as const;
+
+export function formatDate(iso: string): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  if (!m) return iso;
+  const [, y, mo, d] = m;
+  const month = MONTHS_SHORT[Number(mo) - 1];
+  return month ? `${Number(d)} ${month} ${y}` : iso;
+}
+
+/**
  * Trim a "…, Bangalore | Ride N Care" title to <=60 chars by dropping the
  * city qualifier when the area name alone already identifies the page.
  */

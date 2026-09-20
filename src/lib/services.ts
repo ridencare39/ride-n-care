@@ -45,7 +45,7 @@ export interface ServiceDef {
 
 /** Shared trust points — one sentence each on what the promise means in practice. */
 export const TRUST_POINTS: [string, string][] = [
-  ["Background-verified mechanics", "Every mechanic is KYC-checked, arrives uniformed and shows an ID you can verify before handing over the bike."],
+  ["Background-verified mechanics", "Every mechanic is KYC-checked and shows an ID you can verify before handing over the bike."],
   ["OEM-grade parts", "Spares are OEM or OEM-grade, shown to you sealed before fitting, and listed with part numbers on the invoice."],
   ["Written quote before work", "You approve an itemised quote in writing before any spanner is lifted — and anything found later needs your approval too."],
   ["Digital invoice", "The invoice reaches your WhatsApp as soon as the job closes, with parts and labour listed separately."],
@@ -55,14 +55,13 @@ export const TRUST_POINTS: [string, string][] = [
 /** Bike brands confirmed by the owner — used on every bike money page. */
 export const BIKE_BRANDS = [
   "Honda", "Hero", "TVS", "Bajaj", "Yamaha", "Suzuki", "Royal Enfield", "KTM",
-  "Jawa", "Yezdi", "Triumph", "Kawasaki", "Benelli", "Aprilia", "Husqvarna",
-  "Harley-Davidson", "Ducati", "BMW Motorrad",
+  "Kawasaki", "Harley-Davidson", "Jawa", "BMW Motorrad",
 ];
 
 const BOOK_STEPS: [string, string][] = [
   ["1. Tell us your bike", "Share the make, model and what feels wrong on WhatsApp or the booking form. Takes under a minute."],
   ["2. Get a written quote", "We confirm parts, labour and the slot in writing before any spanner is touched."],
-  ["3. Mechanic reaches you", "A uniformed Ride N Care mechanic arrives at your gate with tools, consumables and OEM spares."],
+  ["3. Mechanic reaches you", "A background-verified Ride N Care mechanic arrives at your gate with tools, consumables and OEM spares."],
   ["4. Pay after the test ride", "Inspect the work, take a short test ride, then pay by UPI, card or cash. Invoice on WhatsApp."],
 ];
 
@@ -141,20 +140,20 @@ export const SERVICES: ServiceDef[] = [
     subheading: "The entire service happens where your bike is parked — no drop-off, no pickup fee, no losing a Saturday to a service-centre queue.",
     title: "Doorstep Bike Service in Bangalore | Ride N Care",
     description:
-      "A verified mechanic brings the workshop to your parking spot — periodic service, repairs and free pickup when a workshop is needed. Call 080 6940 9289.",
+      "A verified mechanic brings the workshop to your parking spot — periodic service, repairs and free workshop transport when a job needs it. Call 080 6940 9289.",
     summary:
-      "Doorstep bike service in Bangalore means a Ride N Care mechanic comes to your home or office with tools, oil, filters and spares, and does the full service where the bike stands. You get a written quote first, photo updates during the job, and free pickup-and-drop if a workshop is genuinely needed.",
+      "Doorstep bike service in Bangalore means a Ride N Care mechanic comes to your home or office with tools, oil, filters and spares, and does the full service where the bike stands. You get a written quote first, photo updates during the job, and free workshop transport if a job genuinely needs it.",
     intro:
       "Doorstep bike service means the entire service happens where your bike is parked. No drop-off, no pickup charge, no losing a Saturday. Book a slot and a Ride N Care mechanic reaches you with everything needed.",
     detail: [
       "Our vans carry engine oil for every popular Indian and imported model, filters, brake pads, chain lube, a portable compressor and a diagnostic kit for fuel-injected bikes. That covers the vast majority of periodic services and light repairs on the spot — from an Activa in Jayanagar to a Classic 350 in Whitefield.",
-      "If a job genuinely needs a workshop lift — a full engine rebuild, accident damage, frame work — we say so before starting, arrange free pickup and share the workshop estimate for approval. You are never charged a doorstep premium: package prices match our workshop rates.",
+      "If a job genuinely needs a workshop lift — a full engine rebuild, accident damage, frame work — we say so before starting, arrange free transport to the workshop and share the estimate for approval. You are never charged a doorstep premium: package prices match our workshop rates.",
     ],
     includes: [
       "Mechanic, tools and consumables brought to your address",
       "Full periodic service performed on site",
       "Photo updates before and after the job",
-      "Free pickup and drop when a workshop visit is unavoidable",
+      "Free transport to the workshop when a workshop visit is unavoidable",
       "Written quote before work starts",
       "UPI, card or cash payment after a test ride",
     ],
@@ -165,19 +164,19 @@ export const SERVICES: ServiceDef[] = [
       ["City-wide coverage", "From HSR Layout and Koramangala to Whitefield and Electronic City — the mechanic is assigned from the unit nearest you."],
     ],
     pricing:
-      "General Service starts at ₹799 for bikes up to 199cc (₹1,249 with engine oil replacement) and scales by engine size; Jump Start is ₹399 and Running Repair ₹450 across all sizes. There is no pickup-and-drop fee and no doorstep surcharge — you pay the same package price as the workshop.",
+      "General Service starts at ₹799 for bikes up to 199cc (₹1,249 with engine oil replacement) and scales by engine size; Jump Start is ₹399 and Running Repair ₹450 across all sizes. There is no doorstep surcharge — you pay the same package price as the workshop.",
     limits: [
-      "Engine rebuilds, accident repair and frame work — moved to the workshop with free pickup and a written estimate.",
+      "Engine rebuilds, accident repair and frame work — moved to the workshop with free transport and a written estimate.",
       "Wheel truing, rim repair and painting — workshop-only jobs.",
       "Very large superbike suspension rebuilds — some need a bench and press.",
     ],
     steps: BOOK_STEPS,
     faqs: [
-      ["Is doorstep bike service more expensive than a garage?", "No. Package prices are the same as our workshop rates and there is no pickup-and-drop fee, so most riders pay less overall once travel and waiting time are counted."],
+      ["Is doorstep bike service more expensive than a garage?", "No. Package prices are the same as our workshop rates, so most riders pay less overall once travel and waiting time are counted."],
       ["What space do you need?", "About two parking bays' worth of room and, ideally, a plug point. Apartment basements, gated-community parking and roadside kerbs all work — we bring a drip tray."],
-      ["Which areas of Bangalore do you cover?", "Forty localities across south, east, central, north and west Bangalore — the full list with pincodes is on our areas page."],
-      ["How do I know the mechanic is genuine?", "Every mechanic is background-verified and uniformed, and shows an ID at the gate. You also get the mechanic's name and photo on WhatsApp before arrival."],
-      ["Do you work on weekends?", "Yes, every day. Evening slots fill first, so booking a day ahead gets the widest choice of windows."],
+      ["Which areas of Bangalore do you cover?", "33 confirmed localities across east and south Bangalore — the full list with pincodes is on our areas page."],
+      ["How do I know the mechanic is genuine?", "Every mechanic is background-verified and shows an ID at the gate."],
+      ["How do I get a good slot?", "Evening slots fill first, so booking a day ahead gets the widest choice of windows."],
       ["What happens if the bike needs workshop work?", "We tell you before touching anything, transport the bike free and share the workshop estimate for your approval."],
       ["Can I reschedule?", "Yes — free reschedule or cancellation on WhatsApp any time before the mechanic is dispatched."],
     ],
@@ -222,7 +221,7 @@ export const SERVICES: ServiceDef[] = [
     pricing:
       "Running Repair is ₹450 across all engine sizes, which covers the initial fault inspection, minor repair labour and a safety check afterwards. Parts are quoted at MRP before fitting, and bigger jobs get an itemised written estimate. Diagnosis itself is free — you pay only if you approve the repair.",
     limits: [
-      "Engine rebuilds, crankcase and gearbox strip-downs — workshop bench jobs with free pickup.",
+      "Engine rebuilds, crankcase and gearbox strip-downs — workshop bench jobs with free transport.",
       "Accident and frame damage — assessed on site, repaired at the workshop.",
       "Wheel truing and painting — not doorstep work.",
     ],
@@ -230,7 +229,7 @@ export const SERVICES: ServiceDef[] = [
     faqs: [
       ["Do you charge for diagnosis?", "No. Diagnosis at your doorstep is free and comes with a written finding; you pay only if you approve the repair."],
       ["My bike will not start — can you help today?", "No-start cases get our emergency slots. Call 080 6940 9289 or WhatsApp 82969 50339 with the symptom and we confirm the earliest arrival on WhatsApp."],
-      ["Can every repair be done at home?", "Most can. Engine rebuilds, accident repair and paint work move to our workshop with free pickup and a written estimate."],
+      ["Can every repair be done at home?", "Most can. Engine rebuilds, accident repair and paint work move to our workshop with free transport and a written estimate."],
       ["Do repairs carry a warranty?", "Yes — a 7-day workmanship guarantee on our work, plus the manufacturer warranty on the part itself."],
       ["Are the parts genuine?", "OEM or OEM-grade only, shown to you sealed before fitting, with part numbers on the invoice."],
       ["How do I pay?", "UPI, card or cash after a test ride; the invoice reaches your WhatsApp immediately."],
@@ -277,7 +276,7 @@ export const SERVICES: ServiceDef[] = [
     pricing:
       "Running Repair is ₹450 across all engine sizes — initial fault inspection, minor repair labour and a safety check. Battery replacement and bigger part jobs are quoted before fitting at MRP. Diagnosis and in-city transport to our workshop are free.",
     limits: [
-      "Engine rebuilds and gearbox work — workshop bench jobs with free pickup.",
+      "Engine rebuilds and gearbox work — workshop bench jobs with free transport.",
       "Accident, frame and paint work — assessed on site, repaired at the workshop.",
       "Wheel truing — needs a truing stand.",
     ],
@@ -331,7 +330,7 @@ export const SERVICES: ServiceDef[] = [
       "General Service starts at ₹799 up to 199cc and scales with engine size; with engine oil replacement it starts at ₹1,249. If your bike is still inside the manufacturer's free-service period, we recommend using those first.",
     limits: [
       "Warranty work during the free-service period — use the authorised centre for those visits.",
-      "Engine overhaul and valve-shim jobs — workshop work with free pickup.",
+      "Engine overhaul and valve-shim jobs — workshop work with free transport.",
     ],
     steps: BOOK_STEPS,
     faqs: [
@@ -361,7 +360,7 @@ export const SERVICES: ServiceDef[] = [
       "From a 100 CC commuter to a litre-class superbike, Ride N Care mechanics are trained by engine class. Bigger motorcycles get bigger-bike attention: torque specs, valve clearance checks and the right grade of oil.",
     detail: [
       "Larger-capacity motorcycles are less forgiving of shortcuts. We use manufacturer torque values, full-synthetic oil where specified, and inspect chain wear, sprocket profile and brake fluid condition on every visit.",
-      "We service Royal Enfield, KTM, Yamaha, Bajaj, Honda, Hero, TVS, Suzuki, Jawa, Yezdi, Benelli, Kawasaki, Triumph, Ducati, BMW, Aprilia, Husqvarna and Harley-Davidson.",
+      "We service Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Kawasaki, Harley-Davidson, Jawa and BMW Motorrad.",
     ],
     includes: [
       "Grade-correct engine oil and filter change",
@@ -548,7 +547,7 @@ export const SERVICES: ServiceDef[] = [
       ["My bike stalled in waterlogging — can you help?", "Do not keep cranking it. Call us; water ingress needs the airbox and cylinder cleared before starting, which we do on site."],
       ["Is breakdown assistance available on holidays?", "Yes, every day between 8 AM and 9 PM."],
       ["What does breakdown assistance cost?", "The callout is quoted on the phone before dispatch; Running Repair is ₹450 with parts billed only after approval."],
-      ["Which areas do you cover?", "All forty Ride N Care service localities across Bangalore — see the areas page for the full list."],
+      ["Which areas do you cover?", "All 33 confirmed Ride N Care service localities across east and south Bangalore — see the areas page for the full list."],
       ["How do I pay?", "UPI, card or cash; the digital invoice reaches your WhatsApp immediately."],
     ],
     relatedGuides: ["bike-breakdown-troubleshooting-guide", "when-to-service-your-bike"],
@@ -596,7 +595,7 @@ export const SERVICES: ServiceDef[] = [
     ],
     steps: BOOK_STEPS,
     faqs: [
-      ["Can engine repair be done at home?", "Diagnosis and light work, yes. An overhaul goes to our workshop with free pickup, since the engine needs a bench and specialist tools."],
+      ["Can engine repair be done at home?", "Diagnosis and light work, yes. An overhaul goes to our workshop with free transport, since the engine needs a bench and specialist tools."],
       ["How long does an overhaul take?", "Typically 2–4 working days depending on parts availability for your model."],
       ["Is my engine noise serious?", "Not always — chain and valve noise are often mistaken for internal damage. A free diagnosis will tell you before you spend anything."],
       ["How much does engine repair cost?", "Minor repairs fall under the ₹450 Running Repair package. Overhauls are quoted itemised per model and approved in writing first."],
@@ -798,7 +797,7 @@ export const SERVICES: ServiceDef[] = [
       "Diagnosis is free and minor electrical fixes fall under the ₹450 Running Repair package. Regulators, relays and loom work are quoted at MRP plus labour before fitting — approved in writing first.",
     limits: [
       "ECU and fuel-injection control faults on some models — diagnosed on site, repaired via the manufacturer network if proprietary.",
-      "Full loom replacement on older bikes — quoted as a workshop job with free pickup.",
+      "Full loom replacement on older bikes — quoted as a workshop job with free transport.",
     ],
     steps: BOOK_STEPS,
     faqs: [
@@ -849,7 +848,7 @@ export const SERVICES: ServiceDef[] = [
     pricing:
       "The doorstep inspection is free. Minor fixes fall under the ₹450 Running Repair package; parts such as tyres and cables are quoted at MRP before fitting — approved in writing first.",
     limits: [
-      "Engine strip-downs, wheel truing and paint — workshop jobs with free pickup.",
+      "Engine strip-downs, wheel truing and paint — workshop jobs with free transport.",
       "EV battery and motor faults — manufacturer service network.",
     ],
     steps: BOOK_STEPS,

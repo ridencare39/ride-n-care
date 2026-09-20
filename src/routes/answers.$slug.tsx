@@ -3,7 +3,7 @@ import { ANSWER_PAGES, ANSWER_CATEGORIES, getAnswerPage } from "@/lib/answer-pag
 import { SERVICES } from "@/lib/services";
 import { CAR_SERVICES } from "@/lib/car-services";
 import { SITE_URL } from "@/lib/seo";
-import { pageHead } from "@/lib/head";
+import { pageHead, formatDate } from "@/lib/head";
 import { graphForPage, webPageNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/answers/$slug")({
     return {
       ...pageHead({
         title: `${p.question} | Ride N Care`,
-        description: p.answer.length <= 160 ? p.answer : `${p.answer.slice(0, 157)}...`,
+        description: p.meta ?? p.answer,
         path: `/answers/${p.slug}`,
         extraMeta: [{ property: "og:type", content: "article" }],
       }),
@@ -75,7 +75,7 @@ function AnswerPageView() {
             {category.label}
           </span>
         )}
-        <span className="text-xs text-muted-foreground">Last updated {p.updated}</span>
+        <span className="text-xs text-muted-foreground">Last updated {formatDate(p.updated)}</span>
       </div>
 
       {/* The question IS the H1 — one question per page. */}

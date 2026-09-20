@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnswerBlocks } from "@/components/AnswerBlocks";
 import { AI_SEARCH_FAQS, ANSWERS, BRAND, ENTITY_SUMMARY, ENTITY_TOPICS } from "@/lib/answers";
 import { ANSWER_CATEGORIES, ANSWER_PAGES, type AnswerCategory } from "@/lib/answer-pages";
-import { AREAS, CONFIRMED_AREAS } from "@/lib/areas";
+import { CONFIRMED_AREAS, COVERAGE_LINE } from "@/lib/areas";
 import { SERVICES } from "@/lib/services";
 import { SITE_URL } from "@/lib/seo";
 import { pageHead } from "@/lib/head";
@@ -21,15 +21,8 @@ export const Route = createFileRoute("/answers/")({
     ...pageHead({
       title: "Bike & Car Service Answers — Bangalore | Ride N Care",
       description:
-        "Direct answers to Bangalore's most-asked bike and car service questions: costs, durations, booking, parts, guarantees, coverage and breakdowns. Written quote first, 7-day guarantee.",
+        "Direct answers to Bangalore's most-asked bike and car service questions: costs, booking, parts, guarantees, coverage and breakdowns. Written quote first.",
       path: "/answers",
-      extraMeta: [
-        { property: "og:title", content: "Ride N Care Answers — Bike & Car Service in Bangalore" },
-        {
-          property: "og:description",
-          content: "Plain answers about doorstep bike and car service in Bangalore from Ride N Care.",
-        },
-      ],
     }),
     scripts: pageScripts(
       graphForPage([
@@ -57,7 +50,7 @@ function Answers() {
       </nav>
 
       <span className="mt-6 block text-xs uppercase tracking-[0.2em] text-primary font-semibold">Ride N Care · {BRAND.tagline}</span>
-      <h1 className="mt-2 text-4xl md:text-5xl font-bold">Bike service &amp; repair in Bangalore, answered</h1>
+      <h1 className="mt-2 text-4xl md:text-5xl font-bold">Bike &amp; car service in Bangalore, answered</h1>
       <p className="mt-4 text-muted-foreground leading-relaxed">{ENTITY_SUMMARY}</p>
 
       <dl className="mt-8 grid gap-3 sm:grid-cols-2 text-sm">
@@ -114,7 +107,7 @@ function Answers() {
       </div>
 
       <h2 className="mt-14 text-2xl md:text-3xl font-bold">Key questions</h2>
-      <AnswerBlocks items={ANSWERS} />
+      <AnswerBlocks items={ANSWERS.filter((a) => a.id !== "who-is-ride-n-care")} />
 
       <h2 className="mt-14 text-2xl md:text-3xl font-bold">Questions people ask search assistants</h2>
       <div className="mt-6 divide-y divide-border rounded-3xl border border-border bg-card">
@@ -142,12 +135,12 @@ function Answers() {
         <li><Link to="/cars" className="text-primary hover:underline">All car services →</Link></li>
         <li><Link to="/$service" params={{ service: "car-ac-service" }} className="text-primary hover:underline">AC Service →</Link></li>
         <li><Link to="/$service" params={{ service: "car-battery-service" }} className="text-primary hover:underline">Battery →</Link></li>
-        <li><Link to="/$service" params={{ service: "car-brake-service" }} className="text-primary hover:underline">Brakes &amp; Suspension →</Link></li>
+        <li><Link to="/$service" params={{ service: "car-brake-service" }} className="text-primary hover:underline">Car Brake Service →</Link></li>
       </ul>
 
       <h2 className="mt-14 text-2xl md:text-3xl font-bold">Bangalore areas we serve</h2>
       <p className="mt-3 text-sm text-muted-foreground">
-        {AREAS.map((a) => a.name).join(", ")}.
+        {COVERAGE_LINE} — {CONFIRMED_AREAS.map((a) => a.name).join(", ")}.
       </p>
       <Link to="/areas" className="mt-3 inline-block text-primary font-semibold hover:underline">
         See area details and pincodes →
@@ -165,7 +158,7 @@ function Answers() {
       </ul>
 
       <div className="mt-16 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">
-        <h2 className="text-2xl font-bold text-primary-foreground">Book a doorstep bike service</h2>
+        <h2 className="text-2xl font-bold text-primary-foreground">Book a doorstep bike or car service</h2>
         <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 7-day guarantee.</p>
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
           <a href="tel:+918069409289" className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Call {BRAND.phonePrimaryDisplay}</a>

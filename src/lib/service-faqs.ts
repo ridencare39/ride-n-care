@@ -3,12 +3,12 @@ export const BIKE_FAQS: [string, string][] = [
   ["How long does a bike service take?", "Most bike services finish in 60–90 minutes at your doorstep in Bangalore."],
   ["Do you service Royal Enfield, KTM and superbikes?", "Yes — Royal Enfield, KTM, Kawasaki, Harley-Davidson and BMW Motorrad are all routine work, with mechanics assigned by engine class."],
   ["How often should I service my bike in Bangalore?", "Every 2,500–3,500 km for commuter bikes or every 3 months — whichever comes first — is ideal for Bangalore traffic conditions."],
-  ["Are the parts genuine?", "Always. We use OEM-grade parts with a printed invoice and standard warranty."],
+  ["Are the parts genuine?", "Always. We use OEM-grade parts, listed with part numbers on the digital invoice."],
 ];
 
 export const CAR_FAQS: [string, string][] = [
   ["What is included in a doorstep car service in Bangalore?", "Engine oil + filter change, brake check, coolant top-up, battery test, AC check, all fluid levels, lights, wipers and a multi-point inspection — completed at your home or office."],
-  ["How long does a doorstep car service take?", "The mechanic's arrival window is confirmed when you book, and the visit runs until the checklist is complete and you have inspected the work."],
+  ["How long does a doorstep car service take?", "The arrival window is confirmed at booking, and the visit runs until the checklist is complete and you have inspected the work."],
   ["How much does a car AC gas refill cost in Bangalore?", "Car AC service is priced after inspection because the refrigerant, leak condition and required parts vary by model. Ride N Care confirms the quote before work begins."],
   ["Do you offer pickup and drop for car service?", "Pickup and drop is arranged when a job genuinely needs the workshop — such as an engine overhaul or wheel alignment — with the estimate approved before the car moves."],
   ["Are your car mechanics certified?", "All our technicians are background-verified, and every job runs on a written quote approved before work starts."],

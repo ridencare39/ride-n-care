@@ -22,7 +22,7 @@ Ride N Care is a doorstep bike and car service company in Bangalore, Karnataka, 
 - Emergency bike repair and breakdown assistance at the vehicle's location.
 - Breakdown assistance covers bikes, scooters and cars: /breakdown-assistance is the hub for any vehicle; /bike-breakdown-assistance covers bikes and scooters; /car-breakdown-assistance covers cars. Call 080 6940 9289 or WhatsApp 82969 50339 with your location.
 - Doorstep car service in Bangalore: periodic maintenance, AC service and gas refill, battery testing and replacement, brake pads, discs and fluid, diagnostics and pre-purchase inspection. Dedicated pages: /car-periodic-service, /car-ac-service, /car-battery-service, /car-brake-service.
-- Free pickup and drop is arranged only when a job genuinely needs the workshop; most bike services finish in 60–90 minutes.
+- Workshop transport is arranged free when a job genuinely needs the workshop; most bike services finish in 60–90 minutes at your address.
 
 ## Answers (AI-ready Q&A)
 
@@ -48,11 +48,11 @@ Top answer pages:
 - How do I book? Call 080 6940 9289, WhatsApp 82969 50339, or use the booking form at /contact. A written quote is shared before the visit.
 - What does a bike service include? Engine oil, oil and air filter, spark plug, brakes, chain, clutch and throttle play, battery check, tyres, lights, wash and a 25-point inspection report.
 - What does it cost? Bike General Service starts at ₹799 (up to 199cc; higher CC tiers cost more — ₹2,499 at 801cc+). General Service + Engine Oil starts at ₹1,249. Jump Start is ₹399 and Running Repair is ₹450 across all CC categories. Electric two-wheelers have their own packages starting at ₹999. Car service is quoted per package after inspection — see /cars.
-- Which brands are covered? Bikes: Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Jawa, Yezdi, Triumph, Kawasaki, Benelli, Aprilia, Husqvarna, Harley-Davidson, Ducati and BMW Motorrad. Cars: Maruti Suzuki, Hyundai, Tata, Mahindra, Honda, Toyota and Kia (the confirmed car-brand list; additional brands are pending owner confirmation).
+- Which brands are covered? Bikes: Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Kawasaki, Harley-Davidson, Jawa and BMW Motorrad (the 12 brands in the homepage strip). Cars: Maruti Suzuki, Hyundai, Tata, Mahindra, Honda, Toyota and Kia (the confirmed car-brand list; additional brands are pending owner confirmation).
 
 ## Service areas in Bangalore
 
-Ride N Care serves confirmed localities across east and south Bangalore, including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, BTM Layout, Jayanagar, JP Nagar, Electronic City, Bellandur and Sarjapur Road. North/west/central pages exist but coverage there is pending owner confirmation. The full list with per-area details is at /areas.
+Ride N Care provides doorstep bike and car service in 33 confirmed Bangalore localities across east and south Bangalore, including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, BTM Layout, Jayanagar, JP Nagar, Electronic City, Bellandur and Sarjapur Road. North/west/central pages exist but coverage there is pending owner confirmation. The full list with per-area details is at /areas.
 
 ## Key pages
 

@@ -24,7 +24,15 @@ PAGES = [
 
 CALL = "+918069409289"
 WA_TEL_BAD = re.compile(r"tel:(08296950339|\+?918296950339)")
-UNVERIFIED = ["12000", "12,000", "4.8", "150+", "50+", "₹200 off", "same-day slots", "30 minutes"]
+UNVERIFIED = [
+    "12000", "12,000", "4.8", "150+", "50+", "₹200 off", "200 off", "same-day slots", "30 minutes",
+    # Part 8B claim sweep — these must not return without owner approval (Q37–Q45):
+    "seven days a week", "uniformed", "typically attended within",
+    "free pickup", "Free Pickup", "Certified pros", "Live updates",
+    "details on WhatsApp before dispatch", "name and photo on WhatsApp",
+    "usually costs the same or less", "printed invoice", "printed warranty",
+    "standard manufacturer warranty", "Brakes & Suspension", "24x7", "free towing", "minutes away",
+]
 IDS_EXPECTED = {
     "https://ridencare.co.in/#organization",
     "https://ridencare.co.in/#localbusiness",
@@ -111,6 +119,17 @@ for page in PAGES:
 
     # business facts
     joined = json.dumps(all_nodes)
+
+    # Part 8B: banned-claims scan over VISIBLE TEXT (scripts/styles stripped),
+    # so a future copy change cannot silently reintroduce removed claims.
+    import html as _html
+    _vis = re.sub(r"<script.*?</script>", " ", html, flags=re.S)
+    _vis = re.sub(r"<style.*?</style>", " ", _vis, flags=re.S)
+    _vis = _html.unescape(re.sub(r"<[^>]+>", " ", _vis))
+    for claim in UNVERIFIED:
+        if claim.lower() in _vis.lower():
+            rec["errors"].append(f"banned claim '{claim}' in page text")
+            fail += 1
     if WA_TEL_BAD.search(html.replace("\\/", "/")):
         # check telephone fields specifically in schema
         for n in all_nodes:

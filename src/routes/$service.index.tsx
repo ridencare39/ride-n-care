@@ -3,7 +3,7 @@ import { getService, type ServiceDef, TRUST_POINTS, BIKE_BRANDS } from "@/lib/se
 import { CAR_SERVICES, getCarService, CAR_BRAND_LIST } from "@/lib/car-services";
 import { AREAS, PRIORITY_AREAS } from "@/lib/areas";
 import { SITE_URL } from "@/lib/seo";
-import { pageHead } from "@/lib/head";
+import { formatDate, pageHead } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
@@ -285,7 +285,7 @@ function ServiceLanding() {
       </div>
 
       {/* Review stamp */}
-      <p className="mt-6 text-center text-xs text-muted-foreground">Last reviewed: {s.reviewed}</p>
+      <p className="mt-6 text-center text-xs text-muted-foreground">Last reviewed: {formatDate(s.reviewed)}</p>
     </div>
   );
 }

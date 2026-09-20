@@ -22,7 +22,8 @@ export type AnswerCategory =
   | "coverage"
   | "emergency"
   | "comparison"
-  | "care";
+  | "care"
+  | "car";
 
 export const ANSWER_CATEGORIES: { id: AnswerCategory; label: string }[] = [
   { id: "cost", label: "Cost & pricing" },
@@ -33,6 +34,7 @@ export const ANSWER_CATEGORIES: { id: AnswerCategory; label: string }[] = [
   { id: "emergency", label: "Emergency & breakdown" },
   { id: "comparison", label: "Comparisons" },
   { id: "care", label: "Care & vehicle-specific" },
+  { id: "car", label: "Car service" },
 ];
 
 export interface AnswerPage {
@@ -42,6 +44,8 @@ export interface AnswerPage {
   category: AnswerCategory;
   /** Answer-first paragraph (40–60 words), self-contained for voice search. */
   answer: string;
+  /** 120–155 char meta description (a complete sentence, no truncation). Used for meta, og and twitter. */
+  meta?: string;
   /** Supporting paragraphs. */
   detail?: string[];
   bullets?: string[];
@@ -67,6 +71,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "cost",
     answer:
       "Bike service at Ride N Care starts at ₹799 for General Service on bikes up to 199cc, ₹999 for 200–249cc, ₹1,199 for 250–400cc, ₹1,399 for 401–500cc, ₹1,799 for 501–800cc and ₹2,499 for 801cc and above. With engine oil replacement, General Service starts at ₹1,249.",
+    meta: "Bike service in Bangalore starts at ₹799 General Service up to 199cc, scaling by engine size — the full price list, and what changes the final bill.",
     detail: [
       "Prices are published by engine size because bigger engines take more oil, bigger filters and more labour. The table below is the full, current price list — the same figures shown in the booking flow.",
       "What changes the final bill: engine capacity (the package price), whether the engine-oil package is added, and any extra parts such as brake pads, a battery or a chain-sprocket set. Parts are quoted at MRP and shown to you before fitting, and consumables or extra parts are billed only after your approval. The exact amount is confirmed in writing before work starts.",
@@ -95,6 +100,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "cost",
     answer:
       "Ride N Care does not publish fixed car service prices, because the quote depends on your car's make, model and engine. The oil grade and capacity, filter type, brake condition and refrigerant type all change the cost. Share your model and the exact price is confirmed in writing before work starts.",
+    meta: "Car service pricing in Bangalore depends on model, oil grade and parts condition — what drives the quote, confirmed in writing before work starts.",
     detail: [
       "What drives the price of a doorstep car service:",
       "Quoting a generic range would be guessing, so none is published — share your car's model on WhatsApp or the booking form and the exact amount, parts and labour, is confirmed in writing before any work starts.",
@@ -121,6 +127,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "cost",
     answer:
       "Running Repair costs ₹450 across every engine size, which covers the initial fault inspection, minor repair labour and a safety check afterwards. Diagnosis is free. Any parts are quoted at MRP and shown to you before fitting, and bigger jobs get an itemised written estimate approved before work starts.",
+    meta: "Bike repair in Bangalore starts with free diagnosis; Running Repair is ₹450 with parts quoted at MRP and approved before anything is fitted.",
     detail: [
       "This is why repair pricing works differently from a service package: the value is in the diagnosis. A bike that will not start, a noise or a soft brake can have several causes, and guessing means paying for parts you did not need. The ₹450 package covers finding the fault and fixing minor issues; anything larger is estimated itemised, approved by you, then repaired.",
     ],
@@ -139,6 +146,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "cost",
     answer:
       "A General Service for an automatic scooter up to 199cc costs ₹799, or ₹1,249 with engine oil replacement. Jump Start is ₹399 and Running Repair is ₹450. Extra parts such as a drive belt, brake shoes or a battery are quoted at MRP and approved by you before fitting.",
+    meta: "Scooter service in Bangalore is ₹799 General Service up to 199cc, or ₹1,249 with engine oil — the same package prices as bikes of the same size.",
     detail: [
       "Scooters up to 199cc — which covers Activa, Jupiter, Access, Fascino, Pleasure and most automatic scooters on Bangalore roads — fall in the base package. The service includes engine and gear oil attention, CVT inspection, brakes, battery and tyre checks.",
     ],
@@ -156,6 +164,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "cost",
     answer:
       "A Jump Start visit costs ₹399 for any bike, scooter or electric two-wheeler, and it includes a battery condition check, a voltage check, a safe jump start and a basic charging-system check. If the battery itself needs replacement, the new battery is quoted at MRP before it is fitted.",
+    meta: "A bike jump start in Bangalore costs ₹399 and includes a battery and charging-system check, so the real cause is found before it strands you again.",
     detail: [
       "The charging-system check matters: a battery that keeps dying usually has a reason — a weak alternator on a car, or a failing regulator/rectifier or drained cell on a two-wheeler. Jump-starting without checking the system is how riders end up stranded twice.",
     ],
@@ -173,6 +182,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "cost",
     answer:
       "Electric two-wheelers have their own fixed-price packages at Ride N Care: EV General Service is ₹999, EV Running Repair is ₹450 and EV Jump Start is ₹399. Each package covers an EV-specific checklist — battery health, charging port, brakes, tyres and electricals — and any extra work needs your approval first.",
+    meta: "Electric scooter service at Ride N Care is flat-priced: ₹999 EV General Service, ₹450 Running Repair, ₹399 Jump Start — battery faults stay with the maker.",
     detail: [
       "EV packages are flat-priced — there is no engine-size logic, because there is no engine. The checklist focuses on what an EV actually wears: brakes, tyres, suspension, bearings, connectors and the charging system.",
     ],
@@ -192,6 +202,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "time",
     answer:
       "A General Service on a bike or scooter takes 60–90 minutes at your address, and General Service with engine oil replacement takes 75–120 minutes. A Jump Start takes 20–40 minutes. Running Repair time depends on the inspection. Your arrival window is confirmed when you book.",
+    meta: "A bike General Service takes 60–90 minutes at your home, and 75–120 minutes with engine oil replacement — the arrival window is confirmed when you book.",
     detail: [
       "Doorstep service does not mean slower service — the mechanic arrives with the tools, oil and filters already on the van, so there is no queue and no handover desk. You can watch the whole job or get on with your day; you are pinged on WhatsApp when it is done.",
     ],
@@ -210,11 +221,12 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "time",
     answer:
       "Ride N Care does not quote fixed durations for car jobs, because the time depends on your car's model and what the inspection finds. When you book, we confirm the mechanic's arrival window, and the visit runs until the checklist is complete and you have inspected the work yourself.",
+    meta: "Car job durations are not pre-quoted; your arrival window is confirmed at booking and the visit ends when the checklist is complete and inspected.",
     detail: [
       "This is deliberate: a periodic service on a hatchback with clean filters is a different job from an SUV whose brake discs are scored. Quoting a single duration would mean either padding the estimate or rushing the checklist. What we commit to instead is the arrival window at booking, a written quote before work starts, and a job that finishes when you have inspected it.",
     ],
     faqs: [
-      ["Will I know when the mechanic arrives?", "Yes — the arrival window is confirmed when you book, and you get the mechanic's details on WhatsApp before dispatch."],
+      ["Will I know when the mechanic arrives?", "Yes — the arrival window is confirmed when you book, and your arrival window is confirmed when you book."],
       ["Can I book a car service for a specific day?", "Yes — share your preferred day and slot when you book, and the confirmation names the window."],
     ],
     related: ["car-service-cost-bangalore", "what-included-car-service", "doorstep-vs-garage-car"],
@@ -227,6 +239,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "time",
     answer:
       "Call 080 6940 9289 or WhatsApp 82969 50339 with your bike model, your address and a preferred slot, or fill the booking form on the website. You receive a written quote first, and the mechanic is dispatched only after you approve it.",
+    meta: "Book doorstep bike service in Bangalore by phone or WhatsApp with your model, address and slot — a written quote arrives before the mechanic is dispatched.",
     detail: [
       "What to have ready: the make and model of your vehicle, what it needs (a routine service, a specific complaint, or a breakdown), your locality or pincode, and a preferred day and time window. That is enough for the written quote.",
     ],
@@ -249,13 +262,14 @@ export const ANSWER_PAGES: AnswerPage[] = [
     question: "Do you provide bike service on weekends and holidays?",
     category: "time",
     answer:
-      "Yes. Ride N Care works seven days a week, and emergency bike repair dispatch runs 8 AM to 9 PM every day, including weekends and most public holidays. Evening slots fill first, so booking a day ahead gives you the widest choice of arrival windows.",
+      "Slots are booked day by day and your arrival window is confirmed when you book. Share your preferred day on 080 6940 9289 or WhatsApp 82969 50339 and we confirm what is open for your area.",
+    meta: "Weekend bike service in Bangalore is booked like any other day: share your preferred slot and the arrival window is confirmed when you book.",
     detail: [
-      "Weekend mornings are the most requested slots across Bangalore, and Sunday evenings queue into Monday's first slots when they fill. For routine service, a weekday booking is the easiest way to get an exact window.",
+      "Popular slots fill first, so sharing a second-choice window at booking makes confirmation faster. For routine service, a mid-week booking is usually the easiest way to get the exact window you want.",
     ],
     faqs: [
       ["Are you open after 9 PM?", "Emergency dispatch closes at 9 PM; late-night requests are scheduled for the next morning's first slot."],
-      ["Do you service on public holidays?", "Most holidays yes, with the 8 AM–9 PM emergency window running as usual."],
+      ["Do you service on public holidays?", "The bike emergency line runs 8 AM to 9 PM; other slots and their windows are confirmed when you book."],
     ],
     related: ["how-to-book", "bike-wont-start", "emergency-cost"],
     services: ["emergency-bike-repair", "doorstep-bike-service"],
@@ -267,6 +281,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "time",
     answer:
       "Very little: a parking spot with space to work around the vehicle and, ideally, a plug point. If you live in a gated community, allow gate access for the mechanic. Having your last service invoice or noting the symptoms you have noticed also shortens the diagnosis.",
+    meta: "For a doorstep service you only need parking space, gate access and ideally a plug point — the mechanic brings tools, oil, filters, spares and a drip tray.",
     detail: [
       "The mechanic brings everything else — tools, oil, filters, common spares, a drip tray and a compressor. If a tap is not available, a dry or low-water wash is used, which is normal in apartment basements.",
     ],
@@ -286,6 +301,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "process",
     answer:
       "A Ride N Care General Service covers air filter cleaning, battery voltage check, brake service, cables and levers adjustment, chain tension check, clutch adjustment, dry wash, electrical check-up, engine oil check, greasing and lubrication, oil leakage check and spark plug cleaning — with engine oil replacement added in the oil package.",
+    meta: "A bike General Service covers filters, brakes, chain, clutch, cables, battery, electricals and a dry wash — with every item ticked off in front of you.",
     detail: [
       "Every job ends with the checklist items ticked in front of you and anything worn photographed and quoted separately. The invoice lists parts and labour separately, and the work carries a 7-day workmanship guarantee.",
     ],
@@ -299,28 +315,12 @@ export const ANSWER_PAGES: AnswerPage[] = [
     updated: UPDATED,
   },
   {
-    slug: "what-included-car-service",
-    question: "What is included in a car periodic service?",
-    category: "process",
-    answer:
-      "A car periodic service at home covers engine oil and oil filter change, air filter cleaning, a brake check covering pads, discs and fluid, coolant and fluid top-ups, a battery test, lights, horn, wipers and indicators, tyre pressure and tread, and a multi-point inspection report at the end.",
-    detail: [
-      "Anything the inspection shows as due — brake pads, a cabin filter, a battery — is quoted for your specific model before replacement. The mechanic works in your parking bay, shows you every part that comes out, and hands over the invoice on WhatsApp before you pay.",
-    ],
-    faqs: [
-      ["Do you do computerised diagnostics?", "Yes — a computerised diagnostics scan is part of the comprehensive car service package."],
-      ["Is the car wash included?", "Interior vacuum and dry wash are part of the Standard package; the Multi Service package covers oil change and the multipoint check."],
-    ],
-    related: ["car-service-cost-bangalore", "how-long-car-service", "warranty-service"],
-    services: ["car-periodic-service"],
-    updated: UPDATED,
-  },
-  {
     slug: "written-quote",
     question: "Do you give a quote before starting work?",
     category: "process",
     answer:
       "Yes. Every job starts with a written quote covering parts, labour and the slot, and nothing is touched until you approve it. If the mechanic finds extra work during the visit, it is photographed, explained and quoted separately — again only with your approval.",
+    meta: "Every job starts with a written quote covering parts, labour and the slot — nothing is touched until you approve it, and extra work is quoted separately.",
     detail: [
       "This is the promise to judge any service provider on, including us: the price you approve in writing is the price on the invoice, and anything discovered later waits for your yes. If a provider will not quote in writing before touching the vehicle, that tells you enough.",
     ],
@@ -338,6 +338,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "process",
     answer:
       "You pay after the work is done and you have taken a short test ride — by UPI, card or cash. A digital invoice listing parts and labour separately reaches your WhatsApp as soon as the job closes. You never pay before the job is done.",
+    meta: "Pay by UPI, card or cash after a test ride — the digital invoice listing parts and labour separately reaches your WhatsApp as soon as the job closes.",
     detail: [
       "The invoice matters beyond the payment: it lists each part fitted, which is what you compare against the approved quote, and it is your record for the workmanship guarantee and any manufacturer warranty on the parts.",
     ],
@@ -357,6 +358,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "trust",
     answer:
       "Yes. Every Ride N Care mechanic is background-verified before joining, arrives at your address, and carries out the job in front of you — with a written quote first, a digital invoice afterwards, and your approval on the full price and scope before any work starts.",
+    meta: "Ride N Care mechanics are background-verified, work in the open where you can watch, and hand over old parts — transparency is the practical safeguard.",
     detail: [
       "Transparency is the practical safeguard: the work happens at your gate where you can see it, every part that comes off is shown to you, and the invoice lists everything fitted. If anything about a visit feels off, call 080 6940 9289 while the mechanic is still there.",
     ],
@@ -374,6 +376,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "trust",
     answer:
       "Yes — because the work happens in the open, in front of you. You see every part that comes off and every part that goes on, you approve the written quote first, and the digital invoice lists everything fitted. Most customers find that more transparent than leaving a bike at a workshop.",
+    meta: "Doorstep service is safe because it happens in front of you — written quote first, parts shown, digital invoice, 7-day workmanship guarantee.",
     detail: [
       "Where a job does need the workshop — an engine rebuild, wheel truing, paint work — the bike is assessed on site first, moved only with your approval, and the workshop estimate is shared before work begins. You always know where your vehicle is and what is being done to it.",
     ],
@@ -391,12 +394,13 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "trust",
     answer:
       "Yes. Every job carries a 7-day workmanship guarantee: if anything Ride N Care serviced or repaired plays up within seven days, a mechanic comes back and puts it right at no charge. Parts fitted also carry the manufacturer's own warranty, which is shown on the invoice.",
+    meta: "Every job carries a 7-day workmanship guarantee: if serviced work plays up within seven days, a mechanic returns and puts it right at no charge.",
     detail: [
       "The guarantee covers the work performed — a chain adjusted, brakes bled, a battery fitted. It is separate from the manufacturer warranty on the part itself, and both are on the invoice so there is no argument later.",
     ],
     faqs: [
       ["How do I claim the guarantee?", "Call or WhatsApp 080 6940 9289 / 82969 50339 within seven days with your invoice, and the follow-up visit is scheduled."],
-      ["Does the guarantee cover parts?", "Parts carry the manufacturer's warranty printed on the invoice; the 7-day guarantee covers the workmanship."],
+      ["Does the guarantee cover parts?", "Parts carry the manufacturer's own warranty, noted on the invoice; the 7-day guarantee covers the workmanship."],
     ],
     related: ["written-quote", "payment-options", "genuine-parts"],
     services: ["bike-service", "bike-repair"],
@@ -408,6 +412,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "trust",
     answer:
       "Ride N Care fits OEM or OEM-grade parts only. The oil and every spare are shown to you before fitting, old parts are handed back if you want them, and the digital invoice lists each part fitted. Anything found mid-job is quoted and approved before it is replaced.",
+    meta: "Only OEM or OEM-grade parts are fitted — oil and spares are shown to you before fitting, and the digital invoice lists every part with part numbers.",
     detail: [
       "\"OEM-grade\" means made to the original equipment specification — for some models the identical part comes in a different box. Either way you see what goes on your vehicle before it goes on, and the invoice is your record of it.",
     ],
@@ -425,6 +430,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "trust",
     answer:
       "The grade your owner's manual specifies — different engines need different viscosities, and wet-clutch motorcycles are particularly sensitive to the wrong grade. Oil from OEM-approved brands is used and the grade is recorded on the invoice. If you are unsure, check your owner's manual or ask us with your model.",
+    meta: "The oil grade your owner's manual specifies is used — wet-clutch motorcycles are grade-sensitive, and the exact grade is recorded on your invoice.",
     detail: [
       "This is one area where guessing has real consequences: a too-thin oil in a hot, idling-in-traffic engine loses protection early, and the wrong specification can make a wet clutch slip. The manual's grade is the baseline; riding pattern decides the change interval, not the other way round.",
     ],
@@ -444,6 +450,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "coverage",
     answer:
       "Ride N Care covers confirmed localities across east and south Bangalore — including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, Bellandur, BTM Layout, Electronic City, Jayanagar, JP Nagar and Sarjapur Road — with pages for 33 confirmed localities. If your pincode is not listed, WhatsApp it and we confirm honestly whether a slot is workable.",
+    meta: "Ride N Care serves 33 confirmed localities across east and south Bangalore — share your pincode on WhatsApp and get a straight yes or no on coverage.",
     detail: [
       "Every confirmed locality has its own page on /areas with the pincode, nearby areas and how doorstep service works there. If your area is not on the list, it does not automatically mean no — share the pincode on WhatsApp and you get a straight yes or no, not a vague promise.",
     ],
@@ -461,6 +468,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "coverage",
     answer:
       "Someone should be there at the start to approve the written quote and at the end to check the work and take the test ride, but you do not have to stand over the mechanic. Many customers work from home or their desk while the job runs in the parking bay.",
+    meta: "Be there at the start to approve the quote and at the end to inspect the work; the middle of the job needs no supervision from you.",
     detail: [
       "What actually needs you: the yes on the quote, and the walk-around at the end. Everything in between is the mechanic's job, and you get photo updates on WhatsApp for anything found along the way.",
     ],
@@ -478,12 +486,13 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "coverage",
     answer:
       "Yes. Basement and covered parking bays are routine work — the mechanic brings a drip tray and needs roughly two parking bays' worth of room and, ideally, a plug point. Gated communities just need security to allow entry; a dry or low-water wash is used where no tap is available.",
+    meta: "Apartment basements are routine doorstep work — a drip tray, two bays of room and gate permission are all that is needed for a clean, contained job.",
     detail: [
       "Apartment basements, gated-community parking and office basements make up most doorstep jobs in Bangalore. The only real constraints are space around the vehicle and gate access — mention both at booking if your building is strict about either.",
     ],
     faqs: [
       ["Will oil or water spill in my parking bay?", "A drip tray is used for all fluid work, and the wash is dry or low-water where there is no drain."],
-      ["Do you need building permission?", "Only whatever your security desk requires — most gated communities wave through a uniformed mechanic with a work order on WhatsApp."],
+      ["Do you need building permission?", "Only whatever your security desk requires — most gated communities wave through a mechanic with a work order on WhatsApp."],
     ],
     related: ["what-to-prepare", "need-to-be-home", "areas-covered"],
     services: ["doorstep-bike-service", "scooter-service"],
@@ -497,6 +506,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "emergency",
     answer:
       "Work through the basics first: check there is fuel, the kill switch is off and the side-stand is up. If the dash is dead or the crank is slow, it is usually the battery. Call 080 6940 9289 and a mechanic is dispatched with a jump pack and spares.",
+    meta: "Bike not starting? Check fuel, the kill switch and side-stand first — then call 080 6940 9289 and a mechanic comes with a jump pack and spares.",
     detail: [
       "A slow crank with dim lights points to the battery; a healthy crank with no fire points to fuel delivery or the spark plug; nothing at all points to the starter relay, a fuse or a switch. Knowing which of the three you have makes the phone call faster — and the fix, once the mechanic arrives, is usually one of those same causes.",
     ],
@@ -514,6 +524,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "emergency",
     answer:
       "Do not keep cranking it. Water in the airbox needs to be cleared before the engine is run again, otherwise more damage is possible. Call 080 6940 9289 or WhatsApp 82969 50339 with your location; the fault is cleared on site where possible and the bike is recovered if it is not.",
+    meta: "If your bike stalled in a waterlogged street, do not keep cranking — water in the airbox must be cleared first. Call 080 6940 9289 with your location.",
     detail: [
       "Bangalore's monsoon leaves water in airboxes and silencers every year, and the instinct to keep cranking is what turns a 20-minute fix into hydrolock. The safe sequence: push the bike out of the water, kill the engine, call, and let the airbox be cleared before the next start.",
     ],
@@ -531,6 +542,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "emergency",
     answer:
       "The callout charge is quoted on the phone before anyone rides out, so there is no surprise at the roadside. The Running Repair package — fault inspection, minor repair labour and a safety check — is ₹450, and parts are billed at MRP only after your approval.",
+    meta: "Emergency bike repair callouts are quoted on the phone before dispatch; Running Repair is ₹450 and parts are billed at MRP only after your approval.",
     detail: [
       "Knowing the charge before dispatch is the whole deal: you can decide whether to fix on the spot, recover to the workshop, or wait until morning — before anyone has spent fuel getting to you.",
     ],
@@ -548,6 +560,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "emergency",
     answer:
       "If the bike cannot be made rideable safely, it is recovered to the nearest Ride N Care workshop within the city once you approve the move. The repair estimate is shared and approved before any work begins, and the mechanic stays until you are not stranded with the bike.",
+    meta: "If a bike cannot be made rideable safely it is recovered to the nearest workshop once you approve — the repair estimate is shared before work begins.",
     detail: [
       "Not every roadside failure should be fixed roadside — a chain that has jumped the sprocket, seized brakes or visible oil loss are transport-first situations. Riding on in those cases turns a repair into a rebuild.",
     ],
@@ -567,6 +580,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "comparison",
     answer:
       "For periodic service and most mechanical or electrical repairs, doorstep service matches a garage on parts and tools while saving you the trip and the wait. A workshop is genuinely better for engine rebuilds, wheel truing and painting. Choose whichever fits the job — an honest provider will tell you which.",
+    meta: "Doorstep bike service matches a garage on parts and tools while saving the trip; rebuilds and paint stay at the workshop. Honest limits, compared.",
     detail: [
       "The honest three-way comparison for Bangalore:",
     ],
@@ -594,6 +608,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "comparison",
     answer:
       "For periodic maintenance, AC service, batteries and brakes, doorstep car service uses the same OEM-grade parts as a workshop and saves you the half-day drop-off. Engine and gearbox overhauls, wheel alignment and bodywork still need a workshop. Warranty-period free services should stay with the authorised service centre.",
+    meta: "Doorstep car service covers periodic, AC, battery and brake work with OEM-grade parts; overhauls, alignment and bodywork stay at the workshop.",
     detail: [
       "Where the boundary sits for cars: a hoist and alignment rack are workshop equipment, so wheel alignment happens at the partner workshop with pickup arranged. Dashboard-off evaporator work, engine and gearbox overhauls and accident bodywork are workshop jobs too. Everything in the periodic checklist — oil, filters, brakes, battery, AC — is fully doorstep-capable.",
     ],
@@ -611,6 +626,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "comparison",
     answer:
       "Periodic service is scheduled maintenance done on a calendar or kilometre interval — oil, filters, brakes, chain and inspection — before anything fails. Breakdown service is reactive: the bike has stopped, stalled or will not start, and the mechanic diagnoses and fixes that specific fault, often at the roadside.",
+    meta: "Periodic service is scheduled maintenance before anything fails; breakdown service fixes the fault that stopped the bike. The cost logic differs too.",
     detail: [
       "The cost logic differs too. Periodic service is a fixed package price because the scope is known in advance. Breakdown work starts with diagnosis — free — because the scope is not knowable until the fault is found, then the fix is quoted and approved.",
     ],
@@ -628,6 +644,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "comparison",
     answer:
       "Motorcycles need chain and sprocket care, clutch adjustment and, on some engines, periodic valve-clearance checks. Automatic scooters instead need CVT belt and roller inspection, final-drive gear oil, and front-brake attention. Scooter oil intervals are usually shorter, and their small tyres wear faster than a motorcycle's.",
+    meta: "Motorcycles need chain and clutch care; scooters need CVT belt, rollers and final-drive gear oil — the maintenance lists differ more than owners expect.",
     detail: [
       "The transmission is the core difference: a motorcycle drives through a chain you can clean and lube; a scooter drives through a rubber belt and rollers hidden in the CVT housing that quietly degrade pickup and fuel economy until they fail. Riders who skip CVT and gear-oil care usually discover it as a sudden loss of pickup rather than a gradual one.",
     ],
@@ -657,6 +674,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "care",
     answer:
       "Lubricate the chain after every wet ride, keep tyres at the sticker pressure with good tread, and get brakes checked if the lever feels spongy. Avoid riding through standing water where you can, and after any deep wading have the airbox checked before the next start.",
+    meta: "Monsoon bike care in Bangalore means chain lube after wet rides, tyre and brake checks, and an airbox inspection after any deep wading.",
     detail: [
       "Bangalore monsoon is hard on three things: the chain (water strips lubrication), the brakes (wet grit glazes pads), and electricals (water finds tired connectors). A five-minute after-rain routine — wipe the chain dry and re-lube, check the tyre tread, listen for brake scrape — prevents most of it.",
       "For exact intervals and pressures for your model, check your owner's manual — the sticker figures on the swingarm or chain guard are the baseline, not the traffic-parked exceptions.",
@@ -676,6 +694,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "care",
     answer:
       "For Bangalore city riding, service roughly every 2,500–3,500 km or every three months, whichever comes first — stop-start traffic and dust wear oil and filters faster than the manual assumes. Riders doing long commutes or delivery duty should tighten the interval further. Check your owner's manual for your model's baseline.",
+    meta: "Service a bike in Bangalore roughly every 2,500–3,500 km or three months — traffic and dust wear oil faster than the manual assumes. Check your manual.",
     detail: [
       "The two clocks that matter: kilometres and time. Oil degrades from heat and moisture even when the bike is parked, which is why a weekend bike still needs its three-month service. Symptoms that override the schedule: longer braking distance, a dry or noisy chain, rough idling, or noticeably worse fuel economy.",
     ],
@@ -694,6 +713,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "care",
     answer:
       "Most can — batteries, brakes, clutches, chains, punctures, electrical faults and carburettor or injector cleaning are routine doorstep work. Engine and gearbox strip-downs, wheel truing, accident damage and painting need workshop equipment, so the bike is assessed on site first and moved only with your approval.",
+    meta: "Most bike repairs happen at your doorstep; engine strip-downs, wheel truing and paint need workshop equipment — the assessment on site decides honestly.",
     detail: [
       "The honest test is equipment: if the job needs a bench, a press, a truing stand or a paint booth, it is workshop work. Everything else that fits in a mechanic's van — which is most of what goes wrong in daily riding — is done where the bike is parked.",
     ],
@@ -711,6 +731,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "care",
     answer:
       "Electric scooters and bikes have no engine oil, filters or clutch to service, so maintenance focuses on battery health, the charging port, brakes, tyres, suspension and electrical checks. Ride N Care's EV packages cover exactly that, while battery-pack and motor faults stay with the manufacturer's service network.",
+    meta: "EV service skips oil and plugs — the checklist becomes brakes, tyres, bearings, connectors and charging, with battery faults left to the maker.",
     detail: [
       "What wears on an EV is what every vehicle shares with every other: brakes, tyres, wheel bearings and suspension — plus the charging connector, which loosens and corrodes like any electrical contact. The EV General Service checklist covers all of it, and there is no engine oil to buy, ever.",
     ],
@@ -728,6 +749,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "care",
     answer:
       "Warranty on an individual part stays with that part's maker regardless of who fits it. If your bike is still inside the manufacturer's free-service period, the honest advice is to use the authorised centre's free services first — Ride N Care tells you this upfront and schedules paid doorstep work after.",
+    meta: "During the free-service period use the authorised centre for those visits; after that, doorstep periodic service follows the same manufacturer schedule.",
     detail: [
       "The practical split: free-service-period visits and warranty claims belong to the authorised centre — that is where the claim paperwork lives. Paid periodic service afterwards is where doorstep wins, with the same OEM-grade parts, a written quote and a service record kept against your phone number.",
     ],
@@ -737,6 +759,260 @@ export const ANSWER_PAGES: AnswerPage[] = [
     ],
     related: ["what-included-bike-service", "doorstep-vs-garage-bike", "guarantee"],
     services: ["periodic-bike-service", "car-periodic-service"],
+    updated: UPDATED,
+  },
+
+  // ─── Car service (Part 8B) ────────────────────────────────────────────────
+  {
+    slug: "car-ac-not-cooling",
+    question: "Why is my car AC not cooling?",
+    category: "car",
+    answer:
+      "The usual suspects are low refrigerant, a clogged cabin filter, a dirty cooling coil or a compressor that is not engaging. A proper check measures each of these before recommending a fix — refilling gas on a leaking system only postpones the real repair.",
+    meta: "Weak car AC usually traces to low refrigerant, a clogged cabin filter, a dirty coil or a compressor that is not engaging — each is measured before a fix.",
+    detail: [
+      "Weak airflow points to the cabin filter or blower; cool-but-not-cold points to refrigerant or the coil; nothing at all with the compressor silent points to an electrical or pressure-switch fault. Bangalore dust clogs cabin filters faster than most owners expect, so that is the first thing worth checking.",
+    ],
+    faqs: [
+      ["Can it be checked at my home?", "Yes — the AC check is part of doorstep car service, and the fix is quoted in writing before work starts."],
+      ["Does the AC service include a leak check?", "Yes — if the system is not holding gas, you are told before any refill is done."],
+    ],
+    related: ["car-ac-service-includes", "car-ac-gas-refill", "car-service-cost-bangalore"],
+    services: ["car-ac-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "car-ac-service-includes",
+    question: "What does a car AC service include?",
+    category: "car",
+    answer:
+      "A doorstep car AC service covers a gas-level check and top-up where needed, cooling-coil and condenser cleaning, cabin filter inspection, and a compressor and vent-temperature test. Anything beyond that — parts, leak repair — is quoted separately before work starts.",
+    meta: "A car AC service includes a gas check and top-up, coil and condenser cleaning, cabin filter inspection and a vent-temperature test at your doorstep.",
+    detail: [
+      "The vent temperature before and after service tells the story: a system that holds gas and moves air should blow noticeably colder. If it does not, the leak or the compressor becomes the diagnosis — and you approve that repair separately, in writing.",
+    ],
+    faqs: [
+      ["Is the cabin filter replaced automatically?", "No — its condition is shown to you and a replacement is quoted at MRP before fitting."],
+      ["How often should AC be serviced?", "Cooling performance is the best guide: when vent temperature rises or airflow drops, get it checked. Your owner's manual lists the manufacturer's schedule."],
+    ],
+    related: ["car-ac-not-cooling", "car-ac-gas-refill", "what-included-car-service"],
+    services: ["car-ac-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "car-ac-gas-refill",
+    question: "How does a car AC gas refill work?",
+    category: "car",
+    answer:
+      "The system's refrigerant type and charge level are checked first, because topping up a leaking system wastes money. If the system holds gas, the correct refrigerant is added to the specified weight, and vent temperature is measured to confirm the result.",
+    meta: "A car AC gas refill starts with a leak check — refilling a leaking system wastes money — then the correct refrigerant goes in by specified weight.",
+    detail: [
+      "The refill price depends on the refrigerant your car uses (R134a or R1234yf), the charge weight and whether a leak repair is needed first — which is why it is quoted per model after inspection rather than as a flat rate. You approve the quote in writing before any work starts.",
+    ],
+    faqs: [
+      ["How much does a refill cost?", "It depends on refrigerant type, charge weight and the system's condition — you get the exact quote in writing before work starts."],
+      ["Can the refill happen at my home?", "Yes — the equipment comes to your parking spot, and the job ends with a vent-temperature check."],
+    ],
+    related: ["car-ac-not-cooling", "car-ac-service-includes"],
+    services: ["car-ac-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "how-often-car-service",
+    question: "How often should a car be serviced?",
+    category: "car",
+    answer:
+      "The right interval depends on your model, its age and how you drive, so the baseline is what your owner's manual specifies — typically a mix of kilometres and months, whichever comes first. Bangalore's stop-start traffic and dust are reasons to stay at or ahead of that schedule, not behind it.",
+    meta: "How often to service a car depends on the model and how you drive — check your owner's manual for the interval, and stay at or ahead of it in Bangalore.",
+    detail: [
+      "Two clocks run at once: distance and time. Oil ages even when the car is parked, so a rarely driven car still needs its time-based service. Severe-use conditions — short trips, heavy traffic, dust — are exactly what manufacturers describe when they shorten intervals in the manual.",
+    ],
+    faqs: [
+      ["Where do I find my schedule?", "Your owner's manual lists the exact service intervals and items for your model — that is the authoritative source."],
+      ["Does a periodic service reset the clock?", "Yes — each service records the date and odometer reading, and the next due point is calculated from there."],
+    ],
+    related: ["what-included-car-service", "how-long-car-service", "car-service-cost-bangalore"],
+    services: ["car-periodic-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "what-included-car-service",
+    question: "What does a periodic car service include?",
+    category: "car",
+    answer:
+      "A doorstep periodic car service covers engine oil and filter replacement, air filter cleaning, brake inspection, coolant and fluid top-ups, battery test, AC check, lights, wipers and tyre check — finished with a multi-point inspection you can walk through before paying.",
+    meta: "A car periodic service at home covers oil and filters, brakes, fluids, battery, AC, lights, wipers, tyres and a multi-point inspection report.",
+    detail: [
+      "The inspection is the quiet value: anything outside the checklist — a weeping shock absorber, a cracked belt — is photographed and quoted separately rather than silently done. Parts are shown before fitting and listed with part numbers on the digital invoice.",
+    ],
+    faqs: [
+      ["Is engine oil included in the price?", "The quote separates parts and labour, and oil is priced by the grade and quantity your model needs — confirmed in writing before work starts."],
+      ["Can it be done in my apartment basement?", "Yes, with your building's permission — one parking bay is enough. Share any gate rules when you book."],
+    ],
+    related: ["how-often-car-service", "car-service-cost-bangalore", "how-to-prepare-car-doorstep"],
+    services: ["car-periodic-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "car-battery-warning-signs",
+    question: "What are the warning signs of a failing car battery?",
+    category: "car",
+    answer:
+      "Slow cranking at start, dimming lights at idle, dashboard battery warnings and a battery older than three years are the classic signals. A swollen casing or a rotten-egg smell is more serious — stop using the car and get it checked before it fails completely.",
+    meta: "Slow cranking, dim lights at idle and dash warnings are the classic signs of a failing car battery — Bangalore heat makes three years a common limit.",
+    detail: [
+      "Bangalore heat shortens battery life more than mileage does — a battery that survives elsewhere often fails here at three to four years. A voltage test at your doorstep tells you whether the battery, the alternator or a parasitic drain is the real culprit before you buy anything.",
+    ],
+    faqs: [
+      ["Can a battery be tested at home?", "Yes — the doorstep check covers battery voltage and the charging system, so you know which part is at fault."],
+      ["My car starts fine. Should I still worry?", "A slow start is the usual first warning — batteries rarely recover, they decline. Testing before a failure beats a no-start on a Monday morning."],
+    ],
+    related: ["car-battery-replacement-when", "car-breakdown-rain"],
+    services: ["car-battery-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "car-battery-replacement-when",
+    question: "When does a car battery need replacement?",
+    category: "car",
+    answer:
+      "When testing shows the battery can no longer hold charge or crank reliably — commonly after three or four years in Bangalore's heat. Age plus symptoms beats the calendar alone: a three-year-old battery that cranks slowly is telling you it is nearly done.",
+    meta: "A car battery needs replacement when testing shows it no longer holds charge or cranks reliably — commonly after three or four years in Bangalore heat.",
+    detail: [
+      "Replacement is a fitting job: the correct capacity and terminal layout for your model, terminals cleaned and greased, and the old battery taken away. The charging system is checked too — a new battery on a failing alternator will not last either.",
+    ],
+    faqs: [
+      ["Is the replacement done at my home?", "Yes — batteries are stocked for common models and the swap is done in your parking bay."],
+      ["What happens to the old battery?", "Disposal is confirmed at booking. Ask on WhatsApp when you book and it is arranged."],
+    ],
+    related: ["car-battery-warning-signs", "what-included-car-service"],
+    services: ["car-battery-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "car-brake-noise-causes",
+    question: "Why do my car brakes squeal or grind?",
+    category: "car",
+    answer:
+      "Squeal usually means worn pads or glazed surfaces; grinding means metal is meeting metal and the pads are done — stop driving hard and get it inspected. Rain or dust can cause temporary noise, but persistent noise means an inspection is due.",
+    meta: "Brake squeal usually means worn or glazed pads; grinding means metal on metal — the car should be inspected before stopping power is compromised.",
+    detail: [
+      "Pads wear quietly; the noise arrives near the end of their life. Grinding that starts after a squeal phase suggests the wear indicator has passed and discs may be scoring — which turns a pad replacement into a disc job. Brake inspection is part of every periodic service, and pad replacement is a doorstep job.",
+    ],
+    faqs: [
+      ["Is it safe to drive with noisy brakes?", "Reduce driving and get it inspected — grinding in particular means stopping power is compromised."],
+      ["Can pads be replaced at home?", "Yes — pad replacement is a doorstep job, with discs measured to confirm whether they are reusable."],
+    ],
+    related: ["car-brake-pads-when", "what-included-car-service"],
+    services: ["car-brake-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "car-brake-pads-when",
+    question: "When do car brake pads need changing?",
+    category: "car",
+    answer:
+      "There is no single mileage — pad life depends on the car, the pad material and how you drive, so check your owner's manual for guidance and watch for the signals: squealing, longer stopping distances, or a pad-wear warning light on the dash.",
+    meta: "There is no single mileage for brake pads — check your owner's manual and watch for squeal, longer stopping distances or a pad-wear warning light.",
+    detail: [
+      "City driving with constant braking wears pads faster than highway running, and Bangalore traffic is the demanding kind. A pad's friction surface is visible on inspection; the mechanic measures it and shows you, so the decision to replace is based on measurement, not guesswork.",
+    ],
+    faqs: [
+      ["How are pads measured?", "During the brake inspection the pad thickness is measured and shown to you before any replacement is quoted."],
+      ["Do the discs always need changing too?", "No — discs are measured as well. If they are within spec, pads alone are replaced."],
+    ],
+    related: ["car-brake-noise-causes", "what-included-car-service"],
+    services: ["car-brake-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "monsoon-car-care",
+    question: "What monsoon car care actually matters in Bangalore?",
+    category: "car",
+    answer:
+      "Check tyres for tread and pressure, wipers for streaking, brakes for response, and drains for blockage before the heavy rain arrives. Keep the tank above half on flood-prone routes, and never drive through water of unknown depth — an underpass can hide an open manhole.",
+    meta: "Monsoon car care: tyres, wipers, brakes and drains checked before the rain, a fuller tank on flood-prone routes, and no driving through deep water.",
+    detail: [
+      "Bangalore's monsoon floods underpasses and low stretches every year, and water damage to an engine is not covered by a service visit — prevention is all of it. If the car wades deep water, have it inspected before restarting; a hydrolocked engine is the expensive outcome of a hopeful restart.",
+    ],
+    faqs: [
+      ["Should I park differently in monsoon?", "Avoid low-lying and tree-covered spots — waterlogging and falling branches are the two monsoon parking risks."],
+      ["Does AC use change in the rain?", "Run the AC with fresh-air mode off to keep windows demisted — it doubles as a drying system for a damp cabin."],
+    ],
+    related: ["car-breakdown-rain", "what-included-car-service"],
+    services: ["car-periodic-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "car-breakdown-rain",
+    question: "My car broke down in the rain — what should I do?",
+    category: "car",
+    answer:
+      "Move to a safe spot if you can, switch on hazard lights, and stay belted inside if visibility is poor. Do not open the bonnet in heavy rain or attempt repairs by a flooded road — call 080 6940 9289 or WhatsApp 82969 50339 with your location.",
+    meta: "Car breaks down in the rain: safe spot, hazard lights on, stay belted if visibility is poor, and call with your location rather than attempting repairs.",
+    detail: [
+      "Water changes the risk picture: a flooded stretch can hide an open manhole, and electrical faults get worse when components get wet. Share a live location pin on WhatsApp so the mechanic reaches you directly, and let the diagnosis happen before anything is restarted or dismantled.",
+    ],
+    faqs: [
+      ["Can the car be started after wading?", "Not until it has been checked — restarting a water-ingressed engine risks serious damage."],
+      ["What if the car is stuck in a flooded underpass?", "Call first so the situation is assessed and the vehicle is moved safely — do not force it."],
+    ],
+    related: ["monsoon-car-care", "car-battery-warning-signs"],
+    services: ["car-breakdown-assistance"],
+    updated: UPDATED,
+  },
+  {
+    slug: "doorstep-vs-workshop-car",
+    question: "Doorstep or workshop — which suits my car job?",
+    category: "car",
+    answer:
+      "Periodic service, AC work, battery replacement, brake pads, diagnostics and pre-purchase inspections are all doorstep jobs. Jobs needing a hoist, paint booth or heavy machining — overhauls, accident repair, wheel alignment — belong at a workshop, and we say so before starting.",
+    meta: "Periodic, AC, battery and brake work are doorstep jobs; hoist, alignment and bodywork are workshop work — the honest dividing line is equipment.",
+    detail: [
+      "The honest dividing line is equipment: if the job needs a lift, a press or a paint booth, no one can do it properly in a parking bay. For everything else, the doorstep version is the same checklist with the same OEM-grade parts — with the written quote and inspection happening at your gate.",
+    ],
+    faqs: [
+      ["What if you find a workshop-only job mid-service?", "You are told before anything is done, the visit is charged only for what was completed, and the workshop path is quoted separately."],
+      ["Is doorstep work safe for my warranty?", "Warranty on a specific part stays with the part maker; if the car is inside its free-service period, we recommend using those visits first."],
+    ],
+    related: ["doorstep-vs-garage-car", "can-every-car-job-home", "what-included-car-service"],
+    services: ["car-periodic-service", "cars"],
+    updated: UPDATED,
+  },
+  {
+    slug: "can-every-car-job-home",
+    question: "Can every car job be done at home?",
+    category: "car",
+    answer:
+      "No — and honesty about that is the point. Periodic service, AC, battery and brake-pad work happen at your doorstep. Engine overhauls, accident and bodywork, wheel alignment and jobs needing a hoist are workshop work, arranged with an estimate shared before the car moves.",
+    meta: "No — periodic, AC, battery and brake jobs happen at home; overhauls, bodywork and alignment need the workshop. The answer comes before you book.",
+    detail: [
+      "The checklist is the guide: if the job fits a parking bay, the tools come to you. If it needs a lift, a paint booth or alignment rig, the workshop is the right answer — and the written quote for that path is approved before the car goes anywhere.",
+    ],
+    faqs: [
+      ["How do I know which category my job is in?", "Describe the symptom when you book — the answer, and the honest category, come back before any visit is scheduled."],
+      ["Is doorstep car work more expensive?", "No doorstep surcharge is added — the quote you approve in writing is the price you pay."],
+    ],
+    related: ["doorstep-vs-workshop-car", "what-included-car-service"],
+    services: ["cars", "car-periodic-service"],
+    updated: UPDATED,
+  },
+  {
+    slug: "how-to-prepare-car-doorstep",
+    question: "How do I prepare my car for a doorstep service?",
+    category: "car",
+    answer:
+      "One allotted parking bay with a bit of working room around the car, gate access sorted with your security desk, and the car unlocked with the key ready. That is nearly all of it — the mechanic brings the tools, oil, filters and consumables.",
+    meta: "One parking bay with working room, gate access sorted and the car unlocked — the mechanic brings tools, oil, filters and consumables to your door.",
+    detail: [
+      "Worth mentioning at booking: any known symptoms, your building's entry rules, and whether a plug point is nearby for battery or electrical work. Payment runs by UPI, card or cash after you have inspected the work, and the digital invoice arrives on WhatsApp.",
+    ],
+    faqs: [
+      ["Do I need to be present the whole time?", "Be there at the start to approve the written quote and at the end to inspect — the middle is the mechanic's job."],
+      ["What if my society needs a work order?", "The booking confirmation on WhatsApp is usually enough for security desks — mention it when you book if your building is strict."],
+    ],
+    related: ["what-included-car-service", "need-to-be-home", "doorstep-vs-workshop-car"],
+    services: ["car-periodic-service", "cars"],
     updated: UPDATED,
   },
 ];

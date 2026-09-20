@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import car from "@/assets/services/car-engine-maintenance.webp";
-import { pageHead } from "@/lib/head";
+import { formatDate, pageHead } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { CAR_SERVICES, CAR_BRAND_LIST, CAR_HUB } from "@/lib/car-services";
 import { AREAS, PRIORITY_AREAS } from "@/lib/areas";
@@ -10,7 +10,7 @@ import type { ServiceDef } from "@/lib/services";
 
 const HUB_FAQS: [string, string][] = [
   ["What is included in a doorstep car service in Bangalore?", "Engine oil and filter change, air filter cleaning, brake check, coolant and fluid top-ups, battery test, AC check, lights and wipers, and a multi-point inspection — completed at your home or office."],
-  ["How long will the mechanic be at my place?", "The arrival window is confirmed when you book, and the visit runs until the checklist is complete and you have inspected the work — we do not quote job durations we cannot guarantee."],
+  ["How long will the mechanic be at my place?", "The arrival window is confirmed at booking, and the visit runs until the checklist is complete and you have inspected the work — we do not quote job durations we cannot guarantee."],
   ["How much does car service at home cost in Bangalore?", "Pricing depends on your car's make, model and engine — oil grade and capacity, filter type and parts condition change the quote. Share your model and we confirm the exact amount in writing before work starts."],
   ["Do you offer pickup and drop for car service?", "Doorstep work happens in your parking bay, so most jobs need no pickup at all. When a workshop job is genuinely required, pickup and drop are arranged and the estimate is shared first."],
   ["Are your car mechanics verified?", "Yes — every technician is background-verified, and every job starts with a written quote and ends with a 7-day workmanship guarantee."],
@@ -26,7 +26,6 @@ export const Route = createFileRoute("/cars")({
       ogImage: car,
       extraMeta: [
         { property: "og:title", content: CAR_HUB.title },
-        { property: "og:description", content: CAR_HUB.summary },
       ],
     }),
     scripts: pageScripts(
@@ -151,7 +150,7 @@ function Cars() {
         </div>
       </div>
 
-      <p className="mt-6 text-center text-xs text-muted-foreground">Last reviewed: 2026-09-19</p>
+      <p className="mt-6 text-center text-xs text-muted-foreground">Last reviewed: {formatDate("2026-09-19")}</p>
     </div>
   );
 }

@@ -87,7 +87,7 @@ export const GUIDES: Guide[] = [
         h: "Doorstep service versus a garage visit",
         p: [
           "Doorstep service suits periodic maintenance and most mechanical and electrical repairs: the same parts, tools and trained mechanics, without losing half a day. A workshop is genuinely better for engine rebuilds, wheel truing, frame work and painting, which need presses, alignment jigs or a paint booth.",
-          "An honest provider tells you which category your job falls in. Ride N Care completes doorstep-suitable work at your address and arranges pickup for the rest.",
+          "An honest provider tells you which category your job falls in. Ride N Care completes doorstep-suitable work at your address and arranges workshop transport for the rest.",
         ],
       },
       {
@@ -352,7 +352,7 @@ export const GUIDES: Guide[] = [
         bullets: [
           "You share the bike model, the symptom and your address with a preferred slot",
           "You receive a written quote covering parts, labour and timing",
-          "A uniformed mechanic arrives with tools, oil, filters and common spares",
+          "A background-verified mechanic arrives with tools, oil, filters and common spares",
           "Work is done in front of you, with anything extra photographed and approved first",
           "You take a short test ride, then pay by UPI, card or cash and receive a digital invoice",
         ],
@@ -378,7 +378,7 @@ export const GUIDES: Guide[] = [
           "Frame or fork straightening after an accident",
         ],
         p: [
-          "Ride N Care states which category your job is in before booking, and arranges pickup when a workshop is the right answer.",
+          "Ride N Care states which category your job is in before booking, and arranges workshop transport when a workshop is the right answer.",
         ],
       },
       {

@@ -87,7 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ...pageHead({
       title: "Ride N Care | Doorstep Bike & Car Service in Bangalore",
       description:
-        "Care in every mile. Book verified doorstep bike & car service across Bangalore — OEM parts, written quote, free pickup & drop, 7-day guarantee.",
+        "Care in every mile. Book verified doorstep bike & car service across Bangalore — OEM parts, written quote, 7-day guarantee.",
       path: "/",
     }),
     meta: [

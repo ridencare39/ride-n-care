@@ -25,7 +25,7 @@ export const Route = createFileRoute("/blog/")({
           "@context": "https://schema.org",
           "@type": "Blog",
           name: "Ride N Care Blog",
-          description: "Bike and car maintenance tips by Ride N Care mechanics.",
+          description: "Bike and car maintenance tips from Ride N Care mechanics — service schedules, monsoon care, breakdowns and fuel economy, written for Bangalore roads.",
           blogPost: (loaderData?.posts ?? []).map((p) => ({
             "@type": "BlogPosting",
             headline: p.title,

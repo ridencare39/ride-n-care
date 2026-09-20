@@ -9,6 +9,7 @@ import { AnswerBlocks } from "@/components/AnswerBlocks";
 import { ANSWERS, BRAND, ENTITY_SUMMARY } from "@/lib/answers";
 import { GUIDES } from "@/lib/guides";
 import { SERVICES } from "@/lib/services";
+import { CONFIRMED_AREAS, CONFIRMED_ZONE_PHRASE, COVERAGE_HEADLINE_NAMES, COVERAGE_NAMES_LIST } from "@/lib/areas";
 import { SITE_URL } from "@/lib/seo";
 import { pageHead } from "@/lib/head";
 import { graphForPage, faqNode, pageScripts } from "@/lib/schema";
@@ -36,9 +37,9 @@ const SERVICE_ICONS: Record<string, string> = {
 const HOME_FAQS: [string, string][] = [
   ["Do you offer doorstep bike service in Bangalore?", "Yes — our background-verified mechanics arrive at your home or office anywhere in Bangalore with tools, OEM-grade spares and a written quote before work starts. Most periodic bike services finish in 60–90 minutes."],
   ["What car services do you provide at home?", "Periodic maintenance, AC service, battery replacement, brake work and pre-purchase inspections — all at your doorstep, with the price confirmed in writing before work starts."],
-  ["Is doorstep car service in Bangalore cheaper than a garage?", "End-to-end it usually costs the same or less. You save on pickup-drop, half a day off, and there are zero hidden labour charges — every quote is upfront."],
-  ["Which Bangalore areas do you cover?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar and many more across east and south Bangalore — the full list with pincodes is on our service areas page."],
-  ["Do you use genuine parts?", "Always. We fit OEM-grade spares with a printed invoice and standard manufacturer warranty."],
+  ["Is doorstep car service in Bangalore cheaper than a garage?", "Doorstep work cuts the hidden costs of a garage visit — getting the vehicle there, waiting, and the trip back — and every quote is confirmed in writing before work starts."],
+  ["Which Bangalore areas do you cover?", `${COVERAGE_NAMES_LIST} and ${CONFIRMED_AREAS.length - COVERAGE_HEADLINE_NAMES.length} more confirmed localities across ${CONFIRMED_ZONE_PHRASE} Bangalore — the full list with pincodes is on our service areas page.`],
+  ["Do you use genuine parts?", "Always. We fit OEM-grade spares, listed with part numbers on the digital invoice you receive on WhatsApp."],
 ];
 
 /**
@@ -55,7 +56,7 @@ const MERGED_SERVICES = [
   { icon: "🛑", name: "Car Brakes", desc: "Pad & disc measurement, fluid change at home", to: "/car-brake-service" },
   { icon: "🛵", name: "Scooter Service", desc: "Activa, Jupiter, Access — CVT care included", to: "/scooter-service" },
   { icon: "🔋", name: "Bike Battery", desc: "Testing, jump-start & doorstep replacement", to: "/battery-service" },
-  { icon: "⚡", name: "EV Service", desc: "Electric bike service, battery & diagnostics", to: "/bikes" },
+  { icon: "⚡", name: "EV Service", desc: "Electric scooter service at home — running gear & brakes", to: "/scooter-service" },
 ];
 
 export const Route = createFileRoute("/")({
@@ -63,7 +64,7 @@ export const Route = createFileRoute("/")({
     ...pageHead({
       title: "Doorstep Bike & Car Service in Bangalore | Ride N Care",
       description:
-        "Trusted doorstep bike & car service in Bangalore. Book a verified mechanic in 60 seconds — OEM parts, written quote, 7-day guarantee. Care in every mile.",
+        "Doorstep bike & car service in Bangalore. Book a verified mechanic in 60 seconds — OEM parts, written quote, 7-day guarantee. Care in every mile.",
       path: "/",
     }),
     scripts: pageScripts(
@@ -98,7 +99,7 @@ function Home() {
               </span>
             </h1>
             <p className="rise-in-late mt-6 text-lg text-white/80 max-w-lg mx-auto [text-shadow:0_1px_12px_rgba(2,10,26,0.9)]">
-              Book a verified mechanic in 60 seconds. Ride N Care brings bike service, car service and repair to your home or office across Bangalore, from Whitefield and HSR Layout to Electronic City and Kengeri. OEM parts, written quote, 7-day guarantee.
+              Book a verified mechanic in 60 seconds. Ride N Care brings bike service, car service and repair to your home or office across Bangalore, from Whitefield and HSR Layout to Electronic City and Sarjapur Road. OEM parts, written quote, 7-day guarantee.
             </p>
             {/* Hero CTA pair: equal-height 2-col grid, 12px gap, wraps on narrow phones */}
             <div className="rise-in-later mx-auto mt-8 grid w-full max-w-xl grid-cols-2 gap-3">
@@ -164,7 +165,7 @@ function Home() {
           Call <a href="tel:+918069409289" className="text-primary hover:underline">080 6940 9289</a> or WhatsApp{" "}
           <a href="https://wa.me/918296950339" target="_blank" rel="noopener" className="text-primary hover:underline">82969 50339</a> in {BRAND.city}, {BRAND.region}.
         </p>
-        <AnswerBlocks items={ANSWERS.slice(0, 7)} headingLevel={3} />
+        <AnswerBlocks items={ANSWERS.filter((a) => a.id !== "who-is-ride-n-care").slice(0, 6)} headingLevel={3} />
         <div className="mt-6">
           <Link to="/answers" className="text-primary font-semibold hover:underline">See all answers about Ride N Care →</Link>
         </div>
@@ -191,7 +192,7 @@ function Home() {
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {[
               ["Doorstep", "At your home"],
-              ["Expert", "Certified pros"],
+              ["Expert", "Background-verified"],
               ["Quick", "60–90 mins"],
               ["Transparent", "Upfront quote"],
               ["Genuine", "OEM parts"],
@@ -214,7 +215,7 @@ function Home() {
           {[
             ["01", "Book online", "60 seconds."],
             ["02", "Mechanic arrives", "On time, at home."],
-            ["03", "Service on the spot", "Live updates."],
+            ["03", "Service on the spot", "Work done in front of you."],
             ["04", "Pay & rate", "Cashless."],
           ].map(([n, t, d]) => (
             <li key={n} className="rounded-xl border border-border p-3 bg-card flex gap-3 items-start">

@@ -3,7 +3,7 @@ import { GUIDES, getGuide } from "@/lib/guides";
 import { getService } from "@/lib/services";
 import { BRAND } from "@/lib/answers";
 import { SITE_URL } from "@/lib/seo";
-import { pageHead } from "@/lib/head";
+import { formatDate, pageHead } from "@/lib/head";
 import { graphForPage, articleNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 
 export const Route = createFileRoute("/guides/$slug")({
@@ -60,7 +60,7 @@ function GuidePage() {
 
       <h1 className="mt-6 text-4xl md:text-5xl font-bold leading-tight">{g.h1}</h1>
       <p className="mt-3 text-xs text-muted-foreground">
-        {BRAND.name}, {BRAND.city} · updated {new Date(g.published).toLocaleDateString("en-IN", { year: "numeric", month: "long" })} · {g.readMinutes} min read
+        {BRAND.name}, {BRAND.city} · updated {formatDate(g.published)} · {g.readMinutes} min read
       </p>
 
       <p className="mt-6 rounded-2xl border border-primary/30 bg-primary/5 p-5 text-base leading-relaxed">

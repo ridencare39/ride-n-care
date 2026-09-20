@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { AREAS, CONFIRMED_AREAS, PRIORITY_AREAS } from "@/lib/areas";
+import { AREAS, CONFIRMED_AREAS, PRIORITY_AREAS, CONFIRMED_ZONE_PHRASE } from "@/lib/areas";
 import { pageHead } from "@/lib/head";
 
 export const Route = createFileRoute("/areas/")({
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/areas/")({
     ...pageHead({
       title: "Service Areas in Bangalore | Ride N Care",
       description:
-        "Doorstep bike & car service across east and south Bangalore — Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar and more, grouped by zone with pincodes.",
+        "Doorstep bike & car service across 33 confirmed Bangalore localities — Whitefield, Koramangala, HSR Layout and more, grouped by zone with pincodes.",
       path: "/areas",
     }),
   }),
@@ -37,7 +37,7 @@ function AreasIndex() {
       <span className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Service Coverage</span>
       <h1 className="mt-2 text-5xl font-bold">Doorstep Service Areas in Bangalore</h1>
       <p className="mt-3 text-muted-foreground max-w-2xl">
-        Ride N Care serves {CONFIRMED_AREAS.length} Bangalore localities across east and south Bangalore — {PRIORITY_AREAS.filter((a) => a.confirmed !== false).length} of them with fully detailed guides. Pick your neighbourhood for local details, nearby landmarks and doorstep service.
+        Ride N Care serves {CONFIRMED_AREAS.length} Bangalore localities across {CONFIRMED_ZONE_PHRASE} Bangalore — {PRIORITY_AREAS.filter((a) => a.confirmed !== false).length} of them with fully detailed guides. Pick your neighbourhood for local details, nearby landmarks and doorstep service.
       </p>
 
       {/* Simple filter: zone chips + name/pincode search */}

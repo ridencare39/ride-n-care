@@ -65,7 +65,7 @@ function MapPage() {
       <h1 className="mt-2 text-4xl md:text-5xl font-bold">Ride N Care service area map</h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
         Pick a locality to see it on Google Maps. Our doorstep mechanics cover every address inside these {AREAS.length} Bangalore
-        zones, and the arrival window is confirmed when you book.
+        zones, and your arrival window is confirmed when you book.
       </p>
 
       <div className="mt-8 grid lg:grid-cols-[280px_1fr] gap-6">

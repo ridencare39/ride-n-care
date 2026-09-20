@@ -77,7 +77,7 @@ function LocalServicePage() {
         {s.name} in <span className="text-primary">{a.name}</span>, Bangalore
       </h1>
       <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-        {s.intro} In {a.name}, a verified mechanic is assigned from the unit nearest to you and the arrival window is confirmed on WhatsApp when you book. We also cover{" "}
+        {s.intro} In {a.name}, a verified mechanic is assigned from the unit nearest to you and your arrival window is confirmed when you book. We also cover{" "}
         {(a.nearby ?? []).join(", ") || "nearby streets"} from the same unit.
       </p>
 

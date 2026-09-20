@@ -182,3 +182,30 @@ export const isConfirmedArea = (a: Area | undefined) => Boolean(a && a.confirmed
 export const isAreaIndexed = (a: Area | undefined) => Boolean(a && isConfirmedArea(a) && a.tier === "priority");
 
 export const areaRobots = (a: Area | undefined) => (isAreaIndexed(a) ? undefined : "noindex, follow");
+
+/* ── Coverage copy helpers — the ONE source of truth for every place that
+   names or counts localities (homepage FAQ, /areas, footer, answers,
+   llms.txt, breakdown pages). Copy must never hard-code counts. ── */
+
+/** Zones present in the confirmed data, lowercase, e.g. ["east", "south"]. */
+export const CONFIRMED_ZONES = [...new Set(CONFIRMED_AREAS.map((a) => a.zone.toLowerCase()))];
+
+/** Data-derived zone phrase, e.g. "east and south Bangalore". */
+export const CONFIRMED_ZONE_PHRASE =
+  CONFIRMED_ZONES.length > 1
+    ? `${CONFIRMED_ZONES.slice(0, -1).join(", ")} and ${CONFIRMED_ZONES[CONFIRMED_ZONES.length - 1]}`
+    : (CONFIRMED_ZONES[0] ?? "Bangalore");
+
+/** The coverage sentence stem reused verbatim across pages and llms.txt. */
+export const COVERAGE_LINE = `Ride N Care provides doorstep bike and car service in ${CONFIRMED_AREAS.length} confirmed Bangalore localities across ${CONFIRMED_ZONE_PHRASE} Bangalore`;
+
+/** A handful of well-known confirmed locality names for short-copy lists. */
+export const COVERAGE_HEADLINE_NAMES = ["Whitefield", "Koramangala", "HSR Layout", "Indiranagar", "Marathahalli", "Electronic City", "Jayanagar"].filter((n) =>
+  CONFIRMED_AREAS.some((a) => a.name === n),
+);
+
+/** Comma list of the headline names, e.g. "Whitefield, Koramangala, … and Jayanagar". */
+export const COVERAGE_NAMES_LIST =
+  COVERAGE_HEADLINE_NAMES.length > 1
+    ? `${COVERAGE_HEADLINE_NAMES.slice(0, -1).join(", ")} and ${COVERAGE_HEADLINE_NAMES[COVERAGE_HEADLINE_NAMES.length - 1]}`
+    : (COVERAGE_HEADLINE_NAMES[0] ?? "Bangalore");

@@ -10,8 +10,8 @@ const SECTIONS: { id: string; title: string; faqs: [string, string][] }[] = [
     title: "General",
     faqs: [
       ["Do you really come to my home?", "Yes. Our mechanics arrive at your doorstep with tools, diagnostics and OEM-grade spares — across confirmed Bangalore localities. See the areas page for the full list."],
-      ["Which areas do you cover in Bangalore?", "Whitefield, Koramangala, HSR, Indiranagar, Electronic City, Hebbal, Jayanagar, Marathahalli, Sarjapur and many more. See our service areas page for the full list."],
-      ["What are your working hours?", "We operate 8 AM to 9 PM, all 7 days a week, including most public holidays."],
+      ["Which areas do you cover in Bangalore?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar, Marathahalli and Sarjapur Road, among 33 confirmed localities — see our service areas page for the full list."],
+      ["What are your working hours?", "The bike emergency line runs 8 AM to 9 PM; other slots and their windows are confirmed when you book."],
       ["Is doorstep service safe?", "All mechanics are background-verified and trained. Every visit runs on a written quote first, and you receive a digital invoice listing the parts fitted."],
     ],
   },
@@ -30,7 +30,7 @@ const SECTIONS: { id: string; title: string; faqs: [string, string][] }[] = [
     title: "Car Service",
     faqs: [
       ["What does a car periodic service include?", "Engine oil + filter change, brake check, coolant top-up, battery test, AC check, all fluid levels, lights, wipers and a multi-point inspection."],
-      ["How long does a car service take?", "We confirm the mechanic's arrival window when you book, and the visit runs until the checklist is complete and you have inspected the work — we do not quote job durations we cannot guarantee."],
+      ["How long does a car service take?", "We confirm the arrival window at booking, and the visit runs until the checklist is complete and you have inspected the work — we do not quote job durations we cannot guarantee."],
       ["Do you handle denting & painting at home?", "Denting and painting need a controlled workshop environment, so we do not offer them at the doorstep. Book a periodic service, AC, battery or brake service — and if bodywork is needed we can advise on next steps."],
 
     ],
@@ -39,7 +39,7 @@ const SECTIONS: { id: string; title: string; faqs: [string, string][] }[] = [
     id: "pricing",
     title: "Pricing & Payments",
     faqs: [
-      ["Are parts genuine?", "Always. OEM-grade parts with printed invoice and standard warranty."],
+      ["Are parts genuine?", "Always. OEM-grade parts, listed with part numbers on the digital invoice."],
       ["What payments do you accept?", "UPI, all major cards, NetBanking and cash on completion. Quotes are always shared upfront."],
       ["Will I get an invoice?", "Yes — a GST-compliant digital invoice is emailed and shared on WhatsApp after every job."],
       ["Are there any hidden charges?", "No. The written quote you approve before work starts is the final price for the agreed scope — anything found later needs your approval first."],
@@ -64,11 +64,10 @@ export const Route = createFileRoute("/faq")({
     ...pageHead({
       title: "FAQ | Doorstep Bike Service Bangalore | Ride N Care",
       description:
-        "Answers about doorstep bike & car service: timing, parts, payments, pickup & drop, warranty and more.",
+        "Answers about doorstep bike & car service in Bangalore: booking, timing, parts, payments, coverage and the 7-day workmanship guarantee — all in one place.",
       path: "/faq",
       extraMeta: [
       { property: "og:title", content: "FAQ — Ride N Care" },
-      { property: "og:description", content: "Common questions about Ride N Care doorstep service." },
     ],
     }),
     scripts: pageScripts(graphForPage([faqNode(allFaqs)])),

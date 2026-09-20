@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bike, CarFront, TriangleAlert, MapPin, Lightbulb, Wrench, ArrowRight } from "lucide-react";
 import { DISPATCH_STEPS } from "@/lib/services";
-import { pageHead } from "@/lib/head";
+import { formatDate, pageHead } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
@@ -40,7 +40,7 @@ const FAQS: [string, string][] = [
   ],
   [
     "Which areas do you cover?",
-    "All forty Ride N Care service localities across Bangalore — see the areas page for the full list.",
+    "All 33 confirmed Ride N Care service localities across east and south Bangalore — see the areas page for the full list.",
   ],
 ];
 
@@ -291,7 +291,7 @@ function BreakdownHub() {
         </ul>
       </section>
 
-      <p className="mt-10 text-xs text-muted-foreground">Last reviewed: {REVIEWED}</p>
+      <p className="mt-10 text-xs text-muted-foreground">Last reviewed: {formatDate(REVIEWED)}</p>
 
       {/* CTA band */}
       <div className="mt-8 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">

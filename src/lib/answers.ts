@@ -17,7 +17,7 @@ export const BRAND = {
   city: "Bangalore",
   region: "Karnataka",
   country: "India",
-  hours: "7 days a week",
+  hours: "Arrival windows are confirmed at booking",
 } as const;
 
 /** Short entity descriptors used consistently across pages and schema. */
@@ -49,7 +49,7 @@ export const ANSWERS: AnswerBlock[] = [
     q: "Who is Ride N Care?",
     a: ENTITY_SUMMARY,
     detail:
-      "The business operates under the tagline “Care in Every Mile” and serves customers across Bangalore seven days a week. Call 080 6940 9289 or WhatsApp 82969 50339 to book, and every completed job is invoiced digitally.",
+      "The business operates under the tagline “Care in Every Mile” and serves confirmed localities across Bangalore. Call 080 6940 9289 or WhatsApp 82969 50339 to book, and every completed job is invoiced digitally.",
   },
   {
     id: "what-services",
@@ -74,14 +74,14 @@ export const ANSWERS: AnswerBlock[] = [
   {
     id: "where-in-bangalore",
     q: "Where does Ride N Care provide bike service in Bangalore?",
-    a: "Ride N Care covers east and south Bangalore, including HSR Layout, Koramangala, Indiranagar, Domlur, Ejipura, BTM Layout, Madiwala, Bommanahalli, Kudlu Gate, Singasandra, Electronic City, Parappana Agrahara, Marathahalli, Bellandur, HAL, Mahadevapura, KR Puram, Whitefield, Brookefield, Varthur, Gunjur, Harlur, Sarjapur Road, Kasavanahalli, Choodasandra, Panathur Road, Kadubeesanahalli, Banashankari, Jayanagar and JP Nagar.",
+    a: "Ride N Care covers 33 confirmed localities across east and south Bangalore, including HSR Layout, Koramangala, Indiranagar, Domlur, Ejipura, BTM Layout, Madiwala, Bommanahalli, Kudlu Gate, Singasandra, Electronic City, Parappana Agrahara, Marathahalli, Bellandur, HAL, Mahadevapura, KR Puram, Whitefield, Brookefield, Varthur, Gunjur, Harlur, Sarjapur Road, Kasavanahalli, Choodasandra, Panathur Road, Kadubeesanahalli, Banashankari, Jayanagar and JP Nagar.",
     detail:
-      "If your locality is not named above, share your pincode on WhatsApp — most addresses inside Bangalore city limits can be served, and we say so honestly when a slot is not workable.",
+      "If your locality is not named above, share your pincode on WhatsApp — we confirm honestly whether a slot is workable before you book.",
   },
   {
     id: "brands",
     q: "Which bike and scooter brands are serviced?",
-    a: "Ride N Care services Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Jawa, Yezdi, Triumph, Kawasaki, Benelli, Aprilia, Husqvarna, Harley-Davidson, Ducati and BMW Motorrad two-wheelers, plus automatic scooters and electric two-wheelers.",
+    a: "Ride N Care services Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Kawasaki, Harley-Davidson, Jawa and BMW Motorrad two-wheelers, plus automatic scooters and electric two-wheelers. Cars: Maruti Suzuki, Hyundai, Tata, Mahindra, Honda, Toyota and Kia.",
     detail:
       "Larger-capacity and premium motorcycles are handled under the higher service tiers because parts and consumables cost more; the tier is shown in the quote before booking is confirmed.",
   },
@@ -92,16 +92,16 @@ export const ANSWERS: AnswerBlock[] = [
     bullets: [
       "Step 1 — Tell us the bike make, model and the symptom",
       "Step 2 — Receive a written quote covering parts, labour and the slot",
-      "Step 3 — A uniformed mechanic reaches your address with tools and spares",
+      "Step 3 — A background-verified mechanic reaches your address with tools and spares",
       "Step 4 — Test ride, then pay by UPI, card or cash and get a digital invoice",
     ],
   },
   {
     id: "how-quickly",
     q: "How quickly can a mechanic visit?",
-    a: "Emergency breakdown visits in core service areas are typically attended within a few hours depending on traffic and mechanic availability.",
+    a: "Slot availability varies by day and locality. Call 080 6940 9289 or WhatsApp 82969 50339 with your pincode and we confirm the earliest open slot for your area before you commit.",
     detail:
-      "Late-evening bookings are normally scheduled for the next morning rather than promised unrealistically.",
+      "Bike breakdown assistance runs 8 AM to 9 PM; requests after 9 PM queue for the next morning's first slot.",
   },
   {
     id: "repair-types",

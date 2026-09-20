@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/logo-96.webp";
 import { SOCIAL } from "@/lib/seo";
+import { CONFIRMED_AREAS } from "@/lib/areas";
 
 type FooterLink = { label: string; to: string; params?: Record<string, string>; note?: string };
 
@@ -156,7 +157,7 @@ export function SiteFooter() {
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-neon/70" aria-hidden />
                 <span>
                   Bangalore, Karnataka
-                  <span className="block text-xs text-white/45">Doorstep across 40 localities</span>
+                  <span className="block text-xs text-white/45">Doorstep across {CONFIRMED_AREAS.length} confirmed localities</span>
                 </span>
               </li>
             </ul>
