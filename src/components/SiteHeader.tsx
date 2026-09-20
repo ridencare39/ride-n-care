@@ -1,140 +1,102 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  BatteryCharging,
   Bike,
   BotMessageSquare,
-  BookOpen,
   CarFront,
   ChevronDown,
   ChevronRight,
-  CircleHelp,
-  Disc3,
-  DoorOpen,
-  Gauge,
   House,
   LifeBuoy,
-  Mail,
-  MapPin,
   MessageCircle,
-  Newspaper,
   Phone,
-  Snowflake,
-  Sparkles,
-  Store,
-  Wrench,
+  Route as RouteIcon,
   X,
-  Zap,
-  type LucideIcon,
 } from "lucide-react";
 import logo from "@/assets/logo-96.webp";
 import { useBooking } from "@/components/booking/BookingProvider";
 import { ctcProps, trackCtc } from "@/lib/analytics";
-import { SERVICES } from "@/lib/services";
-import { CAR_SERVICES } from "@/lib/car-services";
-
-/** A row in one of the expandable service lists. */
-type ServiceRow = { to: string; params?: Record<string, string>; label: string; icon: LucideIcon };
-
-/** Live bike service pages (src/lib/services.ts). Re-order the two hero pages first. */
-const BIKE_ORDER = [
-  "bike-service",
-  "doorstep-bike-service",
-  "bike-repair",
-  "scooter-service",
-  "engine-repair",
-  "battery-service",
-  "emergency-bike-repair",
-  "bike-breakdown-assistance",
-  "periodic-bike-service",
-] as const;
-const BIKE_ROW_ICONS: Record<string, LucideIcon> = {
-  "bike-service": Wrench,
-  "doorstep-bike-service": DoorOpen,
-  "bike-repair": Disc3,
-  "scooter-service": Gauge,
-  "engine-repair": Zap,
-  "battery-service": BatteryCharging,
-  "emergency-bike-repair": LifeBuoy,
-  "bike-breakdown-assistance": Sparkles,
-  "periodic-bike-service": Snowflake,
-};
-const BIKE_ROWS: ServiceRow[] = BIKE_ORDER.filter((slug) => SERVICES.some((s) => s.slug === slug)).map((slug) => ({
-  to: "/$service",
-  params: { service: slug },
-  label: SERVICES.find((s) => s.slug === slug)!.name,
-  icon: BIKE_ROW_ICONS[slug] ?? Wrench,
-}));
-
-/** Live car service pages (src/lib/car-services.ts). */
-const CAR_ORDER = ["car-periodic-service", "car-ac-service", "car-battery-service", "car-brake-service"] as const;
-const CAR_ROW_ICONS: Record<string, LucideIcon> = {
-  "car-periodic-service": Wrench,
-  "car-ac-service": Snowflake,
-  "car-battery-service": BatteryCharging,
-  "car-brake-service": Disc3,
-};
-const CAR_ROWS: ServiceRow[] = CAR_ORDER.filter((slug) => CAR_SERVICES.some((s) => s.slug === slug)).map((slug) => ({
-  to: "/$service",
-  params: { service: slug },
-  label: CAR_SERVICES.find((s) => s.slug === slug)!.name,
-  icon: CAR_ROW_ICONS[slug] ?? Wrench,
-}));
-
-/** Simple links below the service boxes — exact order from the brief. */
-const SIMPLE_LINKS: { to: string; label: string; icon: LucideIcon }[] = [
-  { to: "/", label: "Home", icon: House },
-  { to: "/areas", label: "Areas We Serve", icon: MapPin },
-  { to: "/blog", label: "Our Blog", icon: Newspaper },
-  { to: "/franchise", label: "Franchise", icon: Store },
-  { to: "/faq", label: "FAQ", icon: CircleHelp },
-  { to: "/contact", label: "Contact", icon: Mail },
-];
-
-/** Desktop nav pills (unchanged routes) — shown alongside the hamburger at lg+. */
-const DESKTOP_NAV: { to: string; params?: Record<string, string>; label: string }[] = [
-  { to: "/$service", params: { service: "bike-service" }, label: "Bike Service" },
-  { to: "/$service", params: { service: "doorstep-bike-service" }, label: "Doorstep" },
-  { to: "/$service", params: { service: "bike-repair" }, label: "Bike Repair" },
-  { to: "/cars", label: "Cars" },
-  { to: "/", label: "Home" },
-  { to: "/areas", label: "Areas" },
-  { to: "/guides", label: "Guides" },
-  { to: "/blog", label: "Blog" },
-  { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
-  { to: "/franchise", label: "Franchise" },
-];
+import {
+  MENU_BIKE_ROWS,
+  MENU_CAR_ROWS,
+  MENU_BREAKDOWN,
+  MENU_FOOTER_ROWS,
+  PANEL_SIMPLE_LINKS,
+  TOP_NAV,
+  type NavRow,
+} from "@/lib/nav";
 
 const PANEL_ID = "site-menu-panel";
+const SERVICES_MENU_ID = "services-menu";
 const BIKE_LIST_ID = "panel-bike-list";
 const CAR_LIST_ID = "panel-car-list";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [processInView, setProcessInView] = useState(false);
   const [expanded, setExpanded] = useState<"bike" | "car" | null>(null);
   const { openBooking, openAiBooking } = useBooking();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const servicesTriggerRef = useRef<HTMLAnchorElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const hoverTimer = useRef<number | undefined>(undefined);
+  /** Set when we close AND return focus to the trigger, so the focus event does not re-open the menu. */
+  const suppressFocusOpen = useRef(false);
 
-  // Auto-expand Bike on a bike page, Car on a car page (panel starts collapsed elsewhere).
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  // Auto-expand Bike on a bike page, Car on a car page.
   useEffect(() => {
-    if (CAR_SERVICES.some((s) => pathname.startsWith(`/${s.slug}`)) || pathname === "/cars") {
+    if (MENU_CAR_ROWS.some((r) => r.params && pathname.startsWith(`/${r.params.service}`)) || pathname === "/cars") {
       setExpanded("car");
-    } else if (SERVICES.some((s) => pathname.startsWith(`/${s.slug}`))) {
+    } else if (MENU_BIKE_ROWS.some((r) => r.params && pathname.startsWith(`/${r.params.service}`))) {
       setExpanded("bike");
     }
   }, [pathname]);
 
+  const topnavRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+
+  // Sliding pill highlight: follows hover and rests on the active item.
+  useEffect(() => {
+    const nav = topnavRef.current;
+    const pill = pillRef.current;
+    if (!nav || !pill) return;
+    const move = (el: Element | null) => {
+      if (!el) return;
+      const nr = nav.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      pill.style.width = `${r.width}px`;
+      pill.style.transform = `translate(${r.left - nr.left}px, -50%)`;
+      pill.style.opacity = "1";
+    };
+    const hide = () => {
+      const active = nav.querySelector<HTMLElement>(".nav-item-active");
+      if (active) move(active);
+      else pill.style.opacity = "0";
+    };
+    move(nav.querySelector<HTMLElement>(".nav-item-active"));
+    const onOver = (e: MouseEvent) => {
+      const item = (e.target as HTMLElement).closest<HTMLElement>(".nav-item");
+      if (item) move(item);
+    };
+    nav.addEventListener("mouseover", onOver);
+    nav.addEventListener("mouseleave", hide);
+    return () => {
+      nav.removeEventListener("mouseover", onOver);
+      nav.removeEventListener("mouseleave", hide);
+    };
+  }, [pathname, menuOpen]);
+
   const closeMenu = () => {
     setOpen(false);
-    // Return focus to the hamburger button on close.
     requestAnimationFrame(() => toggleRef.current?.focus());
   };
 
-  // Deepen the bar shadow once the page scrolls for a premium layered feel.
+  // Shrinking header + "Process" section highlight (homepage only).
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -142,19 +104,30 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Open/close side effects: scroll lock, initial focus, Escape + focus trap.
+  useEffect(() => {
+    if (pathname !== "/") {
+      setProcessInView(false);
+      return;
+    }
+    const target = document.getElementById("process");
+    if (!target || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => setProcessInView(entry.isIntersecting),
+      { rootMargin: "-80px 0px -55% 0px" },
+    );
+    io.observe(target);
+    return () => io.disconnect();
+  }, [pathname]);
+
+  // Panel open/close side effects: scroll lock, initial focus, Escape + trap.
   useEffect(() => {
     if (!open) return;
     const root = document.documentElement;
     const prevOverflow = root.style.overflow;
     root.style.overflow = "hidden";
-
     const focusables = () =>
-      Array.from(
-        panelRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [],
-      );
+      Array.from(panelRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? []);
     focusables()[0]?.focus();
-
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         closeMenu();
@@ -181,43 +154,164 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  /* ── Services dropdown behaviour ─────────────────────────────────────────── */
+  const openServices = useCallback(() => {
+    window.clearTimeout(hoverTimer.current);
+    setMenuOpen(true);
+  }, []);
+  const closeServices = useCallback((returnFocus = false) => {
+    window.clearTimeout(hoverTimer.current);
+    setMenuOpen(false);
+    if (returnFocus) {
+      suppressFocusOpen.current = true;
+      servicesTriggerRef.current?.focus();
+    }
+  }, []);
+  const hoverOpenServices = useCallback(() => {
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = window.setTimeout(() => setMenuOpen(true), 120); // hover-intent
+  }, []);
+  const hoverCloseServices = useCallback(() => {
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = window.setTimeout(() => setMenuOpen(false), 120);
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeServices(true);
+        return;
+      }
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+      const items = Array.from(
+        menuRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [],
+      );
+      if (items.length === 0) return;
+      event.preventDefault();
+      const idx = items.indexOf(document.activeElement as HTMLElement);
+      const next = event.key === "ArrowDown" ? (idx + 1 + items.length) % items.length : (idx - 1 + items.length) % items.length;
+      items[next === items.length ? 0 : next]?.focus();
+    };
+    const onClick = (event: MouseEvent) => {
+      if (
+        !menuRef.current?.contains(event.target as Node) &&
+        !servicesTriggerRef.current?.contains(event.target as Node)
+      ) {
+        closeServices();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onClick);
+    };
+  }, [menuOpen, closeServices]);
+
+  const servicesActive = menuOpen;
+  const isActive = (to: string) => (to === "/" ? pathname === "/" : to !== "/#" && pathname.startsWith(to));
+
   let stagger = 0;
 
   return (
     <>
       <header
-        className={`sticky top-0 z-40 border-b border-white/10 bg-hero backdrop-blur transition-shadow duration-300 ${scrolled ? "shadow-glow" : ""}`}
+        className={`site-header sticky top-0 z-40 border-b border-white/10 bg-hero backdrop-blur transition-all duration-200 ${scrolled ? "is-scrolled shadow-glow" : ""}`}
       >
-        {/* Neon accent hairline under the navy bar */}
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-neon/70 to-transparent" />
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2 group" aria-label="Ride N Care — home">
+        <div className="header-inner mx-auto flex h-[72px] max-w-[1400px] items-center gap-4 px-4 sm:px-6">
+          {/* Logo */}
+          <Link to="/" className="flex shrink-0 items-center gap-2 group" aria-label="Ride N Care — home">
             <span className="relative inline-flex rounded-full ring-1 ring-neon/40 ring-offset-2 ring-offset-transparent transition group-hover:ring-neon/80">
               <img src={logo} alt="" width={40} height={40} fetchPriority="high" decoding="async" className="rounded-full bg-plate p-0.5" />
               <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full bg-neon/10 opacity-0 transition group-hover:opacity-100" />
             </span>
-            <span className="font-display font-bold text-lg tracking-tight leading-none flex flex-col">
+            <span className="hidden font-display text-lg font-bold leading-none tracking-tight sm:flex sm:flex-col">
               <span className="text-glow-neon text-neon">Ride N Care</span>
-              <span className="text-[10px] uppercase tracking-[0.15em] text-white/60 font-medium">Care in every mile</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-white/60">Care in every mile</span>
             </span>
           </Link>
-          {/* Full nav fits from xl up; 1024–1279 uses the hamburger (which now
-              works at every width) so the row never pushes the button off-screen. */}
-          <nav className="hidden xl:flex items-center gap-1 text-sm" aria-label="Primary">
-            {DESKTOP_NAV.map((l) => (
-              <Link
-                key={l.label}
-                to={l.to as never}
-                params={l.params as never}
-                className="rounded-full px-3 py-1.5 text-white/70 hover:text-neon hover:bg-white/5 transition"
-                activeProps={{ className: "text-neon font-semibold bg-neon/10" }}
-                activeOptions={{ exact: l.to === "/" }}
-              >
-                {l.label}
-              </Link>
-            ))}
+
+          {/* Desktop top bar */}
+          <nav ref={topnavRef} className="topnav relative hidden min-w-0 flex-1 items-center lg:flex" aria-label="Primary">
+            <span ref={pillRef} aria-hidden className="nav-pill absolute top-1/2 h-9 -translate-y-1/2 rounded-full bg-neon/12 opacity-0 transition-[transform,width,opacity] duration-200 will-change-transform" data-navpill />
+            <ul className="flex min-w-0 items-center gap-0.5">
+              {TOP_NAV.map((item) => {
+                if (item.label === "Our Services") {
+                  return (
+                    <li key={item.label} className="relative">
+                      <a
+                        ref={servicesTriggerRef}
+                        href="/#services"
+                        className={`nav-item nav-trigger relative z-[1] cursor-pointer ${servicesActive ? "nav-item-active" : ""}`}
+                        aria-expanded={menuOpen}
+                        aria-controls={SERVICES_MENU_ID}
+                        aria-haspopup="true"
+                        onMouseEnter={hoverOpenServices}
+                        onMouseLeave={hoverCloseServices}
+                        onFocus={(e) => {
+                          // Return-focus after Escape must not re-open the menu,
+                          // and mouse clicks that move focus must not open it.
+                          if (suppressFocusOpen.current) {
+                            suppressFocusOpen.current = false;
+                            return;
+                          }
+                          if ((e.target as HTMLElement).matches(":focus-visible")) openServices();
+                        }}
+                        onClick={(e) => {
+                          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // let the browser navigate
+                          e.preventDefault();
+                          if (menuOpen) closeServices(true);
+                          else openServices();
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === " ") {
+                            e.preventDefault();
+                            if (menuOpen) closeServices(true);
+                            else openServices();
+                          }
+                          if (e.key === "ArrowDown") {
+                            e.preventDefault();
+                            openServices();
+                            requestAnimationFrame(() =>
+                              menuRef.current?.querySelector<HTMLElement>("a[href], button")?.focus(),
+                            );
+                          }
+                        }}
+                      >
+                        {item.label}
+                        <ChevronDown aria-hidden className={`h-3.5 w-3.5 transition-transform duration-200 ${menuOpen ? "rotate-180" : ""}`} />
+                      </a>
+                    </li>
+                  );
+                }
+                const active = item.to === "/#process" ? processInView && pathname === "/" : isActive(item.to);
+                return (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to.includes("#") ? "/" : (item.to as never)}
+                      hash={item.to.includes("#") ? (item.to.split("#")[1] as never) : undefined}
+                      className={`nav-item relative z-[1] whitespace-nowrap ${active ? "nav-item-active" : ""}`}
+                      activeOptions={{ exact: item.to === "/" }}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </nav>
-          <div className="flex items-center gap-2">
+
+          {/* Right side */}
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={() => openBooking()}
+              className="btn-shine hidden rounded-full bg-grad-accent px-5 py-2 text-[15px] font-semibold text-white shadow-glow-strong transition hover:brightness-110 active:scale-[0.98] md:inline-flex"
+            >
+              Book Now
+            </button>
             <button
               type="button"
               onClick={() => {
@@ -226,23 +320,15 @@ export function SiteHeader() {
               }}
               aria-label="Book with AI assistant"
               title="Book with AI"
-              className="ai-btn inline-flex shrink-0 items-center gap-1.5 rounded-full bg-grad-accent px-3 py-2 text-xs font-semibold text-white shadow-glow transition hover:brightness-110 active:scale-[0.97]"
+              className="ai-btn inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/25 bg-white/8 px-3 py-2 text-[15px] font-semibold text-white backdrop-blur transition hover:bg-white/15 active:scale-[0.97] max-[1279px]:px-2.5"
             >
-              <BotMessageSquare className="h-4.5 w-4.5 shrink-0" aria-hidden />
-              Book with AI
+              <BotMessageSquare className="h-[18px] w-[18px] shrink-0" aria-hidden />
+              <span className="max-[1279px]:hidden">Book with AI</span>
             </button>
-            <button
-              type="button"
-              onClick={() => openBooking()}
-              className="btn-shine hidden md:inline-flex items-center rounded-full bg-grad-accent px-5 py-2 text-sm font-semibold text-white shadow-glow-strong transition hover:brightness-110 active:scale-[0.98]"
-            >
-              Book Now
-            </button>
-            {/* Hamburger — rendered at EVERY width so the panel opens on desktop too */}
             <button
               ref={toggleRef}
               type="button"
-              className="menu-btn text-white hover:text-neon"
+              className="menu-btn text-white hover:text-neon max-[1099px]:flex lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               aria-controls={PANEL_ID}
@@ -256,13 +342,53 @@ export function SiteHeader() {
             </button>
           </div>
         </div>
+
+        {/*
+          "Our Services" dropdown — links stay in the DOM when closed
+          (inert + aria-hidden, visibility delayed) so nav stays crawlable.
+        */}
+        <div
+          id={SERVICES_MENU_ID}
+          ref={menuRef}
+          className={`services-menu ${menuOpen ? "services-menu-open" : ""}`}
+          aria-hidden={!menuOpen}
+          inert={!menuOpen ? true : undefined}
+          onMouseEnter={hoverOpenServices}
+          onMouseLeave={hoverCloseServices}
+        >
+          <div className="mx-auto max-w-[760px] rounded-3xl border border-white/10 bg-[linear-gradient(165deg,rgb(10_26_47/0.98),rgb(6_15_30/0.99))] p-5 shadow-2xl backdrop-blur-xl">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <MenuColumn title="Bike Services" rows={MENU_BIKE_ROWS} tone="bike" panelOpen={menuOpen} />
+              <MenuColumn title="Car Services" rows={MENU_CAR_ROWS} tone="car" panelOpen={menuOpen} />
+            </div>
+            <Link
+              to={MENU_BREAKDOWN.to as never}
+              onClick={() => closeServices()}
+              className="mt-4 flex min-h-[48px] items-center gap-3 rounded-2xl border border-neon/40 bg-neon/10 px-4 text-sm font-semibold text-neon transition hover:bg-neon/20"
+            >
+              <LifeBuoy aria-hidden className="h-5 w-5 shrink-0" />
+              {MENU_BREAKDOWN.label}
+              <ChevronRight aria-hidden className="ml-auto h-4 w-4 shrink-0" />
+            </Link>
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-white/10 px-1 pt-3 text-sm">
+              {MENU_FOOTER_ROWS.map((r) => (
+                <Link
+                  key={r.label}
+                  to={r.to as never}
+                  onClick={() => closeServices()}
+                  className="text-white/65 transition hover:text-neon"
+                >
+                  {r.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
       </header>
 
       {/*
-        Slide-in menu. Rendered as a SIBLING of the header (a transform/filter
-        ancestor would make position:fixed relative to the header and trap the
-        panel in the header's stacking context). The panel and its links are
-        ALWAYS server-rendered so nav stays crawlable; the closed state is
+        Slide-in panel — sibling of the header so position:fixed is
+        viewport-relative. Links are ALWAYS server-rendered; the closed state is
         transform + aria-hidden/inert.
       */}
       <div
@@ -274,7 +400,6 @@ export function SiteHeader() {
       >
         <div className="panel-backdrop" aria-hidden onClick={() => closeMenu()} />
         <aside role="dialog" aria-modal="true" aria-label="Site menu" className="panel">
-          {/* Panel header: logo + close */}
           <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
             <span className="flex items-center gap-2">
               <img src={logo} alt="" width={36} height={36} className="rounded-full bg-plate p-0.5" />
@@ -285,42 +410,24 @@ export function SiteHeader() {
             </button>
           </div>
 
-          {/* Scrollable body: service boxes + simple links. Footer stays pinned. */}
           <div className="panel-body flex-1 overflow-y-auto overscroll-contain px-3 py-4">
-            {/* A. Magic-style Bike / Car boxes — expand their list below */}
             <div className="grid grid-cols-2 gap-3">
-              <ServiceBox
-                id="bike"
-                open={expanded === "bike"}
-                listId={BIKE_LIST_ID}
-                count={BIKE_ROWS.length}
-                onToggle={() => setExpanded(expanded === "bike" ? null : "bike")}
-                panelOpen={open}
-              />
-              <ServiceBox
-                id="car"
-                open={expanded === "car"}
-                listId={CAR_LIST_ID}
-                count={CAR_ROWS.length}
-                onToggle={() => setExpanded(expanded === "car" ? null : "car")}
-                panelOpen={open}
-              />
+              <ServiceBox id="bike" open={expanded === "bike"} listId={BIKE_LIST_ID} count={MENU_BIKE_ROWS.length} onToggle={() => setExpanded(expanded === "bike" ? null : "bike")} />
+              <ServiceBox id="car" open={expanded === "car"} listId={CAR_LIST_ID} count={MENU_CAR_ROWS.length} onToggle={() => setExpanded(expanded === "car" ? null : "car")} />
             </div>
 
-            {/* Expandable category lists (one open at a time, links stay in the DOM) */}
-            <ServiceList id={BIKE_LIST_ID} shown={expanded === "bike"} rows={BIKE_ROWS} hub={{ to: "/bikes", label: "View all bike services" }} panelOpen={open} onNavigate={closeMenu} baseDelay={0} />
-            <ServiceList id={CAR_LIST_ID} shown={expanded === "car"} rows={CAR_ROWS} hub={{ to: "/cars", label: "View all car services" }} panelOpen={open} onNavigate={closeMenu} baseDelay={BIKE_ROWS.length} />
+            <PanelServiceList id={BIKE_LIST_ID} shown={expanded === "bike"} rows={MENU_BIKE_ROWS} hub={{ to: "/bikes", label: "View all bike services" }} panelOpen={open} onNavigate={closeMenu} baseDelay={0} />
+            <PanelServiceList id={CAR_LIST_ID} shown={expanded === "car"} rows={MENU_CAR_ROWS} hub={{ to: "/cars", label: "View all car services" }} panelOpen={open} onNavigate={closeMenu} baseDelay={MENU_BIKE_ROWS.length} />
 
-            {/* B. Simple links */}
             <nav aria-label="Site" className="mt-4 border-t border-white/10 pt-2">
               <ul>
-                {SIMPLE_LINKS.map((l) => {
+                {PANEL_SIMPLE_LINKS.map((l) => {
                   const Icon = l.icon;
                   return (
                     <li key={l.label}>
                       <Link
-                        to={l.to as never}
-                        params={undefined}
+                        to={l.to.includes("#") ? "/" : (l.to as never)}
+                        hash={l.to.includes("#") ? (l.to.split("#")[1] as never) : undefined}
                         onClick={() => closeMenu()}
                         activeProps={{ className: "text-neon font-semibold bg-neon/10" }}
                         activeOptions={{ exact: l.to === "/" }}
@@ -338,14 +445,9 @@ export function SiteHeader() {
             </nav>
           </div>
 
-          {/* C. Sticky contact footer — styled like the hero buttons, same events */}
           <div className="sticky bottom-0 z-10 border-t border-white/10 bg-[#050d1c]/95 p-3 backdrop-blur">
             <div className="grid grid-cols-2 gap-3">
-              <a
-                href="tel:+918069409289"
-                {...ctcProps("call_click", { vehicle_type: "unknown" })}
-                className="hero-cta bg-grad-primary text-primary-foreground shadow-glow"
-              >
+              <a href="tel:+918069409289" {...ctcProps("call_click", { vehicle_type: "unknown" })} className="hero-cta bg-grad-primary text-primary-foreground shadow-glow">
                 <Phone aria-hidden className="h-5 w-5 shrink-0" />
                 080 6940 9289
               </a>
@@ -367,21 +469,54 @@ export function SiteHeader() {
   );
 }
 
-/** Magic-style Bike/Car box: glass, gradient hairline border, slow beam, glow when active. */
+/* ── Desktop services menu column ──────────────────────────────────────────── */
+function MenuColumn({ title, rows, tone, panelOpen }: { title: string; rows: NavRow[]; tone: "bike" | "car"; panelOpen: boolean }) {
+  const hub = tone === "bike" ? { to: "/bikes", label: "View all bike services" } : { to: "/cars", label: "View all car services" };
+  return (
+    <div className={`menu-col menu-col-${tone}`}>
+      <div className="px-2 pb-1.5 text-[11px] font-semibold uppercase tracking-[0.18em]">{title}</div>
+      <ul>
+        {rows.map((r) => {
+          const Icon = r.icon;
+          return (
+            <li key={r.label}>
+              <Link
+                to={r.to as never}
+                params={r.params as never}
+                onClick={() => undefined}
+                className="menu-row flex min-h-[40px] items-center gap-2.5 rounded-xl px-2.5 text-[15px] text-white/80 transition-colors hover:bg-white/5 hover:text-neon"
+              >
+                <Icon aria-hidden className="h-4 w-4 shrink-0" />
+                <span className="truncate">{r.label}</span>
+              </Link>
+            </li>
+          );
+        })}
+        <li>
+          <Link to={hub.to as never} className="menu-row menu-row-hub flex min-h-[40px] items-center gap-2.5 rounded-xl px-2.5 text-[15px] font-semibold">
+            <House aria-hidden className="h-4 w-4 shrink-0" />
+            {hub.label}
+            <ChevronRight aria-hidden className="ml-auto h-3.5 w-3.5 shrink-0" />
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+/* ── Panel: magic-style service box ────────────────────────────────────────── */
 function ServiceBox({
   id,
   open,
   listId,
   count,
   onToggle,
-  panelOpen,
 }: {
   id: "bike" | "car";
   open: boolean;
   listId: string;
   count: number;
   onToggle: () => void;
-  panelOpen: boolean;
 }) {
   const bike = id === "bike";
   const Icon = bike ? Bike : CarFront;
@@ -392,7 +527,7 @@ function ServiceBox({
       onClick={onToggle}
       aria-expanded={open}
       aria-controls={listId}
-      className={`svc-box ${bike ? "svc-box-bike" : "svc-box-car"} ${open ? "svc-box-active" : ""} group cursor-pointer text-left`}
+      className={`svc-box ${bike ? "svc-box-bike" : "svc-box-car"} ${open ? "svc-box-active" : ""} cursor-pointer text-left`}
     >
       <span className="svc-box-beam" aria-hidden />
       <span className="svc-box-inner">
@@ -407,12 +542,8 @@ function ServiceBox({
   );
 }
 
-/**
- * Expandable list under the two boxes. Collapsed = grid-template-rows 0fr
- * (smooth height animation) with the links kept IN THE DOM, hidden from AT via
- * aria-hidden + inert — never display:none, so SEO keeps every <a href>.
- */
-function ServiceList({
+/* ── Panel: expandable service list (links never leave the DOM) ────────────── */
+function PanelServiceList({
   id,
   shown,
   rows,
@@ -423,7 +554,7 @@ function ServiceList({
 }: {
   id: string;
   shown: boolean;
-  rows: ServiceRow[];
+  rows: NavRow[];
   hub: { to: string; label: string };
   panelOpen: boolean;
   onNavigate: () => void;
@@ -455,7 +586,6 @@ function ServiceList({
           <li>
             <Link
               to={hub.to as never}
-              params={undefined}
               onClick={() => onNavigate()}
               style={{ animationDelay: `${120 + (baseDelay + rows.length) * 35}ms` }}
               className={`panel-row ${panelOpen && shown ? "panel-row-in" : ""} flex min-h-[52px] items-center gap-3 rounded-xl px-3 text-[13px] font-semibold text-neon hover:bg-neon/10 transition-colors`}

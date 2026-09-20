@@ -783,6 +783,105 @@
    Rendered OUTSIDE the header element (a transform/filter/blur ancestor would
    make position:fixed relative to the header and trap the panel in the
    header's stacking context — the floating bar (z-50) must stay below it. */
+
+/* Header shrink: 72px → 60px once the page scrolls (.is-scrolled on header). */
+.header-inner {
+  transition: height 0.2s ease;
+}
+.site-header.is-scrolled .header-inner {
+  height: 60px !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-inner {
+    transition: none !important;
+  }
+}
+
+/* Desktop top bar: nav items ≥15px, single-line. */
+.topnav .nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 36px;
+  padding: 0 0.75rem;
+  border-radius: 9999px;
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+  color: rgb(255 255 255 / 0.72);
+  transition: color 0.2s ease;
+}
+.topnav .nav-item:hover,
+.topnav .nav-item:focus-visible {
+  color: var(--neon);
+}
+.topnav .nav-item:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+.topnav .nav-item-active {
+  color: var(--neon);
+  font-weight: 600;
+}
+/* Sliding pill highlight — transform/width only, driven from JS on hover;
+   the active item carries a static server-rendered pill via .nav-item-active. */
+.nav-pill {
+  left: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-pill {
+    transition: none !important;
+  }
+}
+
+/* Services dropdown: near-solid navy glass; links always in the DOM. */
+.services-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 0 1rem;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
+  pointer-events: none; /* the strip itself never blocks the page */
+}
+/* Only the card is interactive; clicks on the strip pass through to the page
+   (and the document-level pointerdown listener closes the menu). */
+.services-menu > div {
+  pointer-events: auto;
+}
+.services-menu.services-menu-open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition-delay: 0s;
+}
+.menu-col-bike > div:first-child {
+  color: var(--neon);
+}
+.menu-col-car > div:first-child {
+  color: #a5b4fc;
+}
+.menu-row:focus-visible,
+.services-menu a:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+.menu-row-hub {
+  color: var(--neon);
+}
+.menu-col-car .menu-row-hub {
+  color: #a5b4fc;
+}
+@media (prefers-reduced-motion: reduce) {
+  .services-menu {
+    transition: none !important;
+  }
+}
 .panel-root {
   position: fixed;
   inset: 0;

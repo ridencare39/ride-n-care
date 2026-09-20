@@ -137,8 +137,9 @@ function Home() {
         </p>
       </section>
 
-      {/* Services — single merged grid, bikes and cars at parity */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-6">
+      {/* Services — single merged grid, bikes and cars at parity.
+          #services anchor target for the top-nav "Our Services" link. */}
+      <section id="services" className="mx-auto max-w-7xl scroll-mt-[76px] px-4 sm:px-6 pb-6">
         <SectionHeading eyebrow="Our Services" title="Pick your service" />
         <div className="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {MERGED_SERVICES.map((s) => (
@@ -209,8 +210,8 @@ function Home() {
         </div>
       </section>
 
-      {/* How it works — compact */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
+      {/* How it works — compact. #process anchor target for the top-nav link. */}
+      <section id="process" className="mx-auto max-w-7xl scroll-mt-[76px] px-4 sm:px-6 py-10">
         <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">How it works</div>
         <h2 className="mt-1 text-2xl md:text-3xl font-bold">Booking to keys-back in 4 steps</h2>
         <ol className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
