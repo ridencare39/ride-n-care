@@ -1,7 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { type Post } from "@/lib/blog";
 import { getPublishedPost } from "@/lib/blog.functions";
-import { OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { LOGO_URL, SITE_URL } from "@/lib/seo";
+import { pageHead } from "@/lib/head";
+import { graphForPage, articleNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { faqsForPostCategory } from "@/lib/service-faqs";
 import { AREAS } from "@/lib/areas";
 import { BookingButton } from "@/components/booking/BookingButton";
@@ -21,70 +23,36 @@ export const Route = createFileRoute("/blog/$slug")({
     const desc = p.excerpt.length > 160 ? `${p.excerpt.slice(0, 157)}...` : p.excerpt;
     const faqs = faqsForPostCategory(p.category);
     return {
-      meta: [
-        { title },
-        { name: "description", content: desc },
-        { name: "keywords", content: p.tags.join(", ") },
-        { property: "og:title", content: p.title },
-        { property: "og:description", content: desc },
-        { property: "og:type", content: "article" },
-        { property: "og:url", content: `${SITE_URL}/blog/${params.slug}` },
-        { property: "og:image", content: OG_IMAGE },
-        { property: "article:section", content: p.category },
-        { property: "article:published_time", content: p.date },
-        { property: "article:author", content: p.author },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: p.title },
-        { name: "twitter:description", content: desc },
-        { name: "twitter:image", content: OG_IMAGE },
-      ],
-      links: [{ rel: "canonical", href: `${SITE_URL}/blog/${params.slug}` }],
-      scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
+      ...pageHead({
+        title,
+        description: desc,
+        path: `/blog/${params.slug}`,
+        extraMeta: [
+          { property: "og:title", content: p.title },
+          { property: "og:type", content: "article" },
+          { property: "article:section", content: p.category },
+          { property: "article:published_time", content: p.date },
+          { property: "article:author", content: p.author },
+        ],
+      }),
+      scripts: pageScripts(
+        graphForPage([
+          articleNode({
+            type: "BlogPosting",
+            url: `${SITE_URL}/blog/${params.slug}`,
             headline: p.title,
             description: p.excerpt,
             datePublished: p.date,
-            dateModified: p.date,
-            author: { "@type": "Organization", name: "Ride N Care" },
-            publisher: {
-              "@type": "Organization",
-              name: "Ride N Care",
-              logo: { "@type": "ImageObject", url: "/__l5e/assets-v1/760c4f79-dc2d-4a56-a959-0c73577c8f73/ride-n-care-logo.jpg" },
-            },
-            keywords: p.tags.join(", "),
-            mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${params.slug}` },
-            about: { "@id": `${SITE_URL}/#business` },
+            authorName: p.author,
           }),
-        },
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-              { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
-              { "@type": "ListItem", position: 3, name: p.title, item: `${SITE_URL}/blog/${params.slug}` },
-            ],
-          }),
-        },
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: faqs.map(([q, a]) => ({
-              "@type": "Question",
-              name: q,
-              acceptedAnswer: { "@type": "Answer", text: a },
-            })),
-          }),
-        },
-      ],
+          faqNode(faqs),
+          breadcrumbNode([
+            ["Home", "/"],
+            ["Blog", "/blog"],
+            [p.title, `/blog/${params.slug}`],
+          ]),
+        ]),
+      ),
     };
   },
   component: Post,
@@ -127,7 +95,7 @@ function Post() {
           Ready to act on this? Book a{" "}
           <Link to={serviceLink} className="text-primary font-medium">{serviceLabel} in Bangalore</Link>
           {" "}or explore our{" "}
-          <Link to="/pricing" className="text-primary font-medium">transparent pricing</Link>.
+          <Link to="/bikes" className="text-primary font-medium">transparent package prices</Link>.
         </p>
         <div className="mt-4 grid sm:grid-cols-2 gap-3">
           <Link to="/bikes" className="rounded-2xl border border-border bg-card p-4 hover:border-primary">

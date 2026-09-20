@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && node scripts/make-dist.mjs",
+    "build:prod": "NODE_OPTIONS=--max-old-space-size=1536 vite build && node scripts/make-dist.mjs",
+    "build:vercel": "NITRO_PRESET=vercel vite build",
+    "deploy": "wrangler --cwd .output deploy && node scripts/purge-cache.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -81,10 +84,12 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
     "nitro": "3.0.260603-beta",
+    "playwright": "1.63.0",
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "wrangler": "^4.132.0"
   },
   "overrides": {
     "seroval": "^1.6.2",

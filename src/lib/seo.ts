@@ -1,6 +1,8 @@
 export const SITE_URL = "https://ridencare.co.in";
-export const OG_IMAGE = `${SITE_URL}/__l5e/assets-v1/2cb2a7d0-57c5-42f3-9ebc-6e2a4ca0cccd/og-ridencare.jpg`;
-export const OG_IMAGE_ABOUT = `${SITE_URL}/__l5e/assets-v1/f4639b52-45f0-4f94-83ac-67b268204b29/og-about-ridencare.jpg`;
+// Static, bundled copies in /public so OG images resolve without any CDN dependency.
+export const OG_IMAGE = `${SITE_URL}/og-default.jpg`;
+export const OG_IMAGE_ABOUT = `${SITE_URL}/og-default.jpg`;
+export const LOGO_URL = `${SITE_URL}/logo-96.webp`;
 
 /** Official Ride N Care profiles — used for schema sameAs and footer links. */
 export const SOCIAL = {
@@ -30,9 +32,9 @@ export const LOCAL_BUSINESS_JSONLD = {
   description:
     "Doorstep bike and car service in Bangalore. Certified mechanics, genuine OEM parts, transparent pricing and a 7-day workmanship guarantee.",
   url: SITE_URL,
-  logo: `${SITE_URL}/__l5e/assets-v1/760c4f79-dc2d-4a56-a959-0c73577c8f73/ride-n-care-logo.jpg`,
+  logo: LOGO_URL,
   image: OG_IMAGE,
-  telephone: ["+91-80-6940-9289", "+91-82969-50339"],
+  telephone: ["+91-80-6940-9289"],
   email: "ridencareinfo@gmail.com",
   priceRange: "₹₹",
   address: {
@@ -49,14 +51,6 @@ export const LOCAL_BUSINESS_JSONLD = {
     { "@type": "AdministrativeArea", name: "Karnataka, India" },
   ],
   serviceArea: { "@type": "GeoCircle", geoMidpoint: { "@type": "GeoCoordinates", latitude: 12.9716, longitude: 77.5946 }, geoRadius: 40000 },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      opens: "08:00",
-      closes: "21:00",
-    },
-  ],
   sameAs: SAME_AS,
   paymentAccepted: ["Cash", "UPI", "Credit Card", "Debit Card", "Net Banking"],
   currenciesAccepted: "INR",
@@ -74,15 +68,15 @@ export const LOCAL_BUSINESS_JSONLD = {
   contactPoint: [
     {
       "@type": "ContactPoint",
-      telephone: "+91-82969-50339",
+      telephone: "+91-80-6940-9289",
       contactType: "customer service",
       areaServed: "IN",
       availableLanguage: ["English", "Hindi", "Kannada"],
     },
     {
       "@type": "ContactPoint",
-      telephone: "+91-80-6940-9289",
-      contactType: "booking",
+      contactType: "WhatsApp bookings",
+      url: "https://wa.me/918296950339",
       areaServed: "IN",
       availableLanguage: ["English", "Hindi", "Kannada"],
     },
@@ -95,9 +89,9 @@ export const ORGANIZATION_JSONLD = {
   "@id": `${SITE_URL}/#organization`,
   name: "Ride N Care",
   url: SITE_URL,
-  logo: `${SITE_URL}/__l5e/assets-v1/760c4f79-dc2d-4a56-a959-0c73577c8f73/ride-n-care-logo.jpg`,
+  logo: LOGO_URL,
   email: "ridencareinfo@gmail.com",
-  telephone: ["+91-82969-50339", "+91-80-6940-9289"],
+  telephone: ["+91-80-6940-9289"],
   sameAs: SAME_AS,
   contactPoint: LOCAL_BUSINESS_JSONLD.contactPoint,
 };
@@ -125,7 +119,10 @@ export function faqPageJsonLd(faqs: [string, string][], id?: string) {
   };
 }
 
-/** BreadcrumbList JSON-LD from [name, url] pairs. */
+/**
+ * @deprecated Use the central schema module (src/lib/schema.ts) — one @graph per page
+ * with stable @ids. Retained only until all references are migrated.
+ */
 export function breadcrumbJsonLd(items: [string, string][]) {
   return {
     "@context": "https://schema.org",

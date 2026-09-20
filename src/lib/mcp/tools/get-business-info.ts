@@ -1,5 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
-import { LOCAL_BUSINESS_JSONLD, SITE_URL } from "@/lib/seo";
+import { BIZ } from "@/lib/schema";
+import { SITE_URL } from "@/lib/seo";
 
 export default defineTool({
   name: "get_business_info",
@@ -11,13 +12,13 @@ export default defineTool({
     const payload = {
       name: "Ride N Care",
       tagline: "Care in every mile",
-      description: LOCAL_BUSINESS_JSONLD.description,
+      description: BIZ.description,
       phone: "08069409289",
       whatsapp: "+918296950339",
       whatsappLink: "https://wa.me/918296950339",
       email: "ridencareinfo@gmail.com",
       address: "Bangalore, Karnataka, India",
-      hours: "Every day, 08:00 – 21:00 IST",
+      hours: "Every day",
       bookingUrl: `${SITE_URL}/contact`,
       website: SITE_URL,
     };

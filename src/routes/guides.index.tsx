@@ -1,43 +1,31 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { GUIDES } from "@/lib/guides";
 import { BRAND } from "@/lib/answers";
-import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL, breadcrumbJsonLd } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
+import { pageHead } from "@/lib/head";
+import { graphForPage, breadcrumbNode, pageScripts } from "@/lib/schema";
 
 const URL = `${SITE_URL}/guides`;
 
 export const Route = createFileRoute("/guides/")({
   head: () => ({
-    meta: [
-      { title: "Bike Maintenance Guides for Bangalore | Ride N Care" },
-      {
-        name: "description",
-        content:
-          "Free bike guides from Ride N Care: service intervals, maintenance checklists, common problems, breakdown troubleshooting and doorstep service explained.",
-      },
+    ...pageHead({
+      title: "Bike Maintenance Guides for Bangalore | Ride N Care",
+      description:
+        "Free bike guides from Ride N Care: service intervals, maintenance checklists, common problems, breakdown troubleshooting and doorstep service explained.",
+      path: "/guides",
+      extraMeta: [
       { property: "og:title", content: "Bike Maintenance & Service Guides | Ride N Care" },
       { property: "og:description", content: "Practical two-wheeler maintenance and repair guides written for Bangalore riding conditions." },
-      { property: "og:url", content: URL },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: OG_IMAGE },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: URL }],
-    scripts: [
-      { type: "application/ld+json", children: JSON.stringify(LOCAL_BUSINESS_JSONLD) },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(
-          breadcrumbJsonLd([
-            ["Home", `${SITE_URL}/`],
-            ["Guides", URL],
-          ]),
-        ),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
+    }),
+    scripts: pageScripts(
+      graphForPage([
+        breadcrumbNode([
+          ["Home", "/"],
+          ["Guides", "/guides"],
+        ]),
+        {
           "@type": "ItemList",
           name: "Ride N Care bike maintenance guides",
           itemListElement: GUIDES.map((g, i) => ({
@@ -46,9 +34,9 @@ export const Route = createFileRoute("/guides/")({
             name: g.h1,
             url: `${SITE_URL}/guides/${g.slug}`,
           })),
-        }),
-      },
-    ],
+        },
+      ]),
+    ),
   }),
   component: GuidesIndex,
 });
@@ -87,7 +75,7 @@ function GuidesIndex() {
           {BRAND.name} services and repairs two-wheelers at your doorstep across {BRAND.city}.
         </p>
         <div className="mt-4 flex flex-wrap gap-3 text-sm">
-          <a href={`tel:${BRAND.phonePrimary}`} className="rounded-full border border-border px-5 py-2.5 font-semibold hover:bg-background">Call {BRAND.phonePrimary}</a>
+          <a href="tel:+918069409289" className="rounded-full border border-border px-5 py-2.5 font-semibold hover:bg-background">Call {BRAND.phonePrimaryDisplay}</a>
           <a href={`https://wa.me/${BRAND.whatsapp}`} className="rounded-full bg-grad-primary px-5 py-2.5 font-semibold text-primary-foreground shadow-glow">WhatsApp</a>
           <Link to="/answers" className="rounded-full border border-border px-5 py-2.5 font-semibold hover:bg-background">Read our answers page</Link>
         </div>

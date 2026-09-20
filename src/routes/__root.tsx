@@ -16,7 +16,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { SiteFooter } from "@/components/SiteFooter";
 import { FloatingActions } from "@/components/FloatingActions";
 import { BookingProvider } from "@/components/booking/BookingProvider";
-import { LOCAL_BUSINESS_JSONLD, ORGANIZATION_JSONLD, WEBSITE_JSONLD } from "@/lib/seo";
+import { graphForPage, organizationNode, localBusinessNode, websiteNode, pageScripts } from "@/lib/schema";
+import { pageHead } from "@/lib/head";
 
 const GA_ID = import.meta.env["VITE_GA_MEASUREMENT_ID"] as string | undefined;
 const GTM_ID = import.meta.env["VITE_GTM_ID"] as string | undefined;
@@ -83,23 +84,18 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
+    ...pageHead({
+      title: "Ride N Care | Doorstep Bike & Car Service in Bangalore",
+      description:
+        "Care in every mile. Book verified doorstep bike & car service across Bangalore — OEM parts, written quote, free pickup & drop, 7-day guarantee.",
+      path: "/",
+    }),
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ride N Care | Doorstep Bike & Car Service in Bangalore" },
-      { name: "description", content: "Care in every mile. Expert at-home bike and car repair in Bangalore. Genuine parts, transparent pricing, doorstep pickup & drop." },
       { name: "author", content: "Ride N Care" },
       { name: "google-site-verification", content: "jhsltMlL-d9OJM2WUXyxdkL6RnJLEpaoQWPUI5qKflc" },
-      { name: "theme-color", content: "#0d0d0f" },
-      { name: "keywords", content: "doorstep bike service Bangalore, car repair at home Bangalore, two wheeler mechanic, car mechanic home, ride n care" },
-      { property: "og:title", content: "Ride N Care | Doorstep Bike & Car Service in Bangalore" },
-      { property: "og:description", content: "Care in every mile. Expert at-home bike and car repair in Bangalore. Genuine parts, transparent pricing, doorstep pickup & drop." },
-      { property: "og:site_name", content: "Ride N Care" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@RideNCare" },
-      { name: "twitter:title", content: "Ride N Care | Doorstep Bike & Car Service in Bangalore" },
-      { name: "twitter:description", content: "Care in every mile. Expert at-home bike and car repair in Bangalore. Genuine parts, transparent pricing, doorstep pickup & drop." },
+      { name: "theme-color", content: "#0e1c3d" },
     ],
     links: [
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
@@ -122,21 +118,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap",
       },
     ],
     scripts: [
+      // One consistent entity graph on every page: Organization + LocalBusiness + WebSite.
+      ...pageScripts(graphForPage([organizationNode(), localBusinessNode(), websiteNode()])),
+      // GA4 click/conversion events (call, WhatsApp, booking, AI, maps) via data-ctc attributes.
       {
-        type: "application/ld+json",
-        children: JSON.stringify(LOCAL_BUSINESS_JSONLD),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(ORGANIZATION_JSONLD),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(WEBSITE_JSONLD),
+        children: `
+(function(){
+  function params(el){
+    var p = el.getAttribute('data-ctc-params');
+    try { return p ? JSON.parse(p) : {}; } catch (e) { return {}; }
+  }
+  document.addEventListener('click', function(ev){
+    var el = ev.target instanceof Element ? ev.target.closest('[data-ctc]') : null;
+    if (!el || !window.gtag) return;
+    window.gtag('event', el.getAttribute('data-ctc'), Object.assign({ page_path: window.location.pathname }, params(el)));
+  }, { passive: true });
+})();`,
       },
       // Analytics: set VITE_GA_MEASUREMENT_ID / VITE_GTM_ID to activate.
       ...(GA_ID
@@ -156,6 +157,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         : []),
     ],
   }),
+  // Fresh HTML on every deploy: browsers may reuse this response within the
+  // session, but shared caches (Cloudflare) must revalidate before reuse.
+  // Route-level headers are collected by the SSR handler (getStartResponseHeaders).
+  headers: () => ({
+    "cache-control": "public, max-age=0, must-revalidate",
+  }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -164,7 +171,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <head>
         <HeadContent />
       </head>

@@ -1,61 +1,44 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import bike from "@/assets/bike-service.webp";
-import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
+import bike from "@/assets/services/doorstep-bike-service.webp";
+import { SITE_URL } from "@/lib/seo";
+import { pageHead } from "@/lib/head";
+import { graphForPage, serviceNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { BIKE_FAQS } from "@/lib/service-faqs";
-import { BIKE_PACKAGES } from "@/lib/pricing";
+import { BIKE_PACKAGES, ELECTRIC_BIKE_PACKAGES } from "@/lib/pricing";
 import { BookingButton } from "@/components/booking/BookingButton";
 
 const brands = ["TVS","Bajaj","Royal Enfield","Yamaha","Honda","Hero","Suzuki","KTM","Jawa","Harley Davidson","Ducati","Kawasaki","Benelli","Triumph","BMW","Aprilia","Yezdi","Husqvarna"];
 export const Route = createFileRoute("/bikes")({
   head: () => ({
-    meta: [
-      { title: "Doorstep Bike Service in Bangalore — All CCs | Ride N Care" },
-      { name: "description", content: "At-home bike service in Bangalore for every CC — TVS, Bajaj, Royal Enfield, KTM, Harley. OEM parts, certified mechanics, 60–90 min service." },
+    ...pageHead({
+      title: "Doorstep Bike Service in Bangalore — All CCs | Ride N Care",
+      description:
+        "At-home bike service in Bangalore for every CC — TVS, Bajaj, Royal Enfield, KTM, Harley. OEM parts, certified mechanics, 60–90 min service.",
+      path: "/bikes",
+      ogImage: bike,
+      extraMeta: [
       { property: "og:title", content: "Doorstep Bike Service in Bangalore | Ride N Care" },
       { property: "og:description", content: "At-home bike service in Bangalore for all CCs with genuine parts, transparent pricing and certified mechanics." },
-      { property: "og:url", content: `${SITE_URL}/bikes` },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: OG_IMAGE },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/bikes` }],
+    }),
     scripts: [
-      { type: "application/ld+json", children: JSON.stringify(LOCAL_BUSINESS_JSONLD) },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Service",
-          serviceType: "Doorstep Bike Service",
-          areaServed: { "@type": "City", name: "Bangalore" },
-          provider: { "@type": "AutoRepair", "@id": `${SITE_URL}/#business`, name: "Ride N Care", telephone: "+91-82969-50339" },
-          offers: { "@type": "AggregateOffer", lowPrice: "399", priceCurrency: "INR" },
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: BIKE_FAQS.map(([q, a]) => ({
-            "@type": "Question",
-            name: q,
-            acceptedAnswer: { "@type": "Answer", text: a },
-          })),
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-            { "@type": "ListItem", position: 2, name: "Bike Service", item: `${SITE_URL}/bikes` },
-          ],
-        }),
-      },
+      ...pageScripts(
+        graphForPage([
+          serviceNode({
+            slug: "bikes",
+            name: "Doorstep Bike Service",
+            serviceType: "Doorstep Bike Service",
+            description:
+              "At-home bike service in Bangalore for every CC — TVS, Bajaj, Royal Enfield, KTM, Harley. OEM parts, certified mechanics, 60–90 min service.",
+            priceFrom: 799,
+          }),
+          breadcrumbNode([
+            ["Home", "/"],
+            ["Bike Service", "/bikes"],
+          ]),
+          faqNode(BIKE_FAQS),
+        ]),
+      ),
     ],
   }),
   component: Bikes,
@@ -71,7 +54,15 @@ function Bikes() {
           <p className="mt-4 text-muted-foreground">From scooters to litre-class superbikes — our mechanics show up with genuine parts and finish most jobs in under 90 minutes.</p>
           <BookingButton vehicle="bike" className="mt-6 h-12 rounded-full bg-grad-primary px-6 font-semibold text-primary-foreground shadow-glow">Book a Bike Service</BookingButton>
         </div>
-        <img src={bike} alt="Bike being serviced" width={1200} height={900} loading="lazy" className="rounded-3xl border border-border" />
+        <img
+          src={bike}
+          alt="Ride N Care mechanic performing a doorstep bike service on a customer's motorcycle"
+          width={1600}
+          height={1200}
+          fetchPriority="high"
+          decoding="async"
+          className="aspect-[4/3] w-full rounded-3xl border border-neon/25 object-cover shadow-glow ring-1 ring-white/10 sm:aspect-[16/10]"
+        />
       </div>
 
       <h2 className="mt-20 text-3xl font-bold">Service Packages</h2>
@@ -90,6 +81,25 @@ function Bikes() {
           </div>
         ))}
       </div>
+
+      <h2 className="mt-20 text-3xl font-bold">Electric Vehicle Service</h2>
+      <p className="mt-2 text-muted-foreground">Same three flat-price packages for every electric scooter and bike — Ola, Ather, TVS iQube, Bajaj Chetak, Vida, Revolt and more. No engine CC needed.</p>
+      <div className="mt-6 grid sm:grid-cols-3 gap-4">
+        {ELECTRIC_BIKE_PACKAGES.map((item) => (
+          <div key={item.id} className="rounded-2xl border border-neon/30 bg-card p-6 hover:border-primary transition">
+            <div className="text-primary text-sm font-semibold uppercase tracking-wider">⚡ {item.name}</div>
+            <div className="mt-1 text-muted-foreground text-sm">All electric models</div>
+            <div className="mt-4">
+              <span className="text-3xl font-bold">₹{item.price?.toLocaleString("en-IN")}</span>
+            </div>
+            <ul className="mt-4 text-sm space-y-1 text-muted-foreground">
+              {item.includes.slice(0, 4).map((inc) => <li key={inc}>• {inc}</li>)}
+            </ul>
+            <BookingButton vehicle="bike" packageId={item.id} className="mt-5 h-11 w-full rounded-full bg-grad-primary px-4 font-semibold text-primary-foreground">Book Now</BookingButton>
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 text-sm text-muted-foreground">Need a repair outside these packages? We inspect first and quote before any additional work — nothing is done without your approval.</p>
 
       <h2 className="mt-20 text-3xl font-bold">Brands We Service</h2>
       <div className="mt-6 flex flex-wrap gap-2">

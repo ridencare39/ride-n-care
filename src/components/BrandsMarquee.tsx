@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * Brand strip. Bike brands = the confirmed two-wheeler list (booking config).
+ * Car brands = ONLY the seven owner-confirmed car brands (Q4; see
+ * docs/seo/OWNER-QUESTIONS.md Q27) — Renault/VW/Skoda/Ford/Nissan/MG appear
+ * in the booking config but are NOT confirmed for public service claims.
+ */
 const BRANDS = [
   // Bike brands
   { name: "Honda", type: "bike", domain: "honda.com" },
@@ -14,22 +20,14 @@ const BRANDS = [
   { name: "Harley-Davidson", type: "bike", domain: "harley-davidson.com" },
   { name: "Jawa", type: "bike", domain: "jawamotorcycles.com" },
   { name: "BMW Motorrad", type: "bike", domain: "bmw-motorrad.in" },
-  // Car brands
+  // Car brands — confirmed seven only
   { name: "Maruti Suzuki", type: "car", domain: "marutisuzuki.com" },
   { name: "Hyundai", type: "car", domain: "hyundai.com" },
   { name: "Tata Motors", type: "car", domain: "tatamotors.com" },
   { name: "Mahindra", type: "car", domain: "mahindra.com" },
+  { name: "Honda", type: "car", domain: "honda.com" },
   { name: "Toyota", type: "car", domain: "toyota.com" },
   { name: "Kia", type: "car", domain: "kia.com" },
-  { name: "Renault", type: "car", domain: "renault.co.in" },
-  { name: "Volkswagen", type: "car", domain: "volkswagen.co.in" },
-  { name: "Skoda", type: "car", domain: "skoda-auto.co.in" },
-  { name: "Ford", type: "car", domain: "ford.com" },
-  { name: "Nissan", type: "car", domain: "nissan.in" },
-  { name: "MG Motor", type: "car", domain: "mgmotor.co.in" },
-  { name: "BMW", type: "car", domain: "bmw.in" },
-  { name: "Mercedes-Benz", type: "car", domain: "mercedes-benz.co.in" },
-  { name: "Audi", type: "car", domain: "audi.in" },
 ];
 
 export function BrandsMarquee() {
@@ -63,9 +61,9 @@ export function BrandsMarquee() {
     <section ref={sectionRef} className="border-y border-border bg-background py-14 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center">
         <span className="text-xs uppercase tracking-[0.2em] text-accent font-semibold">Brands We Service</span>
-        <h2 className="mt-2 text-3xl md:text-4xl font-bold">25+ bike & car brands, one trusted garage</h2>
+        <h2 className="mt-2 text-3xl md:text-4xl font-bold">Bike &amp; car brands we service</h2>
         <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
-          From Royal Enfield to Mercedes-Benz, our mechanics are trained on every popular Indian and international brand sold in Bangalore.
+          From Royal Enfield to Maruti Suzuki — the two-wheeler and car brands confirmed for doorstep service, with every part shown before it is fitted.
         </p>
       </div>
       <div className="relative mt-10 overflow-hidden">
@@ -92,11 +90,11 @@ export function BrandsMarquee() {
                   }}
                 />
               ) : (
-                <span aria-hidden="true" className="h-10 w-10 shrink-0 rounded bg-slate-200/60" />
+                <span aria-hidden="true" className="h-10 w-10 shrink-0 rounded bg-secondary" />
               )}
               <div className="text-left">
-                <div className="text-sm font-semibold leading-tight text-slate-900">{b.name}</div>
-                <div className="text-[10px] uppercase tracking-wider text-slate-500">{b.type}</div>
+                <div className="text-sm font-semibold leading-tight text-foreground">{b.name}</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{b.type}</div>
               </div>
             </div>
           ))}

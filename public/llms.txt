@@ -1,66 +1,70 @@
 # Ride N Care
 
-> Care in Every Mile — doorstep bike service and bike repair in Bangalore, Karnataka, India.
+> Care in Every Mile — doorstep bike, scooter and car service and repair in Bangalore, Karnataka, India.
 
-Ride N Care is a doorstep two-wheeler service and repair provider in Bangalore, Karnataka, India. Certified mechanics travel to the customer's home or office to service motorcycles, scooters and electric two-wheelers using OEM-grade parts, with the price agreed in writing before work starts. Car service is also offered.
+Ride N Care is a doorstep bike and car service company in Bangalore, Karnataka, India. Background-verified mechanics travel to the customer's home or office to service and repair motorcycles, scooters, electric two-wheelers and cars using OEM-grade parts, quoting the price in writing before work starts and backing the job with a 7-day workmanship guarantee.
 
 - Business name: Ride N Care
 - Tagline: Care in Every Mile
 - Website: https://ridencare.co.in
-- Phone: 08296950339 / 08069409289 (WhatsApp: +91 82969 50339)
+- Call: 080 6940 9289 (tel: +918069409289)
+- WhatsApp: 82969 50339 (https://wa.me/918296950339)
 - Email: ridencareinfo@gmail.com
-- Location: Bangalore, Karnataka, India
-- Hours: 8:00 AM – 9:00 PM, all seven days
-- Payments: UPI, cards, net banking, cash. Digital invoice after every job.
+- Location: Bangalore, Karnataka, India (service-area business; no walk-in workshop)
+- Payments: UPI, cards, cash. Digital invoice after every job.
 - Guarantee: 7-day workmanship guarantee on work performed.
 
 ## What Ride N Care does
 
-Bike service Bangalore · Bike repair Bangalore · Doorstep bike service Bangalore · Two wheeler service Bangalore · Motorcycle repair Bangalore · Scooter repair Bangalore · Emergency bike repair and breakdown assistance.
+- Bike service in Bangalore: periodic service with 25-point inspection, oil and filter change, brakes, clutch, chain and suspension work.
+- Bike repair in Bangalore: repair for specific complaints, engine work, electrical diagnosis, battery testing and replacement.
+- Scooter and electric two-wheeler service, including EV-specific packages.
+- Emergency bike repair and breakdown assistance at the vehicle's location.
+- Doorstep car service in Bangalore: periodic maintenance, AC service and gas refill, battery testing and replacement, brake pads, discs and fluid, diagnostics and pre-purchase inspection. Dedicated pages: /car-periodic-service, /car-ac-service, /car-battery-service, /car-brake-service.
+- Free pickup and drop is arranged only when a job genuinely needs the workshop; most bike services finish in 60–90 minutes.
+
+## Answers (AI-ready Q&A)
+
+The /answers hub has one page per question, each opening with a direct 40–60-word answer: https://ridencare.co.in/answers
+
+Top answer pages:
+- Bike service cost: https://ridencare.co.in/answers/bike-service-cost-bangalore
+- Car service cost: https://ridencare.co.in/answers/car-service-cost-bangalore
+- How long a bike service takes: https://ridencare.co.in/answers/how-long-bike-service
+- How to book: https://ridencare.co.in/answers/how-to-book
+- What is included: https://ridencare.co.in/answers/what-included-bike-service
+- 7-day guarantee: https://ridencare.co.in/answers/guarantee
+- Coverage: https://ridencare.co.in/answers/areas-covered
+- Doorstep vs garage (bike): https://ridencare.co.in/answers/doorstep-vs-garage-bike
+- Doorstep vs service centre (car): https://ridencare.co.in/answers/doorstep-vs-garage-car
+- Emergency callout cost: https://ridencare.co.in/answers/emergency-cost
+- Monsoon care: https://ridencare.co.in/answers/monsoon-bike-care
+- Electric two-wheeler service: https://ridencare.co.in/answers/ev-service-different
 
 ## Key answers
 
-- Does Ride N Care provide doorstep bike service? Yes — a mechanic comes to your address; a periodic service usually takes 60–90 minutes.
-- How do I book? Call or WhatsApp 08296950339 / 08069409289, or use the booking form at /contact. A written quote is shared before the visit.
-- How fast is a visit? Slots booked before 4:00 PM are usually served the same day; emergency calls are attended within hours in core areas.
-- What does a service include? Engine oil, oil and air filter, spark plug, brakes, chain, clutch and throttle play, battery check, tyres, lights, wash and a 25-point inspection report.
-- Price? Jump Start is ₹399, Running Repair is ₹450, and General Service starts at ₹799 for bikes up to 199cc; parts are quoted separately.
+- Does Ride N Care provide doorstep bike service? Yes — a verified mechanic comes to your address; a periodic service usually takes 60–90 minutes.
+- How do I book? Call 080 6940 9289, WhatsApp 82969 50339, or use the booking form at /contact. A written quote is shared before the visit.
+- What does a bike service include? Engine oil, oil and air filter, spark plug, brakes, chain, clutch and throttle play, battery check, tyres, lights, wash and a 25-point inspection report.
+- What does it cost? Bike General Service starts at ₹799 (up to 199cc; higher CC tiers cost more — ₹2,499 at 801cc+). General Service + Engine Oil starts at ₹1,249. Jump Start is ₹399 and Running Repair is ₹450 across all CC categories. Electric two-wheelers have their own packages starting at ₹999. Car service is quoted per package after inspection — see /cars.
+- Which brands are covered? Bikes: Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Jawa, Yezdi, Triumph, Kawasaki, Benelli, Aprilia, Husqvarna, Harley-Davidson, Ducati and BMW Motorrad. Cars: Maruti Suzuki, Hyundai, Tata, Mahindra, Honda, Toyota and Kia (the confirmed car-brand list; additional brands are pending owner confirmation).
 
 ## Service areas in Bangalore
 
-HSR Layout, Koramangala, Indiranagar, Domlur, Ejipura, BTM Layout, Madiwala, Bommanahalli, Kudlu Gate, Singasandra, Parappana Agrahara, Electronic City, Marathahalli, Bellandur, HAL, Mahadevapura, KR Puram, Whitefield, Brookefield, Varthur, Gunjur, Harlur, Sarjapur Road, Kasavanahalli, Choodasandra, Panathur Road, Kadubeesanahalli, Banashankari, Jayanagar, JP Nagar and nearby localities.
+Ride N Care serves confirmed localities across east and south Bangalore, including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, BTM Layout, Jayanagar, JP Nagar, Electronic City, Bellandur and Sarjapur Road. North/west/central pages exist but coverage there is pending owner confirmation. The full list with per-area details is at /areas.
 
-## Pages
+## Key pages
 
-- [Home](/): Doorstep bike service and repair overview, services, areas, booking
-- [Answers](/answers): Direct answers about the business, services, areas, brands, booking and pricing
-- [Guides](/guides): Original two-wheeler maintenance and troubleshooting reference guides
-- [Bike Service](/bike-service): Periodic bike service in Bangalore
-- [Doorstep Bike Service](/doorstep-bike-service): How doorstep service works and what it covers
-- [Bike Repair](/bike-repair): Complaint-based repair at your address
-- [Emergency Bike Repair](/emergency-bike-repair): Breakdown assistance in Bangalore
-- [Scooter Service](/scooter-service): Automatic scooter and EV service
-- [Pricing](/pricing): Service tiers and starting prices
-- [Service Areas](/areas): Bangalore localities with pincodes
-- [FAQ](/faq): Questions about service, parts, payments, warranty
-- [About](/about): Business background
-- [Contact](/contact): Booking form and phone numbers
-- [Blog](/blog): Bike and car care articles
-
-## Guides
-
-- [Bike Service Guide for Bangalore](/guides/bike-service-guide-bangalore)
-- [Complete Bike Maintenance Guide](/guides/complete-bike-maintenance-guide)
-- [Common Bike Problems and Solutions](/guides/common-bike-problems-and-solutions)
-- [When Should You Service Your Bike?](/guides/when-to-service-your-bike)
-- [Doorstep Bike Service Guide](/guides/doorstep-bike-service-guide)
-- [Motorcycle vs Scooter Maintenance Guide](/guides/motorcycle-vs-scooter-maintenance)
-- [Bike Breakdown Troubleshooting Guide](/guides/bike-breakdown-troubleshooting-guide)
-
-## Official profiles
-
-- Instagram: https://www.instagram.com/ride_n_care_care_in_every_mile
-- Facebook: https://www.facebook.com/share/1DUdsHtp16/
-- YouTube: https://youtube.com/@ridencare_care_with_every_mile
-- Google Business Profile: https://maps.app.goo.gl/PHpPyTNBj9cmPf4w9
-- WhatsApp: https://wa.me/918296950339
+- Home: https://ridencare.co.in/
+- Bike service: https://ridencare.co.in/bikes
+- Car service: https://ridencare.co.in/cars
+- Car periodic service: https://ridencare.co.in/car-periodic-service
+- Car AC service: https://ridencare.co.in/car-ac-service
+- Car battery service: https://ridencare.co.in/car-battery-service
+- Car brake service: https://ridencare.co.in/car-brake-service
+- All services: https://ridencare.co.in/bike-service
+- Service areas: https://ridencare.co.in/areas
+- Answers (AI-ready Q&A): https://ridencare.co.in/answers
+- Guides: https://ridencare.co.in/guides
+- FAQ: https://ridencare.co.in/faq
+- Contact / booking: https://ridencare.co.in/contact

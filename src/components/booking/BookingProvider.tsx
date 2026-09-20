@@ -66,10 +66,17 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-lg overflow-x-hidden overflow-y-auto rounded-2xl p-4 sm:max-h-[92dvh] sm:w-[calc(100vw-1.5rem)] sm:p-6">
           <DialogHeader>
-            <DialogTitle className="text-left text-xl">{title}</DialogTitle>
+            <DialogTitle className="text-left font-display text-xl tracking-tight">{title}</DialogTitle>
           </DialogHeader>
           <div key={`${mode}-${seed}`} className="min-w-0">
-            <Suspense fallback={<div className="py-10 text-center text-sm text-muted-foreground">Opening booking…</div>}>
+            <Suspense fallback={
+              <div className="space-y-3 py-6" aria-busy="true" aria-label="Loading booking form">
+                <div className="skeleton h-10 w-full" />
+                <div className="grid grid-cols-2 gap-3"><div className="skeleton h-24" /><div className="skeleton h-24" /></div>
+                <div className="skeleton h-12 w-full" />
+                <p className="pt-1 text-center text-sm text-muted-foreground">Opening booking…</p>
+              </div>
+            }>
               {mode === "flow" && <BookingFlow initialVehicle={vehicle} initialPackageId={packageId} initialServiceId={serviceId} onDone={close} />}
               {mode === "ai" && <AiBooking />}
               {mode === "quick" && (

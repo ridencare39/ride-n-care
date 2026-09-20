@@ -120,8 +120,8 @@ function SeoMonitor() {
                     <XAxis dataKey="date" tick={{ fontSize: 11 }} />
                     <YAxis tick={{ fontSize: 11 }} />
                     <Tooltip />
-                    <Area type="monotone" dataKey="impressions" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.15} />
-                    <Area type="monotone" dataKey="clicks" stroke="hsl(var(--accent))" fill="hsl(var(--accent))" fillOpacity={0.3} />
+                    <Area type="monotone" dataKey="impressions" stroke="var(--primary)" fill="var(--primary)" fillOpacity={0.15} />
+                    <Area type="monotone" dataKey="clicks" stroke="var(--accent)" fill="var(--accent)" fillOpacity={0.3} />
                   </AreaChart>
                 </ResponsiveContainer>
               ) : (
@@ -143,8 +143,8 @@ function SeoMonitor() {
                     <XAxis dataKey="day" tick={{ fontSize: 11 }} />
                     <YAxis tick={{ fontSize: 11 }} />
                     <Tooltip />
-                    <Line type="monotone" dataKey="submitted_pages" stroke="hsl(var(--primary))" dot={false} />
-                    <Line type="monotone" dataKey="indexed_pages" stroke="hsl(var(--accent))" dot={false} />
+                    <Line type="monotone" dataKey="submitted_pages" stroke="var(--primary)" dot={false} />
+                    <Line type="monotone" dataKey="indexed_pages" stroke="var(--accent)" dot={false} />
                   </LineChart>
                 </ResponsiveContainer>
               ) : (

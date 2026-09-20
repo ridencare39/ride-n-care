@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { AREAS } from "@/lib/areas";
+import { CONFIRMED_AREAS, PRIORITY_AREAS } from "@/lib/areas";
 
 export function AreasSection() {
   return (
@@ -8,10 +8,10 @@ export function AreasSection() {
         <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Service areas in Bangalore</div>
         <h2 className="mt-1 text-2xl md:text-3xl font-bold">Doorstep mechanics near you</h2>
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl">
-          Looking for a bike or car mechanic near you? Pick your locality for pincode-level slots, nearby landmarks and same-day doorstep service.
+          Looking for a bike or car mechanic near you? Pick your locality for pincode-level details, nearby landmarks and doorstep service.
         </p>
         <div className="mt-6 flex flex-wrap gap-2">
-          {AREAS.map((a) => (
+          {PRIORITY_AREAS.filter((a) => a.confirmed !== false).map((a) => (
             <Link
               key={a.slug}
               to="/areas/$slug"
@@ -24,7 +24,7 @@ export function AreasSection() {
           ))}
         </div>
         <Link to="/areas" className="mt-5 inline-block text-primary font-semibold hover:underline">
-          See all Bangalore areas →
+          See all {CONFIRMED_AREAS.length} confirmed Bangalore areas →
         </Link>
       </div>
     </section>

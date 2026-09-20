@@ -37,12 +37,31 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   });
 }
 
+// Every HTML page is rendered per-request. Browser-facing directive forces
+// revalidation (no stale page ever comes from a browser cache); CDN-facing
+// directives allow a short 60 s edge TTL with stale-while-revalidate so a
+// cache rule CAN be enabled later without long staleness windows.
+// scripts/purge-cache.mjs purges the Cloudflare zone right after every deploy
+// (wired into the "deploy" script), so a fresh fetch after a deploy always
+// sees the newest build. Static assets keep their immutable _headers policy.
+function withHtmlCachePolicy(response: Response): Response {
+  if (!response.headers.get("content-type")?.includes("text/html")) return response;
+  const headers = new Headers(response.headers);
+  headers.set("Cache-Control", "public, max-age=0, must-revalidate, s-maxage=60, stale-while-revalidate=300");
+  headers.set("CDN-Cache-Control", "s-maxage=60, stale-while-revalidate=300");
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withHtmlCachePolicy(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

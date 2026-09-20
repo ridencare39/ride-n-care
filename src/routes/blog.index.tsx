@@ -2,26 +2,22 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { CATEGORIES, type Category } from "@/lib/blog";
 import { listPublishedPosts } from "@/lib/blog.functions";
-import { Newsletter } from "@/components/Newsletter";
-import { SITE_URL, OG_IMAGE } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
+import { pageHead } from "@/lib/head";
 
 export const Route = createFileRoute("/blog/")({
   loader: async () => await listPublishedPosts(),
   head: ({ loaderData }) => ({
-    meta: [
-      { title: "Blog — Ride N Care | Bike & Car Care Tips" },
-      { name: "description", content: "Expert tips on bike and car maintenance, doorstep service guides, and Bangalore-specific car care advice from Ride N Care mechanics." },
+    ...pageHead({
+      title: "Blog — Ride N Care | Bike & Car Care Tips",
+      description:
+        "Expert tips on bike and car maintenance, doorstep service guides, and Bangalore-specific car care advice from Ride N Care mechanics.",
+      path: "/blog",
+      extraMeta: [
       { property: "og:title", content: "Ride N Care Blog — Bike & Car Care Tips" },
       { property: "og:description", content: "Maintenance tips, doorstep service guides, and Bangalore car-care advice." },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: `${SITE_URL}/blog` },
-      { property: "og:image", content: OG_IMAGE },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: OG_IMAGE },
-      { name: "twitter:title", content: "Ride N Care Blog — Bike & Car Care Tips" },
-      { name: "twitter:description", content: "Maintenance tips, doorstep service guides, and Bangalore car-care advice." },
     ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/blog` }],
+    }),
     scripts: [
       {
         type: "application/ld+json",
@@ -34,7 +30,8 @@ export const Route = createFileRoute("/blog/")({
             "@type": "BlogPosting",
             headline: p.title,
             datePublished: p.date,
-            author: { "@type": "Organization", name: "Ride N Care" },
+            author: { "@id": `${SITE_URL}/#organization` },
+            publisher: { "@id": `${SITE_URL}/#organization` },
             url: `${SITE_URL}/blog/${p.slug}`,
           })),
         }),
@@ -112,11 +109,6 @@ function Blog() {
         {filtered.length === 0 && (
           <p className="text-muted-foreground">No posts in this category yet.</p>
         )}
-      </div>
-
-      {/* Newsletter */}
-      <div className="mt-16">
-        <Newsletter />
       </div>
 
       {/* Submit to Google */}

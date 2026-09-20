@@ -260,7 +260,7 @@ export const GUIDES: Guide[] = [
           "Repeated stalling in traffic",
         ],
         p: [
-          "In Bangalore, Ride N Care attends emergency bike repair and breakdown calls between 8:00 AM and 9:00 PM on 08296950339.",
+          "In Bangalore, Ride N Care attends emergency bike repair and breakdown calls on 080 6940 9289; WhatsApp 82969 50339 also works for photos and location sharing.",
         ],
       },
     ],
@@ -551,7 +551,7 @@ export const GUIDES: Guide[] = [
           "Whether you smell fuel or see fluid on the road",
         ],
         p: [
-          "Ride N Care attends emergency bike repair and breakdown assistance calls in Bangalore from 8:00 AM to 9:00 PM on 08296950339 or 08069409289.",
+          "Ride N Care attends emergency bike repair and breakdown assistance calls in Bangalore on 080 6940 9289 (call) or 82969 50339 (WhatsApp).",
         ],
       },
       {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { isValidIndianMobile, normalizeIndianMobile, sendBookingToWhatsApp } from "@/lib/booking";
+import { trackCtc } from "@/lib/analytics";
 
 /** Mobile-number popup: number in, booking straight to WhatsApp. */
 export function QuickWhatsAppBooking({ onFullBooking }: { onFullBooking: () => void }) {
@@ -13,6 +14,7 @@ export function QuickWhatsAppBooking({ onFullBooking }: { onFullBooking: () => v
       return;
     }
     setError(null);
+    trackCtc("booking_form_submit", { vehicle_type: "unknown" });
     sendBookingToWhatsApp({
       mobile: `+91 ${normalizeIndianMobile(mobile)}`,
       whatsapp: `+91 ${normalizeIndianMobile(mobile)}`,

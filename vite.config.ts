@@ -9,6 +9,12 @@ import { mcpPlugin } from "@lovable.dev/mcp-js/stacks/tanstack/vite";
 
 export default defineConfig({
   plugins: [mcpPlugin()],
+  vite: {
+    // `cloudflare:workers` is a runtime-only module (optional metrics lookup in
+    // @lovable.dev/mcp-js with a process.env fallback). Keep it external so
+    // non-Cloudflare presets (e.g. vercel) can bundle the server cleanly.
+    build: { rollupOptions: { external: [/^cloudflare:/] } },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

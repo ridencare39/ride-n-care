@@ -8,7 +8,7 @@ import { bikeCatalogBrands, bikeCatalogModels } from "@/lib/vehicle-catalog";
 
 /** Edit this to change where every booking is sent. */
 export const WHATSAPP_NUMBER = "918296950339";
-export const CALL_NUMBER = "+918296950339";
+export const CALL_NUMBER = "+918069409289";
 
 export type VehicleType = "bike" | "car";
 export type PowerType = "non-electric" | "electric";
@@ -76,6 +76,15 @@ export const PREFERRED_TIME_SLOTS = [
   "06:00 – 08:00 PM",
 ];
 
+/** Details for a vehicle the customer entered manually (not found in catalog). */
+export interface ManualVehicleInfo {
+  brand: string;
+  model: string;
+  variant?: string;
+  vehicleType?: "Petrol" | "Electric";
+  notes?: string;
+}
+
 export interface Booking {
   bookingId?: string;
   vehicle?: VehicleType;
@@ -85,6 +94,7 @@ export interface Booking {
   /** CC bucket (bike) or fuel/variant (car) */
   variant?: string;
   engineCc?: number | null;
+  manualVehicle?: ManualVehicleInfo;
   packageId?: string;
   packageName?: string;
   mrp?: number | null;
@@ -143,7 +153,8 @@ export function buildBookingMessage(b: Booking): string {
     b.power && `Power: ${b.power === "electric" ? "Electric" : "Non-Electric"}`,
     b.brand && `Brand: ${b.brand}`,
     b.model && `Model: ${b.model}`,
-    b.vehicle === "bike" && b.engineCc ? `CC: ${b.engineCc}cc` : b.variant && `${b.vehicle === "car" ? "Variant / Fuel" : "CC Category"}: ${b.variant}`,
+    b.vehicle === "bike" && b.engineCc ? `Engine CC: ${b.engineCc}cc` : false,
+    b.variant && `${b.vehicle === "car" ? "Variant / Fuel" : "CC Category"}: ${b.variant}`,
     b.packageName && `Package: ${b.packageName}`,
     b.mrp ? `MRP: ${formatPrice(b.mrp)}` : false,
     b.price !== undefined && `Offer Price: ${formatPrice(b.price ?? null)}`,
@@ -160,24 +171,147 @@ export function buildBookingMessage(b: Booking): string {
     b.paymentStatus && `Payment Status: ${b.paymentStatus.replaceAll("_", " ")}`,
     b.status && `Request Status: Awaiting Ride N Care confirmation`,
     b.issue && `Additional Issue: ${b.issue}`,
+    b.manualVehicle && `Vehicle Details (manually entered): ${[b.manualVehicle.brand, b.manualVehicle.model, b.manualVehicle.variant].filter(Boolean).join(" ")}${b.manualVehicle.vehicleType ? ` (${b.manualVehicle.vehicleType})` : ""}${b.manualVehicle.notes ? ` — ${b.manualVehicle.notes}` : ""}`,
     b.includes?.length ? `\nIncludes:\n${b.includes.map((i) => `• ${i}`).join("\n")}` : false,
   ];
   return lines.filter((l): l is string => typeof l === "string").join("\n").replace(/\n{3,}/g, "\n\n").trim();
 }
 
+/** Every required detail, in plain language, so the customer knows what to fix. */
+export function bookingIssues(b: Booking): string[] {
+  const issues: string[] = [];
+  if (!b.vehicle) issues.push("Choose whether you need bike or car service.");
+  if (b.vehicle === "bike" && !b.power) issues.push("Choose your bike type (electric or non-electric).");
+  if (!b.brand) issues.push("Select your vehicle brand.");
+  if (!b.model) issues.push("Select your vehicle model.");
+  if (b.vehicle === "car" && !b.variant) issues.push("Choose your car's fuel type.");
+  if (b.vehicle === "bike" && b.power === "non-electric" && !b.engineCc) issues.push("Enter your bike's engine CC.");
+  if (!b.packageId || !b.packageName) issues.push("Choose a service package.");
+  if (!b.address?.trim()) issues.push("Enter the service address or share your current location.");
+  if (!b.name?.trim() || b.name.trim().length < 2) issues.push("Enter your full name.");
+  if (!isValidIndianMobile(b.mobile ?? "")) issues.push("Enter a valid 10-digit mobile number.");
+  if (!isValidIndianMobile(b.whatsapp ?? "")) issues.push("Enter a valid 10-digit WhatsApp number.");
+  if (!b.date) issues.push("Choose your preferred service date.");
+  if (!b.time) issues.push("Choose a preferred time slot.");
+  if (!b.paymentMethod) issues.push("Choose a payment option.");
+  return issues;
+}
+
+/**
+ * Fully URL-encoded WhatsApp deep link.
+ * `encodeURIComponent` escapes spaces, newlines, `&`, `#`, `+` and emoji, so the
+ * message text can never break the query string.
+ */
 export function whatsappBookingUrl(b: Booking): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildBookingMessage(b))}`;
 }
 
+/**
+ * Alternate WhatsApp link (`api.whatsapp.com`) for the same encoded message.
+ * Offered as a fallback when `wa.me` cannot open on a device or browser.
+ */
+export function whatsappFallbackUrl(b: Booking): string {
+  return `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(buildBookingMessage(b))}`;
+}
+
+/**
+ * Opens a blank tab while the click is still being handled, so mobile browsers
+ * keep the user gesture. Call this BEFORE any await, then hand the window to
+ * `openWhatsAppUrl` once the message is ready.
+ */
+export function reserveWhatsAppWindow(): Window | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const win = window.open("about:blank", "_blank");
+    if (win) {
+      try { win.opener = null; } catch { /* cross-origin/noopener — safe to ignore */ }
+    }
+    return win;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Navigates to WhatsApp in the reserved tab, or in the current tab when no tab
+ * could be reserved.
+ *
+ * Pass `{ redirectIfBlocked: false }` when the caller shows its own manual
+ * fallback (link, copy-details, call) instead of navigating away from the page;
+ * the return value is then `"blocked"` so the UI can say what happened.
+ */
+export function openWhatsAppUrl(
+  url: string,
+  reserved?: Window | null,
+  options?: { redirectIfBlocked?: boolean },
+): "window" | "redirect" | "blocked" {
+  if (typeof window === "undefined") return "blocked";
+  if (reserved && !reserved.closed) {
+    try {
+      reserved.location.href = url;
+      return "window";
+    } catch { /* fall through to a same-tab navigation */ }
+  }
+  if (options?.redirectIfBlocked === false) return "blocked";
+  window.location.href = url;
+  return "redirect";
+}
+
 /** THE reusable send function — every booking surface calls this. */
 export function sendBookingToWhatsApp(b: Booking): boolean {
-  const url = whatsappBookingUrl(b);
-  if (typeof window === "undefined") return false;
-  const win = window.open(url, "_blank", "noopener");
-  if (!win) {
-    window.location.href = url;
+  return openWhatsAppUrl(whatsappBookingUrl(b), reserveWhatsAppWindow()) === "window";
+}
+
+/** Keeps a slow or unreachable backend from blocking the WhatsApp handoff. */
+export async function withTimeout<T>(promise: Promise<T>, ms: number, label = "Request"): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`${label} timed out.`)), ms);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
   }
-  return true;
+}
+
+const DRAFT_KEY = "rnc.booking.draft.v1";
+
+export interface BookingDraft {
+  booking: Booking;
+  step: string;
+}
+
+/** Restores the customer's in-progress booking when they return to the site. */
+export function loadBookingDraft(): BookingDraft | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return null;
+    const draft = parsed as Partial<BookingDraft>;
+    if (!draft.booking || typeof draft.booking !== "object" || typeof draft.step !== "string") return null;
+    return { booking: draft.booking, step: draft.step };
+  } catch {
+    return null;
+  }
+}
+
+export function saveBookingDraft(booking: Booking, step: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ booking, step } satisfies BookingDraft));
+  } catch { /* private mode or storage full — booking still works */ }
+}
+
+export function clearBookingDraft(): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.removeItem(DRAFT_KEY);
+  } catch { /* ignore */ }
 }
 
 export async function copyBookingDetails(b: Booking): Promise<boolean> {

@@ -61,13 +61,14 @@ export const BIKE_CC_TIERS: BikeCcTier[] = [
   { id: "801-plus", label: "801cc and above", minCc: 801, maxCc: null },
 ];
 
+/** Exact prices per CC tier. Single source of truth — never hardcode prices elsewhere. */
 const PRICE_MATRIX: Record<string, Record<BikeServiceId, number>> = {
   "upto-199": { "general-service": 799, "general-service-engine-oil": 1249, "jump-start": 399, "running-repair": 450 },
-  "200-249": { "general-service": 899, "general-service-engine-oil": 1549, "jump-start": 399, "running-repair": 450 },
+  "200-249": { "general-service": 999, "general-service-engine-oil": 1449, "jump-start": 399, "running-repair": 450 },
   "250-400": { "general-service": 1199, "general-service-engine-oil": 2449, "jump-start": 399, "running-repair": 450 },
-  "401-500": { "general-service": 1399, "general-service-engine-oil": 3849, "jump-start": 399, "running-repair": 450 },
-  "501-800": { "general-service": 1899, "general-service-engine-oil": 4149, "jump-start": 399, "running-repair": 450 },
-  "801-plus": { "general-service": 2499, "general-service-engine-oil": 5449, "jump-start": 399, "running-repair": 450 },
+  "401-500": { "general-service": 1399, "general-service-engine-oil": 3949, "jump-start": 399, "running-repair": 450 },
+  "501-800": { "general-service": 1799, "general-service-engine-oil": 4499, "jump-start": 399, "running-repair": 450 },
+  "801-plus": { "general-service": 2499, "general-service-engine-oil": 5999, "jump-start": 399, "running-repair": 450 },
 };
 
 export const BIKE_SERVICES: Array<{ id: BikeServiceId; name: string; duration: string; includes: string[] }> = [
@@ -163,10 +164,20 @@ export const CAR_PACKAGES: CarPackage[] = [
   { id: "denting-painting", name: "Denting & Painting", desc: "Panel-wise, pick-up and drop", price: null, duration: "Depends on panels", includes: ["Panel Inspection", "Dent Removal", "Paint Match & Finish", "Free Pick and Drop (if needed)"] },
 ];
 
+/**
+ * EV packages — identical three packages for EVERY electric two-wheeler.
+ * Flat prices (no CC logic). Never show the petrol engine-oil package to EVs.
+ */
 export const ELECTRIC_BIKE_PACKAGES: CarPackage[] = [
-  { id: "electric-general-service", name: "Electric Bike General Service", desc: "Inspection and preventive maintenance", price: null, duration: "60–90 mins", includes: ["Battery Health Check", "Charging Port Inspection", "Brake Inspection & Adjustment", "Tyre & Wheel Check", "Electrical Check-up", "Controls & Lights Check", "Dry Wash", "Diagnostic Review"] },
-  { id: "electric-running-repair", name: "Electric Bike Running Repair", desc: "Diagnosis and minor repair", price: null, duration: "Depends on inspection", includes: ["Initial Fault Inspection", "Electrical Diagnostic Check", "Minor Running Repair Labour", "Safety Check After Repair", "Additional parts charged only after approval"] },
+  { id: "electric-general-service", name: "EV General Service", desc: "Electric Vehicle Service — inspection & preventive maintenance", price: 999, mrp: null, duration: "60–90 mins", includes: ["Battery Health Check", "Charging Port Inspection", "Brake Inspection & Adjustment", "Tyre & Wheel Check", "Electrical Check-up", "Controls & Lights Check", "Dry Wash", "Diagnostic Review"] },
+  { id: "electric-running-repair", name: "EV Running Repair", desc: "Electric Vehicle Service — diagnosis & minor repair; extra work only after your approval", price: 450, mrp: null, duration: "Depends on inspection", includes: ["Initial Fault Inspection", "Electrical Diagnostic Check", "Minor Running Repair Labour", "Safety Check After Repair", "Additional parts charged only after approval"] },
+  { id: "electric-jump-start", name: "EV Jump Start", desc: "Electric Vehicle Service — safe boost & charging check", price: 399, mrp: null, duration: "20–40 mins", includes: ["Battery Condition Check", "Safe Jump Start", "Charging System Basic Check"] },
 ];
+
+/** True when a package belongs to the fixed-price EV catalogue. */
+export function isElectricPackage(packageId?: string): boolean {
+  return ELECTRIC_BIKE_PACKAGES.some((item) => item.id === packageId);
+}
 
 export function getServicePackage(packageId?: string): BikePackage | CarPackage | undefined {
   return getBikePackage(packageId) ?? ELECTRIC_BIKE_PACKAGES.find((item) => item.id === packageId) ?? CAR_PACKAGES.find((item) => item.id === packageId);

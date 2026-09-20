@@ -2,6 +2,10 @@
  * Ride N Care bike-service catalogue.
  * Drives /bike-service, /doorstep-bike-service, /bike-repair, ... landing pages,
  * their local area pages, sitemap entries and internal linking.
+ *
+ * Content rules (SEO program Part 5): one intent per page, answer-first summary,
+ * only confirmed prices (from src/lib/pricing.ts), honest limits, no unverified
+ * claims (no same-day promises, response-time minutes, customer counts or ratings).
  */
 
 export interface ServiceDef {
@@ -9,22 +13,51 @@ export interface ServiceDef {
   /** Nav / card label */
   name: string;
   h1: string;
+  /** One-line supporting subheading under the H1. */
+  subheading: string;
   title: string;
   description: string;
-  /** Short intro paragraph shown under the H1 */
+  /** Answer-first summary (40–60 words): what, where, how long, how it works. */
+  summary: string;
+  /** Short intro paragraph shown in area-page hero. */
   intro: string;
-  /** Longer explanation of the service */
+  /** Longer explanation of the service. */
   detail: string[];
   includes: string[];
   benefits: [string, string][];
+  /** One-paragraph pricing explanation; the renderer appends the written-quote promise. */
+  pricing: string;
+  /** What genuinely cannot be done at the doorstep. */
+  limits: string[];
   steps: [string, string][];
   faqs: [string, string][];
+  /** Guide slugs (src/lib/guides.ts) for related-guide internal links. */
+  relatedGuides: string[];
+  /** ISO date of the last content review, shown on the page. */
+  reviewed: string;
   /** Whether we generate /<slug>/<area> local landing pages */
   local: boolean;
+  /** Lowest confirmed package price for this service (must match a visible price). */
   priceFrom?: number;
   serviceType: string;
   related: string[];
 }
+
+/** Shared trust points — one sentence each on what the promise means in practice. */
+export const TRUST_POINTS: [string, string][] = [
+  ["Background-verified mechanics", "Every mechanic is KYC-checked, arrives uniformed and shows an ID you can verify before handing over the bike."],
+  ["OEM-grade parts", "Spares are OEM or OEM-grade, shown to you sealed before fitting, and listed with part numbers on the invoice."],
+  ["Written quote before work", "You approve an itemised quote in writing before any spanner is lifted — and anything found later needs your approval too."],
+  ["Digital invoice", "The invoice reaches your WhatsApp as soon as the job closes, with parts and labour listed separately."],
+  ["7-day workmanship guarantee", "If anything we serviced or repaired plays up within seven days, we come back and put it right at no charge."],
+];
+
+/** Bike brands confirmed by the owner — used on every bike money page. */
+export const BIKE_BRANDS = [
+  "Honda", "Hero", "TVS", "Bajaj", "Yamaha", "Suzuki", "Royal Enfield", "KTM",
+  "Jawa", "Yezdi", "Triumph", "Kawasaki", "Benelli", "Aprilia", "Husqvarna",
+  "Harley-Davidson", "Ducati", "BMW Motorrad",
+];
 
 const BOOK_STEPS: [string, string][] = [
   ["1. Tell us your bike", "Share the make, model and what feels wrong on WhatsApp or the booking form. Takes under a minute."],
@@ -33,46 +66,69 @@ const BOOK_STEPS: [string, string][] = [
   ["4. Pay after the test ride", "Inspect the work, take a short test ride, then pay by UPI, card or cash. Invoice on WhatsApp."],
 ];
 
+const DISPATCH_STEPS: [string, string][] = [
+  ["1. Call or WhatsApp", "Share your live location and what happened. Call 080 6940 9289 or WhatsApp 82969 50339."],
+  ["2. Get the charge upfront", "The callout and likely repair cost are confirmed on the call before anyone rides out."],
+  ["3. Mechanic dispatched", "The nearest available mechanic rides to you with a jump pack, spares and a puncture kit."],
+  ["4. Ride away or be recovered", "Fixed on the spot where possible, or transported to our workshop with the estimate shared first."],
+];
+
 export const SERVICES: ServiceDef[] = [
   {
     slug: "bike-service",
     name: "Bike Service",
-    h1: "Bike Service in Bangalore — At Your Doorstep",
-    title: "Bike Service Near Me in Bangalore | Ride N Care",
+    h1: "Bike Service at Home in Bangalore",
+    subheading: "A certified two-wheeler mechanic comes to your parking spot with the full workshop — oil, filters, brakes, chain and a written quote before any work starts.",
+    title: "Bike Service at Home in Bangalore | Ride N Care",
     description:
-      "Book bike service in Bangalore at your doorstep. Certified mechanics, OEM-grade parts, upfront pricing and a 7-day workmanship guarantee. Call 08296950339.",
+      "Full bike service at your home or office anywhere in Bangalore — engine oil, filters, brakes, chain and inspection. Written quote first. Call 080 6940 9289.",
+    summary:
+      "Ride N Care sends a background-verified mechanic to your home or office anywhere in Bangalore for a full bike service at home. Book a slot, approve a written quote, and the job — engine oil, filters, brakes, chain and a multi-point inspection — is finished in 60–90 minutes while you work or rest.",
     intro:
       "Ride N Care services two-wheelers at your home or office anywhere in Bangalore. You pick the slot, we bring the workshop — engine oil, filters, brakes, chain and a full inspection, finished while you get on with your day.",
     detail: [
-      "A bike service is not only an oil change. Bangalore riding is stop-start, dusty and monsoon-heavy, which wears down the air filter, chain and brake pads far faster than the manual assumes. Our periodic bike service works through a 25-point checklist so small problems are caught while they are still cheap to fix.",
-      "Every job starts with a written quote. If we find something beyond the package — a worn sprocket, a leaking fork seal, a battery that will not hold charge — we photograph it, explain it and only proceed once you approve.",
+      "A bike service is not only an oil change. Bangalore riding is stop-start, dusty and monsoon-heavy, and a Silk Board crawl or a waterlogged ORR exit wears the air filter, chain and brake pads far faster than the manual assumes. That is why the service follows a fixed checklist: everything due gets done, and anything worn gets photographed and shown to you.",
+      "You never leave the building. The mechanic works in your parking bay, shows you every part that comes out, and hands over the invoice on WhatsApp before you pay. If your bike is still inside its free-service period at the company workshop, we will honestly tell you to use that first.",
     ],
     includes: [
-      "Engine oil replacement with OEM-grade oil",
-      "Oil filter and air filter clean or replacement",
-      "Spark plug clean and gap check",
-      "Front and rear brake inspection and adjustment",
-      "Chain cleaning, lubrication and slack setting",
-      "Clutch and throttle play adjustment",
-      "Battery terminal and charging-system check",
-      "Tyre pressure, tread and wheel-alignment check",
-      "Headlight, indicator and horn check",
-      "Exterior wash and dry finish",
+      "Engine oil check with OEM-grade top-up or replacement",
+      "Air filter cleaning and oil filter check",
+      "Spark plug cleaning and gap check",
+      "Front and rear brake service and adjustment",
+      "Chain tension check, cleaning and lubrication",
+      "Clutch and cables-and-levers adjustment",
+      "Battery voltage check",
+      "Electrical check-up — lights, horn, indicators",
+      "Oil leakage check",
+      "Greasing and lubrication of pivots",
+      "Dry wash and finish",
     ],
     benefits: [
-      ["No garage queue", "No riding to a service centre and waiting half a day. The mechanic comes to your parking spot."],
-      ["Watch the work", "You can see every part that goes in and every part that comes out. Nothing is swapped out of sight."],
-      ["Transparent pricing", "Package rates published on the site, parts billed at MRP, no surprise labour charge at the end."],
-      ["7-day guarantee", "If a serviced item plays up within a week, we come back and fix it free."],
+      ["No garage queue", "No riding across town and losing half a day. The workshop comes to your parking spot."],
+      ["Watch every step", "You see each part go in and each part come out. Nothing is swapped out of sight."],
+      ["Published package rates", "Prices by engine size are on our bikes page; parts bill at MRP with the invoice listing everything."],
+      ["7-day workmanship guarantee", "If a serviced item plays up within a week, we return and set it right free."],
+    ],
+    pricing:
+      "General Service starts at ₹799 for bikes up to 199cc and scales with engine size — ₹999 for 200–249cc, ₹1,199 for 250–400cc, ₹1,399 for 401–500cc, ₹1,799 for 501–800cc and ₹2,499 for 801cc and above. General Service with engine oil replacement starts at ₹1,249. Jump Start is ₹399 and Running Repair is ₹450 across all engine sizes; consumables and extra parts are billed only after your approval.",
+    limits: [
+      "Engine rebuilds and crankcase work — these need a workshop bench, so we pick the bike up free and share the estimate first.",
+      "Wheel truing and rim repair — a truing stand is workshop equipment.",
+      "Paint and panel work — not suitable for open-air doorstep work.",
+      "Valve-clearance jobs on some models need special shims or tools; if yours does, we tell you upfront.",
     ],
     steps: BOOK_STEPS,
     faqs: [
-      ["How often should I get my bike serviced in Bangalore?", "Every 2,500–3,500 km or roughly every three months for a commuter bike. Bangalore traffic means more idling and clutch use than highway riding, so err on the shorter interval."],
-      ["How long does a doorstep bike service take?", "Most periodic services finish in 45–90 minutes depending on engine size and how much cleaning the chain and filters need."],
-      ["What does bike service cost?", "General Service starts at ₹799 for bikes up to 199cc. Jump Start is ₹399 and Running Repair is ₹450 across all CC categories. Consumables and extra parts are billed only after approval."],
-      ["Do you use genuine spare parts?", "Yes — OEM or OEM-grade parts only, listed on the invoice so you can check part numbers."],
-      ["Can you service my bike at an apartment basement?", "Yes. We work in apartment parking bays across Bangalore and carry a drip tray so nothing stains the floor."],
+      ["What does a bike service at home cost in Bangalore?", "General Service starts at ₹799 up to 199cc, ₹999 up to 249cc and rises with engine size to ₹2,499 for 801cc+. With engine oil replacement it starts at ₹1,249. The exact amount is confirmed in writing before work starts."],
+      ["How long does it take?", "Most general services finish in 60–90 minutes at your address; with engine oil replacement allow up to two hours."],
+      ["What do I need to provide?", "Just parking space to work in and, ideally, a plug point. You do not need to hand over documents — the mechanic records the odometer and registration number from the bike itself."],
+      ["Which parts do you use?", "OEM or OEM-grade only. Oil is shown to you sealed, and every part fitted appears with its number on the digital invoice."],
+      ["What if you find extra work?", "The mechanic photographs the issue, explains it and quotes it separately. Nothing is done without your approval."],
+      ["Is there a warranty?", "Yes — a 7-day workmanship guarantee on the service, plus the manufacturer warranty on any part fitted."],
+      ["How do I pay and can I cancel?", "UPI, card or cash after a test ride. Cancel or reschedule free by WhatsApp any time before the mechanic is dispatched."],
     ],
+    relatedGuides: ["when-to-service-your-bike", "bike-service-guide-bangalore"],
+    reviewed: "2026-09-19",
     local: true,
     priceFrom: 799,
     serviceType: "Bike Service",
@@ -82,14 +138,17 @@ export const SERVICES: ServiceDef[] = [
     slug: "doorstep-bike-service",
     name: "Doorstep Bike Service",
     h1: "Doorstep Bike Service in Bangalore",
-    title: "Doorstep Bike Service Near Me, Bangalore | Ride N Care",
+    subheading: "The entire service happens where your bike is parked — no drop-off, no pickup fee, no losing a Saturday to a service-centre queue.",
+    title: "Doorstep Bike Service in Bangalore | Ride N Care",
     description:
-      "Doorstep bike service in Bangalore — mechanic at your home or office, OEM parts, live updates and cashless payment. Same-day slots. Call 08296950339.",
+      "A verified mechanic brings the workshop to your parking spot — periodic service, repairs and free pickup when a workshop is needed. Call 080 6940 9289.",
+    summary:
+      "Doorstep bike service in Bangalore means a Ride N Care mechanic comes to your home or office with tools, oil, filters and spares, and does the full service where the bike stands. You get a written quote first, photo updates during the job, and free pickup-and-drop if a workshop is genuinely needed.",
     intro:
       "Doorstep bike service means the entire service happens where your bike is parked. No drop-off, no pickup charge, no losing a Saturday. Book a slot and a Ride N Care mechanic reaches you with everything needed.",
     detail: [
-      "Our doorstep vans carry engine oil for every popular Indian and imported model, filters, brake pads, chain lube, a portable compressor and a diagnostic kit for fuel-injected bikes. That covers the vast majority of periodic services and light repairs on the spot.",
-      "If a job genuinely needs a workshop lift — a full engine rebuild, accident damage, frame work — we tell you upfront, arrange free pickup and share the workshop estimate before starting.",
+      "Our vans carry engine oil for every popular Indian and imported model, filters, brake pads, chain lube, a portable compressor and a diagnostic kit for fuel-injected bikes. That covers the vast majority of periodic services and light repairs on the spot — from an Activa in Jayanagar to a Classic 350 in Whitefield.",
+      "If a job genuinely needs a workshop lift — a full engine rebuild, accident damage, frame work — we say so before starting, arrange free pickup and share the workshop estimate for approval. You are never charged a doorstep premium: package prices match our workshop rates.",
     ],
     includes: [
       "Mechanic, tools and consumables brought to your address",
@@ -101,17 +160,29 @@ export const SERVICES: ServiceDef[] = [
     ],
     benefits: [
       ["Zero travel time", "Book between meetings; you never leave your building."],
-      ["Same-day slots", "Slots confirmed before 4 PM are usually completed the same day."],
+      ["Slot you choose", "Pick a morning or evening window that fits your day — we confirm the mechanic and time on WhatsApp before dispatch."],
       ["Complete visibility", "The work happens in front of you instead of behind a workshop shutter."],
-      ["City-wide coverage", "From HSR Layout and Koramangala to Whitefield and Electronic City."],
+      ["City-wide coverage", "From HSR Layout and Koramangala to Whitefield and Electronic City — the mechanic is assigned from the unit nearest you."],
+    ],
+    pricing:
+      "General Service starts at ₹799 for bikes up to 199cc (₹1,249 with engine oil replacement) and scales by engine size; Jump Start is ₹399 and Running Repair ₹450 across all sizes. There is no pickup-and-drop fee and no doorstep surcharge — you pay the same package price as the workshop.",
+    limits: [
+      "Engine rebuilds, accident repair and frame work — moved to the workshop with free pickup and a written estimate.",
+      "Wheel truing, rim repair and painting — workshop-only jobs.",
+      "Very large superbike suspension rebuilds — some need a bench and press.",
     ],
     steps: BOOK_STEPS,
     faqs: [
-      ["Is doorstep bike service more expensive than a garage?", "No. Package prices are the same as our workshop rates and there is no pickup-and-drop fee, so most riders pay less overall."],
-      ["What space do you need?", "About two parking bays' worth of room and, ideally, a plug point. Apartment basements, gated-community parking and roadside kerbs all work."],
-      ["Do you work on weekends?", "Yes, seven days a week between 8 AM and 9 PM."],
-      ["Which areas of Bangalore do you cover for doorstep service?", "All major localities across South and East Bangalore plus central, north and west neighbourhoods — see the area list on this page."],
+      ["Is doorstep bike service more expensive than a garage?", "No. Package prices are the same as our workshop rates and there is no pickup-and-drop fee, so most riders pay less overall once travel and waiting time are counted."],
+      ["What space do you need?", "About two parking bays' worth of room and, ideally, a plug point. Apartment basements, gated-community parking and roadside kerbs all work — we bring a drip tray."],
+      ["Which areas of Bangalore do you cover?", "Forty localities across south, east, central, north and west Bangalore — the full list with pincodes is on our areas page."],
+      ["How do I know the mechanic is genuine?", "Every mechanic is background-verified and uniformed, and shows an ID at the gate. You also get the mechanic's name and photo on WhatsApp before arrival."],
+      ["Do you work on weekends?", "Yes, every day. Evening slots fill first, so booking a day ahead gets the widest choice of windows."],
+      ["What happens if the bike needs workshop work?", "We tell you before touching anything, transport the bike free and share the workshop estimate for your approval."],
+      ["Can I reschedule?", "Yes — free reschedule or cancellation on WhatsApp any time before the mechanic is dispatched."],
     ],
+    relatedGuides: ["doorstep-bike-service-guide", "when-to-service-your-bike"],
+    reviewed: "2026-09-19",
     local: true,
     priceFrom: 799,
     serviceType: "Doorstep Bike Service",
@@ -120,15 +191,18 @@ export const SERVICES: ServiceDef[] = [
   {
     slug: "bike-repair",
     name: "Bike Repair",
-    h1: "Bike Repair in Bangalore — Diagnose, Quote, Fix",
-    title: "Bike Repair Near Me in Bangalore | Ride N Care",
+    h1: "Bike Repair at Home in Bangalore",
+    subheading: "Diagnosis first, quote second, repair third — a mechanic traces the actual fault with proper instruments instead of swapping parts by guesswork.",
+    title: "Bike Repair at Home in Bangalore | Ride N Care",
     description:
-      "Bike repair in Bangalore for engine, brake, clutch, electrical and starting problems. Free diagnosis, written quote, OEM parts. Call 08296950339.",
+      "Bike repair at your doorstep in Bangalore. Free diagnosis with a written finding, OEM parts, and a 7-day workmanship guarantee. Call 080 6940 9289.",
+    summary:
+      "Something specific gone wrong? Ride N Care repairs bikes at home in Bangalore — a mechanic diagnoses the fault with a compression tester, multimeter and FI scanner, explains the finding, and fixes it at your parking spot wherever possible. Diagnosis is free; you pay only for the repair you approve.",
     intro:
       "Something specific gone wrong? Ride N Care mechanics diagnose the fault first, quote the repair in writing, and fix it at your doorstep wherever possible.",
     detail: [
-      "Repairs are different from a periodic service: the value is in the diagnosis. Our mechanics carry a compression tester, multimeter and OBD/FI scanner so a misfire or a dead start is traced to the actual cause instead of replacing parts by guesswork.",
-      "You always see the failed component. Old parts stay with you if you want them, and the invoice lists labour and parts separately.",
+      "Repairs are different from a periodic service: the value is in the diagnosis. A misfire, a dead start or a brake that binds can have three different causes, and guessing means paying for parts you did not need. Our mechanics carry a compression tester, multimeter and OBD/FI scanner, so the finding is measured, not assumed.",
+      "You always see the failed component and the old part stays with you if you want it. The invoice lists labour and parts separately, and most repairs — batteries, self-starts, brakes, chains, clutches, punctures, carburettor cleaning — are completed where the bike is parked.",
     ],
     includes: [
       "Free fault diagnosis with a written finding",
@@ -140,19 +214,32 @@ export const SERVICES: ServiceDef[] = [
       "Post-repair road test with you present",
     ],
     benefits: [
-      ["Diagnosis before spend", "You approve a specific repair, not a vague estimate."],
+      ["Diagnosis before spend", "You approve a specific repair with a measured finding, not a vague estimate."],
       ["Old parts returned", "Proof that the replacement actually happened."],
-      ["Guaranteed workmanship", "7-day guarantee on the repaired item."],
-      ["Doorstep first", "Most repairs are completed where the bike is parked."],
+      ["Doorstep first", "Most repairs are completed where the bike is parked, the same visit."],
+      ["Guaranteed workmanship", "A 7-day workmanship guarantee on the repaired item."],
+    ],
+    pricing:
+      "Running Repair is ₹450 across all engine sizes, which covers the initial fault inspection, minor repair labour and a safety check afterwards. Parts are quoted at MRP before fitting, and bigger jobs get an itemised written estimate. Diagnosis itself is free — you pay only if you approve the repair.",
+    limits: [
+      "Engine rebuilds, crankcase and gearbox strip-downs — workshop bench jobs with free pickup.",
+      "Accident and frame damage — assessed on site, repaired at the workshop.",
+      "Wheel truing and painting — not doorstep work.",
     ],
     steps: BOOK_STEPS,
     faqs: [
-      ["Do you charge for diagnosis?", "No. Diagnosis at your doorstep is free; you pay only if you approve the repair."],
-      ["My bike will not start. Can you come today?", "Usually yes — same-day and emergency slots are available across Bangalore between 8 AM and 9 PM."],
-      ["Can every repair be done at home?", "Most can. Engine rebuilds, accident repair and paint work move to our workshop with free pickup."],
-      ["Do repairs carry a warranty?", "Yes, a 7-day workmanship guarantee, plus the manufacturer warranty on the part itself."],
+      ["Do you charge for diagnosis?", "No. Diagnosis at your doorstep is free and comes with a written finding; you pay only if you approve the repair."],
+      ["My bike will not start — can you help today?", "No-start cases get our emergency slots. Call 080 6940 9289 or WhatsApp 82969 50339 with the symptom and we confirm the earliest arrival on WhatsApp."],
+      ["Can every repair be done at home?", "Most can. Engine rebuilds, accident repair and paint work move to our workshop with free pickup and a written estimate."],
+      ["Do repairs carry a warranty?", "Yes — a 7-day workmanship guarantee on our work, plus the manufacturer warranty on the part itself."],
+      ["Are the parts genuine?", "OEM or OEM-grade only, shown to you sealed before fitting, with part numbers on the invoice."],
+      ["How do I pay?", "UPI, card or cash after a test ride; the invoice reaches your WhatsApp immediately."],
+      ["What if you cannot fix it on the spot?", "If a part is not in the van we source it and return; if the job needs a workshop we transport the bike free after your approval."],
     ],
+    relatedGuides: ["common-bike-problems-and-solutions", "bike-breakdown-troubleshooting-guide"],
+    reviewed: "2026-09-19",
     local: true,
+    priceFrom: 450,
     serviceType: "Bike Repair",
     related: ["doorstep-bike-repair", "engine-repair", "electrical-repair", "brake-service"],
   },
@@ -160,14 +247,17 @@ export const SERVICES: ServiceDef[] = [
     slug: "doorstep-bike-repair",
     name: "Doorstep Bike Repair",
     h1: "Doorstep Bike Repair in Bangalore",
-    title: "Doorstep Bike Repair Near Me, Bangalore | Ride N Care",
+    subheading: "A bike that will not start is hard to take to a garage — so the garage comes to the bike: free diagnosis at your address and the fix on the spot in most cases.",
+    title: "Doorstep Bike Repair in Bangalore | Ride N Care",
     description:
-      "Doorstep bike repair in Bangalore — a mechanic reaches your home or office, diagnoses free and repairs on the spot. Same-day slots. Call 08296950339.",
+      "Doorstep bike repair in Bangalore — a mechanic reaches your home or office, diagnoses free and repairs on the spot. Written quote first. Call 080 6940 9289.",
+    summary:
+      "Doorstep bike repair brings the mechanic to the bike, not the other way round. A Ride N Care technician diagnoses the fault free at your address, quotes the fix in writing, and completes most repairs — batteries, self-starts, brakes, chains, clutches, punctures — right there in your parking bay.",
     intro:
       "A bike that will not start is hard to take to a garage. Ride N Care brings the repair to you: free diagnosis at your address, a written quote, and the fix done on the spot in most cases.",
     detail: [
-      "Our most common doorstep repairs are dead batteries, self-start failures, brake binding, chain and sprocket replacement, clutch cable and plate work, punctures and carburettor cleaning — all fully doable in a parking bay.",
-      "Where the bike must move, we load it safely and cover the transport. You are told the workshop estimate before it leaves.",
+      "Our most common doorstep repairs are dead batteries, self-start failures, brake binding, chain and sprocket replacement, clutch cable and plate work, punctures and carburettor cleaning — all fully doable in a parking bay with the tools and spares the van carries.",
+      "Where the bike must move, we load it safely and cover the transport free. You are told the workshop estimate and approve it before the bike leaves your sight.",
     ],
     includes: [
       "Doorstep diagnosis at no charge",
@@ -180,18 +270,30 @@ export const SERVICES: ServiceDef[] = [
     ],
     benefits: [
       ["No pushing your bike", "The mechanic reaches the bike, not the other way round."],
-      ["Fast response", "Most Bangalore addresses reached within about 30–45 minutes in a same-day slot."],
+      ["Nearest mechanic dispatched", "Your mechanic is assigned from the unit closest to your address and the arrival time is confirmed on WhatsApp."],
       ["Parts in the van", "Common spares and consumables carried on board."],
       ["Written quote first", "Nothing is replaced without your approval."],
     ],
+    pricing:
+      "Running Repair is ₹450 across all engine sizes — initial fault inspection, minor repair labour and a safety check. Battery replacement and bigger part jobs are quoted before fitting at MRP. Diagnosis and in-city transport to our workshop are free.",
+    limits: [
+      "Engine rebuilds and gearbox work — workshop bench jobs with free pickup.",
+      "Accident, frame and paint work — assessed on site, repaired at the workshop.",
+      "Wheel truing — needs a truing stand.",
+    ],
     steps: BOOK_STEPS,
     faqs: [
-      ["How quickly can a mechanic reach me?", "Within about 30–45 minutes for most Bangalore addresses during working hours, depending on traffic."],
-      ["Can you replace a battery at home?", "Yes — we test the charging system first, then fit a fresh battery with a manufacturer warranty."],
-      ["Do you handle punctures?", "Yes, wheel-on tubeless repair or a tube change at your doorstep."],
+      ["How quickly can a mechanic reach me?", "We dispatch the nearest available mechanic as soon as your slot is confirmed. Traffic and distance decide the exact arrival time, which we share on WhatsApp before dispatch."],
+      ["Can you replace a battery at home?", "Yes — we test the charging system first so the new battery does not die the same way, then fit a fresh one with a manufacturer warranty."],
+      ["Do you handle punctures?", "Yes — wheel-on tubeless repair or a tube change at your doorstep."],
+      ["What does doorstep repair cost?", "Running Repair is ₹450 including inspection and minor repair labour; parts are quoted before fitting. Diagnosis is free."],
       ["What if the repair needs a workshop?", "We tell you before touching anything, transport the bike free and share the estimate for approval."],
+      ["Is there a warranty?", "A 7-day workmanship guarantee on the repair, plus the manufacturer warranty on any part fitted."],
     ],
+    relatedGuides: ["bike-breakdown-troubleshooting-guide", "common-bike-problems-and-solutions"],
+    reviewed: "2026-09-19",
     local: true,
+    priceFrom: 450,
     serviceType: "Doorstep Bike Repair",
     related: ["bike-repair", "emergency-bike-repair", "bike-breakdown-assistance", "battery-service"],
   },
@@ -199,9 +301,12 @@ export const SERVICES: ServiceDef[] = [
     slug: "periodic-bike-service",
     name: "Periodic Bike Service",
     h1: "Periodic Bike Service in Bangalore",
+    subheading: "The maintenance your manufacturer schedules by kilometres or months — done at your doorstep, with a service history you never lose track of.",
     title: "Periodic Bike Service in Bangalore | Ride N Care",
     description:
       "Scheduled periodic bike service in Bangalore at your doorstep — oil, filters, brakes, chain and a 25-point inspection with service reminders.",
+    summary:
+      "Periodic bike service follows the manufacturer's schedule for your model and mileage, done at your doorstep in Bangalore. We adjust the checklist for how you actually ride, keep a dated service record against your phone number, and send a WhatsApp reminder when the next interval is due.",
     intro:
       "Periodic service is the maintenance your manufacturer schedules by kilometres or months. We do it at your doorstep and keep a service history so you never lose track of the next due date.",
     detail: [
@@ -222,12 +327,21 @@ export const SERVICES: ServiceDef[] = [
       ["Fewer breakdowns", "Wear is caught on schedule instead of on the road."],
       ["Reminder service", "We nudge you when the next interval is due."],
     ],
+    pricing:
+      "General Service starts at ₹799 up to 199cc and scales with engine size; with engine oil replacement it starts at ₹1,249. If your bike is still inside the manufacturer's free-service period, we recommend using those first.",
+    limits: [
+      "Warranty work during the free-service period — use the authorised centre for those visits.",
+      "Engine overhaul and valve-shim jobs — workshop work with free pickup.",
+    ],
     steps: BOOK_STEPS,
     faqs: [
       ["What is the difference between periodic service and general service?", "Periodic service follows the manufacturer's scheduled checklist for your model and mileage. A general service is a lighter clean-and-check."],
       ["Will doorstep service void my manufacturer warranty?", "Warranty on a specific part stays with the part maker. If your bike is still inside the free-service period, we recommend using those free services first."],
       ["Do you keep my service history?", "Yes, against your phone number, with the odometer reading from each visit."],
+      ["How much does periodic service cost?", "General Service starts at ₹799 up to 199cc; with engine oil replacement it starts at ₹1,249, scaling with engine size."],
     ],
+    relatedGuides: ["when-to-service-your-bike", "bike-service-guide-bangalore"],
+    reviewed: "2026-09-19",
     local: false,
     priceFrom: 799,
     serviceType: "Periodic Bike Service",
@@ -237,9 +351,12 @@ export const SERVICES: ServiceDef[] = [
     slug: "motorcycle-service",
     name: "Motorcycle Service",
     h1: "Motorcycle Service in Bangalore — Commuter to Superbike",
+    subheading: "Mechanics assigned by engine class, not one-size-fits-all: torque specs, valve checks and the right grade of oil for bigger bikes.",
     title: "Motorcycle Service in Bangalore | Ride N Care",
     description:
       "Motorcycle service in Bangalore for Royal Enfield, KTM, Yamaha, Kawasaki, Triumph and more. Doorstep service by trained mechanics with OEM-grade parts.",
+    summary:
+      "From a 100cc commuter to a litre-class superbike, Ride N Care services motorcycles across Bangalore with mechanics assigned by engine class. Bigger bikes get bigger-bike attention: manufacturer torque values, full-synthetic oil where specified, FI diagnostics and chain, sprocket and brake-fluid inspection on every visit.",
     intro:
       "From a 100 CC commuter to a litre-class superbike, Ride N Care mechanics are trained by engine class. Bigger motorcycles get bigger-bike attention: torque specs, valve clearance checks and the right grade of oil.",
     detail: [
@@ -260,12 +377,21 @@ export const SERVICES: ServiceDef[] = [
       ["Diagnostics on board", "FI scanning for modern EFI motorcycles."],
       ["Doorstep or workshop", "Your choice for larger jobs."],
     ],
+    pricing:
+      "General Service starts at ₹799 up to 199cc, ₹1,199 for 250–400cc and ₹1,799 for 501–800cc; with engine oil replacement from ₹1,249 to ₹4,499 depending on engine size and oil grade. The exact package for your bike is confirmed in writing before work starts.",
+    limits: [
+      "Valve-clearance and suspension rebuilds on large bikes — workshop bench jobs.",
+      "Tyre changing for very large rear widths — some need workshop machines.",
+    ],
     steps: BOOK_STEPS,
     faqs: [
       ["Do you service Royal Enfield and KTM?", "Yes — both are among our most-serviced brands in Bangalore, including 350/650 twins and KTM Duke/RC models."],
       ["Can you service superbikes at home?", "Periodic service and consumables, yes. Valve-clearance and suspension rebuilds are done in the workshop."],
       ["Which oil do you use?", "The grade your manual specifies, from OEM-approved brands, shown to you sealed before pouring."],
+      ["What does motorcycle service cost?", "From ₹799 up to 199cc; bigger engines price higher — e.g. ₹1,799 for 501–800cc. The exact figure is confirmed in writing first."],
     ],
+    relatedGuides: ["complete-bike-maintenance-guide", "when-to-service-your-bike"],
+    reviewed: "2026-09-19",
     local: true,
     priceFrom: 799,
     serviceType: "Motorcycle Service",
@@ -274,15 +400,18 @@ export const SERVICES: ServiceDef[] = [
   {
     slug: "scooter-service",
     name: "Scooter Service",
-    h1: "Scooter Service in Bangalore at Your Doorstep",
-    title: "Scooter Service in Bangalore | Ride N Care",
+    h1: "Scooter Service at Home in Bangalore",
+    subheading: "Activa, Jupiter, Access and every automatic scooter — including the CVT and gear-oil care that most quick garages skip.",
+    title: "Scooter Service at Home in Bangalore | Ride N Care",
     description:
-      "Doorstep scooter service in Bangalore for Honda Activa, TVS Jupiter, Suzuki Access, Ather and Ola. CVT care, brakes and battery. Call 08296950339.",
+      "Scooter service at home in Bangalore — Activa, Jupiter, Access and more. CVT care, brakes and battery tested. Written quote. Call 080 6940 9289.",
+    summary:
+      "Scooters take the worst of Bangalore's potholes and short trips, and they need care a motorcycle does not. A Ride N Care mechanic services your automatic scooter at home — engine oil, gear oil, CVT inspection, brakes and battery — in a single visit, with a written quote before work starts.",
     intro:
       "Scooters take the worst of Bangalore's potholes and short trips. Ride N Care services every automatic scooter at your doorstep — including the CVT and rear-drive care that most quick garages skip.",
     detail: [
-      "Automatic scooters need attention a motorcycle does not: CVT belt and roller wear, gear oil in the final drive, and a variator that collects dust from unpaved shortcuts. Short city trips also mean the engine rarely gets fully warm, so oil degrades faster.",
-      "We service Honda Activa and Dio, TVS Jupiter and Ntorq, Suzuki Access and Burgman, Yamaha Fascino and RayZR, Hero Pleasure and Destini, Aprilia SR, plus electric scooters for brake, tyre and running-gear work.",
+      "Automatic scooters need attention a motorcycle does not: CVT belt and roller wear, gear oil in the final drive, and a variator that collects dust from unpaved shortcuts. Short city trips also mean the engine rarely gets fully warm, so oil degrades faster than the calendar suggests.",
+      "We service Honda Activa and Dio, TVS Jupiter and Ntorq, Suzuki Access and Burgman, Yamaha Fascino and RayZR, Hero Pleasure and Destini, and Aprilia SR. Electric scooters get brake, tyre and running-gear service at home; battery and motor issues stay with the manufacturer's service network.",
     ],
     includes: [
       "Engine oil and gear oil change",
@@ -297,14 +426,26 @@ export const SERVICES: ServiceDef[] = [
       ["CVT done properly", "Belt and roller wear checked, not ignored."],
       ["Short-trip oil advice", "Interval tuned to real city usage."],
       ["Family-safe brakes", "Full brake inspection on every visit."],
-      ["EV-friendly", "Running-gear service for Ather, Ola and TVS iQube."],
+      ["At your gate", "Done in your apartment parking bay — no riding to a centre."],
+    ],
+    pricing:
+      "General Service for scooters up to 199cc is ₹799, or ₹1,249 with engine oil replacement. Jump Start is ₹399 and Running Repair ₹450. Extra parts — a drive belt, brake shoes, a battery — are quoted at MRP before fitting.",
+    limits: [
+      "Battery and motor faults on electric scooters — these stay with the manufacturer's service network.",
+      "CVT belt replacement needs the correct belt for your model — if it is not in the van we source it and return.",
+      "Body-panel replacement for crash damage — assessed on site, quoted separately.",
     ],
     steps: BOOK_STEPS,
     faqs: [
       ["How often should a scooter be serviced?", "Every 2,500–3,000 km or three months. If your daily ride is under 5 km, keep to the time-based interval — oil ages even when kilometres are low."],
-      ["Do you service electric scooters?", "We handle brakes, tyres, suspension and general running gear. Battery and motor issues stay with the manufacturer's service network."],
-      ["What does scooter service cost?", "General Service for scooters up to 199cc is ₹799. Jump Start is ₹399 and Running Repair is ₹450, with extra parts quoted before work."],
+      ["What does scooter service at home cost?", "General Service is ₹799 for scooters up to 199cc; with engine oil replacement ₹1,249. Jump Start is ₹399 and Running Repair ₹450."],
+      ["Do you service Honda Activa and TVS Jupiter?", "Yes — Activa, Dio, Jupiter, Ntorq, Access, Burgman, Fascino, RayZR, Pleasure, Destini and Aprilia SR are all routine work for us."],
+      ["Do you service electric scooters?", "We handle brakes, tyres, suspension and general running gear at home. Battery and motor issues stay with the manufacturer's service network."],
+      ["What do I need to provide?", "Parking space and ideally a plug point — that is all."],
+      ["How do I pay?", "UPI, card or cash after a test ride; the digital invoice reaches your WhatsApp right away."],
     ],
+    relatedGuides: ["motorcycle-vs-scooter-maintenance", "complete-bike-maintenance-guide"],
+    reviewed: "2026-09-19",
     local: true,
     priceFrom: 799,
     serviceType: "Scooter Service",
@@ -314,17 +455,20 @@ export const SERVICES: ServiceDef[] = [
     slug: "emergency-bike-repair",
     name: "Emergency Bike Repair",
     h1: "Emergency Bike Repair in Bangalore",
+    subheading: "Stuck on the road? Call 080 6940 9289 and the nearest available mechanic is dispatched with a jump pack, puncture kit and basic spares.",
     title: "Emergency Bike Repair in Bangalore | Ride N Care",
     description:
-      "Emergency bike repair in Bangalore — roadside mechanic for dead batteries, punctures and no-start problems. Fast response, 8 AM to 9 PM. Call 08296950339.",
+      "Emergency bike repair in Bangalore, 8 AM to 9 PM. Dead battery, puncture or no-start — call 080 6940 9289 and we dispatch the nearest mechanic.",
+    summary:
+      "Emergency bike repair in Bangalore for the moments a ride cannot wait: a battery that will not crank, a puncture, a snapped clutch cable or a stall after riding through waterlogging. Call 080 6940 9289 between 8 AM and 9 PM, the charge is confirmed upfront, and the nearest mechanic rides to your location.",
     intro:
-      "Stuck on the road? Call 08296950339 or WhatsApp us and a mechanic is dispatched to your location with a battery pack, puncture kit and basic spares.",
+      "Stuck on the road? Call 080 6940 9289 or WhatsApp 82969 50339 and a mechanic is dispatched to your location with a battery pack, puncture kit and basic spares.",
     detail: [
-      "Roadside jobs we solve most often: a battery that will not crank, a snapped clutch cable, a tubeless puncture, brake binding after a wet ride, and fuel-line or plug trouble after riding through waterlogging.",
-      "If your bike cannot be made rideable safely, we recover it to the nearest Ride N Care workshop rather than leaving you to arrange transport.",
+      "Roadside jobs we solve most often: a battery that will not crank, a snapped clutch cable, a tubeless puncture, brake binding after a wet ride, and fuel-line or plug trouble after riding through waterlogging on ORR or NICE Road.",
+      "If your bike cannot be made rideable safely, we recover it to the nearest Ride N Care workshop rather than leaving you to arrange transport. The callout and likely repair cost are told before dispatch, so there is no surprise at the roadside.",
     ],
     includes: [
-      "Rapid dispatch to your location",
+      "Dispatch of the nearest available mechanic to your location",
       "Jump-start and battery replacement",
       "On-the-spot puncture repair",
       "Cable, fuse and plug replacement",
@@ -332,23 +476,32 @@ export const SERVICES: ServiceDef[] = [
       "Recovery to workshop if unrideable",
     ],
     benefits: [
-      ["Fast response", "Typically 30–45 minutes inside Bangalore city limits."],
+      ["Nearest mechanic dispatched", "We route whoever is closest to your pin — arrival time confirmed on WhatsApp before dispatch."],
       ["Rideable or recovered", "You are never left stranded with the bike."],
       ["Upfront charges", "Callout and repair charges told before dispatch."],
       ["Every day, 8 AM–9 PM", "Weekends and holidays included."],
     ],
-    steps: [
-      ["1. Call or WhatsApp", "Share your live location and what happened."],
-      ["2. Get the charge upfront", "Callout plus likely repair cost confirmed on the call."],
-      ["3. Mechanic dispatched", "Nearest available mechanic rides to you with spares."],
-      ["4. Ride away or be recovered", "Fixed on the spot, or transported to the workshop."],
+    pricing:
+      "A callout charge applies to emergency dispatch and is quoted on the phone before anyone rides out. The Running Repair package is ₹450 — fault inspection, minor repair labour and a safety check — with parts billed at MRP after your approval.",
+    limits: [
+      "After 9 PM — late-night requests are scheduled for the next morning's first slot.",
+      "Accident damage and recovery from accidents — call first; we assess and recover safely.",
+      "Major repairs at the roadside — the bike is recovered to the workshop instead.",
     ],
+    steps: DISPATCH_STEPS,
     faqs: [
-      ["How fast can you reach me?", "Usually 30–45 minutes within Bangalore city limits during service hours, depending on traffic and distance."],
+      ["How fast can you reach me?", "We dispatch the nearest available mechanic immediately after your call. Traffic and distance decide arrival, and we share the expected time on WhatsApp before dispatch."],
       ["Are you available at night?", "Our dispatch window is 8 AM to 9 PM every day. Late-night requests are scheduled for the next morning's first slot."],
-      ["What does an emergency callout cost?", "A callout charge applies and is quoted on the phone before dispatch; repairs and parts are billed on top after your approval."],
+      ["What does an emergency callout cost?", "A callout charge applies and is quoted on the phone before dispatch; the Running Repair package is ₹450 and parts are billed after your approval."],
+      ["My bike stalled in a waterlogged stretch — what should I do?", "Do not keep cranking it. Call us; water in the airbox needs to be cleared before starting, which we do on site."],
+      ["Can you replace the battery on the road?", "Yes — common battery sizes are carried, and we test the charging system so the new battery is not killed by the same fault."],
+      ["How do I pay?", "UPI, card or cash at the roadside or after recovery; the invoice reaches your WhatsApp immediately."],
+      ["What if the bike cannot be fixed on the spot?", "We recover it to the nearest Ride N Care workshop free within the city, with the repair estimate shared before work begins."],
     ],
+    relatedGuides: ["bike-breakdown-troubleshooting-guide", "common-bike-problems-and-solutions"],
+    reviewed: "2026-09-19",
     local: true,
+    priceFrom: 450,
     serviceType: "Emergency Bike Repair",
     related: ["bike-breakdown-assistance", "doorstep-bike-repair", "battery-service", "bike-repair"],
   },
@@ -356,14 +509,17 @@ export const SERVICES: ServiceDef[] = [
     slug: "bike-breakdown-assistance",
     name: "Bike Breakdown Assistance",
     h1: "Bike Breakdown Assistance in Bangalore",
+    subheading: "Roadside assessment, honest diagnosis and recovery — for the bike that stops mid-ride or refuses to move after a flood-hit street.",
     title: "Bike Breakdown Assistance in Bangalore | Ride N Care",
     description:
-      "Bike breakdown assistance across Bangalore — roadside diagnosis, on-spot repair and bike recovery to our workshop. Call 08296950339 or WhatsApp us.",
+      "Bike breakdown assistance across Bangalore — roadside diagnosis, on-spot repair and bike recovery to our workshop. Call 080 6940 9289 or WhatsApp 82969 50339.",
+    summary:
+      "Bike breakdown assistance in Bangalore covers everything from a stall mid-commute to a bike left immobile by monsoon waterlogging. We diagnose the fault roadside, fix what can be fixed on the spot, and recover the bike to our workshop free within the city when it cannot be made rideable.",
     intro:
       "Breakdown assistance covers everything from a bike that stops mid-ride to one that will not move after a flood-hit street. We assess, fix what can be fixed roadside, and recover the rest.",
     detail: [
-      "Bangalore's monsoon leaves water in air boxes and silencers, and heat leaves batteries flat. Both leave a bike immobile in a way that looks alarming and is often quick to solve once diagnosed properly.",
-      "Our assistance mechanics carry a jump pack, tool roll, spare cables, fuses, plugs and a puncture kit — the parts behind most roadside failures.",
+      "Bangalore's monsoon leaves water in air boxes and silencers, and summer heat leaves batteries flat. Both leave a bike immobile in a way that looks alarming and is often quick to solve once diagnosed properly — that diagnosis is the service.",
+      "Our assistance mechanics carry a jump pack, tool roll, spare cables, fuses, plugs and a puncture kit — the parts behind most roadside failures. Charges are confirmed before we ride out.",
     ],
     includes: [
       "Roadside fault diagnosis",
@@ -374,23 +530,31 @@ export const SERVICES: ServiceDef[] = [
       "Recovery and transport to workshop",
     ],
     benefits: [
-      ["City-wide cover", "Assistance across all Ride N Care service areas."],
+      ["City-wide cover", "Assistance across all Ride N Care service areas in Bangalore."],
       ["Real diagnosis", "The cause is found, not guessed at."],
       ["No abandoned bikes", "Recovery included where needed."],
       ["Clear pricing", "Charges confirmed before we ride out."],
     ],
-    steps: [
-      ["1. Share your location", "WhatsApp a live location pin so we route the nearest mechanic."],
-      ["2. Describe the symptom", "Sound, smell, warning lights — it narrows the diagnosis before arrival."],
-      ["3. Roadside assessment", "Fault identified and options explained on the spot."],
-      ["4. Fixed or recovered", "Repaired roadside where possible; otherwise transported."],
+    pricing:
+      "A callout charge is quoted on the phone before dispatch. The Running Repair package is ₹450 — fault inspection, minor repair labour and a safety check — and parts are billed at MRP only after your approval. Recovery to our workshop within the city is free once you approve the next step.",
+    limits: [
+      "Major roadside repairs — the bike is recovered to the workshop instead.",
+      "After 9 PM — requests queue for the next morning's first slot.",
+      "Accident recovery — call us first so the bike is secured and moved safely.",
     ],
+    steps: DISPATCH_STEPS,
     faqs: [
       ["Do you recover the bike if it cannot be repaired?", "Yes, to the nearest Ride N Care workshop, with the repair estimate shared before work begins."],
       ["My bike stalled in waterlogging — can you help?", "Do not keep cranking it. Call us; water ingress needs the airbox and cylinder cleared before starting, which we do on site."],
       ["Is breakdown assistance available on holidays?", "Yes, every day between 8 AM and 9 PM."],
+      ["What does breakdown assistance cost?", "The callout is quoted on the phone before dispatch; Running Repair is ₹450 with parts billed only after approval."],
+      ["Which areas do you cover?", "All forty Ride N Care service localities across Bangalore — see the areas page for the full list."],
+      ["How do I pay?", "UPI, card or cash; the digital invoice reaches your WhatsApp immediately."],
     ],
+    relatedGuides: ["bike-breakdown-troubleshooting-guide", "when-to-service-your-bike"],
+    reviewed: "2026-09-19",
     local: false,
+    priceFrom: 450,
     serviceType: "Bike Breakdown Assistance",
     related: ["emergency-bike-repair", "doorstep-bike-repair", "battery-service"],
   },
@@ -398,9 +562,12 @@ export const SERVICES: ServiceDef[] = [
     slug: "engine-repair",
     name: "Bike Engine Repair",
     h1: "Bike Engine Repair in Bangalore",
+    subheading: "Compression, plug and oil checked before anyone says the word overhaul — many engine complaints turn out to be far cheaper than they sound.",
     title: "Bike Engine Repair in Bangalore | Ride N Care",
     description:
-      "Bike engine repair in Bangalore — noise, smoke, overheating and power-loss diagnosis, top-end and full overhaul with OEM parts and written estimates.",
+      "Bike engine repair in Bangalore that starts with a real diagnosis — compression test, plug and oil check — before any top-end work is quoted.",
+    summary:
+      "Engine work deserves a proper diagnosis first. A Ride N Care mechanic measures compression, inspects the plug and oil, and only then recommends a top-end job, a full overhaul or something far simpler. White or blue smoke, knocks, overheating and power loss all start with this free assessment in Bangalore.",
     intro:
       "Engine work deserves a proper diagnosis first. We measure compression, inspect the plug and oil, and only then recommend a top-end job, a full overhaul or something far simpler.",
     detail: [
@@ -421,12 +588,24 @@ export const SERVICES: ServiceDef[] = [
       ["OEM internals", "Genuine pistons, rings, gaskets and seals."],
       ["Run-in support", "Follow-up check after the first 500 km."],
     ],
+    pricing:
+      "Engine diagnosis is free. Minor running repairs fall under the ₹450 Running Repair package; overhauls are quoted itemised — parts and labour separately — based on your model, and the estimate is approved in writing before the engine is opened.",
+    limits: [
+      "All engine strip-downs happen in our workshop, not at the doorstep — the engine needs a bench and specialist tools. Pickup and drop are free.",
+      "Performance modifications and boring work are not offered.",
+    ],
     steps: BOOK_STEPS,
     faqs: [
       ["Can engine repair be done at home?", "Diagnosis and light work, yes. An overhaul goes to our workshop with free pickup, since the engine needs a bench and specialist tools."],
       ["How long does an overhaul take?", "Typically 2–4 working days depending on parts availability for your model."],
       ["Is my engine noise serious?", "Not always — chain and valve noise are often mistaken for internal damage. A free diagnosis will tell you before you spend anything."],
+      ["How much does engine repair cost?", "Minor repairs fall under the ₹450 Running Repair package. Overhauls are quoted itemised per model and approved in writing first."],
+      ["What does a free diagnosis include?", "Compression test, plug and oil inspection, and a written finding with the recommended next step."],
+      ["Do you use genuine engine parts?", "Yes — OEM pistons, rings, gaskets and seals, with part numbers on the invoice."],
+      ["Is there a warranty?", "A 7-day workmanship guarantee on the repair, plus a follow-up check after the first 500 km of running-in."],
     ],
+    relatedGuides: ["common-bike-problems-and-solutions", "complete-bike-maintenance-guide"],
+    reviewed: "2026-09-19",
     local: false,
     serviceType: "Bike Engine Repair",
     related: ["bike-repair", "motorcycle-service", "general-two-wheeler-repair"],
@@ -435,9 +614,12 @@ export const SERVICES: ServiceDef[] = [
     slug: "brake-service",
     name: "Bike Brake Service",
     h1: "Bike Brake Service & Repair in Bangalore",
+    subheading: "Pads and shoes measured, not guessed — and the old parts handed back to you with the wear numbers.",
     title: "Bike Brake Service in Bangalore | Ride N Care",
     description:
       "Bike brake service in Bangalore at your doorstep — pad and shoe replacement, disc check, brake bleeding and squeal fixes with OEM parts.",
+    summary:
+      "Brakes are the one system worth servicing early. A Ride N Care mechanic measures pad and shoe thickness at your doorstep, checks the disc and drum, bleeds the line if the lever feels spongy, and sets free play correctly — with the measured wear shown to you before anything is replaced.",
     intro:
       "Brakes are the one system worth servicing early. We measure pad and shoe thickness, check the disc and drum, bleed the line if the lever feels spongy, and set free play correctly.",
     detail: [
@@ -450,7 +632,7 @@ export const SERVICES: ServiceDef[] = [
       "Disc runout and drum condition check",
       "Brake fluid change and line bleeding",
       "Cable lubrication and free-play setting",
-      "Post-service braking test ride",
+      "Post-service test ride with you present",
     ],
     benefits: [
       ["Measured, not guessed", "Wear numbers shown before replacement."],
@@ -458,12 +640,23 @@ export const SERVICES: ServiceDef[] = [
       ["Doorstep service", "Full brake work possible at your parking bay."],
       ["7-day guarantee", "On the brake work performed."],
     ],
+    pricing:
+      "Brake inspection is free and minor adjustments fall under the ₹450 Running Repair package. Pads, shoes, discs and fluid are quoted at MRP before fitting — the total is approved in writing before work starts.",
+    limits: [
+      "Disc skimming and caliper rebuilds on some models — workshop jobs.",
+      "ABS module faults — diagnosed on site, repaired with the manufacturer network where needed.",
+    ],
     steps: BOOK_STEPS,
     faqs: [
       ["How often should brake pads be replaced?", "Typically every 8,000–15,000 km, much sooner in heavy city traffic. We measure rather than assume."],
       ["Why do my brakes squeal?", "Usually glazed pads or brake dust build-up; sometimes a worn disc. Cleaning and correct bedding-in solves most cases."],
       ["Do you change brake fluid?", "Yes — recommended every two years, or sooner if the lever feels spongy."],
+      ["What does brake service cost?", "Inspection is free; minor work falls under the ₹450 Running Repair package. Pads and shoes are quoted at MRP before fitting."],
+      ["Can brake work be done at my parking spot?", "Yes — pad, shoe, cable and fluid work is fully doorstep-capable."],
+      ["Is there a warranty?", "A 7-day workmanship guarantee on the brake work, plus the manufacturer warranty on parts."],
     ],
+    relatedGuides: ["complete-bike-maintenance-guide", "common-bike-problems-and-solutions"],
+    reviewed: "2026-09-19",
     local: false,
     serviceType: "Bike Brake Service",
     related: ["bike-service", "bike-repair", "clutch-repair"],
@@ -472,9 +665,12 @@ export const SERVICES: ServiceDef[] = [
     slug: "clutch-repair",
     name: "Bike Clutch Repair",
     h1: "Bike Clutch Repair in Bangalore",
+    subheading: "Slipping, grabbing or a stiff lever — free-play adjustment fixes more clutches than parts do, and we check that first.",
     title: "Bike Clutch Repair in Bangalore | Ride N Care",
     description:
       "Bike clutch repair in Bangalore — slipping clutch, hard lever and plate replacement done at your doorstep with OEM parts and a written quote.",
+    summary:
+      "A slipping or grabbing clutch makes city riding exhausting and burns fuel. Ride N Care checks clutch free play and the cable first — which fixes a surprising number of complaints — and replaces plates or the cable only when the inspection genuinely calls for it, at your doorstep in Bangalore.",
     intro:
       "A slipping or grabbing clutch makes city riding exhausting and burns fuel. We adjust, replace the cable or fit new plates depending on what the inspection actually shows.",
     detail: [
@@ -495,12 +691,23 @@ export const SERVICES: ServiceDef[] = [
       ["Set replacement", "Plates changed as a matched set, not mixed."],
       ["Doorstep possible", "Most clutch jobs done at your address."],
     ],
+    pricing:
+      "Inspection is free; free-play and cable work falls under the ₹450 Running Repair package. A plate set depends on the model and is quoted at MRP — the exact figure is approved in writing before work starts.",
+    limits: [
+      "Pressure-plate or basket machining — workshop jobs.",
+      "Wet-multiplate work on some large bikes needs special tools; we tell you upfront.",
+    ],
     steps: BOOK_STEPS,
     faqs: [
       ["How do I know the clutch is slipping?", "Revs climb but speed does not, especially uphill or in third gear. A test ride confirms it quickly."],
       ["Can clutch plates be changed at home?", "On most commuter bikes and many motorcycles, yes — at your parking spot."],
-      ["What does clutch repair cost?", "Cable and adjustment work is inexpensive; a plate set depends on the model. You get the exact quote before approval."],
+      ["What does clutch repair cost?", "Cable and adjustment work falls under the ₹450 Running Repair package; a plate set depends on the model and is quoted before approval."],
+      ["Why is my clutch lever so hard?", "Usually a dry or fraying cable, sometimes the push lever. Lubrication or cable replacement solves it."],
+      ["Is there a warranty?", "A 7-day workmanship guarantee on the work, plus the manufacturer warranty on parts."],
+      ["How long does it take?", "Adjustment minutes; a plate set typically under two hours at your address."],
     ],
+    relatedGuides: ["complete-bike-maintenance-guide", "common-bike-problems-and-solutions"],
+    reviewed: "2026-09-19",
     local: false,
     serviceType: "Bike Clutch Repair",
     related: ["bike-repair", "brake-service", "general-two-wheeler-repair"],
@@ -508,37 +715,52 @@ export const SERVICES: ServiceDef[] = [
   {
     slug: "battery-service",
     name: "Bike Battery Service",
-    h1: "Bike Battery Service & Replacement in Bangalore",
-    title: "Bike Battery Replacement in Bangalore | Ride N Care",
+    h1: "Bike Battery Replacement at Home in Bangalore",
+    subheading: "A slow crank usually needs a test before a battery — we check the charging system first so the new one does not die the same way.",
+    title: "Bike Battery Replacement at Home | Ride N Care",
     description:
-      "Bike battery service in Bangalore — free health test, jump-start and doorstep battery replacement with warranty. Same-day fitting. Call 08296950339.",
+      "Bike battery replacement at your home in Bangalore. Free load test first, battery fitted at your gate, terms stated on the quote. Call 080 6940 9289.",
+    summary:
+      "A bike that cranks slowly or clicks and dies usually needs a battery test, not immediately a new battery. Ride N Care tests the battery and the charging system free at your home in Bangalore, then fits a replacement at your gate only if the test says the battery is genuinely finished.",
     intro:
-      "A bike that cranks slowly or clicks and dies usually needs a battery test, not immediately a new battery. We test first, then fit a warranted replacement at your doorstep if it is genuinely finished.",
+      "A bike that cranks slowly or clicks and dies usually needs a battery test, not immediately a new battery. We test first, then fit a replacement at your doorstep if it is genuinely finished.",
     detail: [
       "Batteries fail early when the charging system is at fault, so we check regulator-rectifier output and standing drain before recommending a replacement. Otherwise the new battery dies the same way.",
-      "Replacements are fitted at your address with the old battery taken away for recycling, and the warranty card registered in your name.",
+      "Replacements are fitted at your address: terminals cleaned and protected, the new battery fitted, and the invoice on WhatsApp before you pay. What happens to the old battery is confirmed with you at booking."
     ],
     includes: [
       "Free battery load and voltage test",
       "Charging-system and drain check",
       "Jump-start service",
-      "Doorstep battery replacement with warranty",
+      "Doorstep battery replacement",
       "Terminal cleaning and protection",
-      "Old battery collected for recycling",
     ],
     benefits: [
       ["Test before you buy", "No unnecessary replacement."],
-      ["Same-day fitting", "Common sizes carried in the van."],
-      ["Warranty registered", "Card in your name, invoice on WhatsApp."],
+      ["Fast fitting", "Common battery sizes carried in the van — most replacements are a single visit."],
+      ["Manufacturer warranty", "Battery warranty terms are stated on the quote and invoice."],
       ["Root cause checked", "Charging faults found before they kill the new battery."],
+    ],
+    pricing:
+      "The battery health and charging-system test is free. Jump Start is ₹399. Replacement batteries are priced by model and capacity and quoted at MRP before fitting — the total, including fitting, is confirmed in writing before work starts.",
+    limits: [
+      "Battery and motor faults on electric scooters — these stay with the manufacturer's service network.",
+      "Batteries for rare imported models may need a day to source; we confirm the arrival date before booking.",
     ],
     steps: BOOK_STEPS,
     faqs: [
       ["How long does a bike battery last?", "Around 2.5–4 years in Bangalore. Heat and long parked spells shorten it."],
-      ["Can you replace the battery at my home?", "Yes, in about 20 minutes including testing."],
-      ["Do the batteries carry a warranty?", "Yes — standard manufacturer warranty on every battery we fit."],
+      ["Can you replace the battery at my home?", "Yes — testing and replacement are done in your parking bay, in one visit for common battery sizes."],
+      ["Do the batteries carry a warranty?", "Warranty terms for the battery fitted are stated on the written quote and the invoice before you pay — no surprises after the job."],
+      ["What if the battery is actually fine?", "Then we say so — the test is free and you have paid nothing. If the charging system is the real fault, we diagnose that instead."],
+      ["What does it cost?", "The test is free and Jump Start is ₹399. Replacement batteries are quoted by model before fitting."],
+      ["What happens to the old battery?", "Disposal of the old battery is confirmed with you at booking."],
+      ["How do I pay?", "UPI, card or cash after the job; the invoice reaches your WhatsApp immediately."],
     ],
+    relatedGuides: ["bike-breakdown-troubleshooting-guide", "common-bike-problems-and-solutions"],
+    reviewed: "2026-09-19",
     local: false,
+    priceFrom: 399,
     serviceType: "Bike Battery Service",
     related: ["electrical-repair", "doorstep-bike-repair", "emergency-bike-repair"],
   },
@@ -546,9 +768,12 @@ export const SERVICES: ServiceDef[] = [
     slug: "electrical-repair",
     name: "Bike Electrical Repair",
     h1: "Bike Electrical Repair in Bangalore",
+    subheading: "Self-starts, dim lights, blown fuses and overnight drain — traced with a multimeter instead of swapping parts hopefully.",
     title: "Bike Electrical Repair in Bangalore | Ride N Care",
     description:
       "Bike electrical repair in Bangalore — self-start failure, wiring faults, charging problems, lights and indicators fixed at your doorstep.",
+    summary:
+      "Electrical faults are the hardest to guess and the easiest to fix once measured. A Ride N Care mechanic traces self-start failures, charging problems, dim lights and battery drain with a multimeter at your doorstep in Bangalore, then repairs or replaces only the part that actually failed.",
     intro:
       "Electrical faults are the hardest to guess and the easiest to fix once measured. Our mechanics trace them with a multimeter instead of swapping parts hopefully.",
     detail: [
@@ -569,12 +794,23 @@ export const SERVICES: ServiceDef[] = [
       ["Doorstep capable", "Most electrical work done at your address."],
       ["Safety focus", "Correct fuse ratings and proper insulation."],
     ],
+    pricing:
+      "Diagnosis is free and minor electrical fixes fall under the ₹450 Running Repair package. Regulators, relays and loom work are quoted at MRP plus labour before fitting — approved in writing first.",
+    limits: [
+      "ECU and fuel-injection control faults on some models — diagnosed on site, repaired via the manufacturer network if proprietary.",
+      "Full loom replacement on older bikes — quoted as a workshop job with free pickup.",
+    ],
     steps: BOOK_STEPS,
     faqs: [
       ["My self-start is not working — is it the battery?", "Often, but not always. It can also be the starter relay, motor or switch. Testing takes minutes and tells us for sure."],
       ["Why does my battery drain overnight?", "A parasitic drain, usually from accessory wiring or a failing regulator. We measure standing current to find it."],
       ["Do you fix aftermarket accessory wiring?", "Yes, and we re-do unsafe installations with proper fusing."],
+      ["What does electrical repair cost?", "Diagnosis is free; minor fixes fall under the ₹450 Running Repair package and bigger parts are quoted before fitting."],
+      ["Can this be done at my home?", "Yes — most electrical work is completed at your parking spot."],
+      ["Is there a warranty?", "A 7-day workmanship guarantee on the repair, plus the manufacturer warranty on parts."],
     ],
+    relatedGuides: ["common-bike-problems-and-solutions", "bike-breakdown-troubleshooting-guide"],
+    reviewed: "2026-09-19",
     local: false,
     serviceType: "Bike Electrical Repair",
     related: ["battery-service", "bike-repair", "general-two-wheeler-repair"],
@@ -583,9 +819,12 @@ export const SERVICES: ServiceDef[] = [
     slug: "general-two-wheeler-repair",
     name: "General Two-Wheeler Repair",
     h1: "General Two-Wheeler Repair in Bangalore",
+    subheading: "Cables, punctures, suspension, locks and a proper wash — the everyday jobs that keep a two-wheeler pleasant to ride.",
     title: "Two Wheeler Repair in Bangalore | Ride N Care",
     description:
-      "General two-wheeler repair in Bangalore — bikes, scooters and EVs. Suspension, tyres, cables, punctures and washing at your doorstep. Call 08296950339.",
+      "General two-wheeler repair in Bangalore — bikes, scooters and EVs. Suspension, tyres, cables, punctures and washing at your doorstep. Call 080 6940 9289.",
+    summary:
+      "Not sure what your two-wheeler needs? Book a general inspection and a Ride N Care mechanic comes to your Bangalore address, checks the bike over and gives you a prioritised list — then handles cables, punctures, suspension, tyres, locks and the wash in the same visit.",
     intro:
       "The everyday jobs that keep a two-wheeler pleasant to ride: cables, punctures, suspension, mirrors, locks, tyres and a proper wash — all handled at your doorstep.",
     detail: [
@@ -607,12 +846,23 @@ export const SERVICES: ServiceDef[] = [
       ["All two-wheelers", "Bikes, scooters and EVs."],
       ["Doorstep convenience", "Nothing needs to leave your building."],
     ],
+    pricing:
+      "The doorstep inspection is free. Minor fixes fall under the ₹450 Running Repair package; parts such as tyres and cables are quoted at MRP before fitting — approved in writing first.",
+    limits: [
+      "Engine strip-downs, wheel truing and paint — workshop jobs with free pickup.",
+      "EV battery and motor faults — manufacturer service network.",
+    ],
     steps: BOOK_STEPS,
     faqs: [
       ["I do not know what is wrong — can you just check?", "Yes. Book a general inspection; the doorstep diagnosis is free and you get a prioritised list."],
       ["Do you replace tyres at home?", "Yes, with tyres sourced to your specified brand and size."],
       ["Do you also wash the bike?", "A foam wash and dry finish is included with most service packages and available on its own."],
+      ["What does it cost?", "Inspection is free; minor work falls under the ₹450 Running Repair package with parts quoted before fitting."],
+      ["Do you handle electric two-wheelers?", "Yes — running gear, brakes, tyres and body items. Battery and motor faults go to the manufacturer network."],
+      ["How do I pay?", "UPI, card or cash after the work; the invoice reaches your WhatsApp immediately."],
     ],
+    relatedGuides: ["complete-bike-maintenance-guide", "common-bike-problems-and-solutions"],
+    reviewed: "2026-09-19",
     local: false,
     serviceType: "Two Wheeler Repair",
     related: ["bike-service", "bike-repair", "scooter-service", "brake-service"],

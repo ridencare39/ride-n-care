@@ -30,3 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel
+.env*
+isolate/
+docs/seo/panel-*.png

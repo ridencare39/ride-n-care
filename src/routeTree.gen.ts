@@ -10,11 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrackBookingRouteImport } from './routes/track-booking'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as FranchiseRouteImport } from './routes/franchise'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CarsRouteImport } from './routes/cars'
@@ -28,10 +31,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as GuidesIndexRouteImport } from './routes/guides.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AreasIndexRouteImport } from './routes/areas.index'
+import { Route as AnswersIndexRouteImport } from './routes/answers.index'
 import { Route as ServiceIndexRouteImport } from './routes/$service.index'
 import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
+import { Route as AnswersSlugRouteImport } from './routes/answers.$slug'
 import { Route as AuthenticatedSeoMonitorRouteImport } from './routes/_authenticated/seo-monitor'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
@@ -45,9 +50,19 @@ const TrackBookingRoute = TrackBookingRouteImport.update({
   path: '/track-booking',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -68,6 +83,11 @@ const MapRoute = MapRouteImport.update({
 const GuidesRoute = GuidesRouteImport.update({
   id: '/guides',
   path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FranchiseRoute = FranchiseRouteImport.update({
+  id: '/franchise',
+  path: '/franchise',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -134,6 +154,11 @@ const AreasIndexRoute = AreasIndexRouteImport.update({
   path: '/areas/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnswersIndexRoute = AnswersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AnswersRoute,
+} as any)
 const ServiceIndexRoute = ServiceIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -153,6 +178,11 @@ const AreasSlugRoute = AreasSlugRouteImport.update({
   id: '/areas/$slug',
   path: '/areas/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AnswersSlugRoute = AnswersSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => AnswersRoute,
 } as any)
 const AuthenticatedSeoMonitorRoute = AuthenticatedSeoMonitorRouteImport.update({
   id: '/seo-monitor',
@@ -198,26 +228,31 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$service': typeof ServiceRouteWithChildren
   '/about': typeof AboutRoute
-  '/answers': typeof AnswersRoute
+  '/answers': typeof AnswersRouteWithChildren
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/franchise': typeof FranchiseRoute
   '/guides': typeof GuidesRouteWithChildren
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/seo-monitor': typeof AuthenticatedSeoMonitorRoute
+  '/answers/$slug': typeof AnswersSlugRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
   '/$service/': typeof ServiceIndexRoute
+  '/answers/': typeof AnswersIndexRoute
   '/areas/': typeof AreasIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/guides/': typeof GuidesIndexRoute
@@ -228,25 +263,29 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/answers': typeof AnswersRoute
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/franchise': typeof FranchiseRoute
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/seo-monitor': typeof AuthenticatedSeoMonitorRoute
+  '/answers/$slug': typeof AnswersSlugRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
   '/$service': typeof ServiceIndexRoute
+  '/answers': typeof AnswersIndexRoute
   '/areas': typeof AreasIndexRoute
   '/blog': typeof BlogIndexRoute
   '/guides': typeof GuidesIndexRoute
@@ -260,26 +299,31 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/$service': typeof ServiceRouteWithChildren
   '/about': typeof AboutRoute
-  '/answers': typeof AnswersRoute
+  '/answers': typeof AnswersRouteWithChildren
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/franchise': typeof FranchiseRoute
   '/guides': typeof GuidesRouteWithChildren
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/seo-monitor': typeof AuthenticatedSeoMonitorRoute
+  '/answers/$slug': typeof AnswersSlugRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/guides/$slug': typeof GuidesSlugRoute
   '/$service/': typeof ServiceIndexRoute
+  '/answers/': typeof AnswersIndexRoute
   '/areas/': typeof AreasIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/guides/': typeof GuidesIndexRoute
@@ -299,20 +343,25 @@ export interface FileRouteTypes {
     | '/cars'
     | '/contact'
     | '/faq'
+    | '/franchise'
     | '/guides'
     | '/map'
     | '/mcp'
     | '/pricing'
+    | '/privacy'
     | '/sitemap.xml'
+    | '/terms'
     | '/track-booking'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/seo-monitor'
+    | '/answers/$slug'
     | '/areas/$slug'
     | '/blog/$slug'
     | '/guides/$slug'
     | '/$service/'
+    | '/answers/'
     | '/areas/'
     | '/blog/'
     | '/guides/'
@@ -323,25 +372,29 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
-    | '/answers'
     | '/auth'
     | '/bikes'
     | '/cars'
     | '/contact'
     | '/faq'
+    | '/franchise'
     | '/map'
     | '/mcp'
     | '/pricing'
+    | '/privacy'
     | '/sitemap.xml'
+    | '/terms'
     | '/track-booking'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/seo-monitor'
+    | '/answers/$slug'
     | '/areas/$slug'
     | '/blog/$slug'
     | '/guides/$slug'
     | '/$service'
+    | '/answers'
     | '/areas'
     | '/blog'
     | '/guides'
@@ -360,20 +413,25 @@ export interface FileRouteTypes {
     | '/cars'
     | '/contact'
     | '/faq'
+    | '/franchise'
     | '/guides'
     | '/map'
     | '/mcp'
     | '/pricing'
+    | '/privacy'
     | '/sitemap.xml'
+    | '/terms'
     | '/track-booking'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/seo-monitor'
+    | '/answers/$slug'
     | '/areas/$slug'
     | '/blog/$slug'
     | '/guides/$slug'
     | '/$service/'
+    | '/answers/'
     | '/areas/'
     | '/blog/'
     | '/guides/'
@@ -387,17 +445,20 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ServiceRoute: typeof ServiceRouteWithChildren
   AboutRoute: typeof AboutRoute
-  AnswersRoute: typeof AnswersRoute
+  AnswersRoute: typeof AnswersRouteWithChildren
   AuthRoute: typeof AuthRoute
   BikesRoute: typeof BikesRoute
   CarsRoute: typeof CarsRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  FranchiseRoute: typeof FranchiseRoute
   GuidesRoute: typeof GuidesRouteWithChildren
   MapRoute: typeof MapRoute
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
   TrackBookingRoute: typeof TrackBookingRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -417,11 +478,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackBookingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -450,6 +525,13 @@ declare module '@tanstack/react-router' {
       path: '/guides'
       fullPath: '/guides'
       preLoaderRoute: typeof GuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/franchise': {
+      id: '/franchise'
+      path: '/franchise'
+      fullPath: '/franchise'
+      preLoaderRoute: typeof FranchiseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -543,6 +625,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AreasIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/answers/': {
+      id: '/answers/'
+      path: '/'
+      fullPath: '/answers/'
+      preLoaderRoute: typeof AnswersIndexRouteImport
+      parentRoute: typeof AnswersRoute
+    }
     '/$service/': {
       id: '/$service/'
       path: '/'
@@ -570,6 +659,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/areas/$slug'
       preLoaderRoute: typeof AreasSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/answers/$slug': {
+      id: '/answers/$slug'
+      path: '/$slug'
+      fullPath: '/answers/$slug'
+      preLoaderRoute: typeof AnswersSlugRouteImport
+      parentRoute: typeof AnswersRoute
     }
     '/_authenticated/seo-monitor': {
       id: '/_authenticated/seo-monitor'
@@ -651,6 +747,19 @@ const ServiceRouteChildren: ServiceRouteChildren = {
 const ServiceRouteWithChildren =
   ServiceRoute._addFileChildren(ServiceRouteChildren)
 
+interface AnswersRouteChildren {
+  AnswersSlugRoute: typeof AnswersSlugRoute
+  AnswersIndexRoute: typeof AnswersIndexRoute
+}
+
+const AnswersRouteChildren: AnswersRouteChildren = {
+  AnswersSlugRoute: AnswersSlugRoute,
+  AnswersIndexRoute: AnswersIndexRoute,
+}
+
+const AnswersRouteWithChildren =
+  AnswersRoute._addFileChildren(AnswersRouteChildren)
+
 interface GuidesRouteChildren {
   GuidesSlugRoute: typeof GuidesSlugRoute
   GuidesIndexRoute: typeof GuidesIndexRoute
@@ -669,17 +778,20 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ServiceRoute: ServiceRouteWithChildren,
   AboutRoute: AboutRoute,
-  AnswersRoute: AnswersRoute,
+  AnswersRoute: AnswersRouteWithChildren,
   AuthRoute: AuthRoute,
   BikesRoute: BikesRoute,
   CarsRoute: CarsRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  FranchiseRoute: FranchiseRoute,
   GuidesRoute: GuidesRouteWithChildren,
   MapRoute: MapRoute,
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
   TrackBookingRoute: TrackBookingRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:

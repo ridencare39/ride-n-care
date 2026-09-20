@@ -8,7 +8,7 @@ import { formatPrice } from "@/lib/pricing";
 import { SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/track-booking")({
-  head: () => ({ meta: [{ title: "Track Your Booking | Ride N Care" }, { name: "description", content: "Check your Ride N Care service booking status using your Booking ID and mobile number." }, { property: "og:title", content: "Track Your Booking | Ride N Care" }, { property: "og:description", content: "Check your Ride N Care service booking status." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }], links: [{ rel: "canonical", href: `${SITE_URL}/track-booking` }] }),
+  head: () => ({ meta: [{ title: "Track Your Booking | Ride N Care" }, { name: "description", content: "Check your Ride N Care service booking status using your Booking ID and mobile number." }, { name: "robots", content: "noindex, nofollow" }], links: [{ rel: "canonical", href: `${SITE_URL}/track-booking` }] }),
   component: TrackBookingPage,
 });
 

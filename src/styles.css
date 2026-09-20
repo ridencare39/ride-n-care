@@ -13,6 +13,11 @@
  * The :root and .dark blocks define the actual color values using oklch.
  * All colors MUST use oklch format.
  *
+ * Theme: "Deep navy + clean white + neon cyan" — premium, bright, modern.
+ * The site is light-first: white surfaces, deep navy brand color used for
+ * headings, footers and primary actions, and a bright neon blue/cyan accent
+ * for highlights, icons, borders and interactive states.
+ *
  * To add a new semantic color:
  * 1. Add the variable to :root (light value) and .dark (dark value)
  * 2. Register it in @theme inline as --color-<name>: var(--<name>)
@@ -48,6 +53,8 @@
   --color-plate: var(--plate);
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-foreground: var(--whatsapp-foreground);
+  /* Bright neon blue/cyan accent usable with full color utilities (bg-, border-, text-, opacity) */
+  --color-neon: var(--neon);
   --color-ring-offset-background: var(--background);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -66,92 +73,103 @@
 
 :root {
   --radius: 0.625rem;
-  /* Black canvas + neon red primary */
-  --background: oklch(0.14 0.012 25);
-  --foreground: oklch(0.97 0.008 25);
-  --card: oklch(0.19 0.018 25);
-  --card-foreground: oklch(0.97 0.008 25);
-  --popover: oklch(0.17 0.016 25);
-  --popover-foreground: oklch(0.97 0.008 25);
-  --primary: oklch(0.62 0.26 25);
-  --primary-foreground: oklch(0.99 0.005 25);
-  --secondary: oklch(0.24 0.022 25);
-  --secondary-foreground: oklch(0.96 0.01 25);
-  --muted: oklch(0.24 0.02 25);
-  --muted-foreground: oklch(0.74 0.03 25);
-  --accent: oklch(0.7 0.24 28);
-  --accent-foreground: oklch(0.14 0.012 25);
-  --destructive: oklch(0.6 0.25 20);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.32 0.04 25);
-  --input: oklch(0.28 0.03 25);
-  --ring: oklch(0.62 0.26 25);
+  /* Clean white canvas + deep navy brand + neon cyan accent */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2 0.045 260);
+  --card: oklch(0.985 0.006 250);
+  --card-foreground: oklch(0.2 0.045 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.045 260);
+  /* Deep navy brand color (primary buttons, headings, footer) */
+  --primary: oklch(0.32 0.095 260);
+  --primary-foreground: oklch(1 0 0);
+  /* Bright neon blue/cyan accent (highlights, icons, links, borders) */
+  --accent: oklch(0.72 0.14 220);
+  --accent-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0.012 240);
+  --secondary-foreground: oklch(0.3 0.06 260);
+  --muted: oklch(0.955 0.01 240);
+  --muted-foreground: oklch(0.44 0.035 255);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9 0.015 245);
+  --input: oklch(0.88 0.018 245);
+  --ring: oklch(0.66 0.15 225);
   --plate: oklch(1 0 0);
   --whatsapp: oklch(0.72 0.2 145);
   --whatsapp-foreground: oklch(1 0 0);
-  --chart-1: oklch(0.62 0.26 25);
-  --chart-2: oklch(0.7 0.24 28);
-  --chart-3: oklch(0.55 0.2 15);
-  --chart-4: oklch(0.8 0.16 40);
-  --chart-5: oklch(0.45 0.16 20);
-  --sidebar: oklch(0.17 0.016 25);
-  --sidebar-foreground: oklch(0.97 0.008 25);
-  --sidebar-primary: oklch(0.62 0.26 25);
-  --sidebar-primary-foreground: oklch(0.99 0.005 25);
-  --sidebar-accent: oklch(0.24 0.022 25);
-  --sidebar-accent-foreground: oklch(0.96 0.01 25);
-  --sidebar-border: oklch(0.32 0.04 25);
-  --sidebar-ring: oklch(0.62 0.26 25);
-  --gradient-hero: linear-gradient(135deg, oklch(0.12 0.01 25) 0%, oklch(0.28 0.13 22) 55%, oklch(0.62 0.26 25) 100%);
-  --gradient-primary: linear-gradient(135deg, oklch(0.55 0.24 22), oklch(0.7 0.24 30));
-  --gradient-accent: linear-gradient(135deg, oklch(0.7 0.24 30), oklch(0.5 0.22 18));
-  --shadow-glow: 0 10px 44px -8px oklch(0.62 0.26 25 / 0.65);
+  /* Neon cyan brand accent — shared value so bg/border/text utilities stay in sync */
+  --neon: oklch(0.62 0.17 222);
+  --chart-1: oklch(0.32 0.095 260);
+  --chart-2: oklch(0.72 0.14 220);
+  --chart-3: oklch(0.6 0.15 235);
+  --chart-4: oklch(0.8 0.11 210);
+  --chart-5: oklch(0.45 0.09 265);
+  --sidebar: oklch(0.985 0.006 250);
+  --sidebar-foreground: oklch(0.2 0.045 260);
+  --sidebar-primary: oklch(0.32 0.095 260);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.955 0.012 240);
+  --sidebar-accent-foreground: oklch(0.3 0.06 260);
+  --sidebar-border: oklch(0.9 0.015 245);
+  --sidebar-ring: oklch(0.66 0.15 225);
+  /* Deep navy showcase gradient for hero sections (darkened for text contrast) */
+  --gradient-hero: linear-gradient(120deg, oklch(0.16 0.055 262) 0%, oklch(0.21 0.07 259) 55%, oklch(0.27 0.085 256) 100%);
+  /* Navy -> neon blue gradient for primary buttons/CTAs */
+  --gradient-primary: linear-gradient(135deg, oklch(0.3 0.1 262), oklch(0.55 0.15 235));
+  /* Neon blue -> neon cyan gradient for highlighted panels */
+  --gradient-accent: linear-gradient(135deg, oklch(0.42 0.12 252), oklch(0.7 0.14 218));
+  --shadow-glow: 0 10px 40px -8px oklch(0.6 0.15 225 / 0.45);
+  --shadow-glow-strong: 0 14px 48px -10px oklch(0.65 0.16 222 / 0.55);
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
 }
 
 .dark {
   --radius: 0.625rem;
-  /* Black canvas + neon red primary */
-  --background: oklch(0.14 0.012 25);
-  --foreground: oklch(0.97 0.008 25);
-  --card: oklch(0.19 0.018 25);
-  --card-foreground: oklch(0.97 0.008 25);
-  --popover: oklch(0.17 0.016 25);
-  --popover-foreground: oklch(0.97 0.008 25);
-  --primary: oklch(0.62 0.26 25);
-  --primary-foreground: oklch(0.99 0.005 25);
-  --secondary: oklch(0.24 0.022 25);
-  --secondary-foreground: oklch(0.96 0.01 25);
-  --muted: oklch(0.24 0.02 25);
-  --muted-foreground: oklch(0.74 0.03 25);
-  --accent: oklch(0.7 0.24 28);
-  --accent-foreground: oklch(0.14 0.012 25);
-  --destructive: oklch(0.6 0.25 20);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.32 0.04 25);
-  --input: oklch(0.28 0.03 25);
-  --ring: oklch(0.62 0.26 25);
-  --plate: oklch(1 0 0);
+  /* Dark variant mirrors the brand: deep navy surfaces + white text + neon cyan */
+  --background: oklch(0.19 0.04 260);
+  --foreground: oklch(0.97 0.005 240);
+  --card: oklch(0.23 0.045 260);
+  --card-foreground: oklch(0.97 0.005 240);
+  --popover: oklch(0.21 0.045 260);
+  --popover-foreground: oklch(0.97 0.005 240);
+  /* Slightly brighter navy in dark mode for contrast against surfaces */
+  --primary: oklch(0.55 0.14 250);
+  --primary-foreground: oklch(1 0 0);
+  --accent: oklch(0.78 0.13 215);
+  --accent-foreground: oklch(0.16 0.05 262);
+  --secondary: oklch(0.28 0.05 258);
+  --secondary-foreground: oklch(0.95 0.005 240);
+  --muted: oklch(0.28 0.045 258);
+  --muted-foreground: oklch(0.78 0.025 245);
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.34 0.05 258);
+  --input: oklch(0.3 0.05 258);
+  --ring: oklch(0.7 0.13 218);
+  --plate: oklch(0.23 0.045 260);
   --whatsapp: oklch(0.72 0.2 145);
   --whatsapp-foreground: oklch(1 0 0);
-  --chart-1: oklch(0.62 0.26 25);
-  --chart-2: oklch(0.7 0.24 28);
-  --chart-3: oklch(0.55 0.2 15);
-  --chart-4: oklch(0.8 0.16 40);
-  --chart-5: oklch(0.45 0.16 20);
-  --sidebar: oklch(0.17 0.016 25);
-  --sidebar-foreground: oklch(0.97 0.008 25);
-  --sidebar-primary: oklch(0.62 0.26 25);
-  --sidebar-primary-foreground: oklch(0.99 0.005 25);
-  --sidebar-accent: oklch(0.24 0.022 25);
-  --sidebar-accent-foreground: oklch(0.96 0.01 25);
-  --sidebar-border: oklch(0.32 0.04 25);
-  --sidebar-ring: oklch(0.62 0.26 25);
-  --gradient-hero: linear-gradient(135deg, oklch(0.12 0.01 25) 0%, oklch(0.28 0.13 22) 55%, oklch(0.62 0.26 25) 100%);
-  --gradient-primary: linear-gradient(135deg, oklch(0.55 0.24 22), oklch(0.7 0.24 30));
-  --gradient-accent: linear-gradient(135deg, oklch(0.7 0.24 30), oklch(0.5 0.22 18));
-  --shadow-glow: 0 10px 44px -8px oklch(0.62 0.26 25 / 0.65);
+  --neon: oklch(0.76 0.14 215);
+  --chart-1: oklch(0.55 0.14 250);
+  --chart-2: oklch(0.78 0.13 215);
+  --chart-3: oklch(0.65 0.15 235);
+  --chart-4: oklch(0.82 0.11 210);
+  --chart-5: oklch(0.48 0.09 265);
+  --sidebar: oklch(0.23 0.045 260);
+  --sidebar-foreground: oklch(0.97 0.005 240);
+  --sidebar-primary: oklch(0.55 0.14 250);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.28 0.05 258);
+  --sidebar-accent-foreground: oklch(0.95 0.005 240);
+  --sidebar-border: oklch(0.34 0.05 258);
+  --sidebar-ring: oklch(0.7 0.13 218);
+  --gradient-hero: linear-gradient(120deg, oklch(0.14 0.05 262) 0%, oklch(0.18 0.065 259) 55%, oklch(0.24 0.08 256) 100%);
+  --gradient-primary: linear-gradient(135deg, oklch(0.35 0.1 262), oklch(0.55 0.15 235));
+  --gradient-accent: linear-gradient(135deg, oklch(0.42 0.12 252), oklch(0.7 0.14 218));
+  --shadow-glow: 0 10px 44px -8px oklch(0.65 0.16 222 / 0.4);
+  --shadow-glow-strong: 0 14px 48px -10px oklch(0.7 0.17 220 / 0.5);
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
 }
@@ -161,16 +179,66 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-body);
     font-feature-settings: "ss01", "cv11";
     overflow-x: clip;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
+    font-weight: 700;
     letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  /* Neon-tinted focus ring for keyboard users on the light canvas */
+  ::selection {
+    background-color: oklch(0.72 0.14 220 / 0.25);
+  }
+
+  ::placeholder {
+    color: oklch(0.55 0.03 250);
+  }
+
+  /* Consistent, brand-tinted keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Subtle branded scrollbar (desktop) */
+  @media (pointer: fine) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: oklch(0.62 0.17 222 / 0.45) transparent;
+    }
+    *::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    *::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, oklch(0.62 0.17 222 / 0.5), oklch(0.32 0.095 260 / 0.55));
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    *::-webkit-scrollbar-track {
+      background: transparent;
+    }
   }
 }
 
@@ -185,6 +253,242 @@
 }
 @utility shadow-glow {
   box-shadow: var(--shadow-glow);
+}
+@utility shadow-glow-strong {
+  box-shadow: var(--shadow-glow-strong);
+}
+
+/* Soft ambient card shadow for white surfaces */
+@utility shadow-card {
+  box-shadow:
+    0 1px 2px oklch(0.32 0.095 260 / 0.05),
+    0 8px 24px -12px oklch(0.32 0.095 260 / 0.12);
+}
+
+/* Elevated card hover: lift + neon border + deeper shadow. Apply with
+   `transition` on the element (or use .card-hover which includes it). */
+@utility card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  &:hover {
+    transform: translateY(-3px);
+    border-color: oklch(0.62 0.17 222 / 0.55);
+    box-shadow:
+      0 2px 4px oklch(0.32 0.095 260 / 0.05),
+      0 18px 36px -16px oklch(0.62 0.17 222 / 0.35);
+  }
+}
+
+/* Light top sheen on navy surfaces for a premium glass feel */
+@utility navy-sheen {
+  background-image:
+    linear-gradient(180deg, oklch(1 0 0 / 0.06) 0%, oklch(1 0 0 / 0) 30%),
+    var(--gradient-hero);
+}
+
+/* Animated shine sweep for primary CTAs (plays on hover) */
+@keyframes rnc-shine {
+  from { transform: translateX(-130%) skewX(-18deg); }
+  to { transform: translateX(230%) skewX(-18deg); }
+}
+@utility btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.35), transparent);
+    transform: translateX(-130%) skewX(-18deg);
+    pointer-events: none;
+  }
+  &:hover::after {
+    animation: rnc-shine 0.9s ease;
+  }
+}
+
+/* Animated AI booking pill — living aurora border + breathing glow */
+@keyframes rnc-ai-hue {
+  to { filter: hue-rotate(360deg); }
+}
+@keyframes rnc-ai-glow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.85; }
+}
+@utility ai-btn {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(from 0deg, #67e8f9, #a78bfa, #34d399, #f0abfc, #67e8f9);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: rnc-ai-hue 7s linear infinite;
+    pointer-events: none;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(120% 120% at 50% 50%, oklch(0.7 0.16 300 / 0.55), transparent 70%);
+    animation: rnc-ai-glow 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+/* Shimmer placeholder for loading states */
+@keyframes rnc-shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+@utility skeleton {
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    90deg,
+    oklch(0.955 0.01 240) 0%,
+    oklch(0.97 0.012 235) 45%,
+    oklch(0.955 0.01 240) 70%,
+    oklch(0.955 0.01 240) 100%
+  );
+  background-size: 200% 100%;
+  animation: rnc-shimmer 1.6s linear infinite;
+}
+
+/* Soft pop-in for menus, dialogs and dropdowns */
+@keyframes rnc-pop-in {
+  from { opacity: 0; transform: translate3d(0, -6px, 0) scale(0.98); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@utility pop-in {
+  animation: rnc-pop-in 0.18s ease-out both;
+}
+
+/* Gentle rise-in for hero content on first load */
+@keyframes rnc-rise-in {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@utility rise-in {
+  animation: rnc-rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility rise-in-late {
+  animation: rnc-rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+@utility rise-in-later {
+  animation: rnc-rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+}
+
+/* Hero rotating word: Bike <-> Car. CSS-only soft blink (fade out with blur/scale,
+   swap, fade in with a subtle cyan glow). Both words stay in the DOM with opacity
+   only — never display:none — and the inline-grid stack keeps the width stable.
+   Cycle = 6s, so the word swaps every 3s. */
+@keyframes rnc-rotor-bike {
+  0%, 42% { opacity: 1; filter: blur(0); transform: scale(1); text-shadow: 0 0 14px oklch(0.72 0.14 220 / 0.55); }
+  50%, 92% { opacity: 0; filter: blur(4px); transform: scale(1.08); text-shadow: 0 0 0 oklch(0.72 0.14 220 / 0); }
+  100% { opacity: 1; filter: blur(0); transform: scale(1); text-shadow: 0 0 14px oklch(0.72 0.14 220 / 0.55); }
+}
+@keyframes rnc-rotor-car {
+  0%, 42% { opacity: 0; filter: blur(4px); transform: scale(0.94); text-shadow: 0 0 0 oklch(0.72 0.14 220 / 0); }
+  50%, 92% { opacity: 1; filter: blur(0); transform: scale(1); text-shadow: 0 0 14px oklch(0.72 0.14 220 / 0.55); }
+  100% { opacity: 0; filter: blur(4px); transform: scale(1.08); }
+}
+@utility rotor {
+  display: inline-grid;
+  vertical-align: baseline;
+}
+@utility rotor-word {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+@utility rotor-bike {
+  opacity: 1;
+  animation: rnc-rotor-bike 6s ease-in-out infinite;
+}
+@utility rotor-car {
+  opacity: 0;
+  animation: rnc-rotor-car 6s ease-in-out infinite;
+}
+
+/* Reduced motion: no animation — show both words statically as "Bike / Car". */
+@media (prefers-reduced-motion: reduce) {
+  .rotor { display: inline; }
+  .rotor-bike,
+  .rotor-car {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+    text-shadow: none;
+  }
+  .rotor-car::before { content: " / "; }
+}
+
+/* Global guard: kill decorative motion for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  .btn-shine::after,
+  .rise-in,
+  .rise-in-late,
+  .rise-in-later,
+  .pop-in,
+  .skeleton,
+  .ai-btn::before,
+  .ai-btn::after,
+  .trust-beam-inner,
+  .panel-row-in {
+    animation: none !important;
+  }
+  .trust-beam-inner {
+    opacity: 0; /* decorative travelling light — simply off for reduced motion */
+  }
+  .card-hover,
+  .card-hover:hover {
+    transform: none !important;
+  }
+}
+
+/* Neon sign glow for the brand wordmark on navy surfaces */
+@utility text-glow-neon {
+  text-shadow:
+    0 0 12px oklch(0.72 0.14 220 / 0.55),
+    0 0 26px oklch(0.65 0.17 215 / 0.3);
+}
+
+/* Thin neon accent hairline used under headings/section labels */
+@utility neon-line {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -0.6rem;
+    height: 3px;
+    width: 3.5rem;
+    border-radius: 9999px;
+    background-image: linear-gradient(90deg, oklch(0.72 0.14 220), oklch(0.65 0.17 200));
+    box-shadow: 0 0 14px oklch(0.72 0.14 220 / 0.65);
+    animation: neon-breathe 3.5s ease-in-out infinite;
+  }
+}
+
+/* Readability scrims for the deep-navy hero over photo backgrounds */
+@utility hero-surface-r {
+  background-image: linear-gradient(90deg, oklch(0.22 0.07 262) 0%, oklch(0.22 0.07 262 / 0.85) 55%, oklch(0.22 0.07 262 / 0.1) 100%);
+}
+@utility hero-surface-t {
+  background-image: linear-gradient(0deg, oklch(0.22 0.07 262) 0%, oklch(0.22 0.07 262 / 0) 45%, oklch(0.22 0.07 262 / 0.4) 100%);
 }
 
 @utility marquee-track {
@@ -203,7 +507,456 @@
   50% { transform: translate3d(0, -14px, 0); }
 }
 
+@keyframes neon-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+/* ---------- Hero vehicles (homepage): quick drive-in + gentle continuous idle ---------- */
+/*
+ * Performance notes: only transform/opacity/stroke-dashoffset animate
+ * (compositor-friendly), the entrance plays once, and the continuous idle
+ * (bob / wheel roll / road dashes / neon pulse) is deliberately subtle.
+ * Vehicles are always visible in markup (no opacity trap); everything animates
+ * except under prefers-reduced-motion, where all motion is disabled.
+ */
+
+@keyframes rnc-drive-in {
+  from { transform: translate3d(-140%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes rnc-wheel-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rnc-road-sweep {
+  from { stroke-dashoffset: 60; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Motion streaks trailing the vehicles — brief fade in/out, translate only. */
+@keyframes rnc-speed-streak {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0; }
+  50% { transform: translate3d(-14px, 0, 0); opacity: 0.85; }
+}
+
+/* Endless cruise: vehicle slides across the hero forever (left → right).
+ * Negative delays put each vehicle mid-path on first paint, so the scene is
+ * alive immediately instead of waiting for the first pass. */
+@keyframes rnc-cruise {
+  from { transform: translate3d(-30vw, 0, 0); }
+  to { transform: translate3d(110vw, 0, 0); }
+}
+
+/* Soft neon pulse on headlights/underglow. */
+@keyframes rnc-beam-pulse {
+  0%, 100% { opacity: 0.22; }
+  50% { opacity: 0.4; }
+}
+
+/* Gentle suspension bob — visible but tasteful. */
+@keyframes rnc-bob {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -2.5px, 0); }
+}
+
+@utility rnc-ride {
+  animation: rnc-drive-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility rnc-ride-bike {
+  animation-delay: 0.05s;
+}
+@utility rnc-ride-car {
+  animation-delay: 0.25s;
+}
+
+@utility rnc-wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: rnc-wheel-spin 0.6s linear infinite;
+}
+
+@utility rnc-road-dashes {
+  animation: rnc-road-sweep 0.55s linear infinite;
+}
+
+@utility rnc-beam {
+  animation: rnc-beam-pulse 2.8s ease-in-out infinite;
+}
+
+@utility rnc-bob {
+  animation: rnc-bob 2.6s ease-in-out infinite;
+}
+@utility rnc-bob-late {
+  animation-delay: 1.3s;
+}
+
+@utility rnc-speed {
+  animation: rnc-speed-streak 1.8s ease-in-out infinite;
+}
+
+@utility rnc-cruise {
+  animation: rnc-cruise 22s linear infinite;
+}
+@utility rnc-cruise-bike {
+  animation-duration: 30s;
+  animation-delay: -14s;
+}
+
+/* Respect reduced motion: park everything instantly, no pulses. */
+@media (prefers-reduced-motion: reduce) {
+  .rnc-ride,
+  .rnc-parked,
+  .rnc-wheel,
+  .rnc-road-dashes,
+  .rnc-beam,
+  .rnc-bob,
+  .rnc-speed,
+  .rnc-cruise,
+  .rnc-cruise-bike {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .rnc-speed {
+    opacity: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Hero CTA pair, trust-point cards (Magic-Card look) and the mobile menu panel
+   --------------------------------------------------------------------------- */
+
+/* Hero CTA pair: equal height, centred label that may wrap to two lines */
+.hero-cta {
+  display: inline-flex;
+  width: 100%;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
+}
+.hero-cta:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+.hero-cta:active {
+  transform: translateY(0) scale(0.98);
+}
+.hero-cta:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+.hero-cta-glass {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.hero-cta-glass:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: color-mix(in oklch, var(--neon) 55%, transparent);
+  color: var(--neon);
+}
+
+/* Trust point: Magic-Card look — hairline gradient border + slow travelling beam */
+.trust-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.06) 40%, rgb(34 211 238 / 0.22));
+  padding: 1px; /* the gradient hairline */
+}
+.trust-card-inner {
+  position: relative;
+  border-radius: calc(1rem - 1px);
+  background: linear-gradient(160deg, rgb(10 26 47 / 0.94), rgb(7 18 36 / 0.94));
+  overflow: hidden;
+}
+.trust-beam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.trust-beam-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5px;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgb(34 211 238 / 0.9), transparent);
+  animation: rnc-trust-beam 6s linear infinite;
+}
+@keyframes rnc-trust-beam {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(440%);
+  }
+}
+
+/* Hamburger: 44px glass square with a thin gradient border; 3 lines -> X */
+.menu-btn {
+  position: relative;
+  display: inline-flex;
+  height: 44px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.menu-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgb(34 211 238 / 0.55), rgb(255 255 255 / 0.14) 55%, rgb(59 130 246 / 0.4));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.menu-btn:hover {
+  background: rgb(255 255 255 / 0.14);
+}
+.menu-btn:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+.menu-burger {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 14px;
+}
+.menu-burger > span {
+  position: absolute;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  background: currentColor;
+  transition: top 0.25s ease, transform 0.25s ease, opacity 0.2s ease;
+}
+.menu-burger > span:nth-child(1) {
+  top: 0;
+}
+.menu-burger > span:nth-child(2) {
+  top: 6px;
+}
+.menu-burger > span:nth-child(3) {
+  top: 12px;
+}
+.menu-burger[aria-expanded="true"] .menu-burger > span:nth-child(1) {
+  top: 6px;
+  transform: rotate(45deg);
+}
+.menu-burger[aria-expanded="true"] .menu-burger > span:nth-child(2) {
+  opacity: 0;
+}
+.menu-burger[aria-expanded="true"] .menu-burger > span:nth-child(3) {
+  top: 6px;
+  transform: rotate(-45deg);
+}/* Slide-in menu panel: right slide-in, near-solid glass navy, rounded left edge.
+   Rendered OUTSIDE the header element (a transform/filter/blur ancestor would
+   make position:fixed relative to the header and trap the panel in the
+   header's stacking context — the floating bar (z-50) must stay below it. */
+.panel-root {
+  position: fixed;
+  inset: 0;
+  z-index: 80; /* above the fixed Call/WhatsApp bar (z-50) and header (z-40) */
+  visibility: hidden;
+  transition: visibility 0s linear 0.32s;
+}
+.panel-root.is-open {
+  visibility: visible;
+  transition-delay: 0s;
+}
+/* Hide the page's fixed Call/WhatsApp bar while the menu is open */
+body:has(.panel-root.is-open) .float-bar {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+}
+.float-bar {
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.panel-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(2 8 16 / 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.panel-root.is-open .panel-backdrop {
+  opacity: 1;
+}
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  height: 100dvh;
+  width: min(88vw, 360px);
+  flex-direction: column;
+  border-radius: 1.25rem 0 0 1.25rem;
+  border-left: 1px solid rgb(255 255 255 / 0.1);
+  /* Near-solid (≥96% opacity) navy gradient — nothing shows through */
+  background: linear-gradient(165deg, rgb(10 26 47 / 0.97), rgb(7 18 36 / 0.98) 55%, rgb(5 13 28 / 0.99));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: -24px 0 60px -20px rgb(0 0 0 / 0.6);
+  transform: translateX(105%);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.panel-root.is-open .panel {
+  transform: translateX(0);
+}
+.panel-row-in {
+  animation: rnc-panel-row 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes rnc-panel-row {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Magic-style Bike/Car service boxes (hand-built Magic-Card look) */
+.svc-box {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 104px;
+  border-radius: 1rem;
+  padding: 1px; /* the gradient hairline */
+  background: linear-gradient(135deg, rgb(34 211 238 / 0.5), rgb(255 255 255 / 0.12) 45%, rgb(99 102 241 / 0.5));
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+.svc-box:hover {
+  transform: translateY(-1px);
+}
+.svc-box:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+.svc-box-inner {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100%;
+  min-height: 102px;
+  border-radius: calc(1rem - 1px);
+  padding: 0.75rem 0.85rem;
+  background: linear-gradient(160deg, rgb(12 28 52 / 0.97), rgb(8 19 38 / 0.97));
+  overflow: hidden;
+}
+.svc-box-bike .svc-box-inner {
+  color: var(--neon);
+}
+.svc-box-car .svc-box-inner {
+  color: #a5b4fc;
+}
+.svc-box-active.svc-box-bike {
+  box-shadow: 0 0 0 1px rgb(34 211 238 / 0.55), 0 0 24px -4px rgb(34 211 238 / 0.45);
+}
+.svc-box-active.svc-box-car {
+  box-shadow: 0 0 0 1px rgb(99 102 241 / 0.6), 0 0 24px -4px rgb(99 102 241 / 0.5);
+}
+.svc-box-beam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Slow travelling shine — 7 s, transform/opacity only */
+.svc-box-beam::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5px;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgb(34 211 238 / 0.85), transparent);
+  animation: rnc-svc-beam 7s linear infinite;
+}
+.svc-box-car .svc-box-beam::before {
+  background: linear-gradient(90deg, transparent, rgb(129 140 248 / 0.85), transparent);
+  animation-delay: -3.5s;
+  animation-duration: 7s;
+}
+@keyframes rnc-svc-beam {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(440%);
+  }
+}
+.svc-box-chevron {
+  color: rgb(255 255 255 / 0.45);
+}
+.svc-box-active .svc-box-chevron {
+  color: currentColor;
+}
+
+/* Expandable list: grid-template-rows 0fr -> 1fr; links never leave the DOM */
+.svc-list {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.svc-list.svc-list-open {
+  grid-template-rows: 1fr;
+}
+.svc-list-clip {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Reduced motion: park all panel motion instantly */
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .panel-backdrop,
+  .panel-row-in,
+  .svc-box,
+  .svc-box-beam::before,
+  .svc-list,
+  .svc-box-chevron {
+    transition: none !important;
+    animation: none !important;
+  }
+  .panel-row-in {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

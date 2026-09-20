@@ -1,9 +1,10 @@
 import { createFileRoute, Link, Outlet, notFound } from "@tanstack/react-router";
 import { getService } from "@/lib/services";
+import { getCarService } from "@/lib/car-services";
 
 export const Route = createFileRoute("/$service")({
   loader: ({ params }) => {
-    const service = getService(params.service);
+    const service = getService(params.service) ?? getCarService(params.service);
     if (!service) throw notFound();
     return { service };
   },

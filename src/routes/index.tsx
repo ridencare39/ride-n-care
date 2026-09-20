@@ -1,83 +1,74 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import heroAvif from "@/assets/hero-3d-mechanic.avif";
-import bike from "@/assets/bike-service.webp";
-import car from "@/assets/car-service.webp";
-import { AreasMarquee } from "@/components/AreasMarquee";
-import { Newsletter } from "@/components/Newsletter";
+import { CalendarCheck, Siren } from "lucide-react";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
-import { StatsRow } from "@/components/StatsRow";
-import { HeroBackground, HeroCardImage } from "@/components/HeroBackground";
+import { TrustPoints } from "@/components/TrustPoints";
+import { HeroVehicles } from "@/components/HeroVehicles";
 import { Testimonials } from "@/components/Testimonials";
 import { AreasSection } from "@/components/AreasSection";
 import { AnswerBlocks } from "@/components/AnswerBlocks";
 import { ANSWERS, BRAND, ENTITY_SUMMARY } from "@/lib/answers";
 import { GUIDES } from "@/lib/guides";
-import { AREAS } from "@/lib/areas";
 import { SERVICES } from "@/lib/services";
-import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
+import { pageHead } from "@/lib/head";
+import { graphForPage, faqNode, pageScripts } from "@/lib/schema";
 import { BookingButton } from "@/components/booking/BookingButton";
 
+/** Emoji icon per service category for the homepage grid (box style, no photos). */
+const SERVICE_ICONS: Record<string, string> = {
+  "bike-service": "🏍️",
+  "doorstep-bike-service": "🏠",
+  "bike-repair": "🔧",
+  "doorstep-bike-repair": "🛠️",
+  "periodic-bike-service": "🗓️",
+  "motorcycle-service": "🏁",
+  "scooter-service": "🛵",
+  "emergency-bike-repair": "🚨",
+  "bike-breakdown-assistance": "🆘",
+  "engine-repair": "⚙️",
+  "brake-service": "🛑",
+  "clutch-repair": "🔩",
+  "battery-service": "🔋",
+  "electrical-repair": "⚡",
+  "general-two-wheeler-repair": "🧰",
+};
+
 const HOME_FAQS: [string, string][] = [
-  ["Do you offer doorstep bike service in Bangalore?", "Yes — our certified mechanics arrive at your home or office anywhere in Bangalore with tools, diagnostics and genuine spares. Most bike services finish in 60–90 minutes."],
-  ["What car services do you provide at home?", "Periodic maintenance, brake jobs, battery replacement, AC service, denting & painting, breakdown assistance and pre-buy inspections — all at your doorstep."],
+  ["Do you offer doorstep bike service in Bangalore?", "Yes — our background-verified mechanics arrive at your home or office anywhere in Bangalore with tools, OEM-grade spares and a written quote before work starts. Most periodic bike services finish in 60–90 minutes."],
+  ["What car services do you provide at home?", "Periodic maintenance, AC service, battery replacement, brake work and pre-purchase inspections — all at your doorstep, with the price confirmed in writing before work starts."],
   ["Is doorstep car service in Bangalore cheaper than a garage?", "End-to-end it usually costs the same or less. You save on pickup-drop, half a day off, and there are zero hidden labour charges — every quote is upfront."],
-  ["Which Bangalore areas do you cover?", "All major Bangalore localities — Whitefield, Koramangala, HSR, Indiranagar, Electronic City, Hebbal, Marathahalli, Sarjapur, Jayanagar and 50+ more."],
+  ["Which Bangalore areas do you cover?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar and many more across east and south Bangalore — the full list with pincodes is on our service areas page."],
   ["Do you use genuine parts?", "Always. We fit OEM-grade spares with a printed invoice and standard manufacturer warranty."],
+];
+
+/**
+ * Homepage services: one merged grid with equal weight for bikes and cars.
+ * Bike and car cards deep-link to the matching money pages; the EV card points
+ * at /bikes (the EV hub) until the dedicated EV page ships in Week 9.
+ */
+const MERGED_SERVICES = [
+  { icon: "🏍️", name: "Bike Service", desc: "Periodic, repair & doorstep maintenance for every CC", to: "/bike-service" },
+  { icon: "🚗", name: "Car Periodic Service", desc: "Oil, filters, brakes & multi-point inspection at home", to: "/car-periodic-service" },
+  { icon: "❄️", name: "Car AC Service", desc: "Cooling check, coil clean & gas refill at your doorstep", to: "/car-ac-service" },
+  { icon: "🔧", name: "Bike Repair", desc: "Diagnosis-led repairs at your parking spot", to: "/bike-repair" },
+  { icon: "🛠️", name: "Car Battery", desc: "Test first, replacement fitted at your gate", to: "/car-battery-service" },
+  { icon: "🛑", name: "Car Brakes", desc: "Pad & disc measurement, fluid change at home", to: "/car-brake-service" },
+  { icon: "🛵", name: "Scooter Service", desc: "Activa, Jupiter, Access — CVT care included", to: "/scooter-service" },
+  { icon: "🔋", name: "Bike Battery", desc: "Testing, jump-start & doorstep replacement", to: "/battery-service" },
+  { icon: "⚡", name: "EV Service", desc: "Electric bike service, battery & diagnostics", to: "/bikes" },
 ];
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: "Ride N Care | Doorstep Bike & Car Service in Bangalore" },
-      { name: "description", content: "Doorstep bike & car service in Bangalore. Certified mechanics, genuine parts, upfront pricing and free pickup & drop across 50+ localities." },
-      { property: "og:title", content: "Ride N Care | Doorstep Bike & Car Service in Bangalore" },
-      { property: "og:description", content: "Bangalore's trusted doorstep bike and car service — genuine parts, transparent pricing, certified mechanics at your home." },
-      { property: "og:url", content: `${SITE_URL}/` },
-      { property: "og:site_name", content: "Ride N Care" },
-      { property: "og:image", content: OG_IMAGE },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: OG_IMAGE },
-    ],
-    links: [
-      { rel: "canonical", href: `${SITE_URL}/` },
-      { rel: "preload", as: "image", href: heroAvif, type: "image/avif", fetchPriority: "high" },
-    ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          ...LOCAL_BUSINESS_JSONLD,
-          areaServed: [
-            ...LOCAL_BUSINESS_JSONLD.areaServed,
-            ...AREAS.map((a) => ({ "@type": "Place", name: `${a.name}, Bangalore`, ...(a.pincode ? { address: { "@type": "PostalAddress", postalCode: a.pincode, addressLocality: "Bangalore", addressCountry: "IN" } } : {}) })),
-          ],
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Service",
-          serviceType: "Bike and Car Repair",
-          provider: { "@type": "AutoRepair", "@id": `${SITE_URL}/#business`, name: "Ride N Care" },
-          areaServed: ["Bangalore"],
-          offers: { "@type": "AggregateOffer", lowPrice: "399", priceCurrency: "INR" },
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: HOME_FAQS.map(([q, a]) => ({
-            "@type": "Question",
-            name: q,
-            acceptedAnswer: { "@type": "Answer", text: a },
-          })),
-        }),
-      },
-    ],
+    ...pageHead({
+      title: "Doorstep Bike & Car Service in Bangalore | Ride N Care",
+      description:
+        "Trusted doorstep bike & car service in Bangalore. Book a verified mechanic in 60 seconds — OEM parts, written quote, 7-day guarantee. Care in every mile.",
+      path: "/",
+    }),
+    scripts: pageScripts(
+      graphForPage([faqNode(HOME_FAQS)]),
+    ),
   }),
   component: Home,
 });
@@ -86,82 +77,85 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-hero">
-        {/* 3D mechanic background */}
-        <HeroBackground />
-        {/* readability scrims */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
-        {/* soft 3D glow orbs */}
+      <section className="relative overflow-hidden navy-sheen">
+        {/* soft neon glow orbs — the hero visual is the animated vehicle road scene below */}
         <div className="pointer-events-none absolute -top-24 right-1/4 h-72 w-72 rounded-full bg-primary/25 blur-3xl float-slow" />
         <div className="pointer-events-none absolute bottom-0 right-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl float-slower" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-24 md:py-32 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <span className="inline-flex items-center rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary uppercase tracking-wider">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-16 md:pt-10 md:pb-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="rise-in inline-flex items-center gap-1.5 rounded-full border border-neon/45 bg-neon/10 px-3 py-1 text-xs font-semibold text-neon uppercase tracking-wider shadow-glow">
               ⭐ Bangalore's Trusted Doorstep Garage
             </span>
-            <h1 className="mt-6 text-4xl md:text-6xl font-bold leading-[1.05]">
-              Trusted Bike Service & <span className="text-primary">Doorstep Bike Repair in Bangalore</span>
+            <h1 className="neon-line rise-in mt-6 text-4xl md:text-6xl font-bold leading-[1.05] text-white [text-shadow:0_2px_18px_rgba(2,10,26,0.95),0_0_3px_rgba(2,10,26,0.8)]">
+              <span className="block">Trusted Bike &amp; Car Service</span>
+              <span className="block text-neon">
+                Doorstep{" "}
+                <span className="rotor">
+                  <span className="rotor-word rotor-bike">Bike</span>
+                  <span className="rotor-word rotor-car">Car</span>
+                </span>{" "}
+                Repair in Bangalore
+              </span>
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-lg">
-              From Whitefield to Kengeri — book a certified mechanic in 60 seconds. We service every two‑wheeler and four‑wheeler with OEM parts, live updates and a printed warranty. <span className="text-foreground font-medium">Care in every mile.</span>
+            <p className="rise-in-late mt-6 text-lg text-white/80 max-w-lg mx-auto [text-shadow:0_1px_12px_rgba(2,10,26,0.9)]">
+              Book a verified mechanic in 60 seconds. Ride N Care brings bike service, car service and repair to your home or office across Bangalore, from Whitefield and HSR Layout to Electronic City and Kengeri. OEM parts, written quote, 7-day guarantee.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <BookingButton className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow hover:opacity-90">Book Now</BookingButton>
-              <Link to="/pricing" className="rounded-full border border-border px-6 py-3 font-semibold hover:bg-card">
-                View Pricing
+            {/* Hero CTA pair: equal-height 2-col grid, 12px gap, wraps on narrow phones */}
+            <div className="rise-in-later mx-auto mt-8 grid w-full max-w-xl grid-cols-2 gap-3">
+              <BookingButton className="hero-cta bg-grad-primary text-primary-foreground shadow-glow">
+                <CalendarCheck aria-hidden className="h-5 w-5 shrink-0" /> Book Now
+              </BookingButton>
+              <Link
+                to="/$service"
+                params={{ service: "bike-breakdown-assistance" }}
+                className="hero-cta hero-cta-glass"
+              >
+                <Siren aria-hidden className="h-5 w-5 shrink-0 text-neon" /> Breakdown Assistance
               </Link>
-            </div>
-            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
-              <li>✅ Same-day slots</li>
-              <li>✅ 7-day workmanship guarantee</li>
-              <li>✅ Free pickup & drop</li>
-              <li>✅ Cashless payments</li>
-            </ul>
-            <StatsRow className="mt-10 max-w-md" />
-          </div>
-          <div className="hidden md:block">
-            <div className="relative rounded-3xl overflow-hidden border border-border shadow-glow float-slow">
-              <HeroCardImage />
             </div>
           </div>
         </div>
+        <HeroVehicles />
+        {/* text-protection scrim: darkens vehicles passing behind the copy */}
+        <div aria-hidden="true" className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_62%_58%_at_50%_40%,rgba(2,10,26,0.78),rgba(2,10,26,0.35)_55%,transparent_78%)]" />
+      </section>
+
+      {/* Trust points — the single six-point block (replaces the old duplicate rows).
+          Bottom padding clears the fixed Call/WhatsApp bar on mobile. */}
+      <section aria-label="Why riders trust Ride N Care" className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6 sm:pb-28">
+        <TrustPoints />
       </section>
 
       {/* SEO-rich intro */}
       <section className="mx-auto max-w-5xl px-4 sm:px-6 py-16 text-center">
         <h2 className="text-3xl md:text-4xl font-bold">Bangalore's friendliest doorstep mechanics</h2>
         <p className="mt-4 text-muted-foreground leading-relaxed">
-          Stuck in traffic, juggling a hectic week, or simply tired of waiting at a service centre? Ride N Care brings the entire workshop to your driveway. Whether it's a routine bike oil change in <strong className="text-foreground">Koramangala</strong>, a car AC top-up in <strong className="text-foreground">HSR Layout</strong>, or a Sunday breakdown rescue in <strong className="text-foreground">Whitefield</strong> — we are 30 minutes away with the right tools and the right price.
+          Stuck in traffic, juggling a hectic week, or simply tired of waiting at a service centre? Ride N Care brings the entire workshop to your driveway. Whether it's a routine bike oil change in <strong className="text-foreground">Koramangala</strong>, a car AC top-up in <strong className="text-foreground">HSR Layout</strong>, or a Sunday breakdown rescue in <strong className="text-foreground">Whitefield</strong> — book a slot, approve a written quote, and the mechanic comes to you with the right tools and the right price.
         </p>
         <p className="mt-4 text-muted-foreground leading-relaxed">
           Every service is performed by a background-verified, trained mechanic, uses genuine OEM-grade spares and ends with a digital invoice plus a 7-day workmanship guarantee. No upselling. No surprise bills. Just honest, on-time, doorstep care for your ride.
         </p>
       </section>
 
-      {/* Bike services — internal links */}
+      {/* Services — single merged grid, bikes and cars at parity */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-6">
-        <SectionHeading eyebrow="Bike services" title="Pick the service your bike needs" />
-        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {SERVICES.map((s) => (
+        <SectionHeading eyebrow="Our Services" title="Pick your service" />
+        <div className="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          {MERGED_SERVICES.map((s) => (
             <Link
-              key={s.slug}
-              to="/$service"
-              params={{ service: s.slug }}
-              className="rounded-2xl border border-border bg-card p-5 hover:border-primary/50 transition"
+              key={s.name}
+              to={s.to}
+              className="card-hover shadow-card group flex flex-col items-center rounded-3xl border border-border bg-card p-5 text-center sm:p-6"
             >
-              <h3 className="font-semibold">{s.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{s.intro}</p>
-              <span className="mt-3 inline-block text-sm text-primary font-semibold">
-                {s.priceFrom ? `From ₹${s.priceFrom} →` : "Learn more →"}
+              <span aria-hidden className="text-4xl transition duration-300 group-hover:scale-110">{s.icon}</span>
+              <h3 className="mt-3 font-semibold text-foreground group-hover:text-primary transition-colors">{s.name}</h3>
+              <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{s.desc}</p>
+              <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary transition group-hover:gap-2">
+                Learn More
+                <span aria-hidden className="text-neon">→</span>
               </span>
             </Link>
           ))}
-        </div>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <a href="tel:08296950339" className="rounded-full border border-border px-5 py-2.5 font-semibold text-sm hover:bg-card">Call 08296950339</a>
-          <a href="tel:08069409289" className="rounded-full border border-border px-5 py-2.5 font-semibold text-sm hover:bg-card">Call 08069409289</a>
-          <a href="https://wa.me/918296950339" className="rounded-full bg-grad-primary px-5 py-2.5 font-semibold text-sm text-primary-foreground shadow-glow">WhatsApp us</a>
         </div>
       </section>
 
@@ -170,8 +164,8 @@ function Home() {
         <SectionHeading eyebrow="About the business" title="Who is Ride N Care?" />
         <p className="mt-6 text-muted-foreground leading-relaxed">{ENTITY_SUMMARY}</p>
         <p className="mt-4 text-sm text-muted-foreground">
-          Reach us on <a href={`tel:${BRAND.phonePrimary}`} className="text-primary hover:underline">{BRAND.phonePrimary}</a> or{" "}
-          <a href={`tel:${BRAND.phoneSecondary}`} className="text-primary hover:underline">{BRAND.phoneSecondary}</a>, open {BRAND.hours} in {BRAND.city}, {BRAND.region}.
+          Call <a href="tel:+918069409289" className="text-primary hover:underline">080 6940 9289</a> or WhatsApp{" "}
+          <a href="https://wa.me/918296950339" target="_blank" rel="noopener" className="text-primary hover:underline">82969 50339</a> in {BRAND.city}, {BRAND.region}.
         </p>
         <AnswerBlocks items={ANSWERS.slice(0, 7)} headingLevel={3} />
         <div className="mt-6">
@@ -180,9 +174,6 @@ function Home() {
       </section>
 
       {/* Areas We Serve */}
-      <AreasMarquee />
-
-      {/* Service areas / locations */}
       <AreasSection />
 
       {/* Trust & testimonials */}
@@ -190,25 +181,6 @@ function Home() {
 
       {/* Brands We Service */}
       <BrandsMarquee />
-
-      {/* Services */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20">
-        <SectionHeading eyebrow="Our Services" title="Built for two wheels and four" />
-        <div className="mt-10 grid md:grid-cols-2 gap-6">
-          <ServiceCard
-            image={bike}
-            title="Bike Service"
-            desc="Periodic, breakdown, and premium maintenance for all bike CCs — TVS to Harley."
-            to="/bikes"
-          />
-          <ServiceCard
-            image={car}
-            title="Car Service"
-            desc="Engine, brakes, AC, battery, denting — handled on the spot by certified mechanics."
-            to="/cars"
-          />
-        </div>
-      </section>
 
       {/* Why us — compact */}
       <section className="bg-card border-y border-border">
@@ -300,18 +272,13 @@ function Home() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 py-12">
-        <Newsletter />
-      </section>
-
       {/* CTA */}
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 py-20">
+      <section className="mx-auto max-w-5xl px-4 pb-32 pt-20 sm:px-6 sm:pb-36">
         <div className="rounded-3xl bg-grad-primary p-10 text-center shadow-glow">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">
             Ready for a smoother ride?
           </h2>
-          <p className="mt-3 text-primary-foreground/90">Book now and get ₹200 off your first service.</p>
+          <p className="mt-3 text-primary-foreground/90">Written quote before work starts. OEM-grade parts, digital invoice, 7-day workmanship guarantee.</p>
           <BookingButton className="mt-6 rounded-full bg-background px-6 py-3 font-semibold text-foreground">Book Now</BookingButton>
         </div>
       </section>
@@ -322,22 +289,11 @@ function Home() {
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="max-w-2xl">
-      <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">{eyebrow}</div>
+      <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-primary font-semibold">
+        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-neon shadow-glow" />
+        {eyebrow}
+      </div>
       <h2 className="mt-2 text-4xl md:text-5xl font-bold">{title}</h2>
     </div>
-  );
-}
-
-function ServiceCard({ image, title, desc, to }: { image: string; title: string; desc: string; to: "/bikes" | "/cars" }) {
-  return (
-    <Link to={to} className="group relative overflow-hidden rounded-3xl border border-border bg-card">
-      <img src={image} alt={title} loading="lazy" width={1200} height={900} className="h-72 w-full object-cover transition group-hover:scale-105" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-      <div className="absolute bottom-0 p-6">
-        <h3 className="text-2xl font-bold">{title}</h3>
-        <p className="mt-1 text-sm text-muted-foreground max-w-sm">{desc}</p>
-        <span className="mt-3 inline-block text-primary font-semibold">Explore →</span>
-      </div>
-    </Link>
   );
 }

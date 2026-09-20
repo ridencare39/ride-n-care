@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AREAS } from "@/lib/areas";
 import { OG_IMAGE, SITE_URL } from "@/lib/seo";
+import { pageHead } from "@/lib/head";
 
 const TITLE = "Service Area Map — Ride N Care Bangalore";
 const DESC =
@@ -9,19 +10,15 @@ const DESC =
 
 export const Route = createFileRoute("/map")({
   head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESC },
-      { name: "keywords", content: "ride n care map, doorstep bike service near me Bangalore, car mechanic near me map" },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESC },
-      { property: "og:url", content: `${SITE_URL}/map` },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: OG_IMAGE },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: OG_IMAGE },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/map` }],
+    ...pageHead({
+      title: TITLE,
+      description: DESC,
+      path: "/map",
+      extraMeta: [
+        { property: "og:title", content: TITLE },
+        { property: "og:description", content: DESC },
+      ],
+    }),
     scripts: [
       {
         type: "application/ld+json",
@@ -67,8 +64,8 @@ function MapPage() {
       <span className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Coverage Map</span>
       <h1 className="mt-2 text-4xl md:text-5xl font-bold">Ride N Care service area map</h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
-        Pick a locality to see it on Google Maps. Our doorstep mechanics reach any address inside these {AREAS.length} Bangalore
-        zones, usually within 30 minutes of confirmation.
+        Pick a locality to see it on Google Maps. Our doorstep mechanics cover every address inside these {AREAS.length} Bangalore
+        zones, and the arrival window is confirmed when you book.
       </p>
 
       <div className="mt-8 grid lg:grid-cols-[280px_1fr] gap-6">

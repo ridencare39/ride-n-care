@@ -1,0 +1,96 @@
+keyword,cluster,intent,funnel_stage,target_url,page_exists,priority,validation_status
+doorstep bike service bangalore,Bike - transactional,transactional,BOFU,/doorstep-bike-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike service at home bangalore,Bike - transactional,transactional,BOFU,/bike-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike mechanic at home bangalore,Bike - transactional,transactional,BOFU,/doorstep-bike-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+two wheeler service at home bangalore,Bike - transactional,transactional,BOFU,/bike-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike mechanic near me,Bike - transactional,local,BOFU,/bike-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike service near me,Bike - transactional,local,BOFU,/bike-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike repair near me,Bike - transactional,local,BOFU,/bike-repair,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike repair at home bangalore,Bike - transactional,transactional,BOFU,/bike-repair,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+doorstep bike repair bangalore,Bike - transactional,transactional,BOFU,/doorstep-bike-repair,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+scooter service at home bangalore,Bike - transactional,transactional,BOFU,/scooter-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+scooter repair near me,Bike - transactional,local,BOFU,/scooter-service,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+electric scooter service bangalore,Bike - transactional,transactional,BOFU,/bikes,Y,P1,TO VALIDATE in Search Console / Keyword Planner (dedicated /ev-two-wheeler-service planned Week 9)
+ev two wheeler service bangalore,Bike - transactional,transactional,BOFU,/bikes,Y,P1,TO VALIDATE in Search Console / Keyword Planner (dedicated /ev-two-wheeler-service planned Week 9)
+emergency bike repair bangalore,Bike - transactional,transactional,BOFU,/emergency-bike-repair,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike breakdown assistance bangalore,Bike - transactional,transactional,BOFU,/bike-breakdown-assistance,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike battery replacement at home bangalore,Bike - transactional,transactional,BOFU,/battery-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike engine repair bangalore,Bike - transactional,transactional,BOFU,/engine-repair,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike brake service bangalore,Bike - transactional,transactional,BOFU,/brake-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike clutch repair bangalore,Bike - transactional,transactional,BOFU,/clutch-repair,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+bike chain repair bangalore,Bike - transactional,transactional,BOFU,/general-two-wheeler-repair,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+bike electrical repair bangalore,Bike - transactional,transactional,BOFU,/electrical-repair,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+motorcycle service bangalore,Bike - transactional,transactional,BOFU,/motorcycle-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+periodic service for bike bangalore,Bike - transactional,transactional,BOFU,/periodic-bike-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike general service cost bangalore,Bike - transactional,transactional,BOFU,/bikes,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike service packages and prices,Bike - transactional,transactional,BOFU,/bikes,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike service booking bangalore,Bike - transactional,transactional,BOFU,/contact,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+royal enfield service at home bangalore,Bike - brand,transactional,BOFU,/royal-enfield-service,N,P2,TO VALIDATE in Search Console / Keyword Planner
+royal enfield classic 350 service cost,Bike - brand,transactional,BOFU,/royal-enfield-service,N,P2,TO VALIDATE in Search Console / Keyword Planner
+royal enfield himalayan service bangalore,Bike - brand,transactional,BOFU,/royal-enfield-service,N,P2,TO VALIDATE in Search Console / Keyword Planner
+ktm duke service bangalore,Bike - brand,transactional,BOFU,/ktm-service,N,P2,TO VALIDATE in Search Console / Keyword Planner
+activa service at home bangalore,Bike - brand,transactional,BOFU,/scooter-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner (Honda 2W brand page Week 10)
+honda activa service cost bangalore,Bike - brand,transactional,BOFU,/scooter-service,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+tvs jupiter service bangalore,Bike - brand,transactional,BOFU,/scooter-service,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+tvs apache service bangalore,Bike - brand,transactional,BOFU,/motorcycle-service,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+bajaj pulsar service bangalore,Bike - brand,transactional,BOFU,/motorcycle-service,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+hero splendor service bangalore,Bike - brand,transactional,BOFU,/motorcycle-service,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+yamaha r15 service bangalore,Bike - brand,transactional,BOFU,/motorcycle-service,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+yamaha fz service bangalore,Bike - brand,transactional,BOFU,/motorcycle-service,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+suzuki access 125 service bangalore,Bike - brand,transactional,BOFU,/scooter-service,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+jawa service bangalore,Bike - brand,transactional,BOFU,/jawa-yezdi-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+yezdi service bangalore,Bike - brand,transactional,BOFU,/jawa-yezdi-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+ather service bangalore,Bike - brand (EV),transactional,BOFU,/ather-service,N,P2,TO VALIDATE in Search Console / Keyword Planner
+ola electric scooter service bangalore,Bike - brand (EV),transactional,BOFU,/ola-electric-service,N,P2,TO VALIDATE in Search Console / Keyword Planner
+tvs iqube service bangalore,Bike - brand (EV),transactional,BOFU,/scooter-service,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+bajaj chetak service bangalore,Bike - brand (EV),transactional,BOFU,/scooter-service,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+how often to service a bike,Bike - informational,informational,TOFU,/guides/when-to-service-your-bike,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+bike service cost bangalore,Bike - informational,informational,MOFU,/bikes,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+what does a periodic bike service include,Bike - informational,informational,MOFU,/guides/bike-service-guide-bangalore,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+bike not starting causes,Bike - informational,informational,TOFU,/guides/bike-breakdown-troubleshooting-guide,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+bike chain lubrication how often,Bike - informational,informational,TOFU,/guides/complete-bike-maintenance-guide,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+engine oil change interval bike,Bike - informational,informational,TOFU,/guides/complete-bike-maintenance-guide,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+monsoon bike care tips,Bike - informational,informational,TOFU,/blog/[monsoon-bike-care post],N,P3,TO VALIDATE in Search Console / Keyword Planner
+doorstep car service bangalore,Car - transactional,transactional,BOFU,/cars,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+car service at home bangalore,Car - transactional,transactional,BOFU,/cars,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+car mechanic at home bangalore,Car - transactional,transactional,BOFU,/cars,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+car periodic maintenance service at home bangalore,Car - transactional,transactional,BOFU,/car-periodic-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+car ac repair at home bangalore,Car - transactional,transactional,BOFU,/car-ac-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+car ac gas refill cost bangalore,Car - transactional,transactional,BOFU,/car-ac-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+car battery replacement at home bangalore,Car - transactional,transactional,BOFU,/car-battery-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+car brake pad replacement at home bangalore,Car - transactional,transactional,BOFU,/car-brake-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+pre purchase car inspection bangalore,Car - transactional,transactional,BOFU,/car-inspection,N,P1,TO VALIDATE in Search Console / Keyword Planner
+used car inspection at home bangalore,Car - transactional,transactional,BOFU,/car-inspection,N,P1,TO VALIDATE in Search Console / Keyword Planner
+car breakdown service bangalore,Car - transactional,transactional,BOFU,/car-breakdown-assistance,N,P2,TO VALIDATE in Search Console / Keyword Planner
+car denting and painting at home bangalore,Car - transactional,transactional,BOFU,/car-denting-painting,N,P3,TO VALIDATE in Search Console / Keyword Planner — BLOCKED on owner Q8
+maruti swift service at home bangalore,Car - brand,transactional,BOFU,/maruti-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+maruti baleno service bangalore,Car - brand,transactional,BOFU,/maruti-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+hyundai i20 service at home bangalore,Car - brand,transactional,BOFU,/hyundai-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+hyundai creta service bangalore,Car - brand,transactional,BOFU,/hyundai-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+tata nexon service bangalore,Car - brand,transactional,BOFU,/tata-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+mahindra thar service bangalore,Car - brand,transactional,BOFU,/mahindra-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+honda city service bangalore,Car - brand,transactional,BOFU,/honda-car-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+toyota innova service bangalore,Car - brand,transactional,BOFU,/toyota-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+kia seltos service bangalore,Car - brand,transactional,BOFU,/kia-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
+car service cost bangalore,Car - informational,informational,MOFU,/cars,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+car ac not cooling causes,Car - informational,informational,TOFU,/blog/[car-ac-not-cooling post],N,P2,TO VALIDATE in Search Console / Keyword Planner
+how often to service a car,Car - informational,informational,TOFU,/blog/[how-often-car-service post],N,P2,TO VALIDATE in Search Console / Keyword Planner
+car battery life how long,Car - informational,informational,TOFU,/blog/[car-battery-life post],N,P3,TO VALIDATE in Search Console / Keyword Planner
+brake noise when braking causes,Car - informational,informational,TOFU,/blog/[brake-noise post],N,P3,TO VALIDATE in Search Console / Keyword Planner
+monsoon car checks,Car - informational,informational,TOFU,/blog/[monsoon-car-checks post],N,P3,TO VALIDATE in Search Console / Keyword Planner
+bike service in whitefield,Local modifiers,local,BOFU,/bike-service/whitefield,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike service in hsr layout,Local modifiers,local,BOFU,/bike-service/hsr-layout,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike service electronic city,Local modifiers,local,BOFU,/bike-service/electronic-city,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+doorstep bike service koramangala,Local modifiers,local,BOFU,/doorstep-bike-service/koramangala,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+bike repair marathahalli,Local modifiers,local,BOFU,/bike-repair/marathahalli,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+scooter service jayanagar,Local modifiers,local,BOFU,/scooter-service/jayanagar,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+emergency bike repair indiranagar,Local modifiers,local,BOFU,/emergency-bike-repair/indiranagar,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+bike breakdown assistance whitefield,Local modifiers,local,BOFU,/areas/whitefield,Y,P2,TO VALIDATE in Search Console / Keyword Planner (assistance page not area-template)
+bike battery replacement hsr layout,Local modifiers,local,BOFU,/areas/hsr-layout,Y,P3,TO VALIDATE in Search Console / Keyword Planner (battery page not area-template)
+car service in koramangala,Local modifiers,local,BOFU,/cars,Y,P1,TO VALIDATE in Search Console / Keyword Planner (car area pages after car sub-service pages ship)
+doorstep bike service vs garage,Comparison,comparison,MOFU,/blog/[doorstep-vs-garage post],N,P2,TO VALIDATE in Search Console / Keyword Planner
+doorstep service vs authorised service centre,Comparison,comparison,MOFU,/blog/[doorstep-vs-authorised post],N,P2,TO VALIDATE in Search Console / Keyword Planner
+is doorstep bike service worth it,Comparison,comparison,MOFU,/guides/doorstep-bike-service-guide,Y,P2,TO VALIDATE in Search Console / Keyword Planner
+how to choose a bike mechanic in bangalore,Comparison,comparison,MOFU,/blog/[choose-mechanic post],N,P3,TO VALIDATE in Search Console / Keyword Planner
+ride n care bangalore,Brand,brand,BOFU,/about,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+ride n care franchise,Brand,brand,BOFU,/franchise,Y,P3,TO VALIDATE in Search Console / Keyword Planner

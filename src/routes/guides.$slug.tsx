@@ -2,7 +2,9 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { GUIDES, getGuide } from "@/lib/guides";
 import { getService } from "@/lib/services";
 import { BRAND } from "@/lib/answers";
-import { LOCAL_BUSINESS_JSONLD, OG_IMAGE, SITE_URL, breadcrumbJsonLd, faqPageJsonLd } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
+import { pageHead } from "@/lib/head";
+import { graphForPage, articleNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 
 export const Route = createFileRoute("/guides/$slug")({
   loader: ({ params }) => {
@@ -14,57 +16,31 @@ export const Route = createFileRoute("/guides/$slug")({
     const g = loaderData?.guide ?? GUIDES[0]!;
     const url = `${SITE_URL}/guides/${params.slug}`;
     return {
-      meta: [
-        { title: g.title },
-        { name: "description", content: g.description },
-        { property: "og:title", content: g.h1 },
-        { property: "og:description", content: g.description },
-        { property: "og:url", content: url },
-        { property: "og:type", content: "article" },
-        { property: "og:image", content: OG_IMAGE },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: OG_IMAGE },
-      ],
-      links: [{ rel: "canonical", href: url }],
-      scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "@id": `${url}#article`,
+      ...pageHead({
+        title: g.title,
+        description: g.description,
+        path: `/guides/${params.slug}`,
+        extraMeta: [
+          { property: "og:title", content: g.h1 },
+          { property: "og:type", content: "article" },
+        ],
+      }),
+      scripts: pageScripts(
+        graphForPage([
+          articleNode({
+            url,
             headline: g.h1,
             description: g.description,
-            abstract: g.summary,
             datePublished: g.published,
-            dateModified: g.published,
-            inLanguage: "en-IN",
-            mainEntityOfPage: { "@type": "WebPage", "@id": url },
-            author: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: BRAND.name },
-            publisher: { "@id": `${SITE_URL}/#organization` },
-            about: { "@id": `${SITE_URL}/#business` },
-            articleSection: "Two-wheeler maintenance",
-            keywords: [
-              "bike service Bangalore",
-              "bike repair Bangalore",
-              "doorstep bike service",
-              "two wheeler maintenance",
-            ],
           }),
-        },
-        { type: "application/ld+json", children: JSON.stringify(faqPageJsonLd(g.faqs, `${url}#faq`)) },
-        {
-          type: "application/ld+json",
-          children: JSON.stringify(
-            breadcrumbJsonLd([
-              ["Home", `${SITE_URL}/`],
-              ["Guides", `${SITE_URL}/guides`],
-              [g.h1, url],
-            ]),
-          ),
-        },
-        { type: "application/ld+json", children: JSON.stringify(LOCAL_BUSINESS_JSONLD) },
-      ],
+          faqNode(g.faqs),
+          breadcrumbNode([
+            ["Home", "/"],
+            ["Guides", "/guides"],
+            [g.h1, `/guides/${params.slug}`],
+          ]),
+        ]),
+      ),
     };
   },
   component: GuidePage,
@@ -88,7 +64,7 @@ function GuidePage() {
       </p>
 
       <p className="mt-6 rounded-2xl border border-primary/30 bg-primary/5 p-5 text-base leading-relaxed">
-        <strong className="text-foreground">In short: </strong>
+        <strong className="text-foreground">Quick answer: </strong>
         <span className="text-muted-foreground">{g.summary}</span>
       </p>
 
@@ -181,7 +157,7 @@ function GuidePage() {
           {BRAND.name} services and repairs bikes and scooters at your doorstep in {BRAND.city}. {BRAND.tagline}.
         </p>
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
-          <a href={`tel:${BRAND.phonePrimary}`} className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Call {BRAND.phonePrimary}</a>
+          <a href="tel:+918069409289" className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Call {BRAND.phonePrimaryDisplay}</a>
           <a href={`https://wa.me/${BRAND.whatsapp}`} className="rounded-full border border-background/40 px-6 py-3 font-semibold text-primary-foreground">WhatsApp</a>
           <Link to="/answers" className="rounded-full border border-background/40 px-6 py-3 font-semibold text-primary-foreground">All answers</Link>
         </div>
