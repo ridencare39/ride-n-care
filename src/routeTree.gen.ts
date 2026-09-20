@@ -21,6 +21,8 @@ import { Route as FranchiseRouteImport } from './routes/franchise'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CarsRouteImport } from './routes/cars'
+import { Route as CarBreakdownAssistanceRouteImport } from './routes/car-breakdown-assistance'
+import { Route as BreakdownAssistanceRouteImport } from './routes/breakdown-assistance'
 import { Route as BikesRouteImport } from './routes/bikes'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AnswersRouteImport } from './routes/answers'
@@ -103,6 +105,16 @@ const ContactRoute = ContactRouteImport.update({
 const CarsRoute = CarsRouteImport.update({
   id: '/cars',
   path: '/cars',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarBreakdownAssistanceRoute = CarBreakdownAssistanceRouteImport.update({
+  id: '/car-breakdown-assistance',
+  path: '/car-breakdown-assistance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BreakdownAssistanceRoute = BreakdownAssistanceRouteImport.update({
+  id: '/breakdown-assistance',
+  path: '/breakdown-assistance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BikesRoute = BikesRouteImport.update({
@@ -231,6 +243,8 @@ export interface FileRoutesByFullPath {
   '/answers': typeof AnswersRouteWithChildren
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
+  '/breakdown-assistance': typeof BreakdownAssistanceRoute
+  '/car-breakdown-assistance': typeof CarBreakdownAssistanceRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -265,6 +279,8 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
+  '/breakdown-assistance': typeof BreakdownAssistanceRoute
+  '/car-breakdown-assistance': typeof CarBreakdownAssistanceRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -302,6 +318,8 @@ export interface FileRoutesById {
   '/answers': typeof AnswersRouteWithChildren
   '/auth': typeof AuthRoute
   '/bikes': typeof BikesRoute
+  '/breakdown-assistance': typeof BreakdownAssistanceRoute
+  '/car-breakdown-assistance': typeof CarBreakdownAssistanceRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -340,6 +358,8 @@ export interface FileRouteTypes {
     | '/answers'
     | '/auth'
     | '/bikes'
+    | '/breakdown-assistance'
+    | '/car-breakdown-assistance'
     | '/cars'
     | '/contact'
     | '/faq'
@@ -374,6 +394,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/bikes'
+    | '/breakdown-assistance'
+    | '/car-breakdown-assistance'
     | '/cars'
     | '/contact'
     | '/faq'
@@ -410,6 +432,8 @@ export interface FileRouteTypes {
     | '/answers'
     | '/auth'
     | '/bikes'
+    | '/breakdown-assistance'
+    | '/car-breakdown-assistance'
     | '/cars'
     | '/contact'
     | '/faq'
@@ -448,6 +472,8 @@ export interface RootRouteChildren {
   AnswersRoute: typeof AnswersRouteWithChildren
   AuthRoute: typeof AuthRoute
   BikesRoute: typeof BikesRoute
+  BreakdownAssistanceRoute: typeof BreakdownAssistanceRoute
+  CarBreakdownAssistanceRoute: typeof CarBreakdownAssistanceRoute
   CarsRoute: typeof CarsRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
@@ -553,6 +579,20 @@ declare module '@tanstack/react-router' {
       path: '/cars'
       fullPath: '/cars'
       preLoaderRoute: typeof CarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/car-breakdown-assistance': {
+      id: '/car-breakdown-assistance'
+      path: '/car-breakdown-assistance'
+      fullPath: '/car-breakdown-assistance'
+      preLoaderRoute: typeof CarBreakdownAssistanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/breakdown-assistance': {
+      id: '/breakdown-assistance'
+      path: '/breakdown-assistance'
+      fullPath: '/breakdown-assistance'
+      preLoaderRoute: typeof BreakdownAssistanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bikes': {
@@ -781,6 +821,8 @@ const rootRouteChildren: RootRouteChildren = {
   AnswersRoute: AnswersRouteWithChildren,
   AuthRoute: AuthRoute,
   BikesRoute: BikesRoute,
+  BreakdownAssistanceRoute: BreakdownAssistanceRoute,
+  CarBreakdownAssistanceRoute: CarBreakdownAssistanceRoute,
   CarsRoute: CarsRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,

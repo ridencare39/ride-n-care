@@ -2,7 +2,7 @@
 """Part 4 JSON-LD validator: parses every JSON-LD block on sampled pages,
 checks required fields, @id resolution, and business-fact consistency
 (call vs WhatsApp numbers, no unverified claims). Prints a summary for docs/seo/04-schema-report.md."""
-import json, re, subprocess, sys, collections
+import json, re, subprocess, sys, collections, time
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8080"
 
@@ -10,6 +10,7 @@ PAGES = [
     "/", "/bikes", "/cars", "/bike-service", "/doorstep-bike-service", "/bike-repair",
     "/car-periodic-service", "/car-ac-service", "/car-battery-service", "/car-brake-service",
     "/scooter-service", "/emergency-bike-repair", "/bike-breakdown-assistance",
+    "/breakdown-assistance", "/car-breakdown-assistance",
     "/engine-repair", "/brake-service", "/battery-service", "/periodic-bike-service",
     "/motorcycle-service", "/areas", "/areas/hsr-layout", "/areas/whitefield",
     "/areas/koramangala", "/areas/electronic-city", "/areas/madiwala",
@@ -30,10 +31,20 @@ IDS_EXPECTED = {
     "https://ridencare.co.in/#website",
 }
 
-def fetch(path):
+def fetch(path, retries=2):
+    """Fetch with a browser-ish UA and retry — bare rapid curl gets rate-limited."""
     url = BASE + path
-    r = subprocess.run(["curl", "-s", "-m", "15", url], capture_output=True, text=True, timeout=30)
-    return r.stdout
+    out = ""
+    for attempt in range(retries + 1):
+        r = subprocess.run(
+            ["curl", "-s", "-m", "15", "-A", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36", url],
+            capture_output=True, text=True, timeout=30,
+        )
+        out = r.stdout or ""
+        if "<html" in out.lower():
+            return out
+        time.sleep(3 * (attempt + 1))
+    return out
 
 def extract_blocks(html):
     return re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', html, re.S)

@@ -20,6 +20,7 @@ Ride N Care is a doorstep bike and car service company in Bangalore, Karnataka, 
 - Bike repair in Bangalore: repair for specific complaints, engine work, electrical diagnosis, battery testing and replacement.
 - Scooter and electric two-wheeler service, including EV-specific packages.
 - Emergency bike repair and breakdown assistance at the vehicle's location.
+- Breakdown assistance covers bikes, scooters and cars: /breakdown-assistance is the hub for any vehicle; /bike-breakdown-assistance covers bikes and scooters; /car-breakdown-assistance covers cars. Call 080 6940 9289 or WhatsApp 82969 50339 with your location.
 - Doorstep car service in Bangalore: periodic maintenance, AC service and gas refill, battery testing and replacement, brake pads, discs and fluid, diagnostics and pre-purchase inspection. Dedicated pages: /car-periodic-service, /car-ac-service, /car-battery-service, /car-brake-service.
 - Free pickup and drop is arranged only when a job genuinely needs the workshop; most bike services finish in 60–90 minutes.
 
@@ -68,3 +69,5 @@ Ride N Care serves confirmed localities across east and south Bangalore, includi
 - Guides: https://ridencare.co.in/guides
 - FAQ: https://ridencare.co.in/faq
 - Contact / booking: https://ridencare.co.in/contact
+- Breakdown assistance (bike & car hub): https://ridencare.co.in/breakdown-assistance
+- Car breakdown assistance: https://ridencare.co.in/car-breakdown-assistance

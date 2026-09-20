@@ -105,11 +105,7 @@ function Home() {
               <BookingButton className="hero-cta bg-grad-primary text-primary-foreground shadow-glow">
                 <CalendarCheck aria-hidden className="h-5 w-5 shrink-0" /> Book Now
               </BookingButton>
-              <Link
-                to="/$service"
-                params={{ service: "bike-breakdown-assistance" }}
-                className="hero-cta hero-cta-glass"
-              >
+              <Link to="/breakdown-assistance" className="hero-cta hero-cta-glass">
                 <Siren aria-hidden className="h-5 w-5 shrink-0 text-neon" /> Breakdown Assistance
               </Link>
             </div>

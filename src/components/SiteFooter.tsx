@@ -21,7 +21,7 @@ const SERVICES: FooterLink[] = [
   { label: "Scooter Service", to: "/$service", params: { service: "scooter-service" } },
   { label: "Engine Repair", to: "/$service", params: { service: "engine-repair" } },
   { label: "Emergency Repair", to: "/$service", params: { service: "emergency-bike-repair" } },
-  { label: "Breakdown Assistance", to: "/$service", params: { service: "bike-breakdown-assistance" } },
+  { label: "Breakdown Assistance", to: "/breakdown-assistance" },
   { label: "Car Service", to: "/cars" },
   { label: "Car Periodic Service", to: "/car-periodic-service" },
   { label: "Car AC Service", to: "/car-ac-service" },

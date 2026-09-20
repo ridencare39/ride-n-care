@@ -13,6 +13,7 @@ scooter repair near me,Bike - transactional,local,BOFU,/scooter-service,Y,P2,TO 
 electric scooter service bangalore,Bike - transactional,transactional,BOFU,/bikes,Y,P1,TO VALIDATE in Search Console / Keyword Planner (dedicated /ev-two-wheeler-service planned Week 9)
 ev two wheeler service bangalore,Bike - transactional,transactional,BOFU,/bikes,Y,P1,TO VALIDATE in Search Console / Keyword Planner (dedicated /ev-two-wheeler-service planned Week 9)
 emergency bike repair bangalore,Bike - transactional,transactional,BOFU,/emergency-bike-repair,Y,P1,TO VALIDATE in Search Console / Keyword Planner
+breakdown assistance bangalore,Breakdown - transactional,transactional,BOFU,/breakdown-assistance,Y,P1,CANNIBALISATION RULING (2026-09-20): the hub /breakdown-assistance owns generic "breakdown assistance bangalore" and vehicle-neutral variants; /bike-breakdown-assistance keeps all bike/scooter modifiers; /car-breakdown-assistance owns all car modifiers. TO VALIDATE in Search Console / Keyword Planner
 bike breakdown assistance bangalore,Bike - transactional,transactional,BOFU,/bike-breakdown-assistance,Y,P1,TO VALIDATE in Search Console / Keyword Planner
 bike battery replacement at home bangalore,Bike - transactional,transactional,BOFU,/battery-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
 bike engine repair bangalore,Bike - transactional,transactional,BOFU,/engine-repair,Y,P1,TO VALIDATE in Search Console / Keyword Planner
@@ -61,7 +62,7 @@ car battery replacement at home bangalore,Car - transactional,transactional,BOFU
 car brake pad replacement at home bangalore,Car - transactional,transactional,BOFU,/car-brake-service,Y,P1,TO VALIDATE in Search Console / Keyword Planner
 pre purchase car inspection bangalore,Car - transactional,transactional,BOFU,/car-inspection,N,P1,TO VALIDATE in Search Console / Keyword Planner
 used car inspection at home bangalore,Car - transactional,transactional,BOFU,/car-inspection,N,P1,TO VALIDATE in Search Console / Keyword Planner
-car breakdown service bangalore,Car - transactional,transactional,BOFU,/car-breakdown-assistance,N,P2,TO VALIDATE in Search Console / Keyword Planner
+car breakdown service bangalore,Car - transactional,transactional,BOFU,/car-breakdown-assistance,Y,P2,TO VALIDATE in Search Console / Keyword Planner
 car denting and painting at home bangalore,Car - transactional,transactional,BOFU,/car-denting-painting,N,P3,TO VALIDATE in Search Console / Keyword Planner — BLOCKED on owner Q8
 maruti swift service at home bangalore,Car - brand,transactional,BOFU,/maruti-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
 maruti baleno service bangalore,Car - brand,transactional,BOFU,/maruti-service,N,P3,TO VALIDATE in Search Console / Keyword Planner
@@ -85,7 +86,7 @@ doorstep bike service koramangala,Local modifiers,local,BOFU,/doorstep-bike-serv
 bike repair marathahalli,Local modifiers,local,BOFU,/bike-repair/marathahalli,Y,P2,TO VALIDATE in Search Console / Keyword Planner
 scooter service jayanagar,Local modifiers,local,BOFU,/scooter-service/jayanagar,Y,P2,TO VALIDATE in Search Console / Keyword Planner
 emergency bike repair indiranagar,Local modifiers,local,BOFU,/emergency-bike-repair/indiranagar,Y,P2,TO VALIDATE in Search Console / Keyword Planner
-bike breakdown assistance whitefield,Local modifiers,local,BOFU,/areas/whitefield,Y,P2,TO VALIDATE in Search Console / Keyword Planner (assistance page not area-template)
+bike breakdown assistance whitefield,Local modifiers,local,BOFU,/areas/whitefield,Y,P2,TO VALIDATE in Search Console / Keyword Planner (area page covers local intent; citywide intent goes to the /breakdown-assistance hub)
 bike battery replacement hsr layout,Local modifiers,local,BOFU,/areas/hsr-layout,Y,P3,TO VALIDATE in Search Console / Keyword Planner (battery page not area-template)
 car service in koramangala,Local modifiers,local,BOFU,/cars,Y,P1,TO VALIDATE in Search Console / Keyword Planner (car area pages after car sub-service pages ship)
 doorstep bike service vs garage,Comparison,comparison,MOFU,/blog/[doorstep-vs-garage post],N,P2,TO VALIDATE in Search Console / Keyword Planner

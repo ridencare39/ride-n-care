@@ -16,6 +16,7 @@ const BASE_URL = SITE_URL;
  */
 const LASTMOD = {
   core: "2026-09-18",
+  breakdown: "2026-09-20",
   services: "2026-09-18",
   carServices: "2026-09-19",
   areas: "2026-09-20",
@@ -34,6 +35,8 @@ const staticEntries: Entry[] = [
   { path: "/faq", priority: "0.7", changefreq: "monthly", lastmod: LASTMOD.core },
   { path: "/contact", priority: "0.8", changefreq: "yearly", lastmod: LASTMOD.core },
   { path: "/franchise", priority: "0.7", changefreq: "monthly", lastmod: "2026-09-18" },
+  { path: "/breakdown-assistance", priority: "0.9", changefreq: "monthly", lastmod: LASTMOD.breakdown },
+  { path: "/car-breakdown-assistance", priority: "0.8", changefreq: "monthly", lastmod: LASTMOD.breakdown },
   { path: "/areas", priority: "0.8", changefreq: "monthly", lastmod: LASTMOD.areas },
   { path: "/map", priority: "0.5", changefreq: "monthly", lastmod: LASTMOD.areas },
   { path: "/answers", priority: "0.9", changefreq: "monthly", lastmod: LASTMOD.answers },

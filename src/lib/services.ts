@@ -66,7 +66,7 @@ const BOOK_STEPS: [string, string][] = [
   ["4. Pay after the test ride", "Inspect the work, take a short test ride, then pay by UPI, card or cash. Invoice on WhatsApp."],
 ];
 
-const DISPATCH_STEPS: [string, string][] = [
+export const DISPATCH_STEPS: [string, string][] = [
   ["1. Call or WhatsApp", "Share your live location and what happened. Call 080 6940 9289 or WhatsApp 82969 50339."],
   ["2. Get the charge upfront", "The callout and likely repair cost are confirmed on the call before anyone rides out."],
   ["3. Mechanic dispatched", "The nearest available mechanic rides to you with a jump pack, spares and a puncture kit."],

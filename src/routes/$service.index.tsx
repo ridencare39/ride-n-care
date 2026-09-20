@@ -216,6 +216,13 @@ function ServiceLanding() {
           <div>
             <h2 className="text-xl font-bold">Related services</h2>
             <ul className="mt-3 space-y-1.5">
+              {(s.slug === "bike-breakdown-assistance" || s.slug === "car-breakdown-assistance") && (
+                <li>
+                  <Link to="/breakdown-assistance" className="text-primary hover:underline">
+                    Bike &amp; Car Breakdown Assistance in Bangalore
+                  </Link>
+                </li>
+              )}
               {related.map((r) => (
                 <li key={r.slug}>
                   <Link to="/$service" params={{ service: r.slug }} className="text-primary hover:underline">
