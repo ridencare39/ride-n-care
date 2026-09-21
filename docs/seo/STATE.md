@@ -162,3 +162,21 @@ Q1–Q13 in OWNER-QUESTIONS.md; most urgent: claim proofs (Q1–Q7) before Part 
 - **De-dup:** entity paragraph once per page — homepage + /answers no longer render the repeat of "Who is Ride N Care?".
 - **Homepage:** "and Kengeri" removed from hero + meta (unconfirmed); EV card → **/scooter-service** (the page that covers Ola/Ather/electric two-wheelers).
 - **Verify (live, cache-busted):** coverage 33 matches on /, /areas, /answers, areas-covered, footer ✓; banned strings absent from 8 sampled URLs ✓ (only `4.8` hits are SVG path data, not copy); 0 meta descriptions ending "..." ✓; 1 H1 + 1 canonical per sampled page ✓; schema validator local PASS 44 pages / 84 blocks / 0 errors / 0 warnings incl. new banned-text scan (live run fully rate-limited — same code passed locally; live JSON spot-checks clean); sitemap includes 14 new answers, 0 dupes ✓. Build needs `NODE_OPTIONS=--max-old-space-size=1300` (1536 was OOM-killed in sandbox).
+
+## Part 9 — GEO (AI answer-engine visibility) — 2026-09-21, commit after 52cfcd0 (A–E)
+
+**Scope shipped:** 9.1 entity audit, 9.2 about at-a-glance, 9.3 /guarantee + /sample-invoice (noindex), 9.4 retrieval-shaping verified, 9.5 crawler-access report, 9.6 AI-visibility test protocol, 9.7 offsite plan.
+
+| Item | Result |
+|---|---|
+| Entity audit (docs/seo/09-entity-audit.md): name/tagline/phones/coverage(33)/brands(12+7)/claims identical across site, schema, llms.txt, footer | PASS — no on-site mismatches; 6 OWNER-ACTION profile checks listed (GBP, Instagram, Facebook, YouTube, X, Justdial/Sulekha) |
+| About "Ride N Care at a glance" fact table + "Last verified" date; founding year/hours/team size logged unanswered in OWNER-QUESTIONS | PASS |
+| /guarantee (full 7-day terms draft) + /sample-invoice (dummy data, labelled sample) — both `noindex, nofollow`, excluded from sitemap, removed from validator banned-strings scan | PASS (live 200, robots meta confirmed) |
+| Retrieval-shaped content on top pages (answer-first, key fact first, tables, real dates) | PASS — already satisfied by Parts 7–8B templates; blog/guides dates unified to "21 Sep 2026" display format |
+| Crawler access: GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, ClaudeBot, Google-Extended, Bingbot → all 200, identical SSR HTML; robots.txt permissive; llms.txt factual | PASS — report + Cloudflare owner checklist in docs/seo/09-crawler-access.md |
+| AI visibility protocol (50 prompts × 5 engines, scoring formula, baseline instructions) | docs/seo/09-ai-visibility-tests.md — owner runs baseline |
+| Offsite plan (copy-ready short/medium/long descriptions, GBP→YouTube priority table, no fake reviews) | docs/seo/09-offsite-plan.md |
+| Schema validator: 51 pages / 0 errors / 0 warnings (now includes the two noindex pages) | PASS |
+| tsc + build | PASS (NODE_OPTIONS=--max-old-space-size=1300; 1536 OOMs on this box) |
+
+**Noindex pages:** /guarantee, /sample-invoice — flip to index only after the owner confirms the terms (tracked in OWNER-QUESTIONS).
