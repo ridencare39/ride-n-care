@@ -189,3 +189,16 @@ Q1–Q13 in OWNER-QUESTIONS.md; most urgent: claim proofs (Q1–Q7) before Part 
 - **Task 2 (commit 6690945):** docs/seo/10-gbp-pack.md (categories, SAB settings + 20-area limit note, 748-char description, 12 services, attributes, 30-photo list, 4-week posts calendar, 10 Q&A seeds, ethical review process with 48h rule), 10-profile-copy.md (IG 122c, FB, YT, X 141c, LinkedIn tagline candidate ≤107c + About, short/medium/long descriptions, consistency checklist), 10-citations.csv (10 platforms + NAP rule), 10-measurement-checklist.md (GSC sitemap, Bing import, GA4 G-EQ8P35TH54 live + 4 key events, UTM conventions, 25-query weekly sheet), OWNER-ACTIONS.md (Q1–Q50 + hours/GA4/GBP/access grouped a–f, prioritised P1–P3, one-line reply format), 30-day-report.md (per-part commits, 211 URLs, metrics blanks, risks, Weeks 5–13 plan, verified-vs-not statement).
 - **GA4 correction:** Measurement ID G-EQ8P35TH54 was found live in the header (VITE_GA_MEASUREMENT_ID) — GA4 is NOT pending; only property access + key-event marking are owner actions. LinkedIn "already chosen" tagline is not recorded in the repo — candidate supplied, owner to paste/approve.
 - **Verify:** LIVE validator 53 checks / 98 blocks / 0 errors / 0 warnings (this run completed without rate-limiting); tsc clean; docs banned-strings clean (only rule-context mentions); old email nowhere in repo.
+
+## Owner answers applied (hours / 40 localities / 12,000+ / rating hold) — 2026-09-21, commit b95af9a, deploy 173c8252
+
+| Item | Result |
+|---|---|
+| Hours wording "Doorstep visits available 24 hours" live on / (trust points + support line), /about Hours row, /faq, /contact, /bikes, /cars, 3 breakdown pages, /answers/do-you-work-weekends + hours FAQs, llms.txt | PASS (live cache-busted, 11/11 URLs) |
+| Contradictions removed (8 AM–9 PM, next-morning scheduling, after-9PM queues, holiday window) | PASS — live grep 0 hits across 11 URLs; validator bans the variants |
+| Schema openingHoursSpecification Mon–Sun 00:00–23:59 (service visits) on LocalBusiness; parses | PASS (live JSON-LD verified) |
+| 40 localities confirmed → zone phrase east/south/north/west/central everywhere (helpers) + llms.txt/GBP/entity-audit; sitemap 211→225 (7 newly confirmed area pages) | PASS |
+| 12,000+ customers served — plain text on / and /about ONLY; validator enforces page scope; no AggregateRating ever | PASS |
+| Rating ON HOLD — value/count blank, nothing published; 4.7/4.8/4.9 absent from visible text on live pages | PASS |
+| GBP pack: hours section → option A (Open 24 hours, recommended only if truly dispatchable) vs B (answered hours + 24-hour line in description) | PASS |
+| Validator LIVE: 53 checks / 98 blocks / 0 errors / 0 warnings; tsc + fresh build + deploy | PASS |
