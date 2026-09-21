@@ -43,8 +43,8 @@
 
 ## Brand descriptions
 
-**Short (~30 words) — listings, bios:**
-> Ride N Care provides doorstep bike, scooter and car service in Bangalore. Written quote before work starts, background-verified mechanics, OEM-grade parts, digital invoice and a 7-day workmanship guarantee.
+**Short (~30 words) — listings, bios (owner update 21 Sep 2026: 40 localities, 24-hour visits):**
+> Ride N Care provides 24-hour doorstep bike, scooter and car service in Bangalore across 40 localities. Written quote before work starts, background-verified mechanics, OEM-grade parts, digital invoice and a 7-day workmanship guarantee.
 
 **Medium (~60 words) — directories, partner pages:**
 > Ride N Care is a doorstep vehicle service company in Bangalore. A background-verified, KYC-checked mechanic comes to your home or office for bike, scooter and car service. You approve a written quote before work starts, parts are OEM-grade, payment is by UPI, card or cash with a digital invoice, and every job carries a 7-day workmanship guarantee. Call 080 6940 9289 or WhatsApp 82969 50339.

@@ -9,7 +9,7 @@
  * - `landmarks` are only well-known roads, metro stations, lakes, malls or
  *   tech parks (3–5, no invented claims). Every landmark is listed in
  *   docs/seo/OWNER-QUESTIONS.md for the owner's local verification.
- * - `confirmed: false` = coverage not yet confirmed by the owner (Q3 — the
+ * - Coverage for ALL localities below is owner-confirmed (Q3, 21 Sep 2026).
  *   north/west/central localities). Their pages stay live but are noindexed
  *   and excluded from areaServed/sitemap until the owner flips the flag.
  * - `tier: "priority"` = the owner's 12 fully-detailed localities with unique
@@ -138,25 +138,25 @@ export const AREAS: Area[] = [
   // --- North / West / Central Bangalore — coverage NOT yet owner-confirmed (Q3). ---
   // Pages stay live but are noindexed and excluded from areaServed + sitemap
   // until the owner confirms each locality. See docs/seo/OWNER-QUESTIONS.md.
-  { slug: "hebbal", name: "Hebbal", zone: "North", pincode: "560024", tier: "priority", confirmed: false,
+  { slug: "hebbal", name: "Hebbal", zone: "North", pincode: "560024", tier: "priority", confirmed: true,
     nearby: ["Yelahanka", "Kalyan Nagar", "KR Puram", "Yeshwanthpur"],
     landmarks: ["Hebbal Flyover", "Hebbal Lake", "Manyata Tech Park", "Esteem Mall"], lat: 13.0358, lng: 77.597 },
-  { slug: "yelahanka", name: "Yelahanka", zone: "North", pincode: "560064", confirmed: false,
+  { slug: "yelahanka", name: "Yelahanka", zone: "North", pincode: "560064", confirmed: true,
     nearby: ["Hebbal"],
     landmarks: ["Yelahanka New Town", "Yelahanka Railway Station", "Doddaballapur Road"], lat: 13.1007, lng: 77.5963 },
-  { slug: "rajajinagar", name: "Rajajinagar", zone: "West", pincode: "560010", confirmed: false,
+  { slug: "rajajinagar", name: "Rajajinagar", zone: "West", pincode: "560010", confirmed: true,
     nearby: ["Malleshwaram", "Yeshwanthpur", "MG Road"],
     landmarks: ["Orion Mall", "Dr. Rajkumar Road", "1st Block Rajajinagar", "Magadi Road"], lat: 12.9911, lng: 77.5522 },
-  { slug: "malleshwaram", name: "Malleshwaram", zone: "Central", pincode: "560003", confirmed: false,
+  { slug: "malleshwaram", name: "Malleshwaram", zone: "Central", pincode: "560003", confirmed: true,
     nearby: ["Rajajinagar", "Yeshwanthpur", "MG Road"],
     landmarks: ["Mantri Square", "Sankey Tank", "Malleshwaram 8th Cross", "Margosa Road"], lat: 13.0035, lng: 77.5709 },
-  { slug: "mg-road", name: "MG Road", zone: "Central", pincode: "560001", confirmed: false,
+  { slug: "mg-road", name: "MG Road", zone: "Central", pincode: "560001", confirmed: true,
     nearby: ["Malleshwaram", "Domlur", "Indiranagar"],
     landmarks: ["MG Road Metro Station", "Trinity Junction", "Brigade Road", "Chinnaswamy Stadium"], lat: 12.9752, lng: 77.606 },
-  { slug: "yeshwanthpur", name: "Yeshwanthpur", zone: "West", pincode: "560022", confirmed: false,
+  { slug: "yeshwanthpur", name: "Yeshwanthpur", zone: "West", pincode: "560022", confirmed: true,
     nearby: ["Malleshwaram", "Rajajinagar", "Peenya", "Hebbal"],
     landmarks: ["Yeshwanthpur Railway Station", "Tumkur Road (NH 48)", "Goraguntepalya Junction", "Mathikere"], lat: 13.0284, lng: 77.554 },
-  { slug: "peenya", name: "Peenya", zone: "West", pincode: "560058", confirmed: false,
+  { slug: "peenya", name: "Peenya", zone: "West", pincode: "560058", confirmed: true,
     nearby: ["Yeshwanthpur"],
     landmarks: ["Peenya Industrial Area", "Peenya Metro Station", "Tumkur Road", "Jalahalli"], lat: 13.029, lng: 77.515 },
 ];

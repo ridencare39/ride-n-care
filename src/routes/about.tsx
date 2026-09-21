@@ -115,6 +115,7 @@ function About() {
             ["Mechanics", "Background-verified and KYC-checked before visiting your home or office."],
             ["Parts", "OEM-grade parts fitted."],
             ["Payment", "UPI, card or cash, paid after the work is done."],
+            ["Hours", "Doorstep visits available 24 hours — the arrival window is confirmed when you book."],
             ["Invoice", "A digital invoice listing parts and labour separately, by WhatsApp or email."],
             ["Guarantee", "A 7-day workmanship guarantee on every job."],
           ].map(([term, def]) => (
@@ -124,6 +125,8 @@ function About() {
             </div>
           ))}
         </dl>
+        {/* Owner-confirmed claim (plain text only — never schema AggregateRating). */}
+        <p className="mt-4 text-sm font-semibold text-primary">12,000+ customers served</p>
         <p className="mt-3 text-xs text-muted-foreground">Last verified: {formatDate("2026-09-21")}</p>
       </section>
 

@@ -85,8 +85,8 @@ export function organizationNode() {
 }
 
 /**
- * LocalBusiness node: AutoRepair + MotorcycleRepair. Price range and opening
- * hours are intentionally omitted until the owner confirms them (owner questions).
+ * LocalBusiness node: AutoRepair + MotorcycleRepair. Opening hours reflect the
+ * owner-confirmed 24-hour doorstep-visit availability (21 Sep 2026).
  */
 export function localBusinessNode() {
   return {
@@ -103,6 +103,17 @@ export function localBusinessNode() {
     description: BIZ.description,
     address: POSTAL_ADDRESS,
     areaServed: areaServedPlaces(),
+    // Owner-confirmed (21 Sep 2026): mechanic visits available at any hour.
+    // Describes SERVICE VISITS, not a walk-in premises (service-area business).
+    openingHoursSpecification: [
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday",
+    ].map((day) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: day,
+      opens: "00:00",
+      closes: "23:59",
+      description: "Doorstep service visits available 24 hours",
+    })),
     sameAs: SAME_AS,
     knowsAbout: [
       "Doorstep bike service",

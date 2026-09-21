@@ -29,7 +29,8 @@ function Contact() {
       <a href="https://wa.me/918296950339"><Info title="WhatsApp" value="+91 82969 50339" /></a>
       <a href="mailto:info@ridencare.co.in"><Info title="Email" value="info@ridencare.co.in" /></a>
     </div>
-    <div className="mt-4 text-sm"><Info title="Address" value="Bangalore, Karnataka, India" /></div>
+    <div className="mt-4 text-sm"><Info title="Hours" value="Doorstep visits available 24 hours — the arrival window is confirmed when you book." /></div>
+    <div className="mt-2 text-sm"><Info title="Address" value="Bangalore, Karnataka, India" /></div>
   </main>;
 }
 

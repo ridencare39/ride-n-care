@@ -12,6 +12,7 @@ Ride N Care is a doorstep bike and car service company in Bangalore, Karnataka, 
 - Email: info@ridencare.co.in
 - Location: Bangalore, Karnataka, India (service-area business; no walk-in workshop)
 - Payments: UPI, cards, cash. Digital invoice after every job.
+- Hours: doorstep visits available 24 hours — book by call or WhatsApp at any hour; the arrival window is confirmed when you book.
 - Guarantee: 7-day workmanship guarantee on work performed.
 
 ## What Ride N Care does
@@ -52,7 +53,7 @@ Top answer pages:
 
 ## Service areas in Bangalore
 
-Ride N Care provides doorstep bike and car service in 33 confirmed Bangalore localities across east and south Bangalore, including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, BTM Layout, Jayanagar, JP Nagar, Electronic City, Bellandur and Sarjapur Road. North/west/central pages exist but coverage there is pending owner confirmation. The full list with per-area details is at /areas.
+Ride N Care provides doorstep bike and car service in 40 confirmed Bangalore localities across east, south, north, west and central Bangalore, including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, BTM Layout, Jayanagar, JP Nagar, Electronic City, Bellandur, Hebbal and Sarjapur Road. The full list with per-area details is at /areas.
 
 ## Key pages
 

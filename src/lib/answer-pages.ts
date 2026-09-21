@@ -262,14 +262,14 @@ export const ANSWER_PAGES: AnswerPage[] = [
     question: "Do you provide bike service on weekends and holidays?",
     category: "time",
     answer:
-      "Slots are booked day by day and your arrival window is confirmed when you book. Share your preferred day on 080 6940 9289 or WhatsApp 82969 50339 and we confirm what is open for your area.",
-    meta: "Weekend bike service in Bangalore is booked like any other day: share your preferred slot and the arrival window is confirmed when you book.",
+      "Yes. Doorstep visits are available 24 hours, weekends and holidays included. Share your preferred day on 080 6940 9289 or WhatsApp 82969 50339 and the arrival window is confirmed when you book.",
+    meta: "Doorstep bike service in Bangalore is available 24 hours, weekends and holidays included — book by call or WhatsApp and the arrival window is confirmed when you book.",
     detail: [
       "Popular slots fill first, so sharing a second-choice window at booking makes confirmation faster. For routine service, a mid-week booking is usually the easiest way to get the exact window you want.",
     ],
     faqs: [
-      ["Are you open after 9 PM?", "Emergency dispatch closes at 9 PM; late-night requests are scheduled for the next morning's first slot."],
-      ["Do you service on public holidays?", "The bike emergency line runs 8 AM to 9 PM; other slots and their windows are confirmed when you book."],
+      ["Are you available late at night?", "Yes — doorstep visits are available 24 hours. Book by call or WhatsApp at any hour; the arrival window is confirmed when you book."],
+      ["Do you service on public holidays?", "Yes — doorstep visits are available 24 hours, including holidays. Availability is confirmed when you book."],
     ],
     related: ["how-to-book", "bike-wont-start", "emergency-cost"],
     services: ["emergency-bike-repair", "doorstep-bike-service"],
@@ -449,8 +449,8 @@ export const ANSWER_PAGES: AnswerPage[] = [
     question: "Which areas of Bangalore do you cover?",
     category: "coverage",
     answer:
-      "Ride N Care covers confirmed localities across east and south Bangalore — including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, Bellandur, BTM Layout, Electronic City, Jayanagar, JP Nagar and Sarjapur Road — with pages for 33 confirmed localities. If your pincode is not listed, WhatsApp it and we confirm honestly whether a slot is workable.",
-    meta: "Ride N Care serves 33 confirmed localities across east and south Bangalore — share your pincode on WhatsApp and get a straight yes or no on coverage.",
+      "Ride N Care covers 40 confirmed localities across east, south, north, west and central Bangalore — including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, Bellandur, BTM Layout, Electronic City, Jayanagar, JP Nagar and Sarjapur Road. If your pincode is not listed, WhatsApp it and we confirm honestly whether a slot is workable.",
+    meta: "Ride N Care serves 40 confirmed localities across Bangalore — share your pincode on WhatsApp and get a straight yes or no on coverage.",
     detail: [
       "Every confirmed locality has its own page on /areas with the pincode, nearby areas and how doorstep service works there. If your area is not on the list, it does not automatically mean no — share the pincode on WhatsApp and you get a straight yes or no, not a vague promise.",
     ],
@@ -548,7 +548,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     ],
     faqs: [
       ["Is the callout charge separate from the repair?", "The callout is quoted on the phone before dispatch; the Running Repair package and any parts are the repair-side charges, approved before work."],
-      ["Do you charge extra for night calls?", "Dispatch runs 8 AM to 9 PM; late-night requests are scheduled for the next morning's first slot rather than surcharged."],
+      ["Do you charge extra for night calls?", "Doorstep visits are available 24 hours. Any night charge would be stated in the written quote before work starts — there are no surprise surcharges."],
     ],
     related: ["bike-wont-start", "bike-service-cost-bangalore", "recovery-after-breakdown"],
     services: ["emergency-bike-repair"],

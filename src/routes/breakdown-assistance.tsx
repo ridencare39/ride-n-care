@@ -36,11 +36,11 @@ const FAQS: [string, string][] = [
   ],
   [
     "Is breakdown assistance available on holidays?",
-    "Bike breakdown assistance runs every day between 8 AM and 9 PM, holidays included. Car callouts are arranged on request — call to confirm availability for your vehicle.",
+    "Breakdown assistance is available 24 hours, holidays included, for bikes and cars. Call any hour; availability for your vehicle is confirmed on the call.",
   ],
   [
     "Which areas do you cover?",
-    "All 33 confirmed Ride N Care service localities across east and south Bangalore — see the areas page for the full list.",
+    "All 40 confirmed Ride N Care service localities across east, south, north, west and central Bangalore — see the areas page for the full list.",
   ],
 ];
 
@@ -129,7 +129,7 @@ function BreakdownHub() {
             <h3 className="mt-3 text-lg font-bold">Bike or Scooter Breakdown</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
               Roadside diagnosis, jump-start, puncture and cable fixes, and recovery to the workshop when the bike cannot be
-              made rideable. Every day, 8 AM to 9 PM.
+              made rideable. Doorstep visits available 24 hours.
             </p>
             <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-300">
               Bike breakdown assistance <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -218,7 +218,7 @@ function BreakdownHub() {
             <h3 className="font-semibold text-neon">Needs the workshop</h3>
             <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
               <li>Major roadside repairs — the bike is recovered to the workshop instead</li>
-              <li>Requests after 9 PM — queued for the next morning's first slot</li>
+              <li>Doorstep visits available 24 hours — book any hour, window confirmed on the call</li>
               <li>Accident recovery — call first so the vehicle is secured and moved safely</li>
             </ul>
             <p className="mt-3 text-xs text-muted-foreground">

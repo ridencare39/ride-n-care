@@ -8,7 +8,7 @@ export const Route = createFileRoute("/areas/")({
     ...pageHead({
       title: "Service Areas in Bangalore | Ride N Care",
       description:
-        "Doorstep bike & car service across 33 confirmed Bangalore localities — Whitefield, Koramangala, HSR Layout and more, grouped by zone with pincodes.",
+        "Doorstep bike & car service across 40 confirmed Bangalore localities — Whitefield, Koramangala, HSR Layout and more, grouped by zone with pincodes.",
       path: "/areas",
     }),
   }),

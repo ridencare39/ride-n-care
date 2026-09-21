@@ -53,6 +53,7 @@ function Bikes() {
           <h1 className="mt-2 text-5xl font-bold">Bike Service at Home</h1>
           <p className="mt-4 text-muted-foreground">From scooters to litre-class superbikes — our mechanics show up with genuine parts and finish most jobs in under 90 minutes.</p>
           <BookingButton vehicle="bike" className="mt-6 h-12 rounded-full bg-grad-primary px-6 font-semibold text-primary-foreground shadow-glow">Book a Bike Service</BookingButton>
+          <p className="mt-3 text-sm text-muted-foreground">Doorstep visits available 24 hours — book by call or WhatsApp at any hour.</p>
         </div>
         <img
           src={bike}

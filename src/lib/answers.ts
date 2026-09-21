@@ -74,7 +74,7 @@ export const ANSWERS: AnswerBlock[] = [
   {
     id: "where-in-bangalore",
     q: "Where does Ride N Care provide bike service in Bangalore?",
-    a: "Ride N Care covers 33 confirmed localities across east and south Bangalore, including HSR Layout, Koramangala, Indiranagar, Domlur, Ejipura, BTM Layout, Madiwala, Bommanahalli, Kudlu Gate, Singasandra, Electronic City, Parappana Agrahara, Marathahalli, Bellandur, HAL, Mahadevapura, KR Puram, Whitefield, Brookefield, Varthur, Gunjur, Harlur, Sarjapur Road, Kasavanahalli, Choodasandra, Panathur Road, Kadubeesanahalli, Banashankari, Jayanagar and JP Nagar.",
+    a: "Ride N Care covers 40 confirmed localities across east, south, north, west and central Bangalore, including HSR Layout, Koramangala, Indiranagar, Domlur, Ejipura, BTM Layout, Madiwala, Bommanahalli, Kudlu Gate, Singasandra, Electronic City, Parappana Agrahara, Marathahalli, Bellandur, HAL, Mahadevapura, KR Puram, Whitefield, Brookefield, Varthur, Gunjur, Harlur, Sarjapur Road, Kasavanahalli, Choodasandra, Panathur Road, Kadubeesanahalli, Banashankari, Jayanagar and JP Nagar.",
     detail:
       "If your locality is not named above, share your pincode on WhatsApp — we confirm honestly whether a slot is workable before you book.",
   },
@@ -101,7 +101,7 @@ export const ANSWERS: AnswerBlock[] = [
     q: "How quickly can a mechanic visit?",
     a: "Slot availability varies by day and locality. Call 080 6940 9289 or WhatsApp 82969 50339 with your pincode and we confirm the earliest open slot for your area before you commit.",
     detail:
-      "Bike breakdown assistance runs 8 AM to 9 PM; requests after 9 PM queue for the next morning's first slot.",
+      "Breakdown assistance is available 24 hours — doorstep visits can be booked at any hour; the arrival window is confirmed on the call.",
   },
   {
     id: "repair-types",

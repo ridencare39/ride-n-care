@@ -1,6 +1,6 @@
 # 10 — Google Business Profile Pack (owner applies)
 
-Facts to use everywhere below — nothing else: Call **080 6940 9289** · WhatsApp **82969 50339** · Email **info@ridencare.co.in** · Website **https://ridencare.co.in** · 33 confirmed localities (east + south Bangalore) · 12 bike brands + 7 car brands · written quote first · OEM-grade parts · digital invoice · 7-day workmanship guarantee · background-verified, KYC-checked mechanics · UPI/card/cash.
+Facts to use everywhere below — nothing else: Call **080 6940 9289** · WhatsApp **82969 50339** · Email **info@ridencare.co.in** · Website **https://ridencare.co.in** · 40 confirmed localities (east, south, north, west and central Bangalore) · 12 bike brands + 7 car brands · written quote first · OEM-grade parts · digital invoice · 7-day workmanship guarantee · background-verified, KYC-checked mechanics · UPI/card/cash.
 
 Never enter: hours, founding year, team size, ratings, customer counts, prices (unless GBP asks for a price range you can stand behind — skip it), "same-day", response times. Anything unverified = **[OWNER TO CONFIRM]** in this doc; do not publish until answered in OWNER-QUESTIONS.md.
 
@@ -21,15 +21,18 @@ If "Two Wheeler Repair Service" is not available, use "Motorcycle Repair Shop" a
 
 - **Business type:** Service-area business (customers served at their location).
 - **Address:** hide the address (do not display) — there is no walk-in workshop. Enter the real address privately for verification only.
-- **Service areas:** Google's current limit is **20 service areas per profile** — set the highest-intent 20 of the 33 confirmed localities: Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, Bellandur, Sarjapur Road, BTM Layout, Electronic City, Jayanagar, JP Nagar, Hebbal, Banashankari, Bannerghatta Road, Domlur, Bommanahalli, Madiwala, Kadubeesanahalli, Brookfield, Mahadevapura. Rotate/update quarterly using Search Console area-query data.
-- **Hours:** **[OWNER TO CONFIRM]** — leave "Mark as temporarily closed" off; set hours only from the owner's answer (Q37/Q25). Until then, if GBP forces hours, use the dispatch window already confirmed on the emergency pages (8 AM–9 PM) **only after** the owner approves it in Q25.
+- **Service areas:** Google's current limit is **20 service areas per profile** — set the highest-intent 20 of the 40 confirmed localities: Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, Bellandur, Sarjapur Road, BTM Layout, Electronic City, Jayanagar, JP Nagar, Hebbal, Banashankari, Bannerghatta Road, Domlur, Bommanahalli, Madiwala, Kadubeesanahalli, Brookfield, Mahadevapura. Rotate/update quarterly using Search Console area-query data.
+- **Hours (owner update 21 Sep 2026):** the owner confirms mechanic visits are available at any hour. Choose ONE:
+  - **(A) "Open 24 hours"** — choose this ONLY if bookings can be taken AND a mechanic dispatched at any hour of every day. This is the recommended setting if true; it matches the site copy ("Doorstep visits available 24 hours") and the schema (openingHoursSpecification Mon–Sun 00:00–23:59).
+  - **(B) The hours the phone is actually answered** — set those exact hours in GBP, and put the sentence **"Doorstep visits available 24 hours"** in the business description so the 24-hour service claim still shows on the profile.
+  - Do NOT pick A if night calls can go unanswered — an unreachable 24-hour profile damages trust and reviews.
 - **Phone:** the call number **080 6940 9289** (never the WhatsApp number in the phone field — Q9 ruled it WhatsApp-only).
 - **Website:** `https://ridencare.co.in/?utm_source=google&utm_medium=organic&utm_campaign=gbp`
 - **Appointment links / booking button:** use `https://ridencare.co.in/contact?utm_source=google&utm_medium=organic&utm_campaign=gbp&utme_content=gbp-booking`. Add the WhatsApp link `https://wa.me/918296950339` as a secondary/website link **only if** the link-type picker allows external links — Google restricts some link types; if refused, leave it out (do not misfile WhatsApp as a social profile).
 
 ## 3. Business description (748 characters — under the 750 limit)
 
-> Ride N Care brings bike, scooter and car service to your doorstep in Bangalore. A background-verified, KYC-checked mechanic comes to your home or office with tools and OEM-grade parts. You approve a written quote before any work starts, watch the job happen, and pay by UPI, card or cash after a short test ride — the digital invoice arrives on WhatsApp or email. Every job carries a 7-day workmanship guarantee. We cover 33 localities across east and south Bangalore including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli and Electronic City. Bikes: Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Kawasaki, Harley-Davidson, Jawa, BMW Motorrad. Cars: Maruti Suzuki, Hyundai, Tata, Mahindra, Honda, Toyota, Kia. Call 080 6940 9289 or WhatsApp 82969 50339.
+> Ride N Care brings bike, scooter and car service to your doorstep in Bangalore, 24 hours a day. A background-verified, KYC-checked mechanic comes to your home or office with tools and OEM-grade parts. You approve a written quote before any work starts, watch the job happen, and pay by UPI, card or cash after a short test ride — the digital invoice arrives on WhatsApp or email. Every job carries a 7-day workmanship guarantee. We cover 40 localities across Bangalore including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli and Electronic City. Bikes: Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Kawasaki, Harley-Davidson, Jawa, BMW Motorrad. Cars: Maruti Suzuki, Hyundai, Tata, Mahindra, Honda, Toyota, Kia. Call 080 6940 9289 or WhatsApp 82969 50339.
 
 (Counted: 748 characters including spaces. Re-paste and recount if you edit.)
 
@@ -83,20 +86,20 @@ Format per post: ≤300 words, one image, one CTA button (Book / Call now).
 | 2 | Thu | EV two-wheeler service (Ola, Ather) with EV-specific packages. Link /scooter-service | Book |
 | 3 | Mon | Car services at your parking spot: periodic, AC, battery, brakes. Link /cars | Book |
 | 3 | Thu | 7-day workmanship guarantee explained — what it covers, how to claim. Link /answers/guarantee | Book |
-| 4 | Mon | Areas: 33 localities across east and south Bangalore (name 8–10). Link /areas | Book |
+| 4 | Mon | Areas: 40 localities across east, south, north, west and central Bangalore (name 8–10). Link /areas | Book |
 | 4 | Thu | Brands covered: 12 bike + 7 car brands. Link /bikes | Book |
 
 **Cadence after week 4:** 1–2 posts/week, alternating bike/car/area/trust angles. Never post a claim that is banned on the site (same-day, free pickup, ratings, counts).
 
 ## 8. Q&A seeds (post the question AND the answer from the owner account; drawn from /answers)
 
-1. **Q: Do you come to my home?** A: Yes — a background-verified mechanic services your bike, scooter or car at your home or office anywhere in our 33 Bangalore localities.
+1. **Q: Do you come to my home?** A: Yes — a background-verified mechanic services your bike, scooter or car at your home or office, 24 hours a day, across our 40 Bangalore localities.
 2. **Q: How much does a bike service cost?** A: Bike General Service starts at ₹799 (up to 199cc) and General Service + Engine Oil starts at ₹1,249; the exact price is confirmed in writing before work starts. Full table: https://ridencare.co.in/answers/bike-service-cost-bangalore
 3. **Q: How do I book?** A: Call 080 6940 9289, WhatsApp 82969 50339, or use the booking form at https://ridencare.co.in/contact — or Book with AI on the website.
 4. **Q: When do I pay?** A: After the work is done and you have inspected it (with a short test ride for bikes). Pay by UPI, card or cash.
 5. **Q: Is there a guarantee?** A: Every job carries a 7-day workmanship guarantee. Terms: https://ridencare.co.in/answers/guarantee
 6. **Q: Which brands do you service?** A: 12 bike brands (Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Kawasaki, Harley-Davidson, Jawa, BMW Motorrad) and 7 car brands (Maruti Suzuki, Hyundai, Tata, Mahindra, Honda, Toyota, Kia).
-7. **Q: Do you serve my area?** A: We cover 33 confirmed localities across east and south Bangalore — check the list at https://ridencare.co.in/areas.
+7. **Q: Do you serve my area?** A: We cover 40 confirmed localities across east, south, north, west and central Bangalore — check the list at https://ridencare.co.in/areas.
 8. **Q: What if my vehicle breaks down?** A: Call 080 6940 9289. The charge is confirmed on the call before a mechanic rides out. Details: https://ridencare.co.in/breakdown-assistance
 9. **Q: What parts do you use?** A: OEM-grade parts. Every part fitted is listed with its number on your digital invoice.
 10. **Q: Do you service electric scooters?** A: Yes — Ola, Ather and other electric two-wheelers have their own service packages starting at ₹999.

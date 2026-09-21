@@ -1,4 +1,4 @@
-import { Bike, FileText, Home, ShieldCheck, BadgeCheck, Cog, type LucideIcon } from "lucide-react";
+import { FileText, Home, ShieldCheck, BadgeCheck, Cog, Clock, type LucideIcon } from "lucide-react";
 
 /**
  * The ONE trust-points block on the homepage (replaces the old duplicate
@@ -11,7 +11,7 @@ import { Bike, FileText, Home, ShieldCheck, BadgeCheck, Cog, type LucideIcon } f
  */
 const POINTS: { icon: LucideIcon; title: string; line: string }[] = [
   { icon: Home, title: "Doorstep Service", line: "at your home or office" },
-  { icon: Bike, title: "Bike, Scooter & Car", line: "two-wheelers and four-wheelers" },
+  { icon: Clock, title: "Available 24 Hours", line: "doorstep visits booked at any hour" },
   { icon: FileText, title: "Written Quote First", line: "price agreed before work starts" },
   { icon: Cog, title: "OEM-Grade Parts", line: "genuine spares fitted" },
   { icon: ShieldCheck, title: "Verified Mechanics", line: "background-verified technicians" },

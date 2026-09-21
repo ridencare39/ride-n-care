@@ -12,7 +12,7 @@
 | Booking phone | 080 6940 9289 (tel:+918069409289) — calls, booking, support | src/lib config |
 | WhatsApp | +91 82969 50339 (wa.me/918296950339) — chat, quotes, invoices | src/lib config |
 | Booking methods | Call, WhatsApp, website booking form, Book with AI | homepage process |
-| Coverage | 33 confirmed localities, east and south Bangalore | src/lib/areas.ts (confirmed=true) |
+| Coverage | 40 confirmed localities, east/south/north/west/central (owner-confirmed 21 Sep 2026) | src/lib/areas.ts (confirmed=true) |
 | Bike brands (12) | Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Kawasaki, Harley-Davidson, Jawa, BMW Motorrad | src/lib/services.ts BIKE_BRANDS |
 | Car brands (7) | Maruti Suzuki, Hyundai, Tata, Mahindra, Honda, Toyota, Kia | src/lib/car-services.ts |
 | Quote | Written quote, approved before work starts | process guide |
@@ -28,7 +28,7 @@
 |---|---|---|---|---|---|---|
 | Header wordmark (all widths) | ✅ | ✅ | — | — | — | MATCH |
 | Homepage hero + process | ✅ | — | ✅ | ✅ (via areas component) | ✅ (strip) | MATCH |
-| Footer | ✅ | — | ✅ | ✅ 33 confirmed, east/south | — | MATCH |
+| Footer | ✅ | — | ✅ | ✅ 40 confirmed, all zones | — | MATCH |
 | /about at-a-glance | ✅ | — | ✅ | ✅ 33 | ✅ 12+7 | MATCH |
 | Schema (LocalBusiness via schema.ts) | ✅ | — | ✅ | ✅ areaServed = confirmed only | — | MATCH |
 | llms.txt | ✅ | — | ✅ | ✅ 33 + pending note | ✅ 12 + 7 | MATCH |

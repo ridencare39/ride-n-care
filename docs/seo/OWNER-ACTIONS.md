@@ -1,5 +1,7 @@
 # OWNER-ACTIONS — all open questions in one prioritised list
 
+**STATUS 21 Sep 2026 (owner answers applied & live):** coverage Q33 — ALL 40 localities confirmed · car services Q46–Q50 confirmed · customers Q1 — 12,000+ approved (plain text, / and /about only) · HOURS — visits available 24 hours (wording "Doorstep visits available 24 hours"; variants banned) · RATING Q2 — ON HOLD, value/count blank, nothing published. Remaining open items below.
+
 Live date: 21 Sep 2026. Source of truth for full context: `docs/seo/OWNER-QUESTIONS.md` (Q1–Q50). Answer format for every item: **one line, "Q<n>: <answer>"** — e.g. `Q38: Yes, mechanics wear a navy uniform`. Anything not answered stays out of public copy.
 
 Priority: **P1** = blocks revenue/claims already removed, **P2** = unlocks better copy this month, **P3** = hygiene.

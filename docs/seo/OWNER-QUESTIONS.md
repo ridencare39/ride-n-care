@@ -70,3 +70,11 @@ These promises appear in Part 5 bike-page copy but were not found in src/lib con
 48. [OWNER TO CONFIRM: /car-jump-start — confirm car jump start is offered (equipment carried, battery/alternator testing, safety limits). Page is live with general copy.]
 49. [OWNER TO CONFIRM: /car-repair — confirm diagnosis-led car repair at home is offered and which repair categories are actually done on the spot. Copy lists conservative examples; confirm or correct.]
 50. [OWNER TO CONFIRM: /car-electrical-repair — confirm car electrical & lights repair is offered (testing equipment, circuit-level faults done at doorstep). Page is live with general copy.]
+
+---
+**UPDATE 21 Sep 2026 — owner answers received, applied & live:**
+- **Q33 (coverage): ALL 40 localities confirmed** — confirmed flags flipped in src/lib/areas.ts; zone wording auto-updates to east, south, north, west and central.
+- **Q46–Q50: all five car services confirmed** offered at the doorstep; pages stay as published.
+- **Q1 (12,000+ customers): CONFIRMED** — "12,000+ customers served" added as plain text on / and /about ONLY (validator enforces the page scope; never AggregateRating/Review schema).
+- **HOURS: mechanic visits available at any hour** — wording family "Doorstep visits available 24 hours" applied across site + schema openingHoursSpecification (7 days, 00:00–23:59, describing service visits). Banned variants: 24x7, open 24 hours, seven days a week, any time you call, 8 AM/9 PM windows, next-morning scheduling, "not workable" for hours.
+- **RATING (Q2): ON HOLD** — value/count/source left blank; NO rating text or markup added anywhere. Approved pattern (only if owner later fills it): visible text "{value} on Google ({count} reviews)" on / and /about only, linking the GBP URL, never AggregateRating/Review schema.

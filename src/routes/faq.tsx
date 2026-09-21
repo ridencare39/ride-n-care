@@ -10,8 +10,8 @@ const SECTIONS: { id: string; title: string; faqs: [string, string][] }[] = [
     title: "General",
     faqs: [
       ["Do you really come to my home?", "Yes. Our mechanics arrive at your doorstep with tools, diagnostics and OEM-grade spares — across confirmed Bangalore localities. See the areas page for the full list."],
-      ["Which areas do you cover in Bangalore?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar, Marathahalli and Sarjapur Road, among 33 confirmed localities — see our service areas page for the full list."],
-      ["What are your working hours?", "The bike emergency line runs 8 AM to 9 PM; other slots and their windows are confirmed when you book."],
+      ["Which areas do you cover in Bangalore?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar, Marathahalli and Sarjapur Road, among 40 confirmed localities — see our service areas page for the full list."],
+      ["What are your working hours?", "Doorstep visits are available 24 hours. Call 080 6940 9289 or WhatsApp 82969 50339 at any hour; the arrival window is confirmed when you book."],
       ["Is doorstep service safe?", "All mechanics are background-verified and trained. Every visit runs on a written quote first, and you receive a digital invoice listing the parts fitted."],
     ],
   },

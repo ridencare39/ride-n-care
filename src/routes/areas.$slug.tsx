@@ -24,7 +24,7 @@ export const Route = createFileRoute("/areas/$slug")({
     const faqs = content?.faqs ?? genericFaqs(a);
     const summary = confirmed
       ? `Doorstep bike & car service in ${a.name}${a.pincode ? ` ${a.pincode}` : ""} — a background-verified mechanic comes to your home or office parking with a written quote before work starts, OEM-grade parts and a 7-day workmanship guarantee.`
-      : `Ride N Care serves 33 confirmed localities across east and south Bangalore today and is adding more. Availability in ${a.name} is confirmed on 080 6940 9289 or WhatsApp 82969 50339 before you book — written quote, OEM-grade parts, 7-day workmanship guarantee.`;
+      : `Ride N Care serves 40 confirmed localities across east, south, north, west and central Bangalore. Availability in ${a.name} is confirmed on 080 6940 9289 or WhatsApp 82969 50339 before you book — written quote, OEM-grade parts, 7-day workmanship guarantee.`;
     const title = seoTitle("Bike & Car Service", a.name);
     const desc = confirmed
       ? `Bike & car service at your gate in ${a.name}, ${a.zone} Bangalore. Periodic service, repairs, AC, battery & brakes. Written quote first, 7-day guarantee. Call 080 6940 9289.`

@@ -174,7 +174,7 @@ export const SERVICES: ServiceDef[] = [
     faqs: [
       ["Is doorstep bike service more expensive than a garage?", "No. Package prices are the same as our workshop rates, so most riders pay less overall once travel and waiting time are counted."],
       ["What space do you need?", "About two parking bays' worth of room and, ideally, a plug point. Apartment basements, gated-community parking and roadside kerbs all work — we bring a drip tray."],
-      ["Which areas of Bangalore do you cover?", "33 confirmed localities across east and south Bangalore — the full list with pincodes is on our areas page."],
+      ["Which areas of Bangalore do you cover?", "40 confirmed localities across east, south, north, west and central Bangalore — the full list with pincodes is on our areas page."],
       ["How do I know the mechanic is genuine?", "Every mechanic is background-verified and shows an ID at the gate."],
       ["How do I get a good slot?", "Evening slots fill first, so booking a day ahead gets the widest choice of windows."],
       ["What happens if the bike needs workshop work?", "We tell you before touching anything, transport the bike free and share the workshop estimate for your approval."],
@@ -457,9 +457,9 @@ export const SERVICES: ServiceDef[] = [
     subheading: "Stuck on the road? Call 080 6940 9289 and the nearest available mechanic is dispatched with a jump pack, puncture kit and basic spares.",
     title: "Emergency Bike Repair in Bangalore | Ride N Care",
     description:
-      "Emergency bike repair in Bangalore, 8 AM to 9 PM. Dead battery, puncture or no-start — call 080 6940 9289 and we dispatch the nearest mechanic.",
+      "Emergency bike repair in Bangalore, 24 hours a day. Dead battery, puncture or no-start — call 080 6940 9289 and we dispatch the nearest mechanic.",
     summary:
-      "Emergency bike repair in Bangalore for the moments a ride cannot wait: a battery that will not crank, a puncture, a snapped clutch cable or a stall after riding through waterlogging. Call 080 6940 9289 between 8 AM and 9 PM, the charge is confirmed upfront, and the nearest mechanic rides to your location.",
+      "Emergency bike repair in Bangalore for the moments a ride cannot wait: a battery that will not crank, a puncture, a snapped clutch cable or a stall after riding through waterlogging. Call 080 6940 9289 any hour — doorstep visits are available 24 hours. The charge is confirmed upfront and the nearest mechanic rides to your location.",
     intro:
       "Stuck on the road? Call 080 6940 9289 or WhatsApp 82969 50339 and a mechanic is dispatched to your location with a battery pack, puncture kit and basic spares.",
     detail: [
@@ -478,19 +478,19 @@ export const SERVICES: ServiceDef[] = [
       ["Nearest mechanic dispatched", "We route whoever is closest to your pin — arrival time confirmed on WhatsApp before dispatch."],
       ["Rideable or recovered", "You are never left stranded with the bike."],
       ["Upfront charges", "Callout and repair charges told before dispatch."],
-      ["Every day, 8 AM–9 PM", "Weekends and holidays included."],
+      ["Doorstep visits available 24 hours", "Bookings taken at any hour; the day's schedule is confirmed when you book."],
     ],
     pricing:
       "A callout charge applies to emergency dispatch and is quoted on the phone before anyone rides out. The Running Repair package is ₹450 — fault inspection, minor repair labour and a safety check — with parts billed at MRP after your approval.",
     limits: [
-      "After 9 PM — late-night requests are scheduled for the next morning's first slot.",
+      "Doorstep visits available 24 hours — after-hours jobs are booked the same way; the mechanic's arrival window is confirmed on the call.",
       "Accident damage and recovery from accidents — call first; we assess and recover safely.",
       "Major repairs at the roadside — the bike is recovered to the workshop instead.",
     ],
     steps: DISPATCH_STEPS,
     faqs: [
       ["How fast can you reach me?", "We dispatch the nearest available mechanic immediately after your call. Traffic and distance decide arrival, and we share the expected time on WhatsApp before dispatch."],
-      ["Are you available at night?", "Our dispatch window is 8 AM to 9 PM every day. Late-night requests are scheduled for the next morning's first slot."],
+      ["Are you available at night?", "Yes — doorstep visits are available 24 hours. Call or WhatsApp any hour; the arrival window is confirmed when you book."],
       ["What does an emergency callout cost?", "A callout charge applies and is quoted on the phone before dispatch; the Running Repair package is ₹450 and parts are billed after your approval."],
       ["My bike stalled in a waterlogged stretch — what should I do?", "Do not keep cranking it. Call us; water in the airbox needs to be cleared before starting, which we do on site."],
       ["Can you replace the battery on the road?", "Yes — common battery sizes are carried, and we test the charging system so the new battery is not killed by the same fault."],
@@ -538,16 +538,16 @@ export const SERVICES: ServiceDef[] = [
       "A callout charge is quoted on the phone before dispatch. The Running Repair package is ₹450 — fault inspection, minor repair labour and a safety check — and parts are billed at MRP only after your approval. Recovery to our workshop within the city is free once you approve the next step.",
     limits: [
       "Major roadside repairs — the bike is recovered to the workshop instead.",
-      "After 9 PM — requests queue for the next morning's first slot.",
+      "Any hour — doorstep visits are available 24 hours; the arrival window is confirmed on the call.",
       "Accident recovery — call us first so the bike is secured and moved safely.",
     ],
     steps: DISPATCH_STEPS,
     faqs: [
       ["Do you recover the bike if it cannot be repaired?", "Yes, to the nearest Ride N Care workshop, with the repair estimate shared before work begins."],
       ["My bike stalled in waterlogging — can you help?", "Do not keep cranking it. Call us; water ingress needs the airbox and cylinder cleared before starting, which we do on site."],
-      ["Is breakdown assistance available on holidays?", "Yes, every day between 8 AM and 9 PM."],
+      ["Is breakdown assistance available on holidays?", "Yes — doorstep visits are available 24 hours, holidays included."],
       ["What does breakdown assistance cost?", "The callout is quoted on the phone before dispatch; Running Repair is ₹450 with parts billed only after approval."],
-      ["Which areas do you cover?", "All 33 confirmed Ride N Care service localities across east and south Bangalore — see the areas page for the full list."],
+      ["Which areas do you cover?", "All 40 confirmed Ride N Care service localities across east, south, north, west and central Bangalore — see the areas page for the full list."],
       ["How do I pay?", "UPI, card or cash; the digital invoice reaches your WhatsApp immediately."],
     ],
     relatedGuides: ["bike-breakdown-troubleshooting-guide", "when-to-service-your-bike"],

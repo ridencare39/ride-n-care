@@ -14,7 +14,7 @@ const HUB_FAQS: [string, string][] = [
   ["How much does car service at home cost in Bangalore?", "Pricing depends on your car's make, model and engine — oil grade and capacity, filter type and parts condition change the quote. Share your model and we confirm the exact amount in writing before work starts."],
   ["Do you offer pickup and drop for car service?", "Doorstep work happens in your parking bay, so most jobs need no pickup at all. When a workshop job is genuinely required, pickup and drop are arranged and the estimate is shared first."],
   ["Are your car mechanics verified?", "Yes — every technician is background-verified, and every job starts with a written quote and ends with a 7-day workmanship guarantee."],
-  ["Which areas of Bangalore do you cover?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar and more across east and south Bangalore. The full list with pincodes is on our service areas page."],
+  ["Which areas of Bangalore do you cover?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar and more across east, south, north, west and central Bangalore. The full list with pincodes is on our service areas page."],
 ];
 
 export const Route = createFileRoute("/cars")({
@@ -125,6 +125,7 @@ function Cars() {
       <p className="mt-3 text-sm text-muted-foreground">
         Not listed? We cover {AREAS.length} localities — see all <Link to="/areas" className="text-primary">service areas</Link>.
       </p>
+      <p className="mt-2 text-sm text-muted-foreground">Doorstep visits available 24 hours — book by call or WhatsApp at any hour.</p>
 
       {/* FAQs — same array drives the FAQPage JSON-LD above */}
       <h2 className="mt-16 text-3xl font-bold">Car service FAQs</h2>

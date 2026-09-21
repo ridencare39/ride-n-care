@@ -129,6 +129,8 @@ function Home() {
           Bottom padding clears the fixed Call/WhatsApp bar on mobile. */}
       <section aria-label="Why riders trust Ride N Care" className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6 sm:pb-28">
         <TrustPoints />
+        {/* Owner-confirmed claim (plain text only — never schema AggregateRating). */}
+        <p className="mt-5 text-center text-sm font-semibold text-neon">12,000+ customers served</p>
       </section>
 
       {/* SEO-rich intro */}
@@ -171,7 +173,7 @@ function Home() {
         <p className="mt-6 text-muted-foreground leading-relaxed">{ENTITY_SUMMARY}</p>
         <p className="mt-4 text-sm text-muted-foreground">
           Call <a href="tel:+918069409289" className="text-primary hover:underline">080 6940 9289</a> or WhatsApp{" "}
-          <a href="https://wa.me/918296950339" target="_blank" rel="noopener" className="text-primary hover:underline">82969 50339</a> in {BRAND.city}, {BRAND.region}.
+          <a href="https://wa.me/918296950339" target="_blank" rel="noopener" className="text-primary hover:underline">82969 50339</a> in {BRAND.city}, {BRAND.region} — doorstep visits available 24 hours.
         </p>
         <AnswerBlocks items={ANSWERS.filter((a) => a.id !== "who-is-ride-n-care").slice(0, 6)} headingLevel={3} />
         <div className="mt-6">

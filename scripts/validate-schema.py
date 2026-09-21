@@ -28,12 +28,18 @@ CALL = "+918069409289"
 WA_TEL_BAD = re.compile(r"tel:(08296950339|\+?918296950339)")
 UNVERIFIED = [
     "12000", "12,000", "4.8", "150+", "50+", "₹200 off", "200 off", "same-day slots", "30 minutes",
+    # Owner update 21 Sep 2026: hours wording is "Doorstep visits available 24 hours".
+    # These variants/contradictions must not return:
+    "24x7", "open 24 hours", "seven days a week", "any time you call",
+    "8 AM", "9 PM", "next morning", "not workable",
+    # No rating anywhere until the owner fills value + count (never schema-marked):
+    "4.7", "4.9", "4.7★", "4.9★", " on Google (",
     # Part 8B claim sweep — these must not return without owner approval (Q37–Q45):
     "seven days a week", "uniformed", "typically attended within",
     "free pickup", "Free Pickup", "Certified pros", "Live updates",
     "details on WhatsApp before dispatch", "name and photo on WhatsApp",
     "usually costs the same or less", "printed invoice", "printed warranty",
-    "standard manufacturer warranty", "Brakes & Suspension", "24x7", "free towing", "minutes away",
+    "standard manufacturer warranty", "Brakes & Suspension", "free towing", "minutes away",
     # Combined task Task D — banned from new copy (ProcessGuide, homepage):
     # NOTE: bare "seven days" is NOT banned — the live 7-day workmanship
     # guarantee copy legitimately spells it out. The availability claim form is.
@@ -135,7 +141,19 @@ for page in PAGES:
     _vis = re.sub(r"<script.*?</script>", " ", html, flags=re.S)
     _vis = re.sub(r"<style.*?</style>", " ", _vis, flags=re.S)
     _vis = _html.unescape(re.sub(r"<[^>]+>", " ", _vis))
-    for claim in UNVERIFIED:
+    # Owner-approved claims (21 Sep 2026): "12,000+ customers served" is allowed
+    # ONLY on / and /about, ONLY as plain text — never AggregateRating/Review schema.
+    if page not in ("/", "/about"):
+        for approved in ("12,000+ customers served", "12,000+"):
+            if approved.lower() in _vis.lower():
+                rec["errors"].append(f"owner-approved claim '{approved}' used outside / and /about")
+                fail += 1
+        # and the raw banned list stays fully in force there
+        _claims = UNVERIFIED
+    else:
+        # on / and /about the 12,000 ban is lifted; everything else stays banned
+        _claims = [c for c in UNVERIFIED if c not in ("12000", "12,000")]
+    for claim in _claims:
         if claim.lower() in _vis.lower():
             rec["errors"].append(f"banned claim '{claim}' in page text")
             fail += 1

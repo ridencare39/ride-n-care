@@ -31,7 +31,7 @@ const FAQS: [string, string][] = [
   ],
   [
     "Which areas do you cover?",
-    "All 33 confirmed Ride N Care service localities across east and south Bangalore — see the areas page for the full list.",
+    "All 40 confirmed Ride N Care service localities across east, south, north, west and central Bangalore — see the areas page for the full list.",
   ],
   [
     "What happens if my car cannot be fixed on the spot?",
@@ -146,7 +146,7 @@ function CarBreakdown() {
             <h3 className="mt-3 text-lg font-bold">Bike or Scooter Breakdown</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
               Roadside diagnosis, jump-start, puncture and cable fixes, and recovery to the workshop when the bike cannot be
-              made rideable. Every day, 8 AM to 9 PM.
+              made rideable. Doorstep visits available 24 hours.
             </p>
             <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-300">
               Bike breakdown assistance <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
