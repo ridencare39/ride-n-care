@@ -28,6 +28,11 @@ const SERVICES: FooterLink[] = [
   { label: "Car AC Service", to: "/car-ac-service" },
   { label: "Car Battery", to: "/car-battery-service" },
   { label: "Car Brakes", to: "/car-brake-service" },
+  { label: "Car Oil Change", to: "/car-oil-change" },
+  { label: "Car Inspection", to: "/car-inspection" },
+  { label: "Car Jump Start", to: "/car-jump-start" },
+  { label: "Car Repair at Home", to: "/car-repair" },
+  { label: "Car Electrical & Lights", to: "/car-electrical-repair" },
 ];
 
 const COMPANY: FooterLink[] = [

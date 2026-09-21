@@ -9,6 +9,7 @@ BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8080"
 PAGES = [
     "/", "/bikes", "/cars", "/bike-service", "/doorstep-bike-service", "/bike-repair",
     "/car-periodic-service", "/car-ac-service", "/car-battery-service", "/car-brake-service",
+    "/car-oil-change", "/car-inspection", "/car-jump-start", "/car-repair", "/car-electrical-repair",
     "/scooter-service", "/emergency-bike-repair", "/bike-breakdown-assistance",
     "/breakdown-assistance", "/car-breakdown-assistance",
     "/engine-repair", "/brake-service", "/battery-service", "/periodic-bike-service",
@@ -32,6 +33,11 @@ UNVERIFIED = [
     "details on WhatsApp before dispatch", "name and photo on WhatsApp",
     "usually costs the same or less", "printed invoice", "printed warranty",
     "standard manufacturer warranty", "Brakes & Suspension", "24x7", "free towing", "minutes away",
+    # Combined task Task D — banned from new copy (ProcessGuide, homepage):
+    # NOTE: bare "seven days" is NOT banned — the live 7-day workmanship
+    # guarantee copy legitimately spells it out. The availability claim form is.
+    "certified pros", "live updates", "on time", "on-time", "free pickup & drop",
+    "open seven days", "uniformed", "printed price list",
 ]
 IDS_EXPECTED = {
     "https://ridencare.co.in/#organization",

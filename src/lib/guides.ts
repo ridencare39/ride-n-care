@@ -286,7 +286,7 @@ export const GUIDES: Guide[] = [
       {
         h: "The two intervals that both matter",
         p: [
-          "Engine oil degrades from heat, moisture and combustion by-products as well as from distance. That is why manufacturers give both a kilometre figure and a months figure: a bike doing 200 km a month still needs its oil changed on time.",
+          "Engine oil degrades from heat, moisture and combustion by-products as well as from distance. That is why manufacturers give both a kilometre figure and a months figure: a bike doing 200 km a month still needs its oil changed on schedule.",
           "Take whichever arrives first. Riders who only track kilometres often run oil that is a year old.",
         ],
       },
@@ -324,7 +324,7 @@ export const GUIDES: Guide[] = [
         h: "What happens if you delay",
         p: [
           "Delaying a service rarely produces a dramatic failure. It produces a chain of small ones: filters restrict, mixture drifts, plugs foul, pads wear into discs, and finally something expensive fails. The cost curve is steep and avoidable.",
-          "The cheapest maintenance decision on any two-wheeler is a service done on time with the correct oil and a clean air filter.",
+          "The cheapest maintenance decision on any two-wheeler is a service done on schedule with the correct oil and a clean air filter.",
         ],
       },
     ],
@@ -557,7 +557,7 @@ export const GUIDES: Guide[] = [
       {
         h: "How to reduce breakdown risk",
         bullets: [
-          "Service on time and keep the air filter clean",
+          "Service on schedule and keep the air filter clean",
           "Replace a battery that has started cranking slowly, before it fails completely",
           "Check tyre pressure and tread weekly; carry a puncture kit for tubeless tyres",
           "Keep the chain clean, lubricated and correctly slacked",

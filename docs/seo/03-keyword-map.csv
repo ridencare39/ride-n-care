@@ -95,3 +95,15 @@ is doorstep bike service worth it,Comparison,comparison,MOFU,/guides/doorstep-bi
 how to choose a bike mechanic in bangalore,Comparison,comparison,MOFU,/blog/[choose-mechanic post],N,P3,TO VALIDATE in Search Console / Keyword Planner
 ride n care bangalore,Brand,brand,BOFU,/about,Y,P3,TO VALIDATE in Search Console / Keyword Planner
 ride n care franchise,Brand,brand,BOFU,/franchise,Y,P3,TO VALIDATE in Search Console / Keyword Planner
+car oil change at home bangalore,Car - service,transactional,BOFU,/car-oil-change,Y,P1,NEW - Task E; distinct from periodic-service intent
+car engine oil and filter change bangalore,Car - service,transactional,BOFU,/car-oil-change,Y,P1,NEW - Task E
+used car inspection bangalore,Car - service,transactional,BOFU,/car-inspection,Y,P1,NEW - Task E
+pre purchase car inspection bangalore,Car - service,transactional,BOFU,/car-inspection,Y,P1,NEW - Task E
+car health check bangalore,Car - service,transactional,BOFU,/car-inspection,Y,P2,NEW - Task E
+car jump start bangalore,Car - emergency,transactional,BOFU,/car-jump-start,Y,P1,NEW - Task E; emergency intent separate from battery service
+battery boost service car bangalore,Car - emergency,transactional,BOFU,/car-jump-start,Y,P2,NEW - Task E
+car repair at home bangalore,Car - service,transactional,BOFU,/car-repair,Y,P1,NEW - Task E; diagnosis-led, distinct from 4 core pages
+doorstep car mechanic bangalore,Car - service,transactional,BOFU,/car-repair,Y,P1,NEW - Task E
+car electrical repair bangalore,Car - service,transactional,BOFU,/car-electrical-repair,Y,P1,NEW - Task E
+car lights not working repair bangalore,Car - service,transactional,BOFU,/car-electrical-repair,Y,P2,NEW - Task E
+car battery drain repair bangalore,Car - service,transactional,BOFU,/car-electrical-repair,Y,P2,NEW - Task E

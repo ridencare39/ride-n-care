@@ -14,14 +14,18 @@ import {
   CircleHelp,
   Disc3,
   DoorOpen,
+  Droplets,
   Gauge,
+  Hammer,
   House,
   Info,
   LifeBuoy,
+  Lightbulb,
   Mail,
   MapPin,
   Newspaper,
   Route as RouteIcon,
+  SearchCheck,
   Snowflake,
   Sparkles,
   Store,
@@ -76,12 +80,27 @@ const BIKE_ICONS: Record<string, LucideIcon> = {
   "periodic-bike-service": Snowflake,
 };
 
-const CAR_ORDER = ["car-periodic-service", "car-ac-service", "car-battery-service", "car-brake-service"] as const;
+const CAR_ORDER = [
+  "car-periodic-service",
+  "car-ac-service",
+  "car-battery-service",
+  "car-brake-service",
+  "car-oil-change",
+  "car-inspection",
+  "car-jump-start",
+  "car-repair",
+  "car-electrical-repair",
+] as const;
 const CAR_ICONS: Record<string, LucideIcon> = {
   "car-periodic-service": Wrench,
   "car-ac-service": Snowflake,
   "car-battery-service": BatteryCharging,
   "car-brake-service": Disc3,
+  "car-oil-change": Droplets,
+  "car-inspection": SearchCheck,
+  "car-jump-start": Zap,
+  "car-repair": Hammer,
+  "car-electrical-repair": Lightbulb,
 };
 
 export const MENU_BIKE_ROWS: NavRow[] = BIKE_ORDER.filter((s) => SERVICES.some((x) => x.slug === s)).map((slug) => ({

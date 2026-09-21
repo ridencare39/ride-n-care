@@ -3,7 +3,7 @@ import { CalendarCheck, Siren } from "lucide-react";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
 import { TrustPoints } from "@/components/TrustPoints";
 import { HeroVehicles } from "@/components/HeroVehicles";
-import { Testimonials } from "@/components/Testimonials";
+import { ProcessGuide } from "@/components/ProcessGuide";
 import { AreasSection } from "@/components/AreasSection";
 import { AnswerBlocks } from "@/components/AnswerBlocks";
 import { ANSWERS, BRAND, ENTITY_SUMMARY } from "@/lib/answers";
@@ -99,7 +99,15 @@ function Home() {
               </span>
             </h1>
             <p className="rise-in-late mt-6 text-lg text-white/80 max-w-lg mx-auto [text-shadow:0_1px_12px_rgba(2,10,26,0.9)]">
-              Book a verified mechanic in 60 seconds. Ride N Care brings bike service, car service and repair to your home or office across Bangalore, from Whitefield and HSR Layout to Electronic City and Sarjapur Road. OEM parts, written quote, 7-day guarantee.
+              Book a verified mechanic in 60 seconds.{" "}
+              <span className="hero-brand-name">
+                <span aria-hidden className="hero-sparkle hero-sparkle-1" />
+                <span aria-hidden className="hero-sparkle hero-sparkle-2" />
+                <span aria-hidden className="hero-sparkle hero-sparkle-3" />
+                <span aria-hidden className="hero-sparkle hero-sparkle-4" />
+                Ride N Care
+              </span>{" "}
+              brings bike service, car service and repair to your home or office across Bangalore, from Whitefield and HSR Layout to Electronic City and Sarjapur Road. OEM parts, written quote, 7-day guarantee.
             </p>
             {/* Hero CTA pair: equal-height 2-col grid, 12px gap, wraps on narrow phones */}
             <div className="rise-in-later mx-auto mt-8 grid w-full max-w-xl grid-cols-2 gap-3">
@@ -130,7 +138,7 @@ function Home() {
           Stuck in traffic, juggling a hectic week, or simply tired of waiting at a service centre? Ride N Care brings the entire workshop to your driveway. Whether it's a routine bike oil change in <strong className="text-foreground">Koramangala</strong>, a car AC top-up in <strong className="text-foreground">HSR Layout</strong>, or a Sunday breakdown rescue in <strong className="text-foreground">Whitefield</strong> — book a slot, approve a written quote, and the mechanic comes to you with the right tools and the right price.
         </p>
         <p className="mt-4 text-muted-foreground leading-relaxed">
-          Every service is performed by a background-verified, trained mechanic, uses genuine OEM-grade spares and ends with a digital invoice plus a 7-day workmanship guarantee. No upselling. No surprise bills. Just honest, on-time, doorstep care for your ride.
+          Every service is performed by a background-verified, trained mechanic, uses genuine OEM-grade spares and ends with a digital invoice plus a 7-day workmanship guarantee. No upselling. No surprise bills. Just honest, doorstep care for your ride.
         </p>
       </section>
 
@@ -174,60 +182,12 @@ function Home() {
       {/* Areas We Serve */}
       <AreasSection />
 
-      {/* Trust & testimonials */}
-      <Testimonials />
-
       {/* Brands We Service */}
       <BrandsMarquee />
 
-      {/* Why us — compact */}
-      <section className="bg-card border-y border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
-          <div className="flex items-end justify-between gap-4 flex-wrap">
-            <div>
-              <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Why Ride N Care</div>
-              <h2 className="mt-1 text-2xl md:text-3xl font-bold">Quality, precision & honesty</h2>
-            </div>
-          </div>
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {[
-              ["Doorstep", "At your home"],
-              ["Expert", "Background-verified"],
-              ["Quick", "60–90 mins"],
-              ["Transparent", "Upfront quote"],
-              ["Genuine", "OEM parts"],
-              ["All Vehicles", "2W & 4W"],
-            ].map(([t, d]) => (
-              <div key={t} className="rounded-xl border border-border bg-background p-3">
-                <h3 className="font-semibold text-sm">{t}</h3>
-                <p className="text-xs text-muted-foreground">{d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works — compact. #process anchor target for the top-nav link. */}
-      <section id="process" className="mx-auto max-w-7xl scroll-mt-[76px] px-4 sm:px-6 py-10">
-        <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">How it works</div>
-        <h2 className="mt-1 text-2xl md:text-3xl font-bold">Booking to keys-back in 4 steps</h2>
-        <ol className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {[
-            ["01", "Book online", "60 seconds."],
-            ["02", "Mechanic arrives", "On time, at home."],
-            ["03", "Service on the spot", "Work done in front of you."],
-            ["04", "Pay & rate", "Cashless."],
-          ].map(([n, t, d]) => (
-            <li key={n} className="rounded-xl border border-border p-3 bg-card flex gap-3 items-start">
-              <div className="text-primary font-display text-xl font-bold">{n}</div>
-              <div>
-                <h3 className="font-semibold text-sm">{t}</h3>
-                <p className="text-xs text-muted-foreground">{d}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
+      {/* ONE process guide — replaces the old "Our promises" / "Why Ride N Care" /
+          "How it works" sections (combined task, Task D). #process anchor target. */}
+      <ProcessGuide />
 
       {/* FAQ */}
       <section className="mx-auto max-w-4xl px-4 sm:px-6 py-20">

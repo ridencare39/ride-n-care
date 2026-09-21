@@ -227,9 +227,10 @@ export function SiteHeader() {
               <img src={logo} alt="" width={40} height={40} fetchPriority="high" decoding="async" className="rounded-full bg-plate p-0.5" />
               <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full bg-neon/10 opacity-0 transition group-hover:opacity-100" />
             </span>
-            <span className="hidden font-display text-lg font-bold leading-none tracking-tight sm:flex sm:flex-col">
-              <span className="text-glow-neon text-neon">Ride N Care</span>
-              <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-white/60">Care in every mile</span>
+            {/* Wordmark + tagline visible at every width (320px up) — responsive font, never hidden. */}
+            <span className="flex min-w-0 flex-col leading-none">
+              <span className="text-glow-neon whitespace-nowrap font-display text-sm font-bold tracking-tight text-neon min-[380px]:text-base sm:text-lg">Ride N Care</span>
+              <span className="mt-0.5 whitespace-nowrap text-[8px] font-medium uppercase tracking-[0.14em] text-white/60 min-[380px]:text-[9px] sm:text-[10px] sm:tracking-[0.15em]">Care in every mile</span>
             </span>
           </Link>
 
@@ -319,11 +320,10 @@ export function SiteHeader() {
                 openAiBooking();
               }}
               aria-label="Book with AI assistant"
-              title="Book with AI"
-              className="ai-btn inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/25 bg-white/8 px-3 py-2 text-[15px] font-semibold text-white backdrop-blur transition hover:bg-white/15 active:scale-[0.97] max-[1279px]:px-2.5"
+              className="ai-btn inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/25 bg-white/8 px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap text-white backdrop-blur transition hover:bg-white/15 active:scale-[0.97] min-[380px]:px-3 min-[380px]:text-[15px]"
             >
               <BotMessageSquare className="h-[18px] w-[18px] shrink-0" aria-hidden />
-              <span className="max-[1279px]:hidden">Book with AI</span>
+              <span>Book with AI</span>
             </button>
             <button
               ref={toggleRef}
@@ -401,10 +401,21 @@ export function SiteHeader() {
         <div className="panel-backdrop" aria-hidden onClick={() => closeMenu()} />
         <aside role="dialog" aria-modal="true" aria-label="Site menu" className="panel">
           <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
-            <span className="flex items-center gap-2">
+            <span className="flex min-w-0 items-center gap-2">
               <img src={logo} alt="" width={36} height={36} className="rounded-full bg-plate p-0.5" />
-              <span className="font-display text-base font-bold text-glow-neon text-neon">Ride N Care</span>
+              <span className="font-display text-base font-bold text-glow-neon whitespace-nowrap text-neon">Ride N Care</span>
             </span>
+            {/* Compact Book Now — same booking flow + tracking as the hero BookingButton. */}
+            <button
+              type="button"
+              onClick={() => {
+                closeMenu();
+                openBooking();
+              }}
+              className="btn-shine shrink-0 rounded-full bg-grad-accent px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-glow-strong transition hover:brightness-110 active:scale-[0.98]"
+            >
+              Book Now
+            </button>
             <button type="button" onClick={() => closeMenu()} aria-label="Close menu" className="menu-btn text-white hover:text-neon">
               <X aria-hidden className="h-5 w-5" />
             </button>

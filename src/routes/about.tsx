@@ -71,7 +71,7 @@ function About() {
 
       <h2 className="mt-14 text-3xl font-bold">Why Bangalore loves us</h2>
       <p className="mt-4 text-muted-foreground leading-relaxed">
-        Bangalore's traffic, dust and unpredictable monsoon are uniquely brutal on vehicles. We built Ride N Care specifically for this city — every mechanic carries a full diagnostics kit, OEM-grade spares for the top 25 bike and car models on Bangalore roads, and a printed price list so there are zero surprises. From a quick oil change in Indiranagar to a full periodic service in Electronic City, we show up on time, work in front of you, and leave your driveway cleaner than we found it.
+        Bangalore's traffic, dust and unpredictable monsoon are uniquely brutal on vehicles. We built Ride N Care specifically for this city — every mechanic carries a diagnostics kit and OEM-grade spares, and every job starts with a written quote so there are zero surprises. From a quick oil change in Indiranagar to a full periodic service in Electronic City, the work happens in front of you, and we leave your driveway cleaner than we found it.
       </p>
 
       <h2 className="mt-12 text-3xl font-bold">Services we specialise in</h2>

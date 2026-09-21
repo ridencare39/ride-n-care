@@ -21,7 +21,7 @@ Ride N Care is a doorstep bike and car service company in Bangalore, Karnataka, 
 - Scooter and electric two-wheeler service, including EV-specific packages.
 - Emergency bike repair and breakdown assistance at the vehicle's location.
 - Breakdown assistance covers bikes, scooters and cars: /breakdown-assistance is the hub for any vehicle; /bike-breakdown-assistance covers bikes and scooters; /car-breakdown-assistance covers cars. Call 080 6940 9289 or WhatsApp 82969 50339 with your location.
-- Doorstep car service in Bangalore: periodic maintenance, AC service and gas refill, battery testing and replacement, brake pads, discs and fluid, diagnostics and pre-purchase inspection. Dedicated pages: /car-periodic-service, /car-ac-service, /car-battery-service, /car-brake-service.
+- Doorstep car service in Bangalore: periodic maintenance, AC service and gas refill, battery testing and replacement, brakes, engine oil and filter change, used-car and health-check inspection, jump start, diagnosis-led repair and electrical/lights repair. Dedicated pages: /car-periodic-service, /car-ac-service, /car-battery-service, /car-brake-service, /car-oil-change, /car-inspection, /car-jump-start, /car-repair, /car-electrical-repair.
 - Workshop transport is arranged free when a job genuinely needs the workshop; most bike services finish in 60–90 minutes at your address.
 
 ## Answers (AI-ready Q&A)
@@ -63,6 +63,11 @@ Ride N Care provides doorstep bike and car service in 33 confirmed Bangalore loc
 - Car AC service: https://ridencare.co.in/car-ac-service
 - Car battery service: https://ridencare.co.in/car-battery-service
 - Car brake service: https://ridencare.co.in/car-brake-service
+- Car oil change: https://ridencare.co.in/car-oil-change
+- Car inspection (pre-purchase & health check): https://ridencare.co.in/car-inspection
+- Car jump start: https://ridencare.co.in/car-jump-start
+- Car repair at home: https://ridencare.co.in/car-repair
+- Car electrical & lights repair: https://ridencare.co.in/car-electrical-repair
 - All services: https://ridencare.co.in/bike-service
 - Service areas: https://ridencare.co.in/areas
 - Answers (AI-ready Q&A): https://ridencare.co.in/answers

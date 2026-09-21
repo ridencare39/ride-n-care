@@ -1042,6 +1042,247 @@ body:has(.panel-root.is-open) .float-bar {
   min-height: 0;
 }
 
+/* ── Header brand (Task A): wordmark + tagline never hidden, any width ────── */
+/* Sizes handled with responsive Tailwind classes in SiteHeader.tsx. */
+
+/* ── Hero brand-name treatment (Task C) ─────────────────────────────────── */
+.hero-brand-name {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap; /* the name never breaks across lines */
+  background: linear-gradient(92deg, #67e8f9 0%, #a5f3fc 45%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 18px rgba(103, 232, 249, 0.45);
+  padding: 0 0.15em;
+}
+.hero-brand-name::after {
+  /* slow shimmer sweep — background-position is a paint-only effect on a
+     pseudo-element, no layout properties animated */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  animation: rnc-shimmer 5s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+@keyframes rnc-shimmer {
+  0%,
+  55% {
+    background-position: 130% 0;
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    background-position: -30% 0;
+    opacity: 0;
+  }
+}
+.hero-sparkle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  pointer-events: none;
+  background: #e0fbff;
+  clip-path: polygon(
+    50% 0%, 62% 38%, 100% 50%, 62% 62%,
+    50% 100%, 38% 62%, 0% 50%, 38% 38%
+  ); /* four-point star */
+  filter: drop-shadow(0 0 4px rgba(165, 243, 252, 0.9));
+  opacity: 0;
+  animation: rnc-twinkle 3.2s ease-in-out infinite;
+}
+.hero-sparkle-1 { top: -8px; left: -11px; animation-delay: 0s; }
+.hero-sparkle-2 { top: -10px; right: -9px; width: 5px; height: 5px; animation-delay: 0.8s; }
+.hero-sparkle-3 { bottom: -7px; left: 14%; width: 6px; height: 6px; animation-delay: 1.6s; }
+.hero-sparkle-4 { bottom: -9px; right: 18%; animation-delay: 2.4s; }
+@keyframes rnc-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(20deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-brand-name::after {
+    animation: none;
+    opacity: 0;
+  }
+  .hero-sparkle {
+    animation: none;
+    opacity: 0.9;
+    transform: none;
+  }
+}
+
+/* ── Process guide (Task D) ───────────────────────────────────────────── */
+.process-line,
+.process-fill {
+  position: absolute;
+  border-radius: 999px;
+}
+.process-line {
+  inset-inline: 12px;
+  height: 2px;
+  top: 26px;
+  background: rgb(255 255 255 / 0.08);
+  display: none;
+}
+.process-fill {
+  inset-inline: 12px;
+  height: 2px;
+  top: 26px;
+  background: linear-gradient(90deg, #67e8f9, #818cf8);
+  transform-origin: left center;
+  transform: scaleX(var(--p, 0.04));
+  transition: transform 0.25s linear;
+  display: none;
+  box-shadow: 0 0 12px rgba(103, 232, 249, 0.5);
+}
+/* Mobile: vertical timeline rail on the left of each card */
+.process-steps {
+  position: relative;
+}
+.process-step {
+  position: relative;
+  padding-left: 34px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.process-step::before {
+  /* timeline node dot */
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #67e8f9, #818cf8);
+  box-shadow: 0 0 0 4px rgba(103, 232, 249, 0.15);
+}
+.process-step::after {
+  /* vertical rail segment */
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 24px;
+  bottom: -26px;
+  width: 2px;
+  background: rgb(255 255 255 / 0.08);
+}
+.process-step:last-child::after {
+  display: none;
+}
+.process-step-in {
+  opacity: 1;
+  transform: none;
+}
+.process-card {
+  position: relative;
+  overflow: hidden;
+}
+.process-beam {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg),
+    transparent 0deg,
+    rgba(103, 232, 249, 0.7) 40deg,
+    transparent 80deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.process-card:hover .process-beam,
+.process-card:active .process-beam {
+  opacity: 1;
+  animation: rnc-beam-spin 6s linear infinite;
+}
+.process-spotlight {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(103, 232, 9, 0) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.process-card:hover .process-spotlight {
+  opacity: 1;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(103, 232, 249, 0.12) 0%,
+    transparent 60%
+ );
+}
+@keyframes rnc-beam-spin {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+@property --beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.process-badge {
+  box-shadow: var(--shadow-glow);
+}
+@media (min-width: 768px) {
+  .process-line,
+  .process-fill {
+    display: block;
+  }
+  .process-step {
+    padding-left: 0;
+  }
+  .process-step::before,
+  .process-step::after {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .process-step {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .process-fill {
+    transition: none;
+  }
+  .process-beam,
+  .process-spotlight {
+    animation: none !important;
+    opacity: 0;
+  }
+}
+
 /* Reduced motion: park all panel motion instantly */
 @media (prefers-reduced-motion: reduce) {
   .panel,

@@ -65,3 +65,8 @@ These promises appear in Part 5 bike-page copy but were not found in src/lib con
 43. [OWNER TO CONFIRM: "printed invoice" and "standard manufacturer warranty" — REMOVED; copy now says digital invoice with part numbers, and part warranty stays with the part maker. Confirm there is no printed invoice and describe the real parts-warranty process.]
 44. [OWNER TO CONFIRM: "arrival window" — kept ONLY as "confirmed when you book". If windows are given in hours ("10 AM–12 PM") or minutes, say so and copy can be more specific.]
 45. [OWNER TO CONFIRM: hero "60 seconds" booking and "60–90 minutes" bike service duration — currently kept (booking-flow duration field backs the service time). Confirm the "60 seconds" phrasing or give the real form time.]
+46. [OWNER TO CONFIRM: /car-oil-change — confirm engine oil & filter change is offered at the doorstep for cars (grades stocked, used-oil disposal process). Page is live with general copy.]
+47. [OWNER TO CONFIRM: /car-inspection — confirm pre-purchase / health-check car inspections are offered (checklist scope, written findings). Page is live with general copy.]
+48. [OWNER TO CONFIRM: /car-jump-start — confirm car jump start is offered (equipment carried, battery/alternator testing, safety limits). Page is live with general copy.]
+49. [OWNER TO CONFIRM: /car-repair — confirm diagnosis-led car repair at home is offered and which repair categories are actually done on the spot. Copy lists conservative examples; confirm or correct.]
+50. [OWNER TO CONFIRM: /car-electrical-repair — confirm car electrical & lights repair is offered (testing equipment, circuit-level faults done at doorstep). Page is live with general copy.]
