@@ -1,0 +1,12 @@
+platform,url,status,name/phone/email used,notes
+# NAP CONSISTENCY RULE (use EXACTLY this on every row): Name: Ride N Care | Phone: 080 6940 9289 | Email: info@ridencare.co.in | Website: https://ridencare.co.in
+Google Business Profile,https://business.google.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Primary cat Two Wheeler Repair Service; service-area business address hidden; apply docs/seo/10-gbp-pack.md
+Bing Places,https://www.bingplaces.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Import from GBP then verify; powers Copilot answers
+Apple Business Connect,https://businessconnect.apple.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Apple Maps/Siri surface; verify with Apple ID
+Justdial,https://www.justdial.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Claim free listing; correct any third-party description (remove timings/pickup/ratings claims); no paid promo initially
+Sulekha,https://www.sulekha.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Free listing first; accurate service list from /bikes + /cars
+Facebook,https://www.facebook.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",About = medium description in 10-profile-copy.md; remove any hours claim (Q37 pending)
+Instagram,https://www.instagram.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Bio = 122-char version in 10-profile-copy.md; link to https://ridencare.co.in
+YouTube,https://www.youtube.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Channel description from 10-profile-copy.md; 3-5 honest shorts planned (09-offsite-plan.md)
+LinkedIn,https://www.linkedin.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Tagline: owner's chosen line (not in repo) or the 94-char candidate; About from 10-profile-copy.md
+X (Twitter),https://x.com/,not-started,"Ride N Care, 080 6940 9289, info@ridencare.co.in, https://ridencare.co.in",Bio = 141-char version in 10-profile-copy.md; pin a booking tweet
