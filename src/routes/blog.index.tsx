@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { CATEGORIES, type Category } from "@/lib/blog";
 import { listPublishedPosts } from "@/lib/blog.functions";
 import { SITE_URL } from "@/lib/seo";
-import { pageHead } from "@/lib/head";
+import { pageHead, formatDate } from "@/lib/head";
 
 export const Route = createFileRoute("/blog/")({
   loader: async () => await listPublishedPosts(),
@@ -101,7 +101,7 @@ function Blog() {
             <h2 className="mt-3 text-xl font-bold group-hover:text-primary transition">{p.title}</h2>
             <p className="mt-2 text-sm text-muted-foreground">{p.excerpt}</p>
             <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-              <span>{new Date(p.date).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })}</span>
+              <span>{formatDate(p.date)}</span>
               <span>{p.readMins} min read</span>
             </div>
           </Link>

@@ -12,11 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrackBookingRouteImport } from './routes/track-booking'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SampleInvoiceRouteImport } from './routes/sample-invoice'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as GuaranteeRouteImport } from './routes/guarantee'
 import { Route as FranchiseRouteImport } from './routes/franchise'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -62,6 +64,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SampleInvoiceRoute = SampleInvoiceRouteImport.update({
+  id: '/sample-invoice',
+  path: '/sample-invoice',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -85,6 +92,11 @@ const MapRoute = MapRouteImport.update({
 const GuidesRoute = GuidesRouteImport.update({
   id: '/guides',
   path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuaranteeRoute = GuaranteeRouteImport.update({
+  id: '/guarantee',
+  path: '/guarantee',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FranchiseRoute = FranchiseRouteImport.update({
@@ -249,11 +261,13 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/franchise': typeof FranchiseRoute
+  '/guarantee': typeof GuaranteeRoute
   '/guides': typeof GuidesRouteWithChildren
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/sample-invoice': typeof SampleInvoiceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
@@ -285,10 +299,12 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/franchise': typeof FranchiseRoute
+  '/guarantee': typeof GuaranteeRoute
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/sample-invoice': typeof SampleInvoiceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
@@ -324,11 +340,13 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/franchise': typeof FranchiseRoute
+  '/guarantee': typeof GuaranteeRoute
   '/guides': typeof GuidesRouteWithChildren
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/sample-invoice': typeof SampleInvoiceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
@@ -364,11 +382,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/franchise'
+    | '/guarantee'
     | '/guides'
     | '/map'
     | '/mcp'
     | '/pricing'
     | '/privacy'
+    | '/sample-invoice'
     | '/sitemap.xml'
     | '/terms'
     | '/track-booking'
@@ -400,10 +420,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/franchise'
+    | '/guarantee'
     | '/map'
     | '/mcp'
     | '/pricing'
     | '/privacy'
+    | '/sample-invoice'
     | '/sitemap.xml'
     | '/terms'
     | '/track-booking'
@@ -438,11 +460,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/franchise'
+    | '/guarantee'
     | '/guides'
     | '/map'
     | '/mcp'
     | '/pricing'
     | '/privacy'
+    | '/sample-invoice'
     | '/sitemap.xml'
     | '/terms'
     | '/track-booking'
@@ -478,11 +502,13 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   FranchiseRoute: typeof FranchiseRoute
+  GuaranteeRoute: typeof GuaranteeRoute
   GuidesRoute: typeof GuidesRouteWithChildren
   MapRoute: typeof MapRoute
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
+  SampleInvoiceRoute: typeof SampleInvoiceRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   TrackBookingRoute: typeof TrackBookingRoute
@@ -518,6 +544,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sample-invoice': {
+      id: '/sample-invoice'
+      path: '/sample-invoice'
+      fullPath: '/sample-invoice'
+      preLoaderRoute: typeof SampleInvoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -551,6 +584,13 @@ declare module '@tanstack/react-router' {
       path: '/guides'
       fullPath: '/guides'
       preLoaderRoute: typeof GuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guarantee': {
+      id: '/guarantee'
+      path: '/guarantee'
+      fullPath: '/guarantee'
+      preLoaderRoute: typeof GuaranteeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/franchise': {
@@ -827,11 +867,13 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   FranchiseRoute: FranchiseRoute,
+  GuaranteeRoute: GuaranteeRoute,
   GuidesRoute: GuidesRouteWithChildren,
   MapRoute: MapRoute,
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
+  SampleInvoiceRoute: SampleInvoiceRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   TrackBookingRoute: TrackBookingRoute,

@@ -21,6 +21,7 @@ PAGES = [
     "/answers/doorstep-vs-garage-bike", "/answers/how-long-bike-service",
     "/answers/areas-covered", "/answers/ev-service-different",
     "/about", "/contact", "/franchise", "/privacy", "/terms",
+    "/guarantee", "/sample-invoice",
 ]
 
 CALL = "+918069409289"

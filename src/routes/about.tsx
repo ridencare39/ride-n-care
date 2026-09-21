@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { StatsRow } from "@/components/StatsRow";
 import { ENTITY_SUMMARY } from "@/lib/answers";
+import { CONFIRMED_AREAS, CONFIRMED_ZONE_PHRASE } from "@/lib/areas";
 import { OG_IMAGE_ABOUT, SITE_URL } from "@/lib/seo";
-import { pageHead } from "@/lib/head";
+import { pageHead, formatDate } from "@/lib/head";
 import { graphForPage, pageScripts } from "@/lib/schema";
 
 export const Route = createFileRoute("/about")({
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/about")({
       ogImage: OG_IMAGE_ABOUT,
       extraMeta: [
       { property: "og:title", content: "About Ride N Care — Care in every mile" },
-      { property: "og:description", content: "Bangalore's trusted doorstep bike & car service. Certified mechanics, OEM parts, transparent pricing." },
+      { property: "og:description", content: "Who we are: a Bangalore doorstep bike & car service team with background-verified mechanics, OEM parts, written quotes and a 7-day workmanship guarantee." },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "About Ride N Care — Care in every mile, Bangalore doorstep bike & car service" },
@@ -64,7 +65,7 @@ function About() {
       </section>
 
       <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-        Ride N Care was founded in <strong className="text-foreground">Bangalore</strong> with one stubborn belief — getting your bike or car serviced should not eat up an entire weekend. What began as two friends fixing neighbours' scooters in a Koramangala parking lot has grown into a doorstep automotive service brand covering <strong className="text-foreground">40 Bangalore localities</strong>, for bikes, scooters, electric two-wheelers and cars.
+        Ride N Care was founded in <strong className="text-foreground">Bangalore</strong> with one stubborn belief — getting your bike or car serviced should not eat up an entire weekend. What began as two friends fixing neighbours' scooters in a Koramangala parking lot has grown into a doorstep automotive service brand covering <strong className="text-foreground">{CONFIRMED_AREAS.length} Bangalore localities</strong>, for bikes, scooters, electric two-wheelers and cars.
       </p>
 
       <StatsRow className="mt-10 max-w-md" />
@@ -77,28 +78,59 @@ function About() {
       <h2 className="mt-12 text-3xl font-bold">Services we specialise in</h2>
       <ul className="mt-4 grid sm:grid-cols-2 gap-3 text-muted-foreground">
         <li>🏍 Bike periodic & general service</li>
-        <li>🚗 Car periodic & comprehensive service</li>
-        <li>🧰 Brake, clutch & chain repairs</li>
-        <li>❄ Car AC gas refill & cleaning</li>
-        <li>🔋 Battery jump-start & replacement</li>
-        <li>🛞 Tyre puncture, change & alignment</li>
-        <li>🎨 Detailing &amp; interior care</li>
-        <li>🛠 Pre-purchase used-vehicle inspection</li>
+        <li>🛵 Scooter & electric two-wheeler service</li>
+        <li>🧰 Bike brake, clutch & chain repairs</li>
+        <li>🆘 Emergency bike repair & breakdown assistance</li>
+        <li>🚗 Car periodic service</li>
+        <li>❄ Car AC service & gas refill</li>
+        <li>🔋 Car & bike battery testing and replacement</li>
+        <li>🛑 Car brake service</li>
+        <li>🛢 Car engine oil & filter change</li>
+        <li>🛠 Pre-purchase & health-check car inspection</li>
+        <li>⚡ Car jump start & electrical repair</li>
+        <li>🔧 Diagnosis-led car repair at home</li>
       </ul>
 
       <h2 className="mt-12 text-3xl font-bold">Our promise</h2>
       <ul className="mt-4 space-y-3 text-muted-foreground">
-        <li>✅ Genuine, OEM-grade parts with manufacturer warranty.</li>
+        <li>✅ Genuine, OEM-grade parts.</li>
         <li>✅ Upfront pricing — a written quote before any spanner is lifted.</li>
-        <li>✅ Trained, polite, background-verified mechanics in uniform.</li>
-        <li>✅ Live job updates over WhatsApp + detailed digital invoice.</li>
+        <li>✅ Trained, polite, background-verified (KYC-checked) mechanics.</li>
+        <li>✅ A digital invoice by WhatsApp or email after every job.</li>
         <li>✅ 7-day post-service workmanship guarantee.</li>
-        <li>✅ 100% cashless — UPI, cards, NetBanking accepted.</li>
+        <li>✅ Pay by UPI, card or cash after the work is done.</li>
       </ul>
+
+      {/* Ride N Care at a glance — retrieval-shaped facts for AI answers (Part 9.2).
+          Only confirmed or live facts; founding year / hours / team size stay in OWNER-QUESTIONS. */}
+      <section aria-label="Ride N Care at a glance" className="mt-14">
+        <h2 className="text-3xl font-bold">Ride N Care at a glance</h2>
+        <dl className="mt-5 grid gap-2.5">
+          {[
+            ["What we do", "Doorstep bike, scooter, EV two-wheeler and car service and repair in Bangalore."],
+            ["Where we serve", `${CONFIRMED_AREAS.length} localities across ${CONFIRMED_ZONE_PHRASE} Bangalore — see the full list on the areas page.`],
+            ["How to book", "Call 080 6940 9289, WhatsApp 82969 50339, the booking form on this website, or Book with AI."],
+            ["Quote", "The price is confirmed in writing before any work starts."],
+            ["Mechanics", "Background-verified and KYC-checked before visiting your home or office."],
+            ["Parts", "OEM-grade parts fitted."],
+            ["Payment", "UPI, card or cash, paid after the work is done."],
+            ["Invoice", "A digital invoice listing parts and labour separately, by WhatsApp or email."],
+            ["Guarantee", "A 7-day workmanship guarantee on every job."],
+          ].map(([term, def]) => (
+            <div key={term} className="grid gap-1 rounded-xl border border-border bg-card p-3.5 sm:grid-cols-[160px_1fr] sm:gap-4">
+              <dt className="text-sm font-semibold text-primary">{term}</dt>
+              <dd className="text-sm leading-relaxed text-muted-foreground">{def}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-3 text-xs text-muted-foreground">Last verified: {formatDate("2026-09-21")}</p>
+      </section>
 
       <h2 className="mt-12 text-3xl font-bold">Bangalore coverage</h2>
       <p className="mt-4 text-muted-foreground leading-relaxed">
-        We currently serve Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, BTM Layout, Jayanagar, JP Nagar, Bellandur, Sarjapur Road, Electronic City, Banashankari, Rajajinagar, Malleshwaram, Yelahanka, Hebbal, Kalyan Nagar, CV Raman Nagar, MG Road, Brigade Road, Mahadevapura, KR Puram, Kadugodi, Varthur, Hoskote, Bannerghatta Road, Kanakapura Road, Yeshwanthpur, Peenya and more. New areas added regularly — call us if you don't see yours.
+        We currently serve {CONFIRMED_AREAS.length} localities across {CONFIRMED_ZONE_PHRASE} Bangalore — including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, Bellandur, Sarjapur Road, BTM Layout, Electronic City, Jayanagar, JP Nagar and Hebbal. The full, current list lives on the{" "}
+        <Link to="/areas" className="text-primary underline underline-offset-4">areas we serve</Link>{" "}
+        page. New areas are added as they are confirmed — call us if you don't see yours.
       </p>
 
       {/* Promises / trust — no invented customer quotes; see Q2/Q19 */}
@@ -135,7 +167,7 @@ function About() {
 
       <div className="mt-12 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Ready to try doorstep service?</h2>
-        <p className="mt-2 text-primary-foreground/90">Get a free quote on WhatsApp in under 2 minutes.</p>
+        <p className="mt-2 text-primary-foreground/90">Get a written quote on WhatsApp before any work starts.</p>
         <a href="https://wa.me/918296950339" className="mt-4 inline-block rounded-full bg-background px-6 py-3 font-semibold text-foreground">Chat on WhatsApp</a>
       </div>
     </div>

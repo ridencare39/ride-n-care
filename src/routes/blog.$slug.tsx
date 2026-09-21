@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { type Post } from "@/lib/blog";
 import { getPublishedPost } from "@/lib/blog.functions";
 import { LOGO_URL, SITE_URL } from "@/lib/seo";
-import { pageHead } from "@/lib/head";
+import { pageHead, formatDate } from "@/lib/head";
 import { graphForPage, articleNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { faqsForPostCategory } from "@/lib/service-faqs";
 import { AREAS } from "@/lib/areas";
@@ -83,7 +83,7 @@ function Post() {
       </div>
       <h1 className="mt-3 text-4xl md:text-5xl font-bold leading-tight">{post.title}</h1>
       <div className="mt-4 text-sm text-muted-foreground">
-        By {post.author} · {new Date(post.date).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })} · {post.readMins} min read
+        By {post.author} · {formatDate(post.date)} · {post.readMins} min read
       </div>
       <div className="mt-10 space-y-5 text-lg leading-relaxed text-foreground/90">
         {post.body.map((para, i) => <p key={i}>{para}</p>)}
