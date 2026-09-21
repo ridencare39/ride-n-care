@@ -16,7 +16,7 @@ export default defineTool({
       phone: "08069409289",
       whatsapp: "+918296950339",
       whatsappLink: "https://wa.me/918296950339",
-      email: "ridencareinfo@gmail.com",
+      email: "info@ridencare.co.in",
       address: "Bangalore, Karnataka, India",
       hours: "Every day",
       bookingUrl: `${SITE_URL}/contact`,

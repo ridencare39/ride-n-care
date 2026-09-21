@@ -20,7 +20,7 @@ export const BIZ = {
   url: SITE_URL,
   logo: LOGO_URL,
   image: OG_IMAGE,
-  email: "ridencareinfo@gmail.com",
+  email: "info@ridencare.co.in",
   /** Call number only — the WhatsApp number must never appear in a telephone field. */
   telephone: "+918069409289",
   whatsappUrl: "https://wa.me/918296950339",

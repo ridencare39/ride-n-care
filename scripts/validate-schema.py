@@ -39,6 +39,8 @@ UNVERIFIED = [
     # guarantee copy legitimately spells it out. The availability claim form is.
     "certified pros", "live updates", "on time", "on-time", "free pickup & drop",
     "open seven days", "uniformed", "printed price list",
+    # Task 1 — the private Gmail must never appear public again (Q51):
+    "ridencareinfo@gmail.com", "ridencareinfo", "@gmail.com",
 ]
 IDS_EXPECTED = {
     "https://ridencare.co.in/#organization",
@@ -217,6 +219,22 @@ for page in PAGES:
         rec["errors"].append("AggregateRating present (banned)")
         fail += 1
 
+    results.append(rec)
+
+# Task 1 / Part 8B: banned strings must also stay out of llms.txt and the
+# sitemap (they are neither a page's visible text nor JSON-LD).
+for extra in ("/llms.txt", "/sitemap.xml"):
+    body = fetch(extra)
+    rec = {"page": extra, "blocks": 0, "parsed": 0, "graphs": 0, "errors": [], "warnings": []}
+    if not body:
+        rec["errors"].append("no content returned")
+        fail += 1
+    else:
+        low = body.lower()
+        for claim in UNVERIFIED:
+            if claim.lower() in low:
+                rec["errors"].append(f"banned claim '{claim}' present")
+                fail += 1
     results.append(rec)
 
 print(f"BASE: {BASE}")

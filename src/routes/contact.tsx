@@ -27,7 +27,7 @@ function Contact() {
     <div className="mt-10 grid gap-4 text-sm sm:grid-cols-3">
       <a href="tel:+918069409289"><Info title="Phone" value="080 6940 9289" /></a>
       <a href="https://wa.me/918296950339"><Info title="WhatsApp" value="+91 82969 50339" /></a>
-      <a href="mailto:ridencareinfo@gmail.com"><Info title="Email" value="ridencareinfo@gmail.com" /></a>
+      <a href="mailto:info@ridencare.co.in"><Info title="Email" value="info@ridencare.co.in" /></a>
     </div>
     <div className="mt-4 text-sm"><Info title="Address" value="Bangalore, Karnataka, India" /></div>
   </main>;

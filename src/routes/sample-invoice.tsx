@@ -79,7 +79,7 @@ function SampleInvoicePage() {
               <p className="mt-2 text-xs leading-relaxed text-white/60">
                 Doorstep bike &amp; car service · Bangalore
                 <br />
-                080 6940 9289 · ridencareinfo@gmail.com
+                080 6940 9289 · info@ridencare.co.in
               </p>
             </div>
             <div className="text-right text-xs leading-relaxed text-white/60">

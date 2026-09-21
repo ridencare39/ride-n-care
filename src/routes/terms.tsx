@@ -81,7 +81,7 @@ function TermsPage() {
       <p className="mt-10 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
         Questions about these terms? Call{" "}
         <a href="tel:+918069409289" className="font-semibold text-primary">080 6940 9289</a> or email{" "}
-        <a href="mailto:ridencareinfo@gmail.com" className="font-semibold text-primary">ridencareinfo@gmail.com</a>.
+        <a href="mailto:info@ridencare.co.in" className="font-semibold text-primary">info@ridencare.co.in</a>.
       </p>
     </div>
   );

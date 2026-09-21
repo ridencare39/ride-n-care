@@ -110,6 +110,7 @@ function About() {
             ["What we do", "Doorstep bike, scooter, EV two-wheeler and car service and repair in Bangalore."],
             ["Where we serve", `${CONFIRMED_AREAS.length} localities across ${CONFIRMED_ZONE_PHRASE} Bangalore — see the full list on the areas page.`],
             ["How to book", "Call 080 6940 9289, WhatsApp 82969 50339, the booking form on this website, or Book with AI."],
+            ["Email", "info@ridencare.co.in — for quotes, invoices and anything else."],
             ["Quote", "The price is confirmed in writing before any work starts."],
             ["Mechanics", "Background-verified and KYC-checked before visiting your home or office."],
             ["Parts", "OEM-grade parts fitted."],

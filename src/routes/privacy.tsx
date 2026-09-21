@@ -50,7 +50,7 @@ const SECTIONS: { heading: string; body: string[] }[] = [
   {
     heading: "Your choices",
     body: [
-      "You can ask us to correct or delete your booking details at any time. Call 080 6940 9289 or email ridencareinfo@gmail.com and we will act on your request.",
+      "You can ask us to correct or delete your booking details at any time. Call 080 6940 9289 or email info@ridencare.co.in and we will act on your request.",
     ],
   },
   {
@@ -83,7 +83,7 @@ function PrivacyPage() {
       <p className="mt-10 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
         Questions? Call <a href="tel:+918069409289" className="font-semibold text-primary">080 6940 9289</a>, WhatsApp{" "}
         <a href="https://wa.me/918296950339" target="_blank" rel="noopener" className="font-semibold text-primary">82969 50339</a> or email{" "}
-        <a href="mailto:ridencareinfo@gmail.com" className="font-semibold text-primary">ridencareinfo@gmail.com</a>.
+        <a href="mailto:info@ridencare.co.in" className="font-semibold text-primary">info@ridencare.co.in</a>.
       </p>
     </div>
   );

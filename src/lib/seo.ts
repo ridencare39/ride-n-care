@@ -35,7 +35,7 @@ export const LOCAL_BUSINESS_JSONLD = {
   logo: LOGO_URL,
   image: OG_IMAGE,
   telephone: ["+91-80-6940-9289"],
-  email: "ridencareinfo@gmail.com",
+  email: "info@ridencare.co.in",
   priceRange: "₹₹",
   address: {
     "@type": "PostalAddress",
@@ -90,7 +90,7 @@ export const ORGANIZATION_JSONLD = {
   name: "Ride N Care",
   url: SITE_URL,
   logo: LOGO_URL,
-  email: "ridencareinfo@gmail.com",
+  email: "info@ridencare.co.in",
   telephone: ["+91-80-6940-9289"],
   sameAs: SAME_AS,
   contactPoint: LOCAL_BUSINESS_JSONLD.contactPoint,

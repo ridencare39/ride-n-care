@@ -13,7 +13,7 @@ export const BRAND = {
   phoneSecondary: "8296950339",
   phoneSecondaryDisplay: "82969 50339",
   whatsapp: "918296950339",
-  email: "ridencareinfo@gmail.com",
+  email: "info@ridencare.co.in",
   city: "Bangalore",
   region: "Karnataka",
   country: "India",

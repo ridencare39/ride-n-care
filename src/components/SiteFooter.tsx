@@ -153,9 +153,9 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
-                <a href="mailto:ridencareinfo@gmail.com" className="inline-flex items-center gap-2 break-all transition hover:text-neon">
+                <a href="mailto:info@ridencare.co.in" className="inline-flex items-center gap-2 break-all transition hover:text-neon">
                   <Mail className="h-4 w-4 shrink-0 text-neon/70" aria-hidden />
-                  ridencareinfo@gmail.com
+                  info@ridencare.co.in
                 </a>
               </li>
               <li className="flex items-start gap-2">
