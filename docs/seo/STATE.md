@@ -180,3 +180,4 @@ Q1–Q13 in OWNER-QUESTIONS.md; most urgent: claim proofs (Q1–Q7) before Part 
 | tsc + build | PASS (NODE_OPTIONS=--max-old-space-size=1300; 1536 OOMs on this box) |
 
 **Noindex pages:** /guarantee, /sample-invoice — flip to index only after the owner confirms the terms (tracked in OWNER-QUESTIONS).
+- **Live verification (deploy 0f8ac1d1):** /guarantee + /sample-invoice 200 with `noindex, nofollow`; both absent from sitemap (211 URLs, 0 dupes — the only "guarantee" hit is /answers/guarantee); /about shows the at-a-glance block with "Last verified: 21 Sep 2026"; note: `bun run deploy` ships the existing `.output` bundle, so always `bun run build` first after adding routes.
