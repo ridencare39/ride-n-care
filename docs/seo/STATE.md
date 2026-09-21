@@ -202,3 +202,4 @@ Q1–Q13 in OWNER-QUESTIONS.md; most urgent: claim proofs (Q1–Q7) before Part 
 | Rating ON HOLD — value/count blank, nothing published; 4.7/4.8/4.9 absent from visible text on live pages | PASS |
 | GBP pack: hours section → option A (Open 24 hours, recommended only if truly dispatchable) vs B (answered hours + 24-hour line in description) | PASS |
 | Validator LIVE: 53 checks / 98 blocks / 0 errors / 0 warnings; tsc + fresh build + deploy | PASS |
+- **GBP hours decision (owner): Option A — "Open 24 hours"** recorded in docs/seo/10-gbp-pack.md (2026-09-21). Matches site copy + schema openingHoursSpecification; standing caveat to switch to option B the same day if night dispatch ever stops being true.
