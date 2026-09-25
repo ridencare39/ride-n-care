@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120" width="240" height="120" role="img" aria-label="TVS Motor Company">
+  <!-- TVS Motor Company mark: bold italic TVS wordmark with the signature
+       red→blue gradient swoosh arcs over the letters, on a white field. -->
+  <rect width="240" height="120" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="tvs-swoosh" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e1251b"/>
+      <stop offset="55%" stop-color="#8a1e5c"/>
+      <stop offset="100%" stop-color="#1f3f94"/>
+    </linearGradient>
+  </defs>
+  <!-- outer swoosh: sweeps up from the left, over the wordmark -->
+  <path d="M18 92 Q60 84 96 66 Q140 44 186 26 L196 30 Q150 52 112 72 Q74 91 26 97 Z" fill="url(#tvs-swoosh)"/>
+  <!-- inner swoosh echo -->
+  <path d="M40 100 Q84 92 122 74 Q152 60 196 44 L200 50 Q158 66 128 80 Q88 98 46 104 Z" fill="url(#tvs-swoosh)" opacity="0.85"/>
+  <!-- bold italic TVS letters -->
+  <g fill="#0a0a0a">
+    <path d="M60 74 L84 74 L88 64 L74 64 L84 42 L70 42 L60 64 L52 64 Z" transform="skewX(-8)"/>
+    <path d="M96 42 L108 42 L104 66 L118 42 L132 42 L126 74 L114 74 L118 54 L104 74 L94 74 Z" transform="skewX(-8)"/>
+    <path d="M138 42 L150 42 L146 66 L160 42 L174 42 L168 74 L156 74 L160 54 L146 74 L136 74 Z" transform="skewX(-8)"/>
+  </g>
+</svg>

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && node scripts/make-dist.mjs",
-    "build:prod": "NODE_OPTIONS=--max-old-space-size=1536 vite build && node scripts/make-dist.mjs",
+    "build:prod": "NODE_OPTIONS=--max-old-space-size=1200 vite build && node scripts/make-dist.mjs",
     "build:vercel": "NITRO_PRESET=vercel vite build",
     "deploy": "wrangler --cwd .output deploy && node scripts/purge-cache.mjs",
     "build:dev": "vite build --mode development",

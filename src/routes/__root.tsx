@@ -95,6 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "author", content: "Ride N Care" },
       { name: "google-site-verification", content: "jhsltMlL-d9OJM2WUXyxdkL6RnJLEpaoQWPUI5qKflc" },
+      { name: "msvalidate.01", content: "8A2538DBEB6ADB19E15BE38DCDAE02FD" },
       { name: "theme-color", content: "#0e1c3d" },
     ],
     links: [
@@ -107,18 +108,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      // Fonts are self-hosted from /fonts/* (see styles.css @font-face): no
+      // fonts.googleapis.com / fonts.gstatic.com round trips on the critical
+      // path. The two font files warm up in parallel with the app bundle.
       {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
+        rel: "preload",
+        href: "/fonts/inter-latin-var.woff2",
+        as: "font",
+        type: "font/woff2",
         crossOrigin: "anonymous",
       },
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap",
+        rel: "preload",
+        href: "/fonts/space-grotesk-700-latin.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
       },
     ],
     scripts: [

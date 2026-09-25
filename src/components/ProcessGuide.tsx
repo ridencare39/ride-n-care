@@ -168,32 +168,49 @@ export function ProcessGuide() {
               className={`process-step ${revealed ? "process-step-in" : ""}`}
               style={{ transitionDelay: revealed ? `${i * 120}ms` : undefined }}
             >
-              <div className="process-card group rounded-2xl border border-border bg-card p-4 transition-colors duration-300 hover:border-primary/40">
-                <span aria-hidden className="process-beam" />
-                <span aria-hidden className="process-spotlight" />
-                <div className="flex items-center gap-2.5">
-                  <span className="process-badge grid h-9 w-9 shrink-0 place-items-center rounded-full bg-grad-accent font-display text-sm font-bold text-white shadow-glow">
-                    {step.n}
-                  </span>
-                  <step.icon aria-hidden className="h-5 w-5 text-primary" />
+              {/* premium tile frame (svc-tile recipe) — the <li> keeps the
+                  mobile timeline rail, so the frame wraps the card only */}
+              <div className="proc-tile group" style={{ "--tile-i": i } as React.CSSProperties}>
+                <span aria-hidden className="svc-tile-rim" />
+                <div className="process-card group flex-1 min-w-0 rounded-2xl border border-border bg-card p-4 transition-colors duration-300 hover:border-primary/55">
+                  <span aria-hidden className="process-beam" />
+                  <span aria-hidden className="process-spotlight" />
+                  <div className="relative flex items-center gap-2.5">
+                    <span className="process-badge grid h-9 w-9 shrink-0 place-items-center rounded-full bg-grad-accent font-display text-sm font-bold text-white">
+                      {step.n}
+                    </span>
+                    <step.icon aria-hidden className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mt-3 font-semibold leading-snug transition-colors group-hover:text-neon">{step.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{step.body}</p>
                 </div>
-                <h3 className="mt-3 font-semibold leading-snug">{step.title}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{step.body}</p>
               </div>
             </li>
           ))}
         </ol>
       </div>
 
-      {/* Trust pillars — one row, no repeats */}
+      {/* Trust pillars — one row, no repeats. Premium tile frame (svc-tile recipe). */}
       <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {PILLARS.map(([title, sub, Icon]) => (
-          <li key={title} className="rounded-xl border border-border bg-background p-3">
-            <div className="flex items-center gap-2">
-              <Icon aria-hidden className="h-4 w-4 shrink-0 text-primary" />
-              <h3 className="text-sm font-semibold leading-tight">{title}</h3>
+        {PILLARS.map(([title, sub, Icon], i) => (
+          <li
+            key={title}
+            className="pillar-tile group"
+            style={{ "--tile-i": i } as React.CSSProperties}
+          >
+            {/* magic UX: gradient hairline rim + conic hover beam + rim light */}
+            <span aria-hidden className="svc-tile-beam" />
+            <span aria-hidden className="svc-tile-rim" />
+            <div className="pillar-card relative overflow-hidden rounded-xl border border-border bg-background p-3 transition-colors duration-300 hover:border-primary/55">
+              <span aria-hidden className="svc-tile-spotlight" />
+              <div className="relative flex items-center gap-2">
+                <span aria-hidden className="pillar-icon shrink-0">
+                  <Icon className="h-4 w-4 text-white" />
+                </span>
+                <h3 className="text-sm font-semibold leading-tight transition-colors group-hover:text-neon">{title}</h3>
+              </div>
+              <p className="relative mt-1.5 text-xs text-muted-foreground">{sub}</p>
             </div>
-            <p className="mt-1 text-xs text-muted-foreground">{sub}</p>
           </li>
         ))}
       </ul>

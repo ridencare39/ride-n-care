@@ -44,6 +44,8 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 // scripts/purge-cache.mjs purges the Cloudflare zone right after every deploy
 // (wired into the "deploy" script), so a fresh fetch after a deploy always
 // sees the newest build. Static assets keep their immutable _headers policy.
+// NOTE: while the purge token is unavailable, the 60 s edge TTL is the safety
+// net — do not raise it until scripts/purge-cache.mjs succeeds reliably.
 function withHtmlCachePolicy(response: Response): Response {
   if (!response.headers.get("content-type")?.includes("text/html")) return response;
   const headers = new Headers(response.headers);

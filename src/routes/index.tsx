@@ -3,8 +3,12 @@ import { CalendarCheck, Siren } from "lucide-react";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
 import { TrustPoints } from "@/components/TrustPoints";
 import { HeroVehicles } from "@/components/HeroVehicles";
+import { HeroMechanic } from "@/components/HeroMechanic";
+import { HeroVehicleDuo } from "@/components/HeroVehicleDuo";
 import { ProcessGuide } from "@/components/ProcessGuide";
 import { AreasSection } from "@/components/AreasSection";
+import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
+import { GoogleReviews } from "@/components/GoogleReviews";
 import { AnswerBlocks } from "@/components/AnswerBlocks";
 import { ANSWERS, BRAND, ENTITY_SUMMARY } from "@/lib/answers";
 import { GUIDES } from "@/lib/guides";
@@ -57,6 +61,7 @@ const MERGED_SERVICES = [
   { icon: "🛵", name: "Scooter Service", desc: "Activa, Jupiter, Access — CVT care included", to: "/scooter-service" },
   { icon: "🔋", name: "Bike Battery", desc: "Testing, jump-start & doorstep replacement", to: "/battery-service" },
   { icon: "⚡", name: "EV Service", desc: "Electric scooter service at home — running gear & brakes", to: "/scooter-service" },
+  { icon: "🔧", name: "Car Repair at Home", desc: "Diagnostics, fixes & part fitting at your doorstep", to: "/car-repair" },
 ];
 
 export const Route = createFileRoute("/")({
@@ -83,21 +88,33 @@ function Home() {
         <div className="pointer-events-none absolute -top-24 right-1/4 h-72 w-72 rounded-full bg-primary/25 blur-3xl float-slow" />
         <div className="pointer-events-none absolute bottom-0 right-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl float-slower" />
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-16 md:pt-10 md:pb-24">
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="rise-in inline-flex items-center gap-1.5 rounded-full border border-neon/45 bg-neon/10 px-3 py-1 text-xs font-semibold text-neon uppercase tracking-wider shadow-glow">
-              ⭐ Bangalore's Trusted Doorstep Garage
-            </span>
-            <h1 className="neon-line rise-in mt-6 text-4xl md:text-6xl font-bold leading-[1.05] text-white [text-shadow:0_2px_18px_rgba(2,10,26,0.95),0_0_3px_rgba(2,10,26,0.8)]">
-              <span className="block">Trusted Bike &amp; Car Service</span>
-              <span className="block text-neon">
-                Doorstep{" "}
-                <span className="rotor">
-                  <span className="rotor-word rotor-bike">Bike</span>
-                  <span className="rotor-word rotor-car">Car</span>
-                </span>{" "}
-                Repair in Bangalore
-              </span>
-            </h1>
+          <div className="mx-auto max-w-6xl text-center">
+            {/* 3-part hero at every width — car+bike left · headline centre ·
+                mechanic right — so mobile mirrors the desktop composition. */}
+            <div className="rise-in mt-2 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 sm:mt-6 sm:gap-4 md:gap-6">
+              <div className="justify-self-center">
+                <HeroVehicleDuo />
+              </div>
+              <div className="min-w-0">
+                <span className="inline-flex max-w-full items-center justify-center gap-1 rounded-full border border-neon/45 bg-neon/10 px-3 py-1.5 text-[10px] font-semibold leading-tight text-neon uppercase tracking-wider shadow-glow sm:gap-1.5 sm:px-4 sm:py-2 sm:text-sm sm:leading-normal">
+                  ⭐ Bangalore's Trusted Doorstep Garage
+                </span>
+                <h1 className="neon-line mt-3 text-2xl sm:text-4xl md:text-5xl font-bold leading-[1.1] text-white [text-shadow:0_2px_18px_rgba(2,10,26,0.95),0_0_3px_rgba(2,10,26,0.8)]">
+                  <span className="block">Trusted Bike &amp; Car Service</span>
+                  <span className="block text-neon">
+                    Doorstep{" "}
+                    <span className="rotor">
+                      <span className="rotor-word rotor-bike">Bike</span>
+                      <span className="rotor-word rotor-car">Car</span>
+                    </span>{" "}
+                    Repair in Bangalore
+                  </span>
+                </h1>
+              </div>
+              <div className="order-3 justify-self-center">
+                <HeroMechanic />
+              </div>
+            </div>
             <p className="rise-in-late mt-6 text-lg text-white/80 max-w-lg mx-auto [text-shadow:0_1px_12px_rgba(2,10,26,0.9)]">
               Book a verified mechanic in 60 seconds.{" "}
               <span className="hero-brand-name">
@@ -111,8 +128,8 @@ function Home() {
             </p>
             {/* Hero CTA pair: equal-height 2-col grid, 12px gap, wraps on narrow phones */}
             <div className="rise-in-later mx-auto mt-8 grid w-full max-w-xl grid-cols-2 gap-3">
-              <BookingButton className="hero-cta bg-grad-primary text-primary-foreground shadow-glow">
-                <CalendarCheck aria-hidden className="h-5 w-5 shrink-0" /> Book Now
+              <BookingButton className="hero-cta hero-cta-glass">
+                <CalendarCheck aria-hidden className="h-5 w-5 shrink-0 text-neon" /> Book Now
               </BookingButton>
               <Link to="/breakdown-assistance" className="hero-cta hero-cta-glass">
                 <Siren aria-hidden className="h-5 w-5 shrink-0 text-neon" /> Breakdown Assistance
@@ -123,6 +140,10 @@ function Home() {
         <HeroVehicles />
         {/* text-protection scrim: darkens vehicles passing behind the copy */}
         <div aria-hidden="true" className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_62%_58%_at_50%_40%,rgba(2,10,26,0.78),rgba(2,10,26,0.35)_55%,transparent_78%)]" />
+        {/* headlight focus on the written content: a warm lamp wash that sweeps
+            across the hero copy like passing headlights, screen-blended so the
+            text stays readable and only brightens. */}
+        <div aria-hidden="true" className="hero-headlight-focus pointer-events-none absolute inset-0 z-[20]" />
       </section>
 
       {/* Trust points — the single six-point block (replaces the old duplicate rows).
@@ -149,20 +170,45 @@ function Home() {
       <section id="services" className="mx-auto max-w-7xl scroll-mt-[76px] px-4 sm:px-6 pb-6">
         <SectionHeading eyebrow="Our Services" title="Pick your service" />
         <div className="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          {MERGED_SERVICES.map((s) => (
-            <Link
+          {MERGED_SERVICES.map((s, i) => (
+            <div
               key={s.name}
-              to={s.to}
-              className="card-hover shadow-card group flex flex-col items-center rounded-3xl border border-border bg-card p-5 text-center sm:p-6"
+              className="svc-tile group relative rounded-3xl"
+              style={{ "--tile-i": i } as React.CSSProperties}
             >
-              <span aria-hidden className="text-4xl transition duration-300 group-hover:scale-110">{s.icon}</span>
-              <h3 className="mt-3 font-semibold text-foreground group-hover:text-primary transition-colors">{s.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{s.desc}</p>
-              <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary transition group-hover:gap-2">
-                Learn More
-                <span aria-hidden className="text-neon">→</span>
-              </span>
-            </Link>
+              {/* magic UX: gradient hairline rim + conic hover beam + rim light */}
+              <span aria-hidden className="svc-tile-beam" />
+              <span aria-hidden className="svc-tile-rim" />
+              <Link
+                to={s.to}
+                className="shadow-card magic-card relative flex h-full flex-col items-center overflow-hidden rounded-3xl border border-border bg-card p-5 text-center transition-colors duration-300 group-hover:border-primary/55 sm:p-6"
+              >
+                {/* travelling shine + twinkling corner stars + icon glow */}
+                <span aria-hidden className="magic-shine" />
+                <span
+                  aria-hidden
+                  className="hero-sparkle pointer-events-none absolute right-3 top-3"
+                  style={{ animationDelay: `${(i % 5) * 0.65}s` }}
+                />
+                <span
+                  aria-hidden
+                  className="hero-sparkle pointer-events-none absolute bottom-4 left-4"
+                  style={{ width: 5, height: 5, animationDelay: `${(i % 5) * 0.65 + 1.1}s` }}
+                />
+                <span aria-hidden className="svc-tile-spotlight" />
+                <span aria-hidden className="svc-tile-float">
+                  <span className="svc-tile-icon">
+                    <span className="magic-icon text-3xl transition duration-300 group-hover:scale-110">{s.icon}</span>
+                  </span>
+                </span>
+                <h3 className="mt-3 font-semibold text-foreground transition-colors group-hover:text-neon">{s.name}</h3>
+                <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{s.desc}</p>
+                <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary transition group-hover:gap-2">
+                  Learn More
+                  <span aria-hidden className="text-neon transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                </span>
+              </Link>
+            </div>
           ))}
         </div>
       </section>
@@ -184,12 +230,18 @@ function Home() {
       {/* Areas We Serve */}
       <AreasSection />
 
-      {/* Brands We Service */}
-      <BrandsMarquee />
+      {/* Customer reviews — all 30 in one carousel, 2.5 s auto-slide + manual nav */}
+      <TestimonialsCarousel />
 
-      {/* ONE process guide — replaces the old "Our promises" / "Why Ride N Care" /
-          "How it works" sections (combined task, Task D). #process anchor target. */}
+      {/* Brands We Service */}
+      <BrandsMarquee />    {/* ONE process guide — replaces the old "Our promises" / "Why Ride N Care" /
+        "How it works" sections (combined task, Task D). #process anchor target. */}
       <ProcessGuide />
+
+      {/* Real Google reviews — official Google Business Profile via Places API.
+          Renders nothing until GOOGLE_PLACES_API_KEY + GOOGLE_PLACE_ID are set;
+          never shows invented reviews. */}
+      <GoogleReviews />
 
       {/* FAQ */}
       <section className="mx-auto max-w-4xl px-4 sm:px-6 py-20">

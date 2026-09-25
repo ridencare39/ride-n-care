@@ -14,6 +14,9 @@
  * All slide left → right, loop with negative delays and staggered durations,
  * so 2–3 vehicles are always on screen. Copy sits above (z-10 in the page).
  *
+ * Every vehicle carries a glowing warm halogen headlamp: a soft radial bloom,
+ * a forward light cone and a bright glass core that gently breathe via CSS.
+ *
  * - Pure inline SVG + CSS animations: no image requests, no JS loop, no layout
  *   shift. Only transform/opacity animate (compositor-friendly).
  * - Reduced motion: everything renders parked and static (src/styles.css).
@@ -44,6 +47,44 @@ function GlassGradient({ id }: { id: string }) {
         <stop offset="100%" stopColor="#0b1c38" />
       </linearGradient>
     </defs>
+  );
+}
+
+/** Shared headlamp glow gradients, rendered once and referenced by every SVG. */
+export function HeadlampDefs() {
+  return (
+    <svg aria-hidden="true" focusable="false" className="absolute h-0 w-0 overflow-hidden">
+      <defs>
+        <radialGradient id="rnc-bloom">
+          <stop offset="0%" stopColor="#fff3bf" stopOpacity="0.9" />
+          <stop offset="35%" stopColor="#ffd76b" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#ffd76b" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="rnc-cone" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#ffedb3" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#ffedb3" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+/** Warm halogen headlamp: bloom halo → forward light cone → glass core. */
+function Headlamp({ cx, cy, r, bike = false }: { cx: number; cy: number; r: number; bike?: boolean }) {
+  return (
+    <g aria-hidden="true">
+      {/* wide bloom behind the lamp (soft radial halo) */}
+      <circle cx={cx} cy={cy} r={r * (bike ? 5 : 4.2)} fill="url(#rnc-bloom)" className="rnc-headlamp-bloom" />
+      {/* forward light cone */}
+      <polygon
+        points={`${cx + r * 0.4},${cy - r * 0.6} ${cx + r * 10},${cy - r * 3.2} ${cx + r * 10},${cy + r * 3.2} ${cx + r * 0.4},${cy + r * 0.6}`}
+        fill="url(#rnc-cone)"
+        className="rnc-headlamp-cone"
+      />
+      {/* lamp glass + hot centre */}
+      <circle cx={cx} cy={cy} r={r} fill="#fff7d6" />
+      <circle cx={cx} cy={cy} r={r * 0.45} fill="#fffef2" className="rnc-headlamp-core" />
+    </g>
   );
 }
 
@@ -103,14 +144,13 @@ function KnobbyWheel({ cx, cy, r = 23 }: { cx: number; cy: number; r?: number })
 }
 
 /** Honda City–style three-box sedan with grille, mirrors, doors. */
-function SedanSvg({ body }: { body: string }) {
+export function SedanSvg({ body }: { body: string }) {
   const g = gid(body, "sedan");
   const w = gid(body, "glass");
   return (
     <svg viewBox="0 0 280 105" className="h-auto w-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.55)]">
       <BodyGradient id={g} body={body} />
       <GlassGradient id={w} />
-      <polygon points="252,52 274,42 274,66" fill="var(--neon)" className="rnc-beam" />
       {/* body */}
       <path d="M18 70 Q16 54 34 50 L92 46 Q104 30 126 29 L152 29 Q168 31 180 46 L224 50 Q252 54 254 64 L252 70 Q250 74 242 74 L226 74 A26 26 0 0 0 174 74 L106 74 A26 26 0 0 0 54 74 L28 74 Q18 74 18 70 Z" fill={`url(#${g})`} stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
       {/* greenhouse */}
@@ -127,7 +167,7 @@ function SedanSvg({ body }: { body: string }) {
       <rect x="240" y="54" width="14" height="8" rx="2" fill="rgba(0,0,0,0.35)" />
       <path d="M20 68 L252 68" stroke="rgba(0,0,0,0.3)" strokeWidth="1.6" />
       {/* lights */}
-      <rect x="244" y="50" width="10" height="5" rx="2.5" fill="var(--neon)" />
+      <Headlamp cx={249} cy={52.5} r={5} />
       <rect x="19" y="54" width="9" height="4.5" rx="2" fill="#ff5470" opacity="0.9" />
       <AlloyWheel cx={79} cy={74} />
       <AlloyWheel cx={201} cy={74} />
@@ -144,7 +184,6 @@ function FastbackSvg({ body }: { body: string }) {
     <svg viewBox="0 0 280 105" className="h-auto w-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.55)]">
       <BodyGradient id={g} body={body} />
       <GlassGradient id={w} />
-      <polygon points="252,52 274,42 274,66" fill="var(--neon)" className="rnc-beam" />
       <path d="M18 70 Q16 54 34 50 L98 46 Q116 26 146 26 L162 26 Q182 30 196 46 Q214 52 232 56 Q254 60 254 66 L252 70 Q250 74 242 74 L226 74 A26 26 0 0 0 174 74 L106 74 A26 26 0 0 0 54 74 L28 74 Q18 74 18 70 Z" fill={`url(#${g})`} stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
       <path d="M132 38 Q140 30 152 30 L158 30 Q168 34 174 42 L132 42 Z" fill={`url(#${w})`} />
       <path d="M102 44 Q112 32 126 30 L126 44 Z" fill={`url(#${w})`} />
@@ -154,7 +193,7 @@ function FastbackSvg({ body }: { body: string }) {
       <rect x="170" y="50" width="10" height="2.4" rx="1.2" fill="rgba(255,255,255,0.65)" />
       <path d="M100 46 L94 42" stroke={body} strokeWidth="3" strokeLinecap="round" />
       <rect x="240" y="56" width="14" height="7" rx="2" fill="rgba(0,0,0,0.35)" />
-      <rect x="244" y="50" width="10" height="5" rx="2.5" fill="var(--neon)" />
+      <Headlamp cx={249} cy={52.5} r={5} />
       <rect x="19" y="54" width="9" height="4.5" rx="2" fill="#ff5470" opacity="0.9" />
       <AlloyWheel cx={79} cy={74} />
       <AlloyWheel cx={201} cy={74} />
@@ -171,7 +210,6 @@ function OffroaderSvg({ body }: { body: string }) {
     <svg viewBox="0 0 290 115" className="h-auto w-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.55)]">
       <BodyGradient id={g} body={body} />
       <GlassGradient id={w} />
-      <polygon points="262,54 284,44 284,68" fill="var(--neon)" className="rnc-beam" />
       {/* snorkel */}
       <path d="M60 40 L60 22 Q60 18 66 18 L72 18 Q76 18 76 22 L76 40" fill="rgba(0,0,0,0.3)" />
       {/* body */}
@@ -183,13 +221,13 @@ function OffroaderSvg({ body }: { body: string }) {
       <path d="M120 46 L120 80 M186 46 L186 80" stroke="rgba(0,0,0,0.3)" strokeWidth="1.6" />
       <rect x="128" y="52" width="12" height="2.6" rx="1.3" fill="rgba(255,255,255,0.65)" />
       <rect x="196" y="52" width="12" height="2.6" rx="1.3" fill="rgba(255,255,255,0.65)" />
-      {/* fender + round lamp */}
+      {/* fender + rear lamp */}
       <path d="M24 52 L36 40" stroke="rgba(255,255,255,0.45)" strokeWidth="3" strokeLinecap="round" />
       <circle cx="30" cy="62" r="11" fill="#0b1830" stroke="#aab6c8" strokeWidth="2" />
       <circle cx="30" cy="62" r="5.5" fill="var(--neon)" />
       {/* grille + spare */}
       <rect x="248" y="56" width="12" height="10" rx="2" fill="rgba(0,0,0,0.35)" />
-      <circle cx="264" cy="34" r="0" />
+      <Headlamp cx={253} cy={50} r={4.5} />
       <circle cx="256" cy="34" r="13" fill="#0b1830" stroke="#aab6c8" strokeWidth="2" />
       <KnobbyWheel cx={85} cy={84} r={24} />
       <KnobbyWheel cx={214} cy={84} r={24} />
@@ -206,7 +244,6 @@ function SuvSvg({ body }: { body: string }) {
     <svg viewBox="0 0 290 115" className="h-auto w-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.55)]">
       <BodyGradient id={g} body={body} />
       <GlassGradient id={w} />
-      <polygon points="262,54 284,44 284,68" fill="var(--neon)" className="rnc-beam" />
       <path d="M18 78 Q16 60 32 56 L50 52 Q60 32 82 30 L192 30 Q208 32 218 48 L238 52 Q262 56 264 66 L262 74 Q260 78 252 78 L238 78 A26 26 0 0 0 186 78 L108 78 A26 26 0 0 0 56 78 L30 78 Q18 78 18 78 Z" fill={`url(#${g})`} stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
       <path d="M88 44 Q96 38 108 38 L120 38 L120 52 L88 52 Z" fill={`url(#${w})`} />
       <path d="M128 38 L162 38 Q174 40 182 50 L128 50 Z" fill={`url(#${w})`} />
@@ -219,7 +256,7 @@ function SuvSvg({ body }: { body: string }) {
       {/* cladding */}
       <path d="M20 72 L262 72" stroke="rgba(0,0,0,0.28)" strokeWidth="3" />
       <rect x="252" y="54" width="11" height="6" rx="2" fill="rgba(0,0,0,0.35)" />
-      <rect x="255" y="50" width="10" height="5" rx="2.5" fill="var(--neon)" />
+      <Headlamp cx={260} cy={52.5} r={5} />
       <rect x="19" y="56" width="9" height="4.5" rx="2" fill="#ff5470" opacity="0.9" />
       <KnobbyWheel cx={81} cy={78} r={23} />
       <KnobbyWheel cx={207} cy={78} r={23} />
@@ -234,7 +271,6 @@ function SportbikeSvg({ body }: { body: string }) {
   return (
     <svg viewBox="0 0 230 115" className="h-auto w-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.55)]">
       <BodyGradient id={g} body={body} />
-      <polygon points="160,44 184,36 172,58" fill="var(--neon)" className="rnc-beam" />
       <WireWheel cx={52} cy={82} r={26} />
       <WireWheel cx={176} cy={82} r={26} />
       {/* swingarm + fork */}
@@ -249,9 +285,9 @@ function SportbikeSvg({ body }: { body: string }) {
       <path d="M32 60 L76 52 Q86 34 110 32 L134 35 L146 45 L130 55 L96 57 Q80 57 76 60 L52 66 Q34 66 32 60 Z" fill={`url(#${g})`} stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
       <path d="M38 56 L90 49 L100 40 L112 41 L100 55 L52 62 Q38 60 38 56 Z" fill="rgba(0,0,0,0.35)" />
       <path d="M112 41 L138 36" stroke="var(--neon)" strokeWidth="3" strokeLinecap="round" />
-      {/* handlebar + headlight */}
+      {/* handlebar + glowing headlight */}
       <path d="M136 34 L152 30" stroke="#101f38" strokeWidth="4.5" strokeLinecap="round" />
-      <circle cx="152" cy="46" r="5.5" fill="var(--neon)" />
+      <Headlamp cx={152} cy={46} r={5.5} bike />
       {/* exhaust */}
       <path d="M56 70 L96 66 L110 70 Q112 74 104 76 L64 76 Q54 74 56 70 Z" fill="#c3ccd9" />
       <ellipse cx="110" cy="105" rx="64" ry="6" fill="var(--neon)" className="rnc-beam" />
@@ -260,12 +296,11 @@ function SportbikeSvg({ body }: { body: string }) {
 }
 
 /** Royal Enfield–style classic: teardrop tank, round lamp, chrome pipes. */
-function ClassicBikeSvg({ body }: { body: string }) {
+export function ClassicBikeSvg({ body }: { body: string }) {
   const g = gid(body, "re");
   return (
     <svg viewBox="0 0 230 115" className="h-auto w-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.55)]">
       <BodyGradient id={g} body={body} />
-      <circle cx="158" cy="48" r="13" fill="var(--neon)" className="rnc-beam" />
       <WireWheel cx={52} cy={82} r={26} />
       <WireWheel cx={176} cy={82} r={26} />
       {/* fenders */}
@@ -279,9 +314,9 @@ function ClassicBikeSvg({ body }: { body: string }) {
       {/* tank pinstripe + badge */}
       <path d="M84 46 Q100 50 124 46" stroke="#e8d9a0" strokeWidth="1.6" fill="none" />
       <circle cx="104" cy="44" r="2.4" fill="#e8d9a0" />
-      {/* headlamp shell */}
+      {/* headlamp shell + warm glow */}
       <circle cx="158" cy="48" r="9" fill="#101f38" stroke="#cfd6df" strokeWidth="2" />
-      <circle cx="158" cy="48" r="4.5" fill="var(--neon)" />
+      <Headlamp cx={158} cy={48} r={4.5} bike />
       {/* chrome exhaust */}
       <path d="M82 70 Q116 78 148 70 Q154 74 146 78 Q112 84 86 78 Q76 74 82 70 Z" fill="#d9e0e8" />
       <path d="M40 56 L78 48 Q86 44 96 46 L98 54 L54 62 Q40 60 40 56 Z" fill="rgba(0,0,0,0.35)" />
@@ -296,7 +331,6 @@ function ScooterSvg({ body }: { body: string }) {
   return (
     <svg viewBox="0 0 220 120" className="h-auto w-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.55)]">
       <BodyGradient id={g} body={body} />
-      <polygon points="146,42 168,34 158,56" fill="var(--neon)" className="rnc-beam" />
       <AlloyWheel cx={60} cy={92} r={18} />
       <AlloyWheel cx={160} cy={92} r={18} />
       {/* front apron + handle */}
@@ -305,10 +339,10 @@ function ScooterSvg({ body }: { body: string }) {
       {/* seat + floorboard */}
       <rect x="66" y="54" width="60" height="12" rx="6" fill="#101f38" />
       <path d="M76 70 L128 70 L132 78 L72 78 Z" fill="rgba(0,0,0,0.3)" />
-      {/* mirrors + lamp */}
+      {/* mirrors + glowing lamp */}
       <path d="M114 28 L100 24" stroke="#101f38" strokeWidth="4" strokeLinecap="round" />
       <circle cx="97" cy="20" r="3.4" fill="#cfd6df" />
-      <circle cx="141" cy="44" r="4.5" fill="var(--neon)" />
+      <Headlamp cx={141} cy={44} r={4.5} bike />
       <rect x="70" y="70" width="8" height="5.5" rx="2.4" fill="#ff5470" opacity="0.9" />
       {/* chrome muffler */}
       <path d="M128 74 L156 74 Q162 74 162 79 Q162 84 156 84 L132 84" fill="none" stroke="#c3ccd9" strokeWidth="6" strokeLinecap="round" />
@@ -317,10 +351,11 @@ function ScooterSvg({ body }: { body: string }) {
   );
 }
 
-/** Soft motion streaks trailing a vehicle (subtle, opacity-animated). */
+/** Mobile perf: 3 tiny animated streak layers per vehicle × 7 lanes is pure
+ * fill-rate on low-end phones — hide the whole group there (CSS below). */
 function SpeedLines({ delays }: { delays: [string, string, string] }) {
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 -left-8 w-24">
+    <div aria-hidden="true" className="rnc-speed-wrap pointer-events-none absolute inset-y-0 -left-8 w-24">
       <span className="rnc-speed absolute top-[30%] right-0 h-[2px] w-20 rounded-full bg-gradient-to-l from-neon/70 to-transparent" style={{ animationDelay: delays[0] }} />
       <span className="rnc-speed absolute top-[52%] right-2 h-[2px] w-14 rounded-full bg-gradient-to-l from-white/60 to-transparent" style={{ animationDelay: delays[1] }} />
       <span className="rnc-speed absolute top-[70%] right-0 h-[2px] w-16 rounded-full bg-gradient-to-l from-neon/50 to-transparent" style={{ animationDelay: delays[2] }} />
@@ -328,7 +363,8 @@ function SpeedLines({ delays }: { delays: [string, string, string] }) {
   );
 }
 
-/** One cruising lane: position, size, lap duration and phase via props. */
+/** One cruising lane: position, size, lap duration and phase via props.
+ * skipMobile hides the lane below 640px — see .lane-skip-mobile in styles.css. */
 function Lane({
   top,
   size,
@@ -336,6 +372,7 @@ function Lane({
   delay,
   streaks,
   bobLate = false,
+  skipMobile = false,
   children,
 }: {
   top: string;
@@ -344,10 +381,11 @@ function Lane({
   delay: string;
   streaks: [string, string, string];
   bobLate?: boolean;
+  skipMobile?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <div className={`rnc-cruise absolute ${size}`} style={{ top, animationDuration: dur, animationDelay: delay }}>
+    <div className={`rnc-cruise absolute ${size} ${skipMobile ? "lane-skip-mobile" : ""}`} style={{ top, animationDuration: dur, animationDelay: delay }}>
       <SpeedLines delays={streaks} />
       <div className={`rnc-bob relative ${bobLate ? "rnc-bob-late" : ""}`}>{children}</div>
     </div>
@@ -355,12 +393,15 @@ function Lane({
 }
 
 /**
- * Transparent full-hero overlay: the 7-vehicle parade, top → bottom.
+ * Transparent full-hero overlay: the 7-vehicle parade, top → bottom,
+ * every vehicle with glowing headlights.
  */
 export function HeroVehicles() {
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden opacity-45 sm:opacity-55">
-      <Lane top="0%" size="w-64 sm:w-80 md:w-[26rem] lg:w-[32rem]" dur="20s" delay="-4s" streaks={["0.3s", "0.8s", "1.4s"]}>
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden opacity-55 sm:opacity-65">
+      <HeadlampDefs />
+
+      <Lane top="0%" size="w-64 sm:w-80 md:w-[26rem] lg:w-[32rem]" dur="20s" delay="-4s" streaks={["0.3s", "0.8s", "1.4s"]} skipMobile>
         <SedanSvg body="#cfd8e3" />
       </Lane>
 
@@ -368,7 +409,7 @@ export function HeroVehicles() {
         <SportbikeSvg body="#ff6b1a" />
       </Lane>
 
-      <Lane top="28%" size="w-72 sm:w-96 md:w-[30rem] lg:w-[38rem]" dur="24s" delay="-8s" streaks={["0.6s", "1.2s", "0.1s"]}>
+      <Lane top="28%" size="w-72 sm:w-96 md:w-[30rem] lg:w-[38rem]" dur="24s" delay="-8s" streaks={["0.6s", "1.2s", "0.1s"]} skipMobile>
         <OffroaderSvg body="#3e7d51" />
       </Lane>
 
@@ -380,7 +421,7 @@ export function HeroVehicles() {
         <FastbackSvg body="#8fb6d9" />
       </Lane>
 
-      <Lane top="70%" size="w-52 sm:w-64 md:w-80 lg:w-96" dur="34s" delay="-6s" streaks={["0.2s", "1.6s", "0.7s"]} bobLate>
+      <Lane top="70%" size="w-52 sm:w-64 md:w-80 lg:w-96" dur="34s" delay="-6s" streaks={["0.2s", "1.6s", "0.7s"]} bobLate skipMobile>
         <ClassicBikeSvg body="#77804a" />
       </Lane>
 

@@ -21,6 +21,8 @@ const html = `<!doctype html>
     <title>Ride N Care — Doorstep Bike &amp; Car Service in Bangalore</title>
     <meta name="description" content="Ride N Care: doorstep two-wheeler and car service in Bangalore. Care in every mile." />
     <meta name="robots" content="noindex" />
+    <!-- Bing Webmaster verification — must stay for verification to persist -->
+    <meta name="msvalidate.01" content="8A2538DBEB6ADB19E15BE38DCDAE02FD" />
     <link rel="canonical" href="${target}" />
     <meta http-equiv="refresh" content="0; url=${target}" />
     <style>
@@ -39,4 +41,16 @@ const html = `<!doctype html>
 `;
 
 writeFileSync(resolve(distDir, "index.html"), html);
+
+// Bing Webmaster XML verification file (second verification method — keep in
+// sync with the msvalidate.01 meta tag above and public/BingSiteAuth.xml).
+writeFileSync(
+  resolve(distDir, "BingSiteAuth.xml"),
+  `<?xml version="1.0"?>
+<users>
+	<user>8A2538DBEB6ADB19E15BE38DCDAE02FD</user>
+</users>
+`,
+);
+
 console.log(`[make-dist] wrote dist/index.html → ${target}`);

@@ -59,8 +59,6 @@ function Blog() {
     () => (cat === "All" ? posts : posts.filter((p) => p.category === cat)),
     [cat, posts],
   );
-  const sitemapUrl = typeof window !== "undefined" ? `${window.location.origin}/sitemap.xml` : "/sitemap.xml";
-  const gscUrl = `https://search.google.com/search-console/welcome?utm_source=ridencare`;
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 py-16">
       <span className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Care Journal</span>
@@ -109,26 +107,6 @@ function Blog() {
         {filtered.length === 0 && (
           <p className="text-muted-foreground">No posts in this category yet.</p>
         )}
-      </div>
-
-      {/* Submit to Google */}
-      <div className="mt-12 rounded-3xl border border-border bg-card p-8">
-        <span className="text-xs uppercase tracking-[0.2em] text-accent font-semibold">SEO</span>
-        <h2 className="mt-2 text-2xl font-bold">Submit our posts to Google</h2>
-        <p className="mt-2 text-muted-foreground">
-          Our XML sitemap auto-includes every blog post with <code className="text-primary">lastmod</code> dates. To get new posts indexed faster, add the sitemap to Google Search Console & Bing Webmaster Tools.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <a href={sitemapUrl} target="_blank" rel="noopener" className="rounded-full border border-border px-4 py-2 text-sm font-semibold hover:border-primary hover:text-primary">
-            View Sitemap
-          </a>
-          <a href={gscUrl} target="_blank" rel="noopener" className="rounded-full bg-grad-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow">
-            Open Google Search Console →
-          </a>
-          <a href="https://www.bing.com/webmasters" target="_blank" rel="noopener" className="rounded-full border border-border px-4 py-2 text-sm font-semibold hover:border-primary hover:text-primary">
-            Bing Webmaster
-          </a>
-        </div>
       </div>
     </div>
   );

@@ -105,12 +105,14 @@ export interface Booking {
   whatsapp?: string;
   email?: string;
   registration?: string;
+  /** Legacy: kept only so old saved rows still render. No longer collected. */
   address?: string;
   latitude?: number | null;
   longitude?: number | null;
   date?: string;
   time?: string;
   issue?: string;
+  /** Legacy: kept only so old saved rows still render. No longer collected. */
   paymentMethod?: "pay_now" | "pay_later";
   paymentStatus?: "pending" | "processing" | "paid" | "failed" | "refunded";
   status?: "awaiting_confirmation" | "confirmed" | "assigned" | "technician_on_the_way" | "service_started" | "service_completed" | "cancelled";
@@ -164,11 +166,8 @@ export function buildBookingMessage(b: Booking): string {
     b.whatsapp && `WhatsApp: ${b.whatsapp}`,
     b.email && `Email: ${b.email}`,
     b.registration && `Registration No: ${b.registration}`,
-    b.address && `Address / Location: ${b.address}`,
     b.date && `Preferred Date: ${b.date}`,
     b.time && `Preferred Time: ${b.time}`,
-    b.paymentMethod && `Payment: ${b.paymentMethod === "pay_now" ? "Pay Now" : "Pay Later"}`,
-    b.paymentStatus && `Payment Status: ${b.paymentStatus.replaceAll("_", " ")}`,
     b.status && `Request Status: Awaiting Ride N Care confirmation`,
     b.issue && `Additional Issue: ${b.issue}`,
     b.manualVehicle && `Vehicle Details (manually entered): ${[b.manualVehicle.brand, b.manualVehicle.model, b.manualVehicle.variant].filter(Boolean).join(" ")}${b.manualVehicle.vehicleType ? ` (${b.manualVehicle.vehicleType})` : ""}${b.manualVehicle.notes ? ` — ${b.manualVehicle.notes}` : ""}`,
@@ -187,13 +186,11 @@ export function bookingIssues(b: Booking): string[] {
   if (b.vehicle === "car" && !b.variant) issues.push("Choose your car's fuel type.");
   if (b.vehicle === "bike" && b.power === "non-electric" && !b.engineCc) issues.push("Enter your bike's engine CC.");
   if (!b.packageId || !b.packageName) issues.push("Choose a service package.");
-  if (!b.address?.trim()) issues.push("Enter the service address or share your current location.");
   if (!b.name?.trim() || b.name.trim().length < 2) issues.push("Enter your full name.");
   if (!isValidIndianMobile(b.mobile ?? "")) issues.push("Enter a valid 10-digit mobile number.");
   if (!isValidIndianMobile(b.whatsapp ?? "")) issues.push("Enter a valid 10-digit WhatsApp number.");
   if (!b.date) issues.push("Choose your preferred service date.");
   if (!b.time) issues.push("Choose a preferred time slot.");
-  if (!b.paymentMethod) issues.push("Choose a payment option.");
   return issues;
 }
 

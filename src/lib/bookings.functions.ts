@@ -19,13 +19,14 @@ const bookingSchema = z.object({
   whatsapp: z.string().trim().min(10).max(20),
   email: z.string().trim().email().max(160).or(z.literal("")).optional(),
   registration: z.string().trim().max(30).optional(),
-  address: z.string().trim().min(5).max(500),
+  /** Location and payment are no longer collected; the legacy DB columns stay satisfied server-side. */
+  address: z.string().trim().max(500).optional(),
   latitude: z.number().min(-90).max(90).nullable().optional(),
   longitude: z.number().min(-180).max(180).nullable().optional(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   time: z.string().trim().min(1).max(80),
   issue: z.string().trim().max(1000).optional(),
-  paymentMethod: z.enum(["pay_now", "pay_later"]),
+  paymentMethod: z.enum(["pay_now", "pay_later"]).optional(),
   source: z.enum(["normal", "ai"]).default("normal"),
 });
 
@@ -66,7 +67,6 @@ function toDto(row: any, history: any[] = []): Booking & { createdAt: string; hi
 export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => bookingSchema.parse(data))
   .handler(async ({ data }) => {
-    if (data.paymentMethod === "pay_now") throw new Error("Online payment is not active yet. Please choose Pay Later.");
     const mobile = normalizeIndianMobile(data.mobile);
     const whatsapp = normalizeIndianMobile(data.whatsapp);
     if (!mobile || !whatsapp) throw new Error("Enter valid 10-digit Indian mobile numbers.");
@@ -100,18 +100,19 @@ export const createBooking = createServerFn({ method: "POST" })
       whatsapp_mobile: whatsapp,
       email: data.email || null,
       registration: data.registration || null,
-      address: data.address,
+      /** Legacy columns: after the migration these are optional; before it runs, the placeholder keeps inserts working. */
+      address: data.address ?? "Service location shared on WhatsApp",
       latitude: data.latitude ?? null,
       longitude: data.longitude ?? null,
       preferred_date: data.date,
       preferred_time: data.time,
       issue: data.issue || null,
       source: data.source,
-      payment_method: data.paymentMethod,
+      payment_method: "pay_later",
       payment_status: "pending",
       status: "awaiting_confirmation",
     } as any).select("*").single();
-    if (error || !row) throw new Error("We could not create the booking. Please try again.");
+    if (error || !row) throw new Error("We could not create the booking. No payment is required — please try again.");
     return { booking: toDto(row), requiresPayment: false };
   });
 

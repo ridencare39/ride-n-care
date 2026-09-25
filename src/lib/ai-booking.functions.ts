@@ -20,6 +20,20 @@ export interface AiBookingReply {
   retryable?: boolean;
 }
 
+/**
+ * Turn the chat state into a compact, nudge-style reminder appended to the
+ * system prompt on every request. Models occasionally answer in plain text and
+ * forget the JSON contract — restating the contract plus the exact keys we
+ * still need keeps them on-script mid-conversation.
+ */
+function withStateReminder(base: string, messages: { role: "user" | "assistant"; content: string }[]): string {
+  const chat = messages.map((m) => `${m.role}: ${m.content}`).join("\n").slice(-3000);
+  return `${base}\n
+REMINDER: Reply ONLY with the JSON object {"reply":"...","booking":{...},"complete":false} — never plain text, never code fences.
+Recent conversation (collect the missing fields next, then confirm with the customer before complete=true):
+${chat}`;
+}
+
 const bikePackagePrompt = BIKE_PACKAGES.map((p) => `- ${p.name}, ${p.cc}, MRP ${formatPrice(p.mrp)}, Price ${formatPrice(p.price)}`).join("\n");
 const carPackagePrompt = CAR_PACKAGES.map((p) => `- ${p.name}: ${formatPrice(p.price)}`).join("\n");
 const electricPackagePrompt = ELECTRIC_BIKE_PACKAGES.map((p) => `- ${p.name}: ${formatPrice(p.price)}`).join("\n");
@@ -28,7 +42,8 @@ const SYSTEM = `You are the Ride N Care booking assistant for a doorstep bike an
 Collect a service booking by asking ONE short question at a time, in friendly plain English.
 
 Fields to collect, in this order (skip what the user already gave):
-vehicle (Bike or Car), power (Electric or Non-Electric — bikes only), brand, model, engineCc as exact integer (NON-ELECTRIC bikes only — never ask for CC on electric bikes), variant (car only), packageName (from the matching catalogue below), name, mobile, whatsapp, email (optional), registration (optional), address, date in YYYY-MM-DD, time, issue (optional), paymentMethod (Pay Now or Pay Later).
+vehicle (Bike or Car), power (Electric or Non-Electric — bikes only), brand, model, engineCc as exact integer (NON-ELECTRIC bikes only — never ask for CC on electric bikes), variant (car only), packageName (from the matching catalogue below), name, mobile, whatsapp, email (optional), registration (optional), date in YYYY-MM-DD, time, issue (optional).
+NEVER ask for the customer's address or location, and NEVER mention payment at all — no Pay Now, Pay Later, UPI or payment questions. The mechanic's visit location is collected on WhatsApp after the booking is created.
 
 NON-ELECTRIC (petrol) bike packages — pick the row that matches the customer's CC (use ONLY these):
 ${bikePackagePrompt}
@@ -39,13 +54,13 @@ ${electricPackagePrompt}
 Car packages (use ONLY these):
 ${carPackagePrompt}
 Never invent any other price. For non-electric bikes pick the package from the CC the user gives; if the CC is unknown, ask for it or the CC range before naming a package. For electric bikes offer ONLY EV General Service ₹999, EV Running Repair ₹450, EV Jump Start ₹399 — never the petrol "General Service + Engine Oil" package. If a needed repair is outside these packages, say additional work is quoted after inspection and requires approval. Never guess vehicle type, CC, or price — ask instead.
-Mobile numbers must be 10-digit Indian numbers starting 6-9; ask again if invalid. Online Pay Now is not active yet, so collect Pay Later as the payment method and explain this briefly if asked.
+Mobile numbers must be 10-digit Indian numbers starting 6-9; ask again if invalid.
 Ask only for missing required details. Before setting complete=true, explicitly ask the customer to confirm the complete booking details including the exact package price. Set complete=true only after the customer clearly confirms.
 
 Reply ONLY with JSON of this shape:
 {"reply":"your next message","booking":{"vehicle":"Bike","brand":"Honda"},"complete":false}
-Put every collected value in "booking" (keys: vehicle, power, brand, model, engineCc, variant, packageName, name, mobile, whatsapp, email, registration, address, date, time, issue, paymentMethod). Do not return a price; the server resolves the current price from the shared catalogue.
-Set "complete": true only after all required details, WhatsApp, payment method, and explicit customer confirmation are collected; then "reply" should say the booking is ready to create.`;
+Put every collected value in "booking" (keys: vehicle, power, brand, model, engineCc, variant, packageName, name, mobile, whatsapp, email, registration, date, time, issue). Do not return a price; the server resolves the current price from the shared catalogue.
+Set "complete": true only after all required details and explicit customer confirmation are collected; then "reply" should say the booking is ready to create.`;
 
 /**
  * All config comes from server env — never bundled into frontend code.
@@ -86,7 +101,7 @@ export const chatBookingAssistant = createServerFn({ method: "POST" })
     // Bangalore runs on IST (UTC+5:30) — the model needs today's date to resolve
     // relative words like "today"/"tomorrow" into YYYY-MM-DD correctly.
     const todayIst = new Date(Date.now() + 5.5 * 60 * 60 * 1000).toISOString().slice(0, 10);
-    const systemWithDate = `${SYSTEM}\nToday's date is ${todayIst} (IST). Resolve "today"/"tomorrow" against it.`;
+    const systemWithDate = withStateReminder(`${SYSTEM}\nToday's date is ${todayIst} (IST). Resolve "today"/"tomorrow" against it.`, data.messages);
 
     let res: Response;
     try {
@@ -146,9 +161,13 @@ export const chatBookingAssistant = createServerFn({ method: "POST" })
       return { reply: "", booking: {}, complete: false, retryable: true, error: "The assistant returned an empty response. Please try again." };
     }
 
+    let parsed: { reply?: string; booking?: Record<string, unknown>; complete?: boolean } | null = null;
     try {
-      const parsed = extractJson(raw) as { reply?: string; booking?: Record<string, unknown>; complete?: boolean } | null;
-      if (!parsed) throw new Error("no JSON object found");
+      parsed = extractJson(raw) as { reply?: string; booking?: Record<string, unknown>; complete?: boolean } | null;
+    } catch (e) {
+      console.error("[ai-booking] extractJson threw:", e);
+    }
+    if (parsed) {
       const booking: Record<string, string> = {};
       for (const [k, v] of Object.entries(parsed.booking ?? {})) {
         if (v !== null && v !== undefined && String(v).trim() !== "") booking[k] = String(v).trim();
@@ -158,10 +177,14 @@ export const chatBookingAssistant = createServerFn({ method: "POST" })
         booking,
         complete: Boolean(parsed.complete),
       };
-    } catch (e) {
-      console.error("[ai-booking] unparseable model response:", String(raw).slice(0, 300), e);
-      return { reply: "", booking: {}, complete: false, retryable: true, error: "The assistant gave a malformed response. Please try again." };
     }
+    // The model answered in plain prose (no JSON at all). That text is usually a
+    // perfectly good question to the customer, so show it instead of failing the
+    // turn — nothing is merged into booking fields, and the next request carries
+    // the JSON reminder so the model gets back on-script.
+    const prose = raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
+    console.warn("[ai-booking] model replied without JSON; showing raw text as the turn reply.", prose.slice(0, 120));
+    return { reply: prose || "Could you tell me a bit more?", booking: {}, complete: false };
   });
 
 /**
