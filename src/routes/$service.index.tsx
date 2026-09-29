@@ -10,6 +10,7 @@ import { ctcProps } from "@/lib/analytics";
 import { formatPrice, getBikePackagesForCc, getBookingServiceForSlug, getBookingServiceIdForSlug } from "@/lib/pricing";
 import { GUIDES } from "@/lib/guides";
 import { answersForService } from "@/lib/answer-pages";
+import { carAreaLinksForService } from "@/lib/car-area-content";
 
 const ALL_SERVICES: ServiceDef[] = [...SERVICES_LIST, ...CAR_SERVICES];
 // bike catalogue import kept separate to avoid a circular import at module init
@@ -96,7 +97,7 @@ function ServiceLanding() {
 
       {/* Above-the-fold CTAs: Call · WhatsApp · Book now, with GA4 conversion events */}
       <div className="mt-6 flex flex-wrap gap-3">
-        <BookingButton vehicle={vehicleType} serviceId={bookingServiceId} className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">Book Now</BookingButton>
+        <BookingButton vehicle={vehicleType} serviceId={bookingServiceId} className="btn-book rounded-full px-6 py-3 font-semibold">Book Now</BookingButton>
         <a
           href="tel:+918069409289"
           {...ctcProps("call_click", { vehicle_type: vehicleType, service: s.slug })}
@@ -185,6 +186,29 @@ function ServiceLanding() {
           <p className="mt-3 text-sm text-muted-foreground">
             Not listed? We cover {AREAS.length} localities — see all <Link to="/areas" className="text-primary">service areas</Link>.
           </p>
+        </>
+      )}
+
+      {/* Local coverage — registry-driven links to published car×area pages.
+          Bike hubs render their own “across Bangalore” block via s.local. */}
+      {isCar && (
+        <>
+          <h2 className="mt-12 text-2xl font-bold">Local car service areas in Bangalore</h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {s.name} at your doorstep in these Bangalore localities — each page covers local parking access, what to have ready and pair-specific questions.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {carAreaLinksForService(s.slug).map((a) => (
+              <Link
+                key={a.slug}
+                to="/$service/$area"
+                params={{ service: s.slug, area: a.slug }}
+                className="rounded-full border border-border bg-card px-4 py-1.5 text-sm hover:border-primary hover:text-primary"
+              >
+                📍 {s.name} in {a.name}
+              </Link>
+            ))}
+          </div>
         </>
       )}
 
@@ -280,7 +304,7 @@ function ServiceLanding() {
           >
             WhatsApp 82969 50339
           </a>
-          <BookingButton vehicle={vehicleType} serviceId={bookingServiceId} variant="outline" className="rounded-full border-background/40 bg-transparent px-6 py-3 text-primary-foreground hover:bg-background hover:text-foreground">Book Now</BookingButton>
+          <BookingButton vehicle={vehicleType} serviceId={bookingServiceId} className="btn-book rounded-full px-6 py-3 font-semibold">Book Now</BookingButton>
         </div>
       </div>
 

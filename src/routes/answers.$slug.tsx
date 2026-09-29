@@ -5,6 +5,7 @@ import { CAR_SERVICES } from "@/lib/car-services";
 import { SITE_URL } from "@/lib/seo";
 import { pageHead, formatDate } from "@/lib/head";
 import { graphForPage, webPageNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
+import { PRIORITY_AREAS } from "@/lib/areas";
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
 
@@ -138,6 +139,25 @@ function AnswerPageView() {
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Coverage answers: point at the live area guides (GEO internal link) */}
+      {p.category === "coverage" && (
+        <section className="mt-12">
+          <h2 className="text-2xl font-bold">Service areas in Bangalore</h2>
+          <p className="mt-3 text-muted-foreground leading-relaxed">
+            Every covered locality has its own guide — nearby landmarks, how doorstep service works there and the services you can book in it:
+          </p>
+          <ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
+            {PRIORITY_AREAS.map((a) => (
+              <li key={a.slug}>
+                <Link to="/areas/$slug" params={{ slug: a.slug }} className="text-primary hover:underline">
+                  Doorstep bike &amp; car service in {a.name}, Bangalore →
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

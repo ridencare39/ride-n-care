@@ -88,6 +88,7 @@ export const SERVICES: ServiceDef[] = [
     detail: [
       "A bike service is not only an oil change. Bangalore riding is stop-start, dusty and monsoon-heavy, and a Silk Board crawl or a waterlogged ORR exit wears the air filter, chain and brake pads far faster than the manual assumes. That is why the service follows a fixed checklist: everything due gets done, and anything worn gets photographed and shown to you.",
       "You never leave the building. The mechanic works in your parking bay, shows you every part that comes out, and hands over the invoice on WhatsApp before you pay. If your bike is still inside its free-service period at the company workshop, we will honestly tell you to use that first.",
+      "Every visit is built around maintenance, not sales: the periodic checklist covers the inspection items your manufacturer expects — engine oil condition, air filter, spark plug, chain and sprocket wear, brake pad thickness, cables, battery voltage and a road test — and repairs are quoted separately only when the inspection shows something is genuinely due. Between visits, a dated service record is kept against your phone number with a reminder when the next interval is due, so the bike gets what it needs when it needs it — and nothing it does not.",
     ],
     includes: [
       "Engine oil check with OEM-grade top-up or replacement",
@@ -125,6 +126,7 @@ export const SERVICES: ServiceDef[] = [
       ["What if you find extra work?", "The mechanic photographs the issue, explains it and quotes it separately. Nothing is done without your approval."],
       ["Is there a warranty?", "Yes — a 7-day workmanship guarantee on the service, plus the manufacturer warranty on any part fitted."],
       ["How do I pay and can I cancel?", "UPI, card or cash after a test ride. Cancel or reschedule free by WhatsApp any time before the mechanic is dispatched."],
+      ["Does a bike service include repairs?", "The service covers the full maintenance checklist — oil, filters, brakes, chain, clutch, cables, battery, electricals and a dry wash. Repairs found during inspection are photographed, quoted at MRP and done only with your approval, so maintenance stays maintenance and you decide on any repair separately."],
     ],
     relatedGuides: ["when-to-service-your-bike", "bike-service-guide-bangalore"],
     reviewed: "2026-09-19",
@@ -148,6 +150,7 @@ export const SERVICES: ServiceDef[] = [
     detail: [
       "Our vans carry engine oil for every popular Indian and imported model, filters, brake pads, chain lube, a portable compressor and a diagnostic kit for fuel-injected bikes. That covers the vast majority of periodic services and light repairs on the spot — from an Activa in Jayanagar to a Classic 350 in Whitefield.",
       "If a job genuinely needs a workshop lift — a full engine rebuild, accident damage, frame work — we say so before starting, arrange free transport to the workshop and share the estimate for approval. You are never charged a doorstep premium: package prices match our workshop rates.",
+      "Doorstep is the whole point: the van carries engine oil for every popular model on Bangalore roads, filters, brake pads, chain lube, a portable compressor and FI diagnostics, so the periodic service, inspection and most repairs happen where the bike stands — your apartment basement, office bay or gated-community parking. You approve the written quote before work starts, can watch every step, and pay by UPI, card or cash after a test ride. Only bench jobs move to the workshop, with free transport and a written estimate first.",
     ],
     includes: [
       "Mechanic, tools and consumables brought to your address",
@@ -179,6 +182,7 @@ export const SERVICES: ServiceDef[] = [
       ["How do I get a good slot?", "Evening slots fill first, so booking a day ahead gets the widest choice of windows."],
       ["What happens if the bike needs workshop work?", "We tell you before touching anything, transport the bike free and share the workshop estimate for your approval."],
       ["Can I reschedule?", "Yes — free reschedule or cancellation on WhatsApp any time before the mechanic is dispatched."],
+      ["What can be done at my doorstep versus at a workshop?", "The full periodic service, inspection and most repairs — batteries, brakes, chains, clutches, punctures, carburettor cleaning — happen at your parking spot because the van carries the workshop. Only bench jobs like engine rebuilds, wheel truing and paint move to the workshop, with free transport and a written estimate first."],
     ],
     relatedGuides: ["doorstep-bike-service-guide", "when-to-service-your-bike"],
     reviewed: "2026-09-19",
@@ -361,6 +365,7 @@ export const SERVICES: ServiceDef[] = [
     detail: [
       "Larger-capacity motorcycles are less forgiving of shortcuts. We use manufacturer torque values, full-synthetic oil where specified, and inspect chain wear, sprocket profile and brake fluid condition on every visit.",
       "We service Honda, Hero, TVS, Bajaj, Yamaha, Suzuki, Royal Enfield, KTM, Kawasaki, Harley-Davidson, Jawa and BMW Motorrad.",
+      "Motorcycle-specific maintenance is what separates this from a generic two-wheeler check: chain and sprocket wear is measured against the manufacturer's service limit rather than eyeballed, brake fluid is inspected for moisture on bikes that see highway speeds, liquid-cooled models get a coolant and radiator inspection, fuel-injected motorcycles get an FI diagnostics scan, and critical fasteners are torqued to specification instead of \"tight\". Commuters, 350–650cc twins and big bikes each get the checklist their engine class actually needs.",
     ],
     includes: [
       "Grade-correct engine oil and filter change",
@@ -388,6 +393,7 @@ export const SERVICES: ServiceDef[] = [
       ["Can you service superbikes at home?", "Periodic service and consumables, yes. Valve-clearance and suspension rebuilds are done in the workshop."],
       ["Which oil do you use?", "The grade your manual specifies, from OEM-approved brands, shown to you sealed before pouring."],
       ["What does motorcycle service cost?", "From ₹799 up to 199cc; bigger engines price higher — e.g. ₹1,799 for 501–800cc. The exact figure is confirmed in writing first."],
+      ["What makes motorcycle service different from a regular bike service?", "Engine-class care: measured chain and sprocket wear, brake-fluid inspection, coolant and radiator checks on liquid-cooled models, FI diagnostics scans and torque-spec tightening — the checks bigger motorcycles actually need, from mechanics assigned by engine capacity."],
     ],
     relatedGuides: ["complete-bike-maintenance-guide", "when-to-service-your-bike"],
     reviewed: "2026-09-19",
