@@ -64,6 +64,90 @@ export interface AnswerPage {
 const UPDATED = "2026-09-20";
 
 export const ANSWER_PAGES: AnswerPage[] = [
+  // ─── Batch 3 additions (2026-09-27) — question-bank gaps, unique answers ───
+  {
+    slug: "car-service-interval",
+    question: "How often should I get my car serviced?",
+    category: "car",
+    answer:
+      "Follow the service interval in your car's owner's manual — it is stated in months and kilometres, whichever comes first, and modern cars commonly fall between 6 and 12 months or 5,000 and 10,000 km. Bangalore's stop-start traffic, short trips and dust are severe-use conditions, so service at or slightly ahead of the manual schedule.",
+    meta:
+      "Service your car on the owner's-manual interval — months and kilometres, whichever comes first — and lean towards the earlier end in Bangalore traffic.",
+    detail: [
+      "The manual interval is the baseline, not a suggestion to stretch: the schedule assumes average conditions, and dense city driving with constant braking, short trips that never fully warm the engine, and dusty air all push wear faster. Severe-condition schedules in most manuals describe exactly this kind of use.",
+      "What actually happens at each visit scales with the interval: periodic service is inspection-led — fluids, filters, brakes, tyres, suspension, electrics — with replacements quoted separately after measurement. Between visits, dashboard warning lights and any change in brake feel or unusual noise are worth an early check rather than waiting for the next due date.",
+      "Do not wait for the odometer if the calendar wins first. Oil ages with heat cycles and moisture even when the car is parked, which is why a lightly driven car still needs its time-based service — and why the invoice records the date and odometer so the next due point is calculated from real data.",
+    ],
+    faqs: [
+      ["Do I need a service even if the car feels fine?", "Yes — most wear in a periodic service is found by inspection, not felt from the driver's seat. The manual interval exists because several items age with time, not just distance."],
+      ["My car shows a service-due reminder — can I wait?", "The reminder follows the manufacturer's schedule; book within a reasonable margin of it rather than postponing repeatedly, especially with city use."],
+      ["Does a periodic service reset the service clock?", "Yes — each visit records the date and odometer reading, and the next due point is calculated from there, so book from the invoice, not from memory."],
+    ],
+    related: ["what-included-car-service", "car-service-cost-bangalore", "how-to-prepare-car-doorstep"],
+    services: ["car-periodic-service", "cars"],
+    updated: "2026-09-27",
+  },
+  {
+    slug: "ev-what-can-be-serviced",
+    question: "What can be serviced on an electric two-wheeler at home?",
+    category: "care",
+    answer:
+      "The mechanical side: brakes, tyres, suspension and running gear, plus a general inspection package with battery health check, charging-port inspection and controls check. Battery packs, BMS and motor faults stay with the manufacturer's service network.",
+    meta:
+      "EV doorstep service covers brakes, tyres, suspension and running gear with inspection checks — battery packs, BMS and motor faults stay with the manufacturer.",
+    detail: [
+      "Electric scooters remove engine oil and fuel systems from the checklist and sharpen the mechanical one. The doorstep work is brakes, tyres, wheels, suspension and controls — plus a general service package that includes a battery health check and charging-port inspection so early warning signs get caught and referred.",
+      "The boundary matters as much as the list: high-voltage systems are manufacturer-network work. A doorstep mechanic who claims battery or motor repair on an EV is the wrong call — the honest answer is the referral, and Ride N Care states it at booking rather than after.",
+    ],
+    faqs: [
+      ["Do you replace EV batteries?", "No — battery packs and BMS faults stay with the manufacturer's service network. We flag what the battery health check shows and refer you."],
+      ["Is there a fixed-price EV service package?", "Yes — EV General Service is ₹999, EV Running Repair is ₹450 and EV Jump Start is ₹399, each confirmed in writing before work starts."],
+    ],
+    related: ["ev-service-different", "ev-service-cost", "scooter-service-cost"],
+    services: ["scooter-service", "bike-service"],
+    updated: "2026-09-27",
+  },
+  {
+    slug: "ktm-duke-200-service-cost",
+    question: "How much does a KTM Duke 200 service cost in Bangalore?",
+    category: "cost",
+    answer:
+      "Ride N Care's General Service for the KTM Duke 200 is ₹999 (the 200–249cc tier), or ₹1,449 with engine oil replacement. Jump Start is ₹399 and Running Repair ₹450; parts such as brake pads are quoted at MRP and shown to you before fitting.",
+    meta:
+      "KTM Duke 200 doorstep service in Bangalore: ₹999 General Service, ₹1,449 with engine oil — written quote before work starts, parts at MRP after approval.",
+    detail: [
+      "The Duke 200's 199cc engine places it in the 200–249cc price tier. Like every current KTM sold in India it is fuel-injected and liquid-cooled, so the visit includes a coolant condition check and an FI diagnostics scan alongside the standard oil, chain, brake and electrical work.",
+      "The package price covers the labour and checklist; the bill changes only when parts are needed. Those are quoted at MRP and shown before fitting, and the total is confirmed in writing before work starts — no parking-bay surcharge on top.",
+    ],
+    faqs: [
+      ["Is the Duke 200 serviced differently from the Duke 390?", "The checklist is the same; the price tier differs — ₹999 for the 200 against ₹1,199 for the 390 in the 250–400cc tier."],
+      ["Do you work on Dukes in apartment basements?", "Yes — one parking bay and a plug point is all it needs; the engine runs briefly for coolant and FI checks."],
+    ],
+    related: ["bike-service-cost-bangalore", "how-long-bike-service"],
+    services: ["bike-service", "motorcycle-service"],
+    updated: "2026-09-27",
+  },
+  {
+    slug: "brake-warning-signs-bike",
+    question: "What are the warning signs my bike brakes need service?",
+    category: "care",
+    answer:
+      "Squealing or grinding sounds, a lever or pedal that travels further than before, longer stopping distances, pulsation when braking, or a grind of metal on metal all mean the brakes need inspection. In Bangalore's rain, a temporary squeal can just be wet pads — persistent noise is not.",
+    meta:
+      "Squeal, longer lever travel, longer stopping distances or pulsation mean your bike brakes need inspection — grinding means pads are done, don't ride it out.",
+    detail: [
+      "Brakes wear quietly and then announce themselves. Pad thickness is a measurement, not a feeling — on a doorstep visit the mechanic measures both wheels, shows you the numbers, and quotes replacement at MRP only if the pads are near or past the limit. Discs are measured too, so a reusable disc is not replaced on a hunch.",
+      "Rain complicates the read: water on the rotor can cause a short-lived squeal that disappears once things dry out. The rule of thumb — sound that persists across rides, or any change in lever feel or stopping distance, gets inspected rather than waited out.",
+    ],
+    faqs: [
+      ["Can brake pads be replaced at my home?", "Yes — pad replacement is a doorstep job, with discs measured to confirm whether they are reusable."],
+      ["My brakes squeal only in the monsoon — normal?", "Wet-pad squeal usually stops when things dry; if it persists across dry rides, book an inspection."],
+    ],
+    related: ["monsoon-bike-care", "bike-service-cost-bangalore", "car-brake-noise-causes"],
+    services: ["brake-service", "bike-service"],
+    updated: "2026-09-27",
+  },
+
   // ─── Cost & pricing ─────────────────────────────────────────────────────────
   {
     slug: "bike-service-cost-bangalore",
@@ -818,24 +902,6 @@ export const ANSWER_PAGES: AnswerPage[] = [
     updated: UPDATED,
   },
   {
-    slug: "how-often-car-service",
-    question: "How often should a car be serviced?",
-    category: "car",
-    answer:
-      "The right interval depends on your model, its age and how you drive, so the baseline is what your owner's manual specifies — typically a mix of kilometres and months, whichever comes first. Bangalore's stop-start traffic and dust are reasons to stay at or ahead of that schedule, not behind it.",
-    meta: "How often to service a car depends on the model and how you drive — check your owner's manual for the interval, and stay at or ahead of it in Bangalore.",
-    detail: [
-      "Two clocks run at once: distance and time. Oil ages even when the car is parked, so a rarely driven car still needs its time-based service. Severe-use conditions — short trips, heavy traffic, dust — are exactly what manufacturers describe when they shorten intervals in the manual.",
-    ],
-    faqs: [
-      ["Where do I find my schedule?", "Your owner's manual lists the exact service intervals and items for your model — that is the authoritative source."],
-      ["Does a periodic service reset the clock?", "Yes — each service records the date and odometer reading, and the next due point is calculated from there."],
-    ],
-    related: ["what-included-car-service", "how-long-car-service", "car-service-cost-bangalore"],
-    services: ["car-periodic-service"],
-    updated: UPDATED,
-  },
-  {
     slug: "what-included-car-service",
     question: "What does a periodic car service include?",
     category: "car",
@@ -849,7 +915,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
       ["Is engine oil included in the price?", "The quote separates parts and labour, and oil is priced by the grade and quantity your model needs — confirmed in writing before work starts."],
       ["Can it be done in my apartment basement?", "Yes, with your building's permission — one parking bay is enough. Share any gate rules when you book."],
     ],
-    related: ["how-often-car-service", "car-service-cost-bangalore", "how-to-prepare-car-doorstep"],
+    related: ["car-service-interval", "car-service-cost-bangalore", "how-to-prepare-car-doorstep"],
     services: ["car-periodic-service"],
     updated: UPDATED,
   },
@@ -1023,4 +1089,27 @@ export const ANSWER_SLUGS = ANSWER_PAGES.map((p) => p.slug);
 /** Answer pages that link to a given service slug (for "Related answers" on service pages). */
 export function answersForService(slug: string, limit = 4): AnswerPage[] {
   return ANSWER_PAGES.filter((p) => p.services.includes(slug)).slice(0, limit);
+}
+
+/**
+ * Answers relevant to a locality: vehicle + booking questions apply everywhere;
+ * coverage answers mention the area network. Drives the "Related answers"
+ * module on /areas/* pages so every area page links into the answers cluster.
+ */
+export function answersForArea(areaName: string, limit = 4): AnswerPage[] {
+  const byCategory = ["coverage", "cost", "time", "trust", "care"]
+    .map((cat) => ANSWER_PAGES.filter((p) => p.category === cat))
+    .flat();
+  const seen = new Set<string>();
+  const picked: AnswerPage[] = [];
+  for (const p of byCategory) {
+    if (picked.length >= limit) break;
+    if (seen.has(p.slug)) continue;
+    seen.add(p.slug);
+    picked.push(p);
+  }
+  // One locality-aware entry keeps the block from being purely generic.
+  const coverage = ANSWER_PAGES.find((p) => p.slug === "areas-covered");
+  if (coverage && !seen.has(coverage.slug)) picked.unshift(coverage);
+  return picked.slice(0, limit);
 }

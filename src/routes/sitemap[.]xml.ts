@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { dbListPosts } from "@/lib/blog.db";
-import { CONFIRMED_AREAS, PRIORITY_AREAS } from "@/lib/areas";
+import { AREAS, PRIORITY_AREAS, isAreaIndexed } from "@/lib/areas";
 import { SERVICES, LOCAL_SERVICES } from "@/lib/services";
 import { CAR_SERVICES } from "@/lib/car-services";
+import { CAR_AREA_WAVE_1 } from "@/lib/car-area-content";
+import { BRAND_SERVICES } from "@/lib/brand-services";
 import { SITE_URL } from "@/lib/seo";
 import { GUIDES } from "@/lib/guides";
 import { ANSWER_PAGES } from "@/lib/answer-pages";
@@ -21,7 +23,10 @@ const LASTMOD = {
   carServices: "2026-09-19",
   areas: "2026-09-20",
   guides: "2026-09-18",
-  answers: "2026-09-20",
+  answers: "2026-09-27",
+  carAreas: "2026-09-27",
+  brands: "2026-09-27",
+  ev: "2026-09-27",
 } as const;
 
 type Entry = { path: string; priority: string; changefreq: string; lastmod?: string };
@@ -38,7 +43,6 @@ const staticEntries: Entry[] = [
   { path: "/breakdown-assistance", priority: "0.9", changefreq: "monthly", lastmod: LASTMOD.breakdown },
   { path: "/car-breakdown-assistance", priority: "0.8", changefreq: "monthly", lastmod: LASTMOD.breakdown },
   { path: "/areas", priority: "0.8", changefreq: "monthly", lastmod: LASTMOD.areas },
-  { path: "/map", priority: "0.5", changefreq: "monthly", lastmod: LASTMOD.areas },
   { path: "/answers", priority: "0.9", changefreq: "monthly", lastmod: LASTMOD.answers },
   ...ANSWER_PAGES.map((p) => ({
     path: `/answers/${p.slug}`,
@@ -55,6 +59,16 @@ const staticEntries: Entry[] = [
   })),
   ...SERVICES.map((s) => ({ path: `/${s.slug}`, priority: "0.9", changefreq: "monthly", lastmod: LASTMOD.services })),
   ...CAR_SERVICES.map((s) => ({ path: `/${s.slug}`, priority: "0.9", changefreq: "monthly", lastmod: LASTMOD.carServices })),
+  // Batch 3: bike brand pages + dedicated EV page (top-level, one segment).
+  ...BRAND_SERVICES.map((b) => ({ path: `/${b.slug}`, priority: "0.8", changefreq: "monthly", lastmod: b.reviewed })),
+  { path: "/ev-two-wheeler-service", priority: "0.8", changefreq: "monthly", lastmod: LASTMOD.ev },
+  // Batch 3 wave-1 car×area pairs (4 services × 5 areas, gated registry).
+  ...CAR_AREA_WAVE_1.map((e) => ({
+    path: `/${e.serviceSlug}/${e.areaSlug}`,
+    priority: "0.7",
+    changefreq: "monthly",
+    lastmod: LASTMOD.carAreas,
+  })),
   ...LOCAL_SERVICES.flatMap((s) =>
     PRIORITY_AREAS.filter((a) => a.confirmed !== false).map((a) => ({
       path: `/${s.slug}/${a.slug}`,
@@ -63,7 +77,10 @@ const staticEntries: Entry[] = [
       lastmod: LASTMOD.services,
     })),
   ),
-  ...CONFIRMED_AREAS.map((a) => ({ path: `/areas/${a.slug}`, priority: "0.7", changefreq: "monthly", lastmod: LASTMOD.areas })),
+  // Sitemap lists ONLY indexable area pages (confirmed coverage + priority
+  // content). Basic-tier areas stay noindex,follow — listing them here would
+  // contradict the meta robots and log them as "Excluded by noindex".
+  ...AREAS.filter(isAreaIndexed).map((a) => ({ path: `/areas/${a.slug}`, priority: "0.7", changefreq: "monthly", lastmod: LASTMOD.areas })),
 ];
 
 function urlset(entries: Entry[]) {
@@ -129,7 +146,9 @@ export const Route = createFileRoute("/sitemap.xml")({
           })),
         ];
         // Single-segment pages only (hub pages + top-level service pages).
-        const staticOnly = staticEntries.filter((e) => e.path.split("/").filter(Boolean).length === 1);
+        // "<= 1" (not "=== 1"): "/" splits to zero segments, so the homepage
+        // must ride the same filter or it silently drops out of the sitemap.
+        const staticOnly = staticEntries.filter((e) => e.path.split("/").filter(Boolean).length <= 1);
         // Service × area pages: exactly two segments, excluding /areas/, /guides/ and /answers/ (listed separately).
         const serviceAreaEntries = staticEntries.filter((e) => {
           const parts = e.path.split("/").filter(Boolean);

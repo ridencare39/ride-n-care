@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getArea, AREAS, areaRobots, isConfirmedArea, type Area } from "@/lib/areas";
 import { getAreaContent } from "@/lib/area-content";
 import { LOCAL_SERVICES, type ServiceDef } from "@/lib/services";
+import { answersForArea } from "@/lib/answer-pages";
 import { CAR_SERVICES } from "@/lib/car-services";
 import { formatDate, pageHead, seoTitle, pageScripts } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, nearbyAreasNode, faqNode } from "@/lib/schema";
@@ -127,7 +128,7 @@ function AreaPage() {
       <div className="mt-6 flex flex-wrap gap-3">
         <a href="tel:+918069409289" {...ctcProps("call_click", { area: a.slug })} className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">Call 080 6940 9289</a>
         <a href={`https://wa.me/918296950339?text=${waText}`} target="_blank" rel="noopener" {...ctcProps("whatsapp_click", { area: a.slug })} className="rounded-full border border-border bg-card px-6 py-3 font-semibold">WhatsApp 82969 50339</a>
-        {confirmed && <BookingButton className="rounded-full border border-border px-6 py-3 font-semibold">Book now</BookingButton>}
+        {confirmed && <BookingButton className="btn-book rounded-full px-6 py-3 font-semibold">Book Now</BookingButton>}
       </div>
 
       {/* Services — bike (service×area) and car (top-level) links */}
@@ -136,7 +137,7 @@ function AreaPage() {
         <div className="rounded-2xl border border-border bg-card p-5">
           <h3 className="font-semibold">Bike services</h3>
           <ul className="mt-3 space-y-2 text-sm">
-            {LOCAL_SERVICES.slice(0, 6).map((s: ServiceDef) => (
+            {LOCAL_SERVICES.map((s: ServiceDef) => (
               <li key={s.slug}>
                 <Link to="/$service/$area" params={{ service: s.slug, area: a.slug }} className="text-primary hover:underline">
                   {s.name} in {a.name}
@@ -183,6 +184,29 @@ function AreaPage() {
         </>
       )}
 
+      {/* Related answers — AEO internal links, data-driven (indexing audit 2026-09-29) */}
+      {(() => {
+        const relatedAnswers = answersForArea(a.name);
+        if (relatedAnswers.length === 0) return null;
+        return (
+          <section className="mt-12">
+            <h2 className="text-2xl font-bold">Related answers for {a.name} customers</h2>
+            <ul className="mt-3 space-y-1.5">
+              {relatedAnswers.map((ap) => (
+                <li key={ap.slug}>
+                  <Link to="/answers/$slug" params={{ slug: ap.slug }} className="text-primary hover:underline">
+                    {ap.question}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link to="/answers" className="mt-3 inline-block text-sm text-muted-foreground hover:text-primary">
+              All answers →
+            </Link>
+          </section>
+        );
+      })()}
+
       {/* Nearby areas */}
       {nearbyAreas.length > 0 && (
         <>
@@ -214,7 +238,7 @@ function AreaPage() {
         <p className="mt-2 text-primary-foreground/90">WhatsApp your model and service — the written quote comes back before any work starts.</p>
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
           <a href={`https://wa.me/918296950339?text=${waText}`} target="_blank" rel="noopener" {...ctcProps("whatsapp_click", { area: a.slug })} className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Chat on WhatsApp</a>
-          {confirmed && <BookingButton variant="outline" className="rounded-full border-background/40 bg-transparent px-6 py-3 text-primary-foreground hover:bg-background hover:text-foreground">Book Now</BookingButton>}
+          {confirmed && <BookingButton className="btn-book rounded-full px-6 py-3 font-semibold">Book Now</BookingButton>}
         </div>
       </div>
 

@@ -54,6 +54,22 @@ const LEARN: FooterLink[] = [
   { label: "Service Areas", to: "/areas" },
 ];
 
+/**
+ * Answers sitewide-footer column (indexing audit 2026-09-29): the /answers/*
+ * cluster previously had no links from global chrome. Anchors are natural
+ * questions, not keyword stuffing.
+ */
+const ANSWER_LINKS: FooterLink[] = [
+  { label: "Bike service cost in Bangalore", to: "/answers/$slug", params: { slug: "bike-service-cost-bangalore" } },
+  { label: "Car service cost in Bangalore", to: "/answers/$slug", params: { slug: "car-service-cost-bangalore" } },
+  { label: "How long a bike service takes", to: "/answers/$slug", params: { slug: "how-long-bike-service" } },
+  { label: "What a bike service includes", to: "/answers/$slug", params: { slug: "what-included-bike-service" } },
+  { label: "Is doorstep service safe?", to: "/answers/$slug", params: { slug: "is-doorstep-service-safe" } },
+  { label: "Bike repair cost", to: "/answers/$slug", params: { slug: "bike-repair-cost" } },
+  { label: "Scooter service cost", to: "/answers/$slug", params: { slug: "scooter-service-cost" } },
+  { label: "Areas we cover", to: "/answers/$slug", params: { slug: "areas-covered" } },
+];
+
 const SOCIALS: { label: string; href: string; Icon: typeof Instagram }[] = [
   { label: "Instagram", href: SOCIAL.instagram, Icon: Instagram },
   { label: "Facebook", href: SOCIAL.facebook, Icon: Facebook },
@@ -96,6 +112,7 @@ export function SiteFooter() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
+          {/* grid: brand 4 · services 2 · company 2 · learn 2 · answers 2 → all columns sized */}
           {/* Brand */}
           <div className="lg:col-span-4 sm:col-span-2">
             <div className="flex items-center gap-2.5">
@@ -132,9 +149,10 @@ export function SiteFooter() {
           <FooterColumn heading="Services" items={SERVICES} />
           <FooterColumn heading="Company" items={COMPANY} />
           <FooterColumn heading="Learn" items={LEARN} />
+          <FooterColumn heading="Popular answers" items={ANSWER_LINKS} />
 
           {/* Contact */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-4 sm:col-span-2">
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neon/90">Contact</h4>
             <ul className="mt-4 space-y-3 text-sm text-white/65">
               <li>

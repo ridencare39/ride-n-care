@@ -7,10 +7,10 @@ import { HeroMechanic } from "@/components/HeroMechanic";
 import { HeroVehicleDuo } from "@/components/HeroVehicleDuo";
 import { ProcessGuide } from "@/components/ProcessGuide";
 import { AreasSection } from "@/components/AreasSection";
-import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { AnswerBlocks } from "@/components/AnswerBlocks";
 import { ANSWERS, BRAND, ENTITY_SUMMARY } from "@/lib/answers";
+import { ANSWER_PAGES } from "@/lib/answer-pages";
 import { GUIDES } from "@/lib/guides";
 import { SERVICES } from "@/lib/services";
 import { CONFIRMED_AREAS, CONFIRMED_ZONE_PHRASE, COVERAGE_HEADLINE_NAMES, COVERAGE_NAMES_LIST } from "@/lib/areas";
@@ -48,8 +48,8 @@ const HOME_FAQS: [string, string][] = [
 
 /**
  * Homepage services: one merged grid with equal weight for bikes and cars.
- * Bike and car cards deep-link to the matching money pages; the EV card points
- * at /bikes (the EV hub) until the dedicated EV page ships in Week 9.
+ * Bike and car cards deep-link to the matching money pages; the EV card
+ * points at the dedicated EV page (Batch 3, Week 9).
  */
 const MERGED_SERVICES = [
   { icon: "🏍️", name: "Bike Service", desc: "Periodic, repair & doorstep maintenance for every CC", to: "/bike-service" },
@@ -60,7 +60,7 @@ const MERGED_SERVICES = [
   { icon: "🛑", name: "Car Brakes", desc: "Pad & disc measurement, fluid change at home", to: "/car-brake-service" },
   { icon: "🛵", name: "Scooter Service", desc: "Activa, Jupiter, Access — CVT care included", to: "/scooter-service" },
   { icon: "🔋", name: "Bike Battery", desc: "Testing, jump-start & doorstep replacement", to: "/battery-service" },
-  { icon: "⚡", name: "EV Service", desc: "Electric scooter service at home — running gear & brakes", to: "/scooter-service" },
+  { icon: "⚡", name: "EV Service", desc: "Electric scooter service at home — running gear & brakes", to: "/ev-two-wheeler-service" },
   { icon: "🔧", name: "Car Repair at Home", desc: "Diagnostics, fixes & part fitting at your doorstep", to: "/car-repair" },
 ];
 
@@ -99,12 +99,16 @@ function Home() {
                 <span className="inline-flex max-w-full items-center justify-center gap-1 rounded-full border border-neon/45 bg-neon/10 px-3 py-1.5 text-[10px] font-semibold leading-tight text-neon uppercase tracking-wider shadow-glow sm:gap-1.5 sm:px-4 sm:py-2 sm:text-sm sm:leading-normal">
                   ⭐ Bangalore's Trusted Doorstep Garage
                 </span>
+                {/* Bare-text spaces (not &nbsp;/wrappers) so text extraction reads one
+                    natural line — block/rotor spans otherwise concatenate into a garbled
+                    H1 for crawlers and answer engines. Whitespace-only text nodes create
+                    no grid track inside the inline-grid rotor and add no visual gap. */}
                 <h1 className="neon-line mt-3 text-2xl sm:text-4xl md:text-5xl font-bold leading-[1.1] text-white [text-shadow:0_2px_18px_rgba(2,10,26,0.95),0_0_3px_rgba(2,10,26,0.8)]">
-                  <span className="block">Trusted Bike &amp; Car Service</span>
+                  <span className="block">Trusted Bike &amp; Car Service</span>{" "}
                   <span className="block text-neon">
                     Doorstep{" "}
                     <span className="rotor">
-                      <span className="rotor-word rotor-bike">Bike</span>
+                      <span className="rotor-word rotor-bike">Bike</span>{" "}
                       <span className="rotor-word rotor-car">Car</span>
                     </span>{" "}
                     Repair in Bangalore
@@ -128,11 +132,11 @@ function Home() {
             </p>
             {/* Hero CTA pair: equal-height 2-col grid, 12px gap, wraps on narrow phones */}
             <div className="rise-in-later mx-auto mt-8 grid w-full max-w-xl grid-cols-2 gap-3">
-              <BookingButton className="hero-cta hero-cta-glass">
-                <CalendarCheck aria-hidden className="h-5 w-5 shrink-0 text-neon" /> Book Now
+              <BookingButton className="hero-cta hero-cta-solid hero-cta-book">
+                <CalendarCheck aria-hidden className="h-5 w-5 shrink-0" /> Book Now
               </BookingButton>
-              <Link to="/breakdown-assistance" className="hero-cta hero-cta-glass">
-                <Siren aria-hidden className="h-5 w-5 shrink-0 text-neon" /> Breakdown Assistance
+              <Link to="/breakdown-assistance" className="hero-cta hero-cta-solid hero-cta-emergency">
+                <Siren aria-hidden className="h-5 w-5 shrink-0" /> Breakdown Assistance
               </Link>
             </div>
           </div>
@@ -230,9 +234,6 @@ function Home() {
       {/* Areas We Serve */}
       <AreasSection />
 
-      {/* Customer reviews — all 30 in one carousel, 2.5 s auto-slide + manual nav */}
-      <TestimonialsCarousel />
-
       {/* Brands We Service */}
       <BrandsMarquee />    {/* ONE process guide — replaces the old "Our promises" / "Why Ride N Care" /
         "How it works" sections (combined task, Task D). #process anchor target. */}
@@ -284,6 +285,28 @@ function Home() {
         </div>
       </section>
 
+      {/* Answers cluster — every /answers/* page reachable from home
+          (indexing audit 2026-09-29: the answers group was discovery-only). */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-16">
+        <SectionHeading eyebrow="Answers" title="Straight answers to common questions" />
+        <ul className="mt-8 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+          {ANSWER_PAGES.map((ap) => (
+            <li key={ap.slug}>
+              <Link
+                to="/answers/$slug"
+                params={{ slug: ap.slug }}
+                className="text-sm text-muted-foreground transition hover:text-primary"
+              >
+                {ap.question}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 text-center">
+          <Link to="/answers" className="text-primary font-semibold hover:underline">Browse all answers →</Link>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="mx-auto max-w-5xl px-4 pb-32 pt-20 sm:px-6 sm:pb-36">
         <div className="rounded-3xl bg-grad-primary p-10 text-center shadow-glow">
@@ -291,7 +314,7 @@ function Home() {
             Ready for a smoother ride?
           </h2>
           <p className="mt-3 text-primary-foreground/90">Written quote before work starts. OEM-grade parts, digital invoice, 7-day workmanship guarantee.</p>
-          <BookingButton className="mt-6 rounded-full bg-background px-6 py-3 font-semibold text-foreground">Book Now</BookingButton>
+          <BookingButton className="btn-book mt-6 rounded-full px-6 py-3 font-semibold">Book Now</BookingButton>
         </div>
       </section>
     </>

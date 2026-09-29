@@ -118,6 +118,12 @@ function ZoneSection({
               <span className="font-semibold group-hover:text-primary transition">📍 {a.name}</span>
               <span className="text-xs text-muted-foreground">{a.pincode}</span>
             </div>
+            {/* Crawlable descriptive anchor for priority pages (indexing audit). */}
+            <span className="sr-only">
+              {priorityNames.has(a.name)
+                ? `Doorstep bike and car service in ${a.name}, Bangalore — detailed area guide`
+                : `Doorstep bike and car service availability in ${a.name}, Bangalore`}
+            </span>
             {a.nearby && a.nearby.length > 0 && (
               <p className="mt-1 text-xs text-muted-foreground">Near {a.nearby.slice(0, 2).join(", ")}</p>
             )}

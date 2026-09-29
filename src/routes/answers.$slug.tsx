@@ -197,7 +197,7 @@ function AnswerPageView() {
           >
             WhatsApp 82969 50339
           </a>
-          <BookingButton variant="outline" className="rounded-full border-background/40 bg-transparent px-6 py-3 text-primary-foreground hover:bg-background hover:text-foreground">
+          <BookingButton className="btn-book rounded-full px-6 py-3 font-semibold">
             Book Now
           </BookingButton>
         </div>
