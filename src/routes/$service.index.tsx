@@ -16,6 +16,33 @@ const ALL_SERVICES: ServiceDef[] = [...SERVICES_LIST, ...CAR_SERVICES];
 // bike catalogue import kept separate to avoid a circular import at module init
 import { SERVICES as SERVICES_LIST } from "@/lib/services";
 
+/**
+ * The Ride N Care Difference — comparison table (only on /doorstep-bike-service).
+ * Copy states only confirmed service facts: doorstep where covered, written
+ * quote process, booking channels. The two AEO Q&As below are rendered in the
+ * section AND appended to this page's FAQPage schema (visible-content parity).
+ */
+const COMPARISON_ROWS: { feature: string; rnc: string; workshop: string }[] = [
+  { feature: "Service location", rnc: "Doorstep bike service at your home or office, where available", workshop: "Service at the workshop" },
+  { feature: "Convenience", rnc: "Mechanic comes to your location", workshop: "Customer takes the bike to the workshop" },
+  { feature: "Service experience", rnc: "Service and repair at your location", workshop: "Service inside the workshop" },
+  { feature: "Bike maintenance", rnc: "Periodic service, maintenance, inspection and repairs", workshop: "Workshop-based maintenance and repairs" },
+  { feature: "Booking", rnc: "Book a service online, by phone or WhatsApp", workshop: "Visit or contact the workshop" },
+  { feature: "Location", rnc: "Doorstep bike service in selected Bangalore areas", workshop: "Service available at the workshop location" },
+  { feature: "Customer convenience", rnc: "Convenient service without travelling to a workshop", workshop: "Travel to and from the workshop may be required" },
+];
+
+const COMPARISON_FAQS: [string, string][] = [
+  [
+    "Is doorstep bike service better than visiting a workshop?",
+    "Doorstep bike service can be more convenient for routine bike servicing, maintenance and suitable repairs because the mechanic comes to the customer's location. Workshop service may be more suitable for repairs that require equipment or facilities that cannot be handled at the customer's location.",
+  ],
+  [
+    "What is the difference between doorstep bike service and workshop service?",
+    "The main difference is where the work is performed. With Ride N Care doorstep bike service, an available mechanic comes to the customer's home, office or other service location in covered Bangalore areas. With a traditional workshop, the customer takes the bike to the workshop.",
+  ],
+];
+
 export const Route = createFileRoute("/$service/")({
   head: ({ params }) => {
     const s = getService(params.service) ?? getCarService(params.service);
@@ -43,7 +70,10 @@ export const Route = createFileRoute("/$service/")({
             ["Home", "/"],
             [s.name, `/${s.slug}`],
           ]),
-          faqNode(s.faqs),
+          // FAQPage mirrors the visible FAQ section — plus, on the doorstep
+          // page, the two comparison Q&As rendered in the Ride N Care
+          // Difference section.
+          faqNode(s.slug === "doorstep-bike-service" ? [...s.faqs, ...COMPARISON_FAQS] : s.faqs),
         ]),
       ),
     };
@@ -212,6 +242,10 @@ function ServiceLanding() {
         </>
       )}
 
+      {/* The Ride N Care Difference — comparison vs traditional workshop.
+          Only on /doorstep-bike-service (its exact search intent). */}
+      {s.slug === "doorstep-bike-service" && <DoorstepVsWorkshop />}
+
       {/* Trust section */}
       <h2 className="mt-12 text-2xl font-bold">Why {isCar ? "car owners" : "riders"} trust Ride N Care</h2>
       <div className="mt-4 space-y-2">
@@ -311,5 +345,105 @@ function ServiceLanding() {
       {/* Review stamp */}
       <p className="mt-6 text-center text-xs text-muted-foreground">Last reviewed: {formatDate(s.reviewed)}</p>
     </div>
+  );
+}
+
+/**
+ * The Ride N Care Difference — /doorstep-bike-service only.
+ * Mobile: stacked cards (feature header + two labelled values). Desktop: grid.
+ * Uses the existing container (max-w-4xl px-4) so nothing can overflow horizontally.
+ */
+function DoorstepVsWorkshop() {
+  const bookingServiceId = getBookingServiceIdForSlug("doorstep-bike-service");
+  return (
+    <section className="mt-12" aria-labelledby="rnc-difference">
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">The Ride N Care Difference</p>
+      <h2 id="rnc-difference" className="mt-2 text-2xl font-bold">Ride N Care vs. Traditional Bike Workshop in Bangalore</h2>
+      <p className="mt-3 text-muted-foreground leading-relaxed">
+        Looking for bike service in Bangalore? Ride N Care provides convenient{" "}
+        <Link to="/$service" params={{ service: "doorstep-bike-service" }} className="text-primary hover:underline">doorstep bike service in Bangalore</Link>{" "}
+        and repair at selected locations, while a traditional workshop requires you to take your bike to the workshop.
+      </p>
+
+      {/* Desktop comparison grid */}
+      <div className="mt-6 hidden sm:block overflow-hidden rounded-2xl border border-border">
+        <table className="w-full text-sm">
+          <thead className="bg-card">
+            <tr>
+              <th scope="col" className="px-4 py-3 text-left font-semibold">Feature</th>
+              <th scope="col" className="px-4 py-3 text-left font-semibold text-primary">Ride N Care</th>
+              <th scope="col" className="px-4 py-3 text-left font-semibold">Traditional Workshop</th>
+            </tr>
+          </thead>
+          <tbody>
+            {COMPARISON_ROWS.map((row) => (
+              <tr key={row.feature} className="border-t border-border">
+                <th scope="row" className="px-4 py-3 text-left font-medium align-top">{row.feature}</th>
+                <td className="px-4 py-3 align-top">{row.rnc}</td>
+                <td className="px-4 py-3 align-top text-muted-foreground">{row.workshop}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile stacked cards — no horizontal scroll */}
+      <div className="mt-6 space-y-3 sm:hidden">
+        {COMPARISON_ROWS.map((row) => (
+          <div key={row.feature} className="rounded-2xl border border-border bg-card p-4">
+            <p className="font-semibold">{row.feature}</p>
+            <p className="mt-2 text-sm"><span className="font-semibold text-primary">Ride N Care: </span>{row.rnc}</p>
+            <p className="mt-1 text-sm text-muted-foreground"><span className="font-semibold">Traditional workshop: </span>{row.workshop}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* AEO answer block */}
+      <div className="mt-8 grid gap-4">
+        {COMPARISON_FAQS.map(([q, a]) => (
+          <div key={q} className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
+            <h3 className="font-semibold">{q}</h3>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{a}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Contextual links to existing pages only */}
+      <p className="mt-6 text-sm text-muted-foreground">
+        Prefer a specific service? See{" "}
+        <Link to="/$service" params={{ service: "bike-service" }} className="text-primary hover:underline">bike service in Bangalore</Link>,{" "}
+        <Link to="/$service" params={{ service: "motorcycle-service" }} className="text-primary hover:underline">motorcycle service</Link>,{" "}
+        <Link to="/$service" params={{ service: "scooter-service" }} className="text-primary hover:underline">scooter service</Link> or{" "}
+        <Link to="/$service" params={{ service: "bike-repair" }} className="text-primary hover:underline">bike repair in Bangalore</Link> — and our{" "}
+        <Link to="/areas" className="text-primary hover:underline">bike service areas in Bangalore</Link>.
+      </p>
+
+      {/* Conversion CTA — existing booking modal, call and WhatsApp functionality */}
+      <div className="mt-8 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">
+        <h3 className="text-2xl font-bold text-primary-foreground">Need Bike Service or Repair in Bangalore?</h3>
+        <p className="mt-2 text-primary-foreground/90">
+          Book Ride N Care for convenient bike service and repair at your location, subject to service availability in your area.
+        </p>
+        <div className="mt-4 flex justify-center gap-3 flex-wrap">
+          <BookingButton vehicle="bike" serviceId={bookingServiceId} className="btn-book rounded-full px-6 py-3 font-semibold">Book a Service</BookingButton>
+          <a
+            href="tel:+918069409289"
+            {...ctcProps("call_click", { vehicle_type: "bike", service: "doorstep-bike-service" })}
+            className="rounded-full border border-background/40 px-6 py-3 font-semibold text-primary-foreground"
+          >
+            Call Now
+          </a>
+          <a
+            href="https://wa.me/918296950339"
+            target="_blank"
+            rel="noopener"
+            {...ctcProps("whatsapp_click", { vehicle_type: "bike", service: "doorstep-bike-service" })}
+            className="rounded-full bg-background px-6 py-3 font-semibold text-foreground"
+          >
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
   );
 }
