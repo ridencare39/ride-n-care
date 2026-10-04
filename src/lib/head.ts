@@ -23,15 +23,23 @@ export interface PageMeta {
   robots?: string;
   /** Extra meta tags appended after the standard set (article:*, og overrides…). */
   extraMeta?: { name?: string; property?: string; content: string }[];
+  /**
+   * Above-the-fold LCP image (a bundled asset URL from the route). Emits a
+   * high-priority <link rel="preload" as="image"> so the download starts with
+   * the document instead of after the header/panel markup is parsed.
+   */
+  preloadImage?: string;
 }
 
 /**
  * One reusable head block: title, meta description, canonical (absolute https,
  * preferred host), robots, Open Graph, Twitter cards and en-IN locale.
  */
-export function pageHead({ title, description, path, ogImage, robots, extraMeta }: PageMeta) {
+export function pageHead({ title, description, path, ogImage, robots, extraMeta, preloadImage }: PageMeta) {
   const url = `${SITE_URL}${path}`;
-  const image = ogImage ?? OG_IMAGE;
+  // Scrapers require absolute og:image URLs. Per-page assets are bundled with
+  // root-relative paths ("/assets/…") — absolutize against SITE_URL.
+  const image = ogImage ? (ogImage.startsWith("http") ? ogImage : `${SITE_URL}${ogImage}`) : OG_IMAGE;
   return {
     meta: [
       { title },
@@ -43,14 +51,19 @@ export function pageHead({ title, description, path, ogImage, robots, extraMeta 
       { property: "og:type", content: "website" },
       { property: "og:image", content: image },
       { property: "og:locale", content: "en_IN" },
-      { property: "og:site_name", content: "Ride N Care" },
+      { property: "og:site_name", content: "RIDE N CARE" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
       { name: "twitter:image", content: image },
       ...(extraMeta ?? []),
     ],
-    links: [{ rel: "canonical", href: url }],
+    links: [
+      { rel: "canonical", href: url },
+      ...(preloadImage
+        ? [{ rel: "preload", as: "image", href: preloadImage, fetchPriority: "high" as const }]
+        : []),
+    ],
   };
 }
 

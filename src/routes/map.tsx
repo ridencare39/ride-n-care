@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AREAS } from "@/lib/areas";
-import { OG_IMAGE, SITE_URL } from "@/lib/seo";
 import { pageHead } from "@/lib/head";
 
 const TITLE = "Service Area Map — Ride N Care Bangalore";
@@ -14,43 +13,20 @@ export const Route = createFileRoute("/map")({
       title: TITLE,
       description: DESC,
       path: "/map",
+      // Utility duplicate of /areas (interactive map picker). Kept out of
+      // search + sitemap; links stay crawlable (follow).
+      robots: "noindex, follow",
       extraMeta: [
         { property: "og:title", content: TITLE },
         { property: "og:description", content: DESC },
       ],
     }),
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "AutoRepair",
-          "@id": `${SITE_URL}/#business`,
-          name: "Ride N Care",
-          url: SITE_URL,
-          hasMap: "https://www.google.com/maps/search/?api=1&query=12.9716,77.5946",
-          telephone: ["+91-80-6940-9289", "+91-82969-50339"],
-          priceRange: "₹₹",
-          geo: { "@type": "GeoCoordinates", latitude: 12.9716, longitude: 77.5946 },
-          areaServed: AREAS.map((a) => ({
-            "@type": "Place",
-            name: `${a.name}, Bangalore`,
-            geo: { "@type": "GeoCoordinates", latitude: a.lat, longitude: a.lng },
-          })),
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-            { "@type": "ListItem", position: 2, name: "Service Area Map", item: `${SITE_URL}/map` },
-          ],
-        }),
-      },
-    ],
+    // NOTE: the former hand-written AutoRepair JSON-LD here declared a second
+    // business entity (@id …/#business, conflicting with the site-wide
+    // #localbusiness) and listed the WhatsApp number inside telephone — both
+    // violate the project's schema rules. Removed; the canonical entity graph
+    // from __root.tsx (organization/localbusiness/website) already covers
+    // every page, including this one.
   }),
   component: MapPage,
 });

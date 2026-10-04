@@ -17,7 +17,7 @@ export const CAR_FAQS: [string, string][] = [
 export const GENERAL_FAQS: [string, string][] = [
   ["Which Bangalore areas do you serve?", "We cover confirmed localities across Bangalore including Whitefield, Koramangala, HSR Layout, Indiranagar, Marathahalli, Electronic City, Jayanagar, JP Nagar, Bellandur and Sarjapur Road — the full list is on our service areas page."],
   ["How quickly can I get a slot?", "Availability varies by day and locality. Call 080 6940 9289 or WhatsApp 82969 50339 and we confirm the earliest open slot for your area before you commit."],
-  ["Is there a warranty on the work done?", "Every job carries a 7-day workmanship guarantee. If a related issue reappears, we revisit and fix it at zero cost."],
+  ["Is there a warranty on the work done?", "Every job carries a 45-day service warranty. If a related issue reappears, we inspect the work and correct it in accordance with the warranty."],
 ];
 
 export function faqsForPostCategory(category: string): [string, string][] {

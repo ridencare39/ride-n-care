@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
@@ -15,10 +16,17 @@ export const getSeoMonitorReport = createServerFn({ method: "POST" })
     if (roleError || !isAdmin) throw new Error("Forbidden: admin access required");
 
     const { buildSeoMonitorReport } = await import("@/lib/gsc.report.server");
+    const { parseCookies, RT_COOKIE } = await import("@/lib/gsc-oauth.server");
+    // Refresh token lives only in the connecting browser's HttpOnly cookie.
+    const request = getRequest();
+    const refreshToken = parseCookies(request?.headers.get("cookie") ?? null)[RT_COOKIE] ?? null;
     try {
-      return await buildSeoMonitorReport(data.siteUrl);
+      return await buildSeoMonitorReport(refreshToken, data.siteUrl);
     } catch (e) {
       console.error("[seo-monitor] failed:", e);
-      return { status: "error" as const, message: "Could not load Search Console data right now." };
+      const message = String(e).includes("gsc_unauthorized")
+        ? "Google rejected the stored authorization — reconnect Search Console."
+        : "Could not load Search Console data right now.";
+      return { status: "error" as const, message };
     }
   });

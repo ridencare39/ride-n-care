@@ -340,3 +340,9 @@ export function petrolCatalogStats() {
   const petrol = BIKE_CATALOG.filter((b) => b.power === "non-electric" && b.name !== "Other");
   return { brands: petrol.length, models: petrol.reduce((sum, b) => sum + b.models.length, 0) };
 }
+
+/** Total brands + models for a power type, or across all types when omitted (excludes the generic "Other" bucket). */
+export function bikeCatalogStats(power?: PowerType) {
+  const brands = BIKE_CATALOG.filter((b) => b.name !== "Other" && (!power || b.power === power));
+  return { brands: brands.length, models: brands.reduce((sum, b) => sum + b.models.length, 0) };
+}

@@ -1,10 +1,11 @@
 import { createFileRoute, Link, Outlet, notFound } from "@tanstack/react-router";
-import { getService } from "@/lib/services";
-import { getCarService } from "@/lib/car-services";
+// Layout loader uses the slim summary so the full service content stays in
+// the per-route chunks.
+import { getServiceSummary, getCarServiceSummary } from "@/lib/service-summary";
 
 export const Route = createFileRoute("/$service")({
   loader: ({ params }) => {
-    const service = getService(params.service) ?? getCarService(params.service);
+    const service = getServiceSummary(params.service) ?? getCarServiceSummary(params.service);
     if (!service) throw notFound();
     return { service };
   },

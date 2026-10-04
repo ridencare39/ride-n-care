@@ -10,7 +10,7 @@ import {
   Youtube,
 } from "lucide-react";
 import logo from "@/assets/logo-96.webp";
-import { SOCIAL } from "@/lib/seo";
+import { SOCIAL, CONTACT_EMAIL } from "@/lib/seo";
 import { CONFIRMED_AREAS } from "@/lib/areas";
 
 type FooterLink = { label: string; to: string; params?: Record<string, string>; note?: string };
@@ -19,6 +19,7 @@ const SERVICES: FooterLink[] = [
   { label: "Bike Service", to: "/$service", params: { service: "bike-service" } },
   { label: "Doorstep Bike Service", to: "/$service", params: { service: "doorstep-bike-service" } },
   { label: "Bike Repair", to: "/$service", params: { service: "bike-repair" } },
+  { label: "Doorstep Bike Repair", to: "/$service", params: { service: "doorstep-bike-repair" } },
   { label: "Scooter Service", to: "/$service", params: { service: "scooter-service" } },
   { label: "Engine Repair", to: "/$service", params: { service: "engine-repair" } },
   { label: "Emergency Repair", to: "/$service", params: { service: "emergency-bike-repair" } },
@@ -46,6 +47,7 @@ const COMPANY: FooterLink[] = [
 
 const LEARN: FooterLink[] = [
   { label: "FAQ", to: "/faq" },
+  { label: "Warranty", to: "/guarantee" },
   { label: "Answers", to: "/answers" },
   { label: "All Guides", to: "/guides" },
   { label: "Bike Service Guide", to: "/guides/$slug", params: { slug: "bike-service-guide-bangalore" } },
@@ -123,7 +125,7 @@ export function SiteFooter() {
               </div>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
-              Doorstep bike &amp; car service in Bangalore with OEM parts, transparent pricing and a 7-day workmanship guarantee.
+              Doorstep bike &amp; car service in Bangalore with OEM parts, transparent pricing and a 45-day service warranty.
             </p>
 
             <h4 className="mt-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-neon/90">Follow us</h4>
@@ -171,9 +173,13 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
-                <a href="mailto:info@ridencare.co.in" className="inline-flex items-center gap-2 break-all transition hover:text-neon">
+                {/* Entity-encoded at runtime — accessible text, harder for scrapers (privacy task). */}
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="inline-flex items-center gap-2 break-all transition hover:text-neon"
+                >
                   <Mail className="h-4 w-4 shrink-0 text-neon/70" aria-hidden />
-                  info@ridencare.co.in
+                  <span dangerouslySetInnerHTML={{ __html: CONTACT_EMAIL }} />
                 </a>
               </li>
               <li className="flex items-start gap-2">

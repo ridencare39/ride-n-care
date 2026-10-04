@@ -1,14 +1,24 @@
-const GATEWAY = "https://connector-gateway.lovable.dev/google_search_console";
+/**
+ * Search Console data access (Google API transport, Batch 6 2026-10-02).
+ *
+ * This file previously talked to the Lovable connector gateway with two API
+ * keys — that gateway does not exist in this deployment and Google rejects
+ * API keys for this API entirely (OAuth2 required). The transport now calls
+ * Google directly with a read-only OAuth access token minted by
+ * gsc-oauth.server.ts from the owner's refresh-token cookie.
+ *
+ * All endpoints need only the `webmasters.readonly` scope:
+ *   sites · searchAnalytics · sitemaps (www.googleapis.com/webmasters/v3)
+ *   urlInspection (searchconsole.googleapis.com/v1)
+ */
 
-function headers() {
-  const lovableApiKey = process.env["LOVABLE_API_KEY"];
-  const connectionApiKey = process.env["GOOGLE_SEARCH_CONSOLE_API_KEY"];
-  if (!lovableApiKey || !connectionApiKey) {
-    throw new Error("Search Console is not connected for this project yet.");
-  }
+const API = "https://www.googleapis.com/webmasters/v3";
+const INSPECT = "https://searchconsole.googleapis.com/v1/urlInspection/index:inspect";
+
+function headers(accessToken: string, hasBody = false) {
   return {
-    Authorization: `Bearer ${lovableApiKey}`,
-    "X-Connection-Api-Key": connectionApiKey,
+    Authorization: `Bearer ${accessToken}`,
+    ...(hasBody ? { "Content-Type": "application/json" } : {}),
   } as Record<string, string>;
 }
 
@@ -32,9 +42,9 @@ export type SiteResolution =
   | { status: "selection_required"; candidates: string[] }
   | { status: "no_property" };
 
-export async function resolveSiteUrl(targetUrl: string, selectedSiteUrl?: string): Promise<SiteResolution> {
-  const res = await fetch(`${GATEWAY}/webmasters/v3/sites`, { headers: headers() });
-  if (!res.ok) throw new Error(`Could not list Search Console properties [${res.status}]: ${await res.text()}`);
+export async function resolveSiteUrl(accessToken: string, targetUrl: string, selectedSiteUrl?: string): Promise<SiteResolution> {
+  const res = await fetch(`${API}/sites`, { headers: headers(accessToken) });
+  if (!res.ok) throw new Error(`Could not list Search Console properties [${res.status}]: ${(await res.text()).slice(0, 300)}`);
   const { siteEntry = [] } = (await res.json()) as { siteEntry?: SiteEntry[] };
   const target = new URL(targetUrl);
   const matches = siteEntry.filter(
@@ -50,26 +60,30 @@ export async function resolveSiteUrl(targetUrl: string, selectedSiteUrl?: string
   return { status: "selection_required", candidates: matches.map((m) => m.siteUrl) };
 }
 
-async function gwJson(path: string, init?: RequestInit) {
-  const res = await fetch(`${GATEWAY}${path}`, {
+async function apiJson(accessToken: string, url: string, init?: RequestInit) {
+  const res = await fetch(url, {
     ...init,
-    headers: { ...headers(), ...(init?.body ? { "Content-Type": "application/json" } : {}) },
+    headers: headers(accessToken, Boolean(init?.body)),
   });
+  if (res.status === 401) throw new Error("gsc_unauthorized");
   if (res.status === 403) {
     throw new Error("The connected Google account cannot access this Search Console property.");
   }
-  if (!res.ok) throw new Error(`Search Console request failed [${res.status}]: ${await res.text()}`);
+  if (!res.ok) throw new Error(`Search Console request failed [${res.status}]: ${(await res.text()).slice(0, 300)}`);
   return res.json();
 }
 
-export async function searchAnalyticsByDate(siteUrl: string, startDate: string, endDate: string) {
-  const data = (await gwJson(
-    `/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+type Rows = { rows?: { keys: string[]; clicks: number; impressions: number; ctr: number; position: number }[] };
+
+export async function searchAnalyticsByDate(accessToken: string, siteUrl: string, startDate: string, endDate: string) {
+  const data = (await apiJson(
+    accessToken,
+    `${API}/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
     {
       method: "POST",
       body: JSON.stringify({ startDate, endDate, dimensions: ["date"], rowLimit: 500 }),
     },
-  )) as { rows?: { keys: string[]; clicks: number; impressions: number; ctr: number; position: number }[] };
+  )) as Rows;
   return (data.rows ?? []).map((r) => ({
     date: r.keys[0]!,
     clicks: r.clicks,
@@ -79,14 +93,15 @@ export async function searchAnalyticsByDate(siteUrl: string, startDate: string, 
   }));
 }
 
-export async function topRows(siteUrl: string, dimension: "query" | "page", startDate: string, endDate: string) {
-  const data = (await gwJson(
-    `/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+export async function topRows(accessToken: string, siteUrl: string, dimension: "query" | "page", startDate: string, endDate: string) {
+  const data = (await apiJson(
+    accessToken,
+    `${API}/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
     {
       method: "POST",
       body: JSON.stringify({ startDate, endDate, dimensions: [dimension], rowLimit: 10 }),
     },
-  )) as { rows?: { keys: string[]; clicks: number; impressions: number; ctr: number; position: number }[] };
+  )) as Rows;
   return (data.rows ?? []).map((r) => ({
     key: r.keys[0]!,
     clicks: r.clicks,
@@ -96,8 +111,28 @@ export async function topRows(siteUrl: string, dimension: "query" | "page", star
   }));
 }
 
-export async function listSitemaps(siteUrl: string) {
-  const data = (await gwJson(`/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/sitemaps`)) as {
+/** Query×page rows (used for the near-me baseline: query with its landing pages). */
+export async function queryPageRows(accessToken: string, siteUrl: string, startDate: string, endDate: string, rowLimit = 250) {
+  const data = (await apiJson(
+    accessToken,
+    `${API}/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+    {
+      method: "POST",
+      body: JSON.stringify({ startDate, endDate, dimensions: ["query", "page"], rowLimit }),
+    },
+  )) as Rows;
+  return (data.rows ?? []).map((r) => ({
+    query: r.keys[0] ?? "",
+    page: r.keys[1] ?? "",
+    clicks: r.clicks,
+    impressions: r.impressions,
+    ctr: r.ctr,
+    position: r.position,
+  }));
+}
+
+export async function listSitemaps(accessToken: string, siteUrl: string) {
+  const data = (await apiJson(accessToken, `${API}/sites/${encodeURIComponent(siteUrl)}/sitemaps`)) as {
     sitemap?: {
       path: string;
       lastSubmitted?: string;
@@ -111,8 +146,8 @@ export async function listSitemaps(siteUrl: string) {
   return data.sitemap ?? [];
 }
 
-export async function inspectUrl(siteUrl: string, inspectionUrl: string) {
-  const data = (await gwJson(`/v1/urlInspection/index:inspect`, {
+export async function inspectUrl(accessToken: string, siteUrl: string, inspectionUrl: string) {
+  const data = (await apiJson(accessToken, INSPECT, {
     method: "POST",
     body: JSON.stringify({ siteUrl, inspectionUrl }),
   })) as {

@@ -26,3 +26,17 @@ matching is then automatic:
 Any JPG/PNG/WebP works — photos are auto-cropped to 4:3, resized to 1600px
 wide and converted to optimized WebP before publishing. Higher resolution
 than 1600px is welcome; nothing needs manual editing.
+
+## How photos are wired in (actual pipeline)
+
+Originals in this folder are never modified. Run:
+
+```sh
+node scripts/optimize-uploads.mjs
+```
+
+It centre-crops each photo to 4:3, writes 1600w + 800w WebP variants to
+`src/assets/photos/`, and maps each source file to a descriptive slug (the
+mapping table lives at the top of that script). Components import the photos
+from the typed registry in `src/lib/photos.ts`, which also owns the unique alt
+text and captions — edit alt text there, not in the components.

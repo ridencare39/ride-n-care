@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
+import { PHOTOS, PHOTO_CAPTIONS } from "@/lib/photos";
 
 interface Step {
   n: string;
@@ -68,8 +69,8 @@ const STEPS: Step[] = [
   },
   {
     n: "6",
-    title: "7-day workmanship guarantee",
-    body: "If something related to the work done goes wrong within 7 days, we come back and set it right at no extra charge.",
+    title: "45-day service warranty",
+    body: "If a workmanship issue related to the original work appears within 45 days, we inspect the vehicle and correct it in accordance with the warranty.",
     icon: ShieldCheck,
   },
 ];
@@ -80,7 +81,7 @@ const PILLARS: [string, string, LucideIcon][] = [
   ["Background-verified mechanics", "KYC-checked before every visit", BadgeCheck],
   ["OEM-grade parts", "Genuine spares fitted", Wrench],
   ["Digital invoice", "On WhatsApp or email", IndianRupee],
-  ["7-day guarantee", "Workmanship guarantee on every job", ShieldCheck],
+  ["45-day warranty", "On eligible service and repair work", ShieldCheck],
 ];
 
 export function ProcessGuide() {
@@ -154,8 +155,28 @@ export function ProcessGuide() {
         <h2 className="mt-2 text-3xl font-bold md:text-4xl">How Ride N Care works: from booking to handover</h2>
       </div>
       <p className="mx-auto mt-4 max-w-2xl text-center text-muted-foreground leading-relaxed">
-        Every booking follows the same six steps — a written quote before any work, and a 7-day workmanship guarantee at handover. Here is exactly what happens when you book doorstep bike or car service in Bangalore.
+        Every booking follows the same six steps — a written quote before any work, and a 45-day service warranty at handover. Here is exactly what happens when you book doorstep bike or car service in Bangalore.
       </p>
+
+      {/* Owner photo (src/assets/uploads → src/assets/photos): the tools a mechanic
+          brings to a booking — trust-building context for the six steps below.
+          Below the fold → lazy; 4:3 width/height pinned (no layout shift). */}
+      <figure className="mx-auto mt-8 max-w-xl">
+        <img
+          src={PHOTOS.toolsTray.src}
+          srcSet={PHOTOS.toolsTray.srcSet}
+          sizes="(min-width: 640px) 576px, calc(100vw - 32px)"
+          alt={PHOTOS.toolsTray.alt}
+          width={PHOTOS.toolsTray.width}
+          height={PHOTOS.toolsTray.height}
+          loading="lazy"
+          decoding="async"
+          className="aspect-[4/3] w-full rounded-3xl border border-border object-cover shadow-card ring-1 ring-primary/10"
+        />
+        <figcaption className="mt-3 text-center text-sm text-muted-foreground">
+          {PHOTO_CAPTIONS.toolsTray}
+        </figcaption>
+      </figure>
 
       {/* Stepper / timeline. The track holds the fill; steps sit on top. */}
       <div className="process-track relative mt-12">
@@ -217,7 +238,7 @@ export function ProcessGuide() {
 
       {/* CTA row */}
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <BookingButton className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">
+        <BookingButton className="btn-book rounded-full px-6 py-3 font-semibold">
           Book Now
         </BookingButton>
         <a
@@ -225,7 +246,7 @@ export function ProcessGuide() {
           target="_blank"
           rel="noopener"
           {...ctcProps("whatsapp_click", { vehicle_type: "unknown" })}
-          className="inline-flex items-center gap-2 rounded-full border border-emerald-500/50 bg-emerald-500/10 px-6 py-3 font-semibold text-emerald-600 hover:bg-emerald-500/20 dark:text-emerald-400"
+          className="inline-flex items-center gap-2 rounded-full border border-emerald-600/50 bg-emerald-500/10 px-6 py-3 font-semibold text-emerald-700 hover:bg-emerald-500/20 dark:text-emerald-400"
         >
           <MessageCircle aria-hidden className="h-5 w-5" /> WhatsApp
         </a>

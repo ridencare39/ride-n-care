@@ -2,8 +2,9 @@ import { SITE_URL, OG_IMAGE, SAME_AS, LOGO_URL } from "@/lib/seo";
 import { AREAS, CONFIRMED_AREAS, PRIORITY_AREAS } from "@/lib/areas";
 import { pageScripts } from "@/lib/head";
 export { pageScripts };
-import { SERVICES } from "@/lib/services";
-import { CAR_SERVICES } from "@/lib/car-services";
+// Slim summaries only — schema.ts is imported by the root route, so it must
+// not pull the full service content into the shared client bundle.
+import { CAR_SERVICE_SUMMARY, SERVICE_SUMMARY } from "@/lib/service-summary";
 import { ENTITY_SUMMARY } from "@/lib/answers";
 
 /** Stable entity @ids for the whole site. */
@@ -12,6 +13,14 @@ export const IDS = {
   localBusiness: `${SITE_URL}/#localbusiness`,
   website: `${SITE_URL}/#website`,
 } as const;
+
+/**
+ * Site-name identity for Google Search (may be shown above the URL in
+ * results). RIDE N CARE is the display brand; "Ride N Care" is the plain
+ * written form carried as alternateName so either casing matches.
+ */
+export const BRAND_NAME = "RIDE N CARE";
+export const BRAND_NAME_PLAIN = "Ride N Care";
 
 /** Business facts (single source: the owner's confirmed facts). */
 export const BIZ = {
@@ -72,9 +81,9 @@ export function organizationNode() {
   return {
     "@type": "Organization",
     "@id": IDS.organization,
-    name: BIZ.name,
-    alternateName: BIZ.alternateName,
-    url: SITE_URL,
+    name: BRAND_NAME,
+    alternateName: BRAND_NAME_PLAIN,
+    url: `${SITE_URL}/`,
     logo: BIZ.logo,
     image: BIZ.image,
     email: BIZ.email,
@@ -86,7 +95,7 @@ export function organizationNode() {
 
 /**
  * LocalBusiness node: AutoRepair + MotorcycleRepair. Opening hours reflect the
- * owner-confirmed 24-hour doorstep-visit availability (21 Sep 2026).
+ * owner-confirmed operating hours 7:00 AM–11:30 PM, every day (2 Oct 2026).
  */
 export function localBusinessNode() {
   return {
@@ -103,16 +112,17 @@ export function localBusinessNode() {
     description: BIZ.description,
     address: POSTAL_ADDRESS,
     areaServed: areaServedPlaces(),
-    // Owner-confirmed (21 Sep 2026): mechanic visits available at any hour.
-    // Describes SERVICE VISITS, not a walk-in premises (service-area business).
+    // Owner-confirmed (2 Oct 2026): open 7:00 AM to 11:30 PM, 7 days a week.
+    // Describes SERVICE VISITS (service-area business, no walk-in premises);
+    // actual booking and mechanic availability may vary and is confirmed when booking.
     openingHoursSpecification: [
       "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday",
     ].map((day) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: day,
-      opens: "00:00",
-      closes: "23:59",
-      description: "Doorstep service visits available 24 hours",
+      opens: "07:00",
+      closes: "23:30",
+      description: "Doorstep service visits 7:00 AM to 11:30 PM, every day",
     })),
     sameAs: SAME_AS,
     knowsAbout: [
@@ -133,7 +143,7 @@ export function localBusinessNode() {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Ride N Care services",
-      itemListElement: [...SERVICES, ...CAR_SERVICES].map((s) => ({
+      itemListElement: [...SERVICE_SUMMARY, ...CAR_SERVICE_SUMMARY].map((s) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
@@ -145,13 +155,18 @@ export function localBusinessNode() {
   };
 }
 
-/** WebSite node. No SearchAction — the site has no on-site search. */
+/**
+ * WebSite node. No SearchAction — the site has no on-site search.
+ * name/alternateName feed Google's site-name signal for the brand
+ * "RIDE N CARE" instead of the bare domain.
+ */
 export function websiteNode() {
   return {
     "@type": "WebSite",
     "@id": IDS.website,
-    url: SITE_URL,
-    name: BIZ.name,
+    url: `${SITE_URL}/`,
+    name: BRAND_NAME,
+    alternateName: BRAND_NAME_PLAIN,
     publisher: { "@id": IDS.organization },
     inLanguage: "en-IN",
   };

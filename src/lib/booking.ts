@@ -144,6 +144,12 @@ export function carModels(brand: string) {
   return CAR_BRANDS.find((b) => b.name === brand)?.models ?? [];
 }
 
+/** Total car brands + models in the catalog (excludes the generic "Other" bucket). */
+export function carCatalogStats() {
+  const brands = CAR_BRANDS.filter((b) => b.name !== "Other");
+  return { brands: brands.length, models: brands.reduce((sum, b) => sum + b.models.length, 0) };
+}
+
 /** Builds the WhatsApp message containing every available booking detail. */
 export function buildBookingMessage(b: Booking): string {
   const lines: (string | false | undefined)[] = [

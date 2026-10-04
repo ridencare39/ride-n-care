@@ -19,36 +19,44 @@ import { useEffect, useRef, useState } from "react";
  * the section enters the viewport, all transform/opacity-only and disabled
  * under prefers-reduced-motion.
  */
+type Brand = { name: string; logo: string; alt?: string };
+
+/**
+ * Alt text audit (SEO/accessibility task 2026-09-30): every meaningful logo
+ * now carries a descriptive alt equal to the official brand name — exact per
+ * the owner-supplied list ("Hero" card shows alt "Hero MotoCorp", the
+ * "Jawa / Yezdi" card shows alt "Yezdi", matching the mark in the file).
+ * No keyword stuffing; the visible card text already carries the label, and
+ * the alt keeps the logo meaningful for crawlers and screen readers alike.
+ */
 const CAR_BRANDS: Brand[] = [
-  { name: "Maruti Suzuki", logo: "/brands/maruti.png" },
-  { name: "Hyundai", logo: "/brands/hyundai.svg" },
-  { name: "Tata Motors", logo: "/brands/tata.svg" },
-  { name: "Mahindra", logo: "/brands/mahindra.svg" },
-  { name: "Honda", logo: "/brands/honda-bike.svg" },
-  { name: "Toyota", logo: "/brands/toyota.svg" },
-  { name: "Kia", logo: "/brands/kia.png" },
+  { name: "Maruti Suzuki", logo: "/brands/maruti.png", alt: "Maruti Suzuki" },
+  { name: "Hyundai", logo: "/brands/hyundai.svg", alt: "Hyundai" },
+  { name: "Tata Motors", logo: "/brands/tata.svg", alt: "Tata Motors" },
+  { name: "Mahindra", logo: "/brands/mahindra.svg", alt: "Mahindra" },
+  { name: "Honda", logo: "/brands/honda-bike.svg", alt: "Honda" },
+  { name: "Toyota", logo: "/brands/toyota.svg", alt: "Toyota" },
+  { name: "Kia", logo: "/brands/kia.png", alt: "Kia" },
 ];
 
 const BIKE_BRANDS: Brand[] = [
-  { name: "Honda", logo: "/brands/honda-bike.svg" },
-  { name: "Hero", logo: "/brands/hero.svg" },
-  { name: "TVS", logo: "/brands/tvs.svg" },
-  { name: "Bajaj", logo: "/brands/bajaj.svg" },
-  { name: "Yamaha", logo: "/brands/yamaha.png" },
-  { name: "Suzuki", logo: "/brands/suzuki.svg" },
-  { name: "Royal Enfield", logo: "/brands/royalenfield.svg" },
-  { name: "KTM", logo: "/brands/ktm.svg" },
-  { name: "Kawasaki", logo: "/brands/kawasaki.svg" },
-  { name: "Harley-Davidson", logo: "/brands/harley.svg" },
-  { name: "Jawa / Yezdi", logo: "/brands/yezdi.png" },
-  { name: "BMW Motorrad", logo: "/brands/bmw-motorrad.svg" },
+  { name: "Honda", logo: "/brands/honda-bike.svg", alt: "Honda" },
+  { name: "Hero", logo: "/brands/hero.svg", alt: "Hero MotoCorp" },
+  { name: "TVS", logo: "/brands/tvs.svg", alt: "TVS" },
+  { name: "Bajaj", logo: "/brands/bajaj.svg", alt: "Bajaj" },
+  { name: "Yamaha", logo: "/brands/yamaha.png", alt: "Yamaha" },
+  { name: "Suzuki", logo: "/brands/suzuki.svg", alt: "Suzuki" },
+  { name: "Royal Enfield", logo: "/brands/royalenfield.webp", alt: "Royal Enfield" }, // rasterized copy of royalenfield.svg (6.2 KB vs 37.7 KB; scripts/optimize-brand-logos.mjs)
+  { name: "KTM", logo: "/brands/ktm.svg", alt: "KTM" },
+  { name: "Kawasaki", logo: "/brands/kawasaki.webp", alt: "Kawasaki" }, // rasterized copy of kawasaki.svg (3 KB vs 93.7 KB — the SVG embedded a 2560px raster; scripts/optimize-brand-logos.mjs)
+  { name: "Harley-Davidson", logo: "/brands/harley.svg", alt: "Harley-Davidson" },
+  { name: "Jawa / Yezdi", logo: "/brands/yezdi.png", alt: "Yezdi" },
+  { name: "BMW Motorrad", logo: "/brands/bmw-motorrad.svg", alt: "BMW Motorrad" },
 ];
 
 /** ~same travel speed for both rows: loop width ÷ duration ≈ 36 px/s. */
 const CAR_SPEED_S = 44; // 7 cards ≈ 1.6k px
 const BIKE_SPEED_S = 104; // 12 cards ≈ 3.8k px
-
-type Brand = { name: string; logo: string };
 
 function BrandLogo({ brand }: { brand: Brand }) {
   const [failed, setFailed] = useState(false);
@@ -64,10 +72,12 @@ function BrandLogo({ brand }: { brand: Brand }) {
     );
   }
   return (
-    <span className="brand-logo-plate" aria-hidden="true">
+    // Not aria-hidden: the img alt names the brand for screen readers and
+    // crawlers, matching the owner-supplied alt list (a11y/SEO task).
+    <span className="brand-logo-plate">
       <img
         src={brand.logo}
-        alt=""
+        alt={brand.alt ?? brand.name}
         width={44}
         height={44}
         loading="lazy"
@@ -141,7 +151,7 @@ export function BrandsMarquee() {
       className={`brands-reveal border-y border-border bg-background py-14 overflow-hidden ${showLogos ? "is-visible" : ""}`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center">
-        <span className="text-xs uppercase tracking-[0.2em] text-accent font-semibold">Brands We Serve</span>
+        <span className="text-xs uppercase tracking-[0.2em] text-primary font-semibold">Brands We Serve</span>
         <h2 className="mt-2 text-3xl md:text-4xl font-bold">Car brands &amp; bike brands we service</h2>
         <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
           From Royal Enfield and KTM to Maruti Suzuki and Toyota — the bike and car brands confirmed for doorstep
@@ -164,13 +174,13 @@ export function BrandsMarquee() {
 
       {/* Visibility keywords — mirrors what riders actually search for. */}
       <div className="mx-auto mt-9 max-w-5xl px-4 sm:px-6 text-center">
-        <p className="text-sm font-semibold text-neon">
+        <p className="text-sm font-semibold text-primary">
           Doorstep bike service · Car service at home · Bike repair near me · Car periodic service Bangalore
         </p>
         <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">
           Verified mechanics service every brand above at your doorstep with OEM-grade spares, a written quote before
-          work starts and a 7-day workmanship guarantee — across 40 confirmed localities in Bangalore, doorstep visits
-          available 24 hours.
+          work starts and a 45-day service warranty — across 40 confirmed localities in Bangalore, open daily
+          7 AM to 11:30 PM.
         </p>
       </div>
     </section>

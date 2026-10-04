@@ -20,7 +20,7 @@
  *   (car services are quoted in writing; pricing sections explain drivers).
  * - Operational promises stay limited to: background-verified mechanics,
  *   written quote before work starts, OEM-grade parts, digital invoice on
- *   WhatsApp, 7-day workmanship guarantee, workshop transport when a job
+ *   WhatsApp, 45-day service warranty, workshop transport when a job
  *   genuinely needs the workshop.
  */
 
@@ -486,7 +486,7 @@ export const CAR_AREA_WAVE_1: CarAreaEntry[] = [
     serviceSlug: "car-brake-service",
     areaSlug: "electronic-city",
     areaAnswer:
-      "Car brake service at your Electronic City home or office bay — free inspection with pad thickness measured on all wheels, disc and fluid condition checked, and replacement quoted at MRP before fitting. Old parts returned; work done in your bay with the 7-day workmanship guarantee.",
+      "Car brake service at your Electronic City home or office bay — free inspection with pad thickness measured on all wheels, disc and fluid condition checked, and replacement quoted at MRP before fitting. Old parts returned; work done in your bay with the 45-day service warranty.",
     areaNotes: [
       "The Hosur Road and Flyover commute means sustained speed followed by hard stops at the exits — exactly the braking pattern that wears pads fastest. The visit measures each wheel's actual thickness, so the quote reflects real wear rather than a mileage rule of thumb.",
       "Office and apartment bays both work; share the campus or complex, bay number and any access formalities when booking. Discs, pads and fluid are all doorstep-capable, replacements are shown sealed before fitting, and the invoice on WhatsApp lists parts and labour separately.",
@@ -515,7 +515,7 @@ export const CAR_AREA_WAVE_1: CarAreaEntry[] = [
     serviceSlug: "car-brake-service",
     areaSlug: "indiranagar",
     areaAnswer:
-      "Car brake service in your Indiranagar parking bay — pad thickness measured on all four wheels, discs checked for scoring, brake fluid inspected, and replacement quoted at MRP only with your approval. Old parts are handed back with the wear numbers; the job carries a 7-day guarantee.",
+      "Car brake service in your Indiranagar parking bay — pad thickness measured on all four wheels, discs checked for scoring, brake fluid inspected, and replacement quoted at MRP only with your approval. Old parts are handed back with the wear numbers; the job carries a 45-day warranty.",
     areaNotes: [
       "100 Feet Road and CMH Road traffic means constant light braking with the occasional hard stop — a pattern that glazes pads and wears them unevenly, so the measurement visit checks each wheel separately rather than quoting a blanket change. Squeal, a soft pedal or a pull to one side are all traced to numbers.",
       "Basement and stilt bays across the 2nd Stage lanes are routine; the job needs one level bay and wheel clearance, nothing more. Fluid condition is checked on the same visit, a fluid change is quoted only when the test shows it is due, and the finished work is inspected with you before you pay.",
@@ -544,7 +544,7 @@ export const CAR_AREA_WAVE_1: CarAreaEntry[] = [
     serviceSlug: "car-brake-service",
     areaSlug: "koramangala",
     areaAnswer:
-      "Car brake service in your Koramangala parking bay — pad thickness measured on all wheels, discs checked for scoring, brake fluid condition inspected, and any replacement quoted at MRP before fitting. Old parts are returned to you, and the work carries the 7-day workmanship guarantee.",
+      "Car brake service in your Koramangala parking bay — pad thickness measured on all wheels, discs checked for scoring, brake fluid condition inspected, and any replacement quoted at MRP before fitting. Old parts are returned to you, and the work carries the 45-day service warranty.",
     areaNotes: [
       "Koramangala's junction-crawl driving is the kind that wears pads well ahead of the manufacturer interval — stop-start braking is exactly what the measurement-first visit is for. Squeal, a soft pedal or a pull to one side are all checked against actual wear numbers.",
       "Basement bays across the 5th and 6th blocks and the 80 Feet Road side are routine; the job needs a level bay and wheel clearance, nothing more. Fluid condition is checked on the same visit, and a fluid change is quoted only when the test shows it is due.",
@@ -573,7 +573,7 @@ export const CAR_AREA_WAVE_1: CarAreaEntry[] = [
     serviceSlug: "car-brake-service",
     areaSlug: "bellandur",
     areaAnswer:
-      "Car brake service at your Bellandur home or office bay — pads measured wheel by wheel, discs and fluid checked, replacement quoted at MRP and done in your bay only with your approval. Wear numbers are shown to you, old parts come back, and the job carries a 7-day guarantee.",
+      "Car brake service at your Bellandur home or office bay — pads measured wheel by wheel, discs and fluid checked, replacement quoted at MRP and done in your bay only with your approval. Wear numbers are shown to you, old parts come back, and the job carries a 45-day warranty.",
     areaNotes: [
       "ORR driving into the Iblur Junction crawl loads brakes with sustained speed followed by hard stops — front pads wear fastest and often unevenly, so each wheel is measured separately. The free inspection converts a symptom like squeal or a soft pedal into actual numbers before anything is quoted.",
       "Tech-park bays and apartment basements both work — one level bay and the job is done: pads, discs and fluid are all fully doorstep-capable. Share the campus or block details when booking; replacements are shown sealed before fitting and the finished work is inspected with you before you pay.",
@@ -594,7 +594,7 @@ export const CAR_AREA_WAVE_1: CarAreaEntry[] = [
       ],
       [
         "Is there a warranty on the brake work?",
-        "A 7-day workmanship guarantee applies to the brake work performed, plus the manufacturer warranty on the parts fitted — both stated before you approve the quote.",
+        "A 45-day service warranty applies to the brake work performed, plus the manufacturer warranty on the parts fitted — both stated before you approve the quote.",
       ],
     ],
   },
@@ -602,7 +602,7 @@ export const CAR_AREA_WAVE_1: CarAreaEntry[] = [
     serviceSlug: "car-brake-service",
     areaSlug: "btm-layout",
     areaAnswer:
-      "Car brake service in your BTM Layout parking bay — pads measured on all four wheels, discs checked for scoring and runout, brake fluid inspected, and replacement quoted at MRP only with your approval. Old parts are returned; the job carries the 7-day workmanship guarantee.",
+      "Car brake service in your BTM Layout parking bay — pads measured on all four wheels, discs checked for scoring and runout, brake fluid inspected, and replacement quoted at MRP only with your approval. Old parts are returned; the job carries the 45-day service warranty.",
     areaNotes: [
       "Braking into the Silk Board Junction crawl and the Madiwala Checkpost approach works the front pads hard — the measurement-first visit catches uneven wear between axles early. Squeal after rain, a soft pedal or vibration all get traced to actual measurements, not guesses.",
       "Basement and stilt bays across the 1st and 2nd Stage are straightforward for the van; the job needs one level bay. Pad, disc and fluid work is fully doorstep-capable, parts are shown sealed before fitting, and the finished work is inspected with you before you pay by UPI, card or cash.",
@@ -722,7 +722,7 @@ export const CAR_AREA_WAVE_1: CarAreaEntry[] = [
     serviceSlug: "car-brake-service",
     areaSlug: "marathahalli",
     areaAnswer:
-      "Car brake service at your Marathahalli parking spot — pads measured on all four wheels, discs checked for scoring and runout, fluid inspected, and replacement quoted at MRP only with your approval. Old parts are returned; the finished work carries the 7-day workmanship guarantee.",
+      "Car brake service at your Marathahalli parking spot — pads measured on all four wheels, discs checked for scoring and runout, fluid inspected, and replacement quoted at MRP only with your approval. Old parts are returned; the finished work carries the 45-day service warranty.",
     areaNotes: [
       "Marathahalli Bridge and the Outer Ring Road junction compress the locality's traffic into a few choke points, with AECS Layout and the Kundalahalli Gate side feeding in — braking into that crawl twice a day works the front pads hard. The measurement-first visit catches uneven axle wear early, before it becomes a disc problem.",
       "Tech-park and apartment parking dominate here, so most jobs are basement or stilt bays needing just one level spot. Pad, disc and fluid work is fully doorstep-capable; parts are shown sealed before fitting, and the job is inspected with you before payment by UPI, card or cash.",

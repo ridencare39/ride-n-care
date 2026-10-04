@@ -2,21 +2,22 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { StatsRow } from "@/components/StatsRow";
 import { ENTITY_SUMMARY } from "@/lib/answers";
 import { CONFIRMED_AREAS, CONFIRMED_ZONE_PHRASE } from "@/lib/areas";
-import { OG_IMAGE_ABOUT, SITE_URL } from "@/lib/seo";
+import { OG_IMAGE_ABOUT, SITE_URL, CONTACT_EMAIL } from "@/lib/seo";
 import { pageHead, formatDate } from "@/lib/head";
 import { graphForPage, pageScripts } from "@/lib/schema";
+import { PHOTOS, PHOTO_CAPTIONS } from "@/lib/photos";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     ...pageHead({
       title: "About Ride N Care | Doorstep Bike Service Bangalore",
       description:
-        "Who we are: a Bangalore doorstep bike & car service team with background-verified mechanics, OEM parts, written quotes and a 7-day workmanship guarantee.",
+        "Who we are: a Bangalore doorstep bike & car service team with background-verified mechanics, OEM parts, written quotes and a 45-day service warranty.",
       path: "/about",
       ogImage: OG_IMAGE_ABOUT,
       extraMeta: [
       { property: "og:title", content: "About Ride N Care — Care in every mile" },
-      { property: "og:description", content: "Who we are: a Bangalore doorstep bike & car service team with background-verified mechanics, OEM parts, written quotes and a 7-day workmanship guarantee." },
+      { property: "og:description", content: "Who we are: a Bangalore doorstep bike & car service team with background-verified mechanics, OEM parts, written quotes and a 45-day service warranty." },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "About Ride N Care — Care in every mile, Bangalore doorstep bike & car service" },
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/about")({
           url: `${SITE_URL}/about`,
           name: "About Ride N Care",
           description:
-            "Bangalore's doorstep bike and car service team — background-verified mechanics, OEM parts, written quotes and a 7-day workmanship guarantee.",
+            "Bangalore's doorstep bike and car service team — background-verified mechanics, OEM parts, written quotes and a 45-day service warranty.",
           mainEntity: { "@id": `${SITE_URL}/#organization` },
           breadcrumb: { "@id": `${SITE_URL}/about#breadcrumb` },
         },
@@ -70,6 +71,26 @@ function About() {
 
       <StatsRow className="mt-10 max-w-md" />
 
+      {/* Owner photo (src/assets/uploads → src/assets/photos): the workshop with
+          the Ride N Care signage — brand/expertise proof. Lazy (below the fold),
+          4:3 width/height pinned so the layout never shifts. */}
+      <figure className="mt-10">
+        <img
+          src={PHOTOS.workshopSignage.src}
+          srcSet={PHOTOS.workshopSignage.srcSet}
+          sizes="(min-width: 768px) 704px, calc(100vw - 32px)"
+          alt={PHOTOS.workshopSignage.alt}
+          width={PHOTOS.workshopSignage.width}
+          height={PHOTOS.workshopSignage.height}
+          loading="lazy"
+          decoding="async"
+          className="aspect-[4/3] w-full rounded-3xl border border-border object-cover shadow-card ring-1 ring-primary/10"
+        />
+        <figcaption className="mt-3 text-sm text-muted-foreground">
+          {PHOTO_CAPTIONS.workshopSignage}
+        </figcaption>
+      </figure>
+
       <h2 className="mt-14 text-3xl font-bold">Why Bangalore loves us</h2>
       <p className="mt-4 text-muted-foreground leading-relaxed">
         Bangalore's traffic, dust and unpredictable monsoon are uniquely brutal on vehicles. We built Ride N Care specifically for this city — every mechanic carries a diagnostics kit and OEM-grade spares, and every job starts with a written quote so there are zero surprises. From a quick oil change in Indiranagar to a full periodic service in Electronic City, the work happens in front of you, and we leave your driveway cleaner than we found it.
@@ -97,7 +118,7 @@ function About() {
         <li>✅ Upfront pricing — a written quote before any spanner is lifted.</li>
         <li>✅ Trained, polite, background-verified (KYC-checked) mechanics.</li>
         <li>✅ A digital invoice by WhatsApp or email after every job.</li>
-        <li>✅ 7-day post-service workmanship guarantee.</li>
+        <li>✅ 45-day service warranty on eligible work.</li>
         <li>✅ Pay by UPI, card or cash after the work is done.</li>
       </ul>
 
@@ -110,18 +131,19 @@ function About() {
             ["What we do", "Doorstep bike, scooter, EV two-wheeler and car service and repair in Bangalore."],
             ["Where we serve", `${CONFIRMED_AREAS.length} localities across ${CONFIRMED_ZONE_PHRASE} Bangalore — see the full list on the areas page.`],
             ["How to book", "Call 080 6940 9289, WhatsApp 82969 50339, the booking form on this website, or Book with AI."],
-            ["Email", "info@ridencare.co.in — for quotes, invoices and anything else."],
+            ["Email", "info@ — write via the email link for quotes, invoices and anything else."],
             ["Quote", "The price is confirmed in writing before any work starts."],
             ["Mechanics", "Background-verified and KYC-checked before visiting your home or office."],
             ["Parts", "OEM-grade parts fitted."],
             ["Payment", "UPI, card or cash, paid after the work is done."],
-            ["Hours", "Doorstep visits available 24 hours — the arrival window is confirmed when you book."],
+            ["Hours", "7:00 AM to 11:30 PM, 7 days a week — the arrival window is confirmed when you book; actual availability may vary."],
             ["Invoice", "A digital invoice listing parts and labour separately, by WhatsApp or email."],
-            ["Guarantee", "A 7-day workmanship guarantee on every job."],
+            ["Warranty", "A 45-day service warranty on eligible work."],
           ].map(([term, def]) => (
             <div key={term} className="grid gap-1 rounded-xl border border-border bg-card p-3.5 sm:grid-cols-[160px_1fr] sm:gap-4">
               <dt className="text-sm font-semibold text-primary">{term}</dt>
-              <dd className="text-sm leading-relaxed text-muted-foreground">{def}</dd>
+              {/* Entity-encoded email renders decoded here (privacy task, 2026-09-30). */}
+              <dd className="text-sm leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: def }} />
             </div>
           ))}
         </dl>
@@ -144,7 +166,7 @@ function About() {
         <div className="mt-6 grid sm:grid-cols-2 gap-3">
           {[
             ["Written quote before work starts", "The mechanic checks the vehicle, tells you what it needs and confirms the price in writing. Work starts only after you approve it."],
-            ["7-day workmanship guarantee", "If something related to the work done goes wrong within 7 days, we come back and set it right at no extra charge."],
+            ["45-day service warranty", "If a workmanship issue related to the original work appears within 45 days, we inspect the vehicle and correct it in accordance with the warranty."],
             ["Background-verified mechanics", "Every mechanic is KYC-checked before they visit your home or office, so you always know who is working on your vehicle."],
             ["OEM-grade parts and digital invoice", "Parts meet original-equipment grade and you get a digital invoice by WhatsApp or email — useful for your service record and resale."],
           ].map(([title, body]) => (
@@ -156,7 +178,7 @@ function About() {
         </div>
         <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            ["7-day", "Workmanship guarantee"],
+            ["45-day", "Service warranty"],
             ["OEM", "Genuine parts only"],
             ["Free", "Pickup & drop"],
             ["UPI", "Card & cash accepted"],

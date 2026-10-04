@@ -1,6 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { MANUAL_GSC_OBSERVATIONS } from "@/lib/gsc-manual";
 import {
   ResponsiveContainer,
   LineChart,
@@ -64,6 +66,31 @@ function SeoMonitor() {
     staleTime: 5 * 60 * 1000,
   });
 
+  // One-shot feedback for the OAuth flow (?gsc=connected|disconnected|error|not_configured).
+  const [conn, setConn] = useState<{ status: string; reason: string } | null>(null);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("gsc");
+    if (!status) return;
+    setConn({ status, reason: params.get("reason") ?? "" });
+    const url = new URL(window.location.href);
+    url.searchParams.delete("gsc");
+    url.searchParams.delete("reason");
+    window.history.replaceState({}, "", url.toString());
+  }, []);
+
+  const CONN_COPY: Record<string, string> = {
+    connected: "Search Console connected — live read-only data is loading below.",
+    disconnected: "Search Console disconnected. The authorization cookie was cleared from this browser.",
+    not_configured: "OAuth keys are not configured in this deployment's environment yet (GOOGLE_OAUTH_CLIENT_ID / GOOGLE_OAUTH_CLIENT_SECRET).",
+  };
+  const ERR_COPY: Record<string, string> = {
+    access_denied: "Authorization was declined at the Google consent screen.",
+    state_mismatch: "The connection attempt expired or the state did not match — try Connect again.",
+    exchange_failed: "Google rejected the code exchange — verify the redirect URI registered on the OAuth client matches this origin exactly.",
+    no_refresh_token: "Google did not return a refresh token — open Connect again so the consent screen re-issues it.",
+  };
+
   return (
     <main className="mx-auto max-w-6xl px-4 sm:px-6 py-14">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -82,6 +109,22 @@ function SeoMonitor() {
         </button>
       </div>
 
+      {conn ? (
+        <div
+          className={`mt-6 rounded-2xl border p-4 text-sm ${
+            conn.status === "connected"
+              ? "border-emerald-600/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+              : conn.status === "error"
+                ? "border-destructive/40 bg-destructive/10 text-destructive"
+                : "border-border bg-card text-foreground"
+          }`}
+        >
+          {conn.status === "error"
+            ? ERR_COPY[conn.reason] ?? `Google did not complete the connection (${conn.reason || "unknown error"}).`
+            : CONN_COPY[conn.status] ?? conn.status}
+        </div>
+      ) : null}
+
       {isLoading ? <p className="mt-10 text-muted-foreground">Loading Search Console data…</p> : null}
       {isError ? <p className="mt-10 text-destructive">Could not load Search Console data.</p> : null}
 
@@ -98,6 +141,19 @@ function SeoMonitor() {
           <p className="mt-2 text-xs text-muted-foreground">
             Search Console usually needs a few days after verification before it reports performance and coverage data.
           </p>
+          {data.status === "not_connected" ? (
+            <a
+              href={data.connectUrl}
+              className="mt-4 inline-block rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90"
+            >
+              Connect Google Search Console
+            </a>
+          ) : null}
+          {data.status === "not_configured" ? (
+            <p className="mt-3 rounded-xl border border-border bg-card p-3 font-mono text-xs">
+              Missing keys: {data.missing.join(", ")} — add them in Settings → Environment, then redeploy.
+            </p>
+          ) : null}
         </div>
       ) : null}
 
@@ -209,6 +265,46 @@ function SeoMonitor() {
             </div>
           </section>
 
+          <section className="mt-10">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-xl font-bold">“Near me” baseline — 4 priority queries (28d)</h2>
+              <span className="rounded-full border border-primary/40 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">GSC API · live</span>
+            </div>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Real rows from <code>searchAnalytics.query</code>. “No data in range” means GSC returned no row for that query — positions are never guessed. “Near me” results vary by the searcher's location, so position is an average across showing locations.
+            </p>
+            <div className="mt-4 overflow-x-auto rounded-2xl border border-border bg-card">
+              <table className="w-full text-sm">
+                <thead className="text-left text-xs uppercase text-muted-foreground">
+                  <tr>
+                    <th className="p-3">Query</th>
+                    <th className="p-3">Match</th>
+                    <th className="p-3">Clicks</th>
+                    <th className="p-3">Impr.</th>
+                    <th className="p-3">CTR</th>
+                    <th className="p-3">Avg pos</th>
+                    <th className="p-3">Top landing page</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.nearMeBaseline.map((r) => (
+                    <tr key={r.query} className="border-t border-border">
+                      <td className="p-3 font-semibold">{r.query}</td>
+                      <td className="p-3 text-xs text-muted-foreground">{r.matched}</td>
+                      <td className="p-3">{r.impressions ? r.clicks : "—"}</td>
+                      <td className="p-3">{r.impressions || "no data in range"}</td>
+                      <td className="p-3">{r.impressions ? pct(r.ctr) : "—"}</td>
+                      <td className="p-3">{r.impressions ? r.position.toFixed(1) : "—"}</td>
+                      <td className="p-3 break-all text-xs">
+                        {r.landingPages.length ? r.landingPages[0]!.page.replace(SITE_URL, "") || "/" : "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
           <section className="mt-10 grid gap-6 md:grid-cols-2">
             <div>
               <h2 className="text-xl font-bold">Top queries (28d)</h2>
@@ -235,9 +331,43 @@ function SeoMonitor() {
           </section>
 
           <p className="mt-8 text-xs text-muted-foreground">
-            Property: {data.siteUrl} · refreshed {new Date(data.refreshedAt).toLocaleString()}
+            Property: {data.siteUrl} · refreshed {new Date(data.refreshedAt).toLocaleString()} ·{" "}
+            <a href="/gsc/disconnect" className="underline hover:text-primary">Disconnect Search Console</a>
           </p>
         </>
+      ) : null}
+
+      {data ? (
+        <section className="mt-10 rounded-2xl border border-dashed border-border bg-card/50 p-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-lg font-bold">Owner-recorded dashboard observations</h2>
+            <span className="rounded-full border border-border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Manual — not API</span>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground">{MANUAL_GSC_OBSERVATIONS.rangeNote}</p>
+          <table className="mt-3 w-full text-sm">
+            <thead className="text-left text-xs uppercase text-muted-foreground">
+              <tr>
+                <th className="p-2">Metric</th>
+                <th className="p-2">Value</th>
+                <th className="p-2">Note</th>
+                <th className="p-2">Available via API?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {MANUAL_GSC_OBSERVATIONS.rows.map((r) => (
+                <tr key={r.label} className="border-t border-border">
+                  <td className="p-2 font-semibold">{r.label}</td>
+                  <td className="p-2">{r.value}</td>
+                  <td className="p-2 text-xs text-muted-foreground">{r.note ?? "—"}</td>
+                  <td className="p-2 text-xs text-muted-foreground">{r.availableViaApi === "api-later" ? "Yes — live API data supersedes" : "No — GSC API does not expose this report"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Source: {MANUAL_GSC_OBSERVATIONS.enteredBy} on {MANUAL_GSC_OBSERVATIONS.enteredAt}. Kept strictly separate from the live API rows above.
+          </p>
+        </section>
       ) : null}
     </main>
   );

@@ -98,7 +98,7 @@ export function AreasSection() {
         <h2 className="mt-2 text-3xl md:text-4xl font-bold">Doorstep mechanics near you — all {CONFIRMED_AREAS.length} localities</h2>
         <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
           Looking for a bike or car mechanic near you? Every confirmed locality below is a live page with pincode-level
-          details, nearby landmarks and doorstep service — doorstep visits available 24 hours.
+          details, nearby landmarks and doorstep service — open 7:00 AM to 11:30 PM, every day.
         </p>
       </div>
 

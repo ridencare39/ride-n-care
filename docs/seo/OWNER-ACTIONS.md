@@ -70,7 +70,10 @@ Priority: **P1** = blocks revenue/claims already removed, **P2** = unlocks bette
 | **P1 · Q10** Cloudflare Cache Purge token | Deploy auto-purge 401s without it; each deploy relies on the 60s s-maxage. Grant the token the Cache Purge scope. | `Q10: token updated` |
 | **P1 · GA4 access** `G-EQ8P35TH54` is live on the site — owner must confirm access to the property and mark the 4 key events (see 10-measurement-checklist.md). | Measurement is blind without property access. | `GA4: access confirmed, key events marked` |
 | **P1 · Q12** GBP login | The GBP pack (10-gbp-pack.md) is applied by the owner — needs login + verification. | `Q12: profile live on <date>` |
+| ~~P1 · Trustindex widget ID~~ | ✅ DONE 2026-09-27 — owner supplied ID; set + deployed + verified live (see COMPLETED below). | — |
 | **P1 · GSC access** Domain property verified (TXT) — owner submits sitemap and watches queries weekly. | Weekly tracking depends on it. | `GSC: sitemap submitted` |
+| **P2 · GSC API key** Optional: add `GOOGLE_SEARCH_CONSOLE_API_KEY` (+ `LOVABLE_API_KEY`) to the environment and the site's built-in seo-monitor pipeline pulls impressions/clicks/positions automatically (Batch 4 confirmed it is not configured). | Automates the weekly review. | `GSC API: key added` |
+| **P2 · Evidence assets** Photos, real customer quotes (with consent), team photos per docs/seo/11-evidence-pipeline.md | Trust content ships only from real assets. | `Evidence: <n> photos, <n> quotes` |
 | **P2 · Q15** GA4 key events (call_click, whatsapp_click, booking_form_submit, book_with_ai_open) | Same as GA4 item — mark as key events. | `Q15: marked` |
 | **P2 · Q11** /track-booking indexable or noindex? | Unindexed page quality decision. | `Q11: keep/noindex` |
 | **P2 · Q13** AI crawlers allowed (GPTBot etc.) | Ruling is ALLOW; confirm you accept AI-training use in exchange for citations. | `Q13: confirm allow / block list` |
@@ -107,3 +110,51 @@ GA4: access confirmed, key events marked
 ```
 
 Every answered item gets shipped into the site copy, profiles and GBP pack in the next work session; every unanswered item stays excluded by the banned-claims validator.
+
+---
+
+## Batch 5 status tracker (2026-09-27) — COMPLETED / IN PROGRESS / OWNER ACTION REQUIRED / BLOCKED
+
+Re-checked 2026-09-27 with real evidence (env inventories, live fetches, code inspection). Nothing here is marked done without proof.
+
+### COMPLETED (verified)
+
+| Action | Evidence |
+|---|---|
+| Batch 4 deploy live (worker version `eb7327da-af8b-4490-b264-a652eb983010`) | Live cache-busted checks: 257-URL sitemap, wave-2 pages 200, 301 consolidation, schema 0/0 |
+| Site-side technical health (Batch 5 audit) | redirects, headers, GA4 G-EQ8P35TH54, call/WA rules, /map noindex,follow, 0 dupes — all PASS live |
+| Indexability of all key URLs | 200 + 1 H1 + self-canonical + sitemap inclusion verified ("INDEXED IN GOOGLE" remains NOT VERIFIED — needs GSC) |
+
+### IN PROGRESS
+
+| Action | State |
+|---|---|
+| Owner verifying/submitting external listings (GBP, Bing Places, Apple Business Connect, Justdial, Sulekha) | Owner reports this is underway; no listing URL or verification evidence supplied yet → tracker stays OWNER-side |
+| Owner collecting genuine photos | Owner reports collection underway; **0 images exist in the project yet** (`public/` has none) — mapping table ready in `11-evidence-pipeline.md` |
+
+### OWNER ACTION REQUIRED
+
+| Action | Exact requirement | Unblocks |
+|---|---|---|
+| **GSC data access for this deployment** | The Lovable-platform connection does not reach this Freebuff deployment. Either (a) add `GOOGLE_SEARCH_CONSOLE_API_KEY` + `LOVABLE_API_KEY` to the Freebuff production env (`freebuff-deploy env set` / Settings → Environment), or (b) paste a manual GSC Performance export (28 days, Pages+Queries) into `gsc-query-review.md`'s workflow. Note: a plain Google API key cannot call GSC (401 — OAuth2 required). | Real query analysis, indexation verification, car×area performance review, AEO query optimizations |
+| Supabase blog migration | Run `supabase/migrations/20260927090000_batch3-blog-posts.sql` in Supabase SQL Editor — verified still unapplied (neither seed slug on live /blog) | 2 calendar blog posts go live |
+| Cloudflare purge token | Token still lacks Cache Purge scope (401 on deploy, 2026-09-27); s-maxage=60 keeps staleness bounded | Instant cache purge after deploys |
+| AI visibility manual runs | Run the 10-prompt set in `ai-visibility-baseline.md` (owner-side, manual); record real observations only | First measured AI-visibility baseline |
+| Genuine photo assets | Send 20–25 real photos per `11-evidence-pipeline.md` intake (consent + verification required) | Real trust imagery on site + GBP |
+| URL Inspection / Sitemaps check after GSC access | Confirm `submitted` vs `indexed` for the 257-URL sitemap; inspect homepage + sample car×area URLs | Turns "INDEXABLE" into verified "INDEXED" or actionable coverage fixes |
+
+### COMPLETED (2026-09-27, later same day — with evidence)
+
+| Action | Evidence |
+|---|---|
+| Trustindex widget ID configured | Owner supplied ID `84063ef82cc2372c9b76c8eb16a`; set as `VITE_TRUSTINDEX_WIDGET_ID`; deployed (Worker version `296a78e0-8c0a-4b64-a970-00fc55ccbb36`). Live homepage verified in a real browser: Trustindex loader.js requested from CDN (200), widget mounts on user scroll, **10 real Google review cards render** with Google platform icons (60) and genuine reviewer names/text. No review/AggregateRating schema added (per anti-fabrication rule). Known behavior: Trustindex lazy-loads on user interaction near the widget — normal for real visitors. Remaining owner item: none for reviews. Optional upgrade later: Google Places API mode (GOOGLE_PLACES_API_KEY + GOOGLE_PLACE_ID) if native cards/rich snippet control is wanted. |
+
+### BLOCKED (waiting on the above)
+
+| Item | Blocked by |
+|---|---|
+| GSC-driven optimization backlog rows (impressions/CTR/position) | GSC data access |
+| Verified indexation claims | GSC URL Inspection / Sitemaps data |
+| Car×area performance groups (useful/some/no impressions) | ≥ 4 weeks of GSC data from 2026-09-27 |
+| AEO query-gap improvements | Real GSC queries |
+| Review schema (AggregateRating/Review) | Real review data via Trustindex/Places — stays banned until then |

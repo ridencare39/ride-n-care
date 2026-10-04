@@ -87,7 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ...pageHead({
       title: "Ride N Care | Doorstep Bike & Car Service in Bangalore",
       description:
-        "Care in every mile. Book verified doorstep bike & car service across Bangalore — OEM parts, written quote, 7-day guarantee.",
+        "Care in every mile. Book verified doorstep bike & car service across Bangalore — OEM parts, written quote, 45-day warranty.",
       path: "/",
     }),
     meta: [
@@ -125,6 +125,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         type: "font/woff2",
         crossOrigin: "anonymous",
       },
+      // GA4/GTM load gtag.js from googletagmanager.com on every page — open
+      // the connection while the document parses. No crossorigin: the script
+      // is fetched in no-CORS mode, and a CORS preconnect would open a
+      // separate, unused connection pool. Only emitted when analytics is on.
+      ...(GA_ID || GTM_ID
+        ? [{ rel: "preconnect", href: "https://www.googletagmanager.com" }]
+        : []),
     ],
     scripts: [
       // One consistent entity graph on every page: Organization + LocalBusiness + WebSite.
@@ -181,6 +188,13 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        {/* Skip link: first focusable element on every page (axe/WCAG 2.4.1). */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground focus:shadow-glow"
+        >
+          Skip to content
+        </a>
         {children}
         <Scripts />
       </body>
@@ -196,7 +210,7 @@ function RootComponent() {
       <BookingProvider>
         <div className="flex min-h-screen min-w-0 flex-col overflow-x-clip pb-24 sm:pb-28">
           <SiteHeader />
-          <main className="min-w-0 flex-1">
+          <main id="main-content" className="min-w-0 flex-1">
             <Outlet />
           </main>
           <SiteFooter />

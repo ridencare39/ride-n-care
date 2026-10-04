@@ -9,18 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TvsTwoWheelerServiceRouteImport } from './routes/tvs-two-wheeler-service'
 import { Route as TrackBookingRouteImport } from './routes/track-booking'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SampleInvoiceRouteImport } from './routes/sample-invoice'
+import { Route as RoyalEnfieldServiceRouteImport } from './routes/royal-enfield-service'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MapRouteImport } from './routes/map'
+import { Route as KtmServiceRouteImport } from './routes/ktm-service'
+import { Route as HondaTwoWheelerServiceRouteImport } from './routes/honda-two-wheeler-service'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as GuaranteeRouteImport } from './routes/guarantee'
 import { Route as FranchiseRouteImport } from './routes/franchise'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as EvTwoWheelerServiceRouteImport } from './routes/ev-two-wheeler-service'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CarsRouteImport } from './routes/cars'
 import { Route as CarBreakdownAssistanceRouteImport } from './routes/car-breakdown-assistance'
@@ -49,6 +54,11 @@ import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
+const TvsTwoWheelerServiceRoute = TvsTwoWheelerServiceRouteImport.update({
+  id: '/tvs-two-wheeler-service',
+  path: '/tvs-two-wheeler-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrackBookingRoute = TrackBookingRouteImport.update({
   id: '/track-booking',
   path: '/track-booking',
@@ -67,6 +77,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const SampleInvoiceRoute = SampleInvoiceRouteImport.update({
   id: '/sample-invoice',
   path: '/sample-invoice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoyalEnfieldServiceRoute = RoyalEnfieldServiceRouteImport.update({
+  id: '/royal-enfield-service',
+  path: '/royal-enfield-service',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -89,6 +104,16 @@ const MapRoute = MapRouteImport.update({
   path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KtmServiceRoute = KtmServiceRouteImport.update({
+  id: '/ktm-service',
+  path: '/ktm-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HondaTwoWheelerServiceRoute = HondaTwoWheelerServiceRouteImport.update({
+  id: '/honda-two-wheeler-service',
+  path: '/honda-two-wheeler-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuidesRoute = GuidesRouteImport.update({
   id: '/guides',
   path: '/guides',
@@ -107,6 +132,11 @@ const FranchiseRoute = FranchiseRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvTwoWheelerServiceRoute = EvTwoWheelerServiceRouteImport.update({
+  id: '/ev-two-wheeler-service',
+  path: '/ev-two-wheeler-service',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -259,18 +289,23 @@ export interface FileRoutesByFullPath {
   '/car-breakdown-assistance': typeof CarBreakdownAssistanceRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
+  '/ev-two-wheeler-service': typeof EvTwoWheelerServiceRoute
   '/faq': typeof FaqRoute
   '/franchise': typeof FranchiseRoute
   '/guarantee': typeof GuaranteeRoute
   '/guides': typeof GuidesRouteWithChildren
+  '/honda-two-wheeler-service': typeof HondaTwoWheelerServiceRoute
+  '/ktm-service': typeof KtmServiceRoute
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/royal-enfield-service': typeof RoyalEnfieldServiceRoute
   '/sample-invoice': typeof SampleInvoiceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
+  '/tvs-two-wheeler-service': typeof TvsTwoWheelerServiceRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -297,17 +332,22 @@ export interface FileRoutesByTo {
   '/car-breakdown-assistance': typeof CarBreakdownAssistanceRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
+  '/ev-two-wheeler-service': typeof EvTwoWheelerServiceRoute
   '/faq': typeof FaqRoute
   '/franchise': typeof FranchiseRoute
   '/guarantee': typeof GuaranteeRoute
+  '/honda-two-wheeler-service': typeof HondaTwoWheelerServiceRoute
+  '/ktm-service': typeof KtmServiceRoute
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/royal-enfield-service': typeof RoyalEnfieldServiceRoute
   '/sample-invoice': typeof SampleInvoiceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
+  '/tvs-two-wheeler-service': typeof TvsTwoWheelerServiceRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -338,18 +378,23 @@ export interface FileRoutesById {
   '/car-breakdown-assistance': typeof CarBreakdownAssistanceRoute
   '/cars': typeof CarsRoute
   '/contact': typeof ContactRoute
+  '/ev-two-wheeler-service': typeof EvTwoWheelerServiceRoute
   '/faq': typeof FaqRoute
   '/franchise': typeof FranchiseRoute
   '/guarantee': typeof GuaranteeRoute
   '/guides': typeof GuidesRouteWithChildren
+  '/honda-two-wheeler-service': typeof HondaTwoWheelerServiceRoute
+  '/ktm-service': typeof KtmServiceRoute
   '/map': typeof MapRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/royal-enfield-service': typeof RoyalEnfieldServiceRoute
   '/sample-invoice': typeof SampleInvoiceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/track-booking': typeof TrackBookingRoute
+  '/tvs-two-wheeler-service': typeof TvsTwoWheelerServiceRoute
   '/$service/$area': typeof ServiceAreaRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -380,18 +425,23 @@ export interface FileRouteTypes {
     | '/car-breakdown-assistance'
     | '/cars'
     | '/contact'
+    | '/ev-two-wheeler-service'
     | '/faq'
     | '/franchise'
     | '/guarantee'
     | '/guides'
+    | '/honda-two-wheeler-service'
+    | '/ktm-service'
     | '/map'
     | '/mcp'
     | '/pricing'
     | '/privacy'
+    | '/royal-enfield-service'
     | '/sample-invoice'
     | '/sitemap.xml'
     | '/terms'
     | '/track-booking'
+    | '/tvs-two-wheeler-service'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -418,17 +468,22 @@ export interface FileRouteTypes {
     | '/car-breakdown-assistance'
     | '/cars'
     | '/contact'
+    | '/ev-two-wheeler-service'
     | '/faq'
     | '/franchise'
     | '/guarantee'
+    | '/honda-two-wheeler-service'
+    | '/ktm-service'
     | '/map'
     | '/mcp'
     | '/pricing'
     | '/privacy'
+    | '/royal-enfield-service'
     | '/sample-invoice'
     | '/sitemap.xml'
     | '/terms'
     | '/track-booking'
+    | '/tvs-two-wheeler-service'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -458,18 +513,23 @@ export interface FileRouteTypes {
     | '/car-breakdown-assistance'
     | '/cars'
     | '/contact'
+    | '/ev-two-wheeler-service'
     | '/faq'
     | '/franchise'
     | '/guarantee'
     | '/guides'
+    | '/honda-two-wheeler-service'
+    | '/ktm-service'
     | '/map'
     | '/mcp'
     | '/pricing'
     | '/privacy'
+    | '/royal-enfield-service'
     | '/sample-invoice'
     | '/sitemap.xml'
     | '/terms'
     | '/track-booking'
+    | '/tvs-two-wheeler-service'
     | '/$service/$area'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -500,18 +560,23 @@ export interface RootRouteChildren {
   CarBreakdownAssistanceRoute: typeof CarBreakdownAssistanceRoute
   CarsRoute: typeof CarsRoute
   ContactRoute: typeof ContactRoute
+  EvTwoWheelerServiceRoute: typeof EvTwoWheelerServiceRoute
   FaqRoute: typeof FaqRoute
   FranchiseRoute: typeof FranchiseRoute
   GuaranteeRoute: typeof GuaranteeRoute
   GuidesRoute: typeof GuidesRouteWithChildren
+  HondaTwoWheelerServiceRoute: typeof HondaTwoWheelerServiceRoute
+  KtmServiceRoute: typeof KtmServiceRoute
   MapRoute: typeof MapRoute
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
+  RoyalEnfieldServiceRoute: typeof RoyalEnfieldServiceRoute
   SampleInvoiceRoute: typeof SampleInvoiceRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   TrackBookingRoute: typeof TrackBookingRoute
+  TvsTwoWheelerServiceRoute: typeof TvsTwoWheelerServiceRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AreasSlugRoute: typeof AreasSlugRoute
@@ -523,6 +588,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tvs-two-wheeler-service': {
+      id: '/tvs-two-wheeler-service'
+      path: '/tvs-two-wheeler-service'
+      fullPath: '/tvs-two-wheeler-service'
+      preLoaderRoute: typeof TvsTwoWheelerServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/track-booking': {
       id: '/track-booking'
       path: '/track-booking'
@@ -549,6 +621,13 @@ declare module '@tanstack/react-router' {
       path: '/sample-invoice'
       fullPath: '/sample-invoice'
       preLoaderRoute: typeof SampleInvoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/royal-enfield-service': {
+      id: '/royal-enfield-service'
+      path: '/royal-enfield-service'
+      fullPath: '/royal-enfield-service'
+      preLoaderRoute: typeof RoyalEnfieldServiceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -579,6 +658,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ktm-service': {
+      id: '/ktm-service'
+      path: '/ktm-service'
+      fullPath: '/ktm-service'
+      preLoaderRoute: typeof KtmServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/honda-two-wheeler-service': {
+      id: '/honda-two-wheeler-service'
+      path: '/honda-two-wheeler-service'
+      fullPath: '/honda-two-wheeler-service'
+      preLoaderRoute: typeof HondaTwoWheelerServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guides': {
       id: '/guides'
       path: '/guides'
@@ -605,6 +698,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ev-two-wheeler-service': {
+      id: '/ev-two-wheeler-service'
+      path: '/ev-two-wheeler-service'
+      fullPath: '/ev-two-wheeler-service'
+      preLoaderRoute: typeof EvTwoWheelerServiceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -865,18 +965,23 @@ const rootRouteChildren: RootRouteChildren = {
   CarBreakdownAssistanceRoute: CarBreakdownAssistanceRoute,
   CarsRoute: CarsRoute,
   ContactRoute: ContactRoute,
+  EvTwoWheelerServiceRoute: EvTwoWheelerServiceRoute,
   FaqRoute: FaqRoute,
   FranchiseRoute: FranchiseRoute,
   GuaranteeRoute: GuaranteeRoute,
   GuidesRoute: GuidesRouteWithChildren,
+  HondaTwoWheelerServiceRoute: HondaTwoWheelerServiceRoute,
+  KtmServiceRoute: KtmServiceRoute,
   MapRoute: MapRoute,
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
+  RoyalEnfieldServiceRoute: RoyalEnfieldServiceRoute,
   SampleInvoiceRoute: SampleInvoiceRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   TrackBookingRoute: TrackBookingRoute,
+  TvsTwoWheelerServiceRoute: TvsTwoWheelerServiceRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,

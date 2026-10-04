@@ -1,9 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getArea, AREAS, areaRobots, isConfirmedArea, type Area } from "@/lib/areas";
 import { getAreaContent } from "@/lib/area-content";
-import { LOCAL_SERVICES, type ServiceDef } from "@/lib/services";
-import { answersForArea } from "@/lib/answer-pages";
-import { CAR_SERVICES } from "@/lib/car-services";
+import { LOCAL_SERVICE_SUMMARY, type ServiceSummary } from "@/lib/service-summary";
+import { CAR_SERVICE_SUMMARY } from "@/lib/service-summary";
+import { answersForArea } from "@/lib/answer-page-summary";
 import { formatDate, pageHead, seoTitle, pageScripts } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, nearbyAreasNode, faqNode } from "@/lib/schema";
 import { BookingButton } from "@/components/booking/BookingButton";
@@ -24,12 +24,12 @@ export const Route = createFileRoute("/areas/$slug")({
     const nearbyAreas = AREAS.filter((x) => a.nearby?.includes(x.name)).slice(0, 5);
     const faqs = content?.faqs ?? genericFaqs(a);
     const summary = confirmed
-      ? `Doorstep bike & car service in ${a.name}${a.pincode ? ` ${a.pincode}` : ""} — a background-verified mechanic comes to your home or office parking with a written quote before work starts, OEM-grade parts and a 7-day workmanship guarantee.`
-      : `Ride N Care serves 40 confirmed localities across east, south, north, west and central Bangalore. Availability in ${a.name} is confirmed on 080 6940 9289 or WhatsApp 82969 50339 before you book — written quote, OEM-grade parts, 7-day workmanship guarantee.`;
+      ? `Doorstep bike & car service in ${a.name}${a.pincode ? ` ${a.pincode}` : ""} — a background-verified mechanic comes to your home or office parking with a written quote before work starts, OEM-grade parts and a 45-day service warranty.`
+      : `Ride N Care serves 40 confirmed localities across east, south, north, west and central Bangalore. Availability in ${a.name} is confirmed on 080 6940 9289 or WhatsApp 82969 50339 before you book — written quote, OEM-grade parts, 45-day service warranty.`;
     const title = seoTitle("Bike & Car Service", a.name);
     const desc = confirmed
-      ? `Bike & car service at your gate in ${a.name}, ${a.zone} Bangalore. Periodic service, repairs, AC, battery & brakes. Written quote first, 7-day guarantee. Call 080 6940 9289.`
-      : `Checking doorstep bike & car service availability in ${a.name}, Bangalore? Confirm your locality on 080 6940 9289 — written quote before work starts, 7-day workmanship guarantee.`;
+      ? `Bike & car service at your gate in ${a.name}, ${a.zone} Bangalore. Periodic service, repairs, AC, battery & brakes. Written quote first, 45-day warranty. Call 080 6940 9289.`
+      : `Checking doorstep bike & car service availability in ${a.name}, Bangalore? Confirm your locality on 080 6940 9289 — written quote before work starts, 45-day service warranty.`;
 
     return {
       ...pageHead({
@@ -80,7 +80,7 @@ function genericFaqs(a: Area): [string, string][] {
     ["How do I book bike or car service in " + a.name + "?", "Call 080 6940 9289 or WhatsApp 82969 50339 with your vehicle model and the service you need. You get a written quote on WhatsApp before any work starts."],
     ["Is doorstep service available in my part of " + a.name + "?", "Share your street or a nearby landmark when you book and we confirm availability and your arrival window when you book."],
     ["What work can be done at the doorstep?", "Periodic service, brake work, battery replacement and clutch or chain work for bikes; periodic service, AC service, battery replacement and brake work for cars. Jobs that need a workshop are arranged with pickup and a written estimate."],
-    ["What guarantee do I get?", "A 7-day workmanship guarantee on the job, plus the manufacturer warranty on parts fitted."],
+    ["What warranty do I get?", "A 45-day service warranty on the job, plus the manufacturer warranty on parts fitted."],
   ];
 }
 
@@ -121,7 +121,7 @@ function AreaPage() {
       {/* Answer-first summary */}
       <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
         {content?.intro ??
-          `Ride N Care brings bike and car service to ${a.name} at your doorstep — a background-verified mechanic works at your parking bay with OEM-grade parts, a written quote before work starts and a 7-day workmanship guarantee. Share your street when you book and we confirm your arrival window.`}
+          `Ride N Care brings bike and car service to ${a.name} at your doorstep — a background-verified mechanic works at your parking bay with OEM-grade parts, a written quote before work starts and a 45-day service warranty. Share your street when you book and we confirm your arrival window.`}
       </p>
 
       {/* Above-the-fold CTAs */}
@@ -137,7 +137,7 @@ function AreaPage() {
         <div className="rounded-2xl border border-border bg-card p-5">
           <h3 className="font-semibold">Bike services</h3>
           <ul className="mt-3 space-y-2 text-sm">
-            {LOCAL_SERVICES.map((s: ServiceDef) => (
+            {LOCAL_SERVICE_SUMMARY.map((s: ServiceSummary) => (
               <li key={s.slug}>
                 <Link to="/$service/$area" params={{ service: s.slug, area: a.slug }} className="text-primary hover:underline">
                   {s.name} in {a.name}
@@ -149,7 +149,7 @@ function AreaPage() {
         <div className="rounded-2xl border border-border bg-card p-5">
           <h3 className="font-semibold">Car services</h3>
           <ul className="mt-3 space-y-2 text-sm">
-            {CAR_SERVICES.map((s) => (
+            {CAR_SERVICE_SUMMARY.map((s) => (
               <li key={s.slug}>
                 <Link to="/$service" params={{ service: s.slug }} className="text-primary hover:underline">
                   {s.name} in Bangalore
@@ -164,7 +164,7 @@ function AreaPage() {
       <h2 className="mt-12 text-2xl font-bold">How doorstep service works in {a.name}</h2>
       {(content?.how ?? [
         `Book on WhatsApp or by phone with your vehicle model, the service and your ${a.name} street or landmark. You receive a written quote before any work starts, and the mechanic is assigned from the unit nearest to you with the arrival window confirmed when you book.`,
-        `The job happens at your parking bay — one bay, tools and consumables carried in. You inspect the work before you pay, the invoice arrives on WhatsApp, and the workmanship is guaranteed for 7 days. Jobs that need a workshop are arranged with pickup and a written estimate.`,
+        `The job happens at your parking bay — one bay, tools and consumables carried in. You inspect the work before you pay, the invoice arrives on WhatsApp, and the work is covered by the 45-day service warranty. Jobs that need a workshop are arranged with pickup and a written estimate.`,
       ]).map((p, i) => (
         <p key={i} className="mt-3 text-muted-foreground leading-relaxed">{p}</p>
       ))}

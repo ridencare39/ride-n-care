@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bike, CarFront, TriangleAlert, MapPin, Lightbulb, Wrench, ArrowRight } from "lucide-react";
-import { DISPATCH_STEPS } from "@/lib/services";
+import { DISPATCH_STEPS } from "@/lib/dispatch-steps";
 import { formatDate, pageHead } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { BookingButton } from "@/components/booking/BookingButton";
@@ -36,7 +36,7 @@ const FAQS: [string, string][] = [
   ],
   [
     "Is breakdown assistance available on holidays?",
-    "Breakdown assistance is available 24 hours, holidays included, for bikes and cars. Call any hour; availability for your vehicle is confirmed on the call.",
+    "Breakdown assistance runs 7:00 AM to 11:30 PM, every day including holidays, for bikes and cars. Call within those hours — availability for your vehicle is confirmed on the call.",
   ],
   [
     "Which areas do you cover?",
@@ -129,7 +129,7 @@ function BreakdownHub() {
             <h3 className="mt-3 text-lg font-bold">Bike or Scooter Breakdown</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
               Roadside diagnosis, jump-start, puncture and cable fixes, and recovery to the workshop when the bike cannot be
-              made rideable. Doorstep visits available 24 hours.
+              made rideable. Open 7:00 AM to 11:30 PM, every day.
             </p>
             <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-300">
               Bike breakdown assistance <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -151,7 +151,7 @@ function BreakdownHub() {
           </Link>
         </div>
         <div className="mt-5">
-          <BookingButton className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">
+          <BookingButton className="btn-book rounded-full px-6 py-3 font-semibold">
             Book Now
           </BookingButton>
         </div>
@@ -218,7 +218,7 @@ function BreakdownHub() {
             <h3 className="font-semibold text-neon">Needs the workshop</h3>
             <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
               <li>Major roadside repairs — the bike is recovered to the workshop instead</li>
-              <li>Doorstep visits available 24 hours — book any hour, window confirmed on the call</li>
+              <li>Open 7:00 AM to 11:30 PM, every day — book within operating hours, window confirmed on the call</li>
               <li>Accident recovery — call first so the vehicle is secured and moved safely</li>
             </ul>
             <p className="mt-3 text-xs text-muted-foreground">
@@ -296,7 +296,7 @@ function BreakdownHub() {
       {/* CTA band */}
       <div className="mt-8 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Broken down right now?</h2>
-        <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 7-day guarantee.</p>
+        <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 45-day warranty.</p>
         <div className="mt-4 flex flex-wrap justify-center gap-3">
           <a
             href="tel:+918069409289"

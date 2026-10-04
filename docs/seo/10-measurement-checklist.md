@@ -3,7 +3,7 @@
 ## 1. Google Search Console
 
 - The domain property is verified via **DNS TXT** (already done — the TXT record exists) and the meta-tag fallback is on the site.
-- **Submit the sitemap:** GSC → Sitemaps → enter `https://ridencare.co.in/sitemap.xml` → Submit. Re-submit after every major content part (current: 211 URLs).
+- **Submit the sitemap:** GSC → Sitemaps → enter `https://ridencare.co.in/sitemap.xml` → Submit. Re-submit after every major content part (current: **225 URLs** — homepage included, /map excluded as noindex).
 - Watch **Coverage** for the noindex pages (`/guarantee`, `/sample-invoice`) appearing as "Excluded by noindex" — that is correct, not an error.
 - **[OWNER TO CONFIRM]** owner login/access to the GSC property (listed in OWNER-ACTIONS group e).
 
@@ -18,6 +18,19 @@
 
 - **Measurement ID `G-EQ8P35TH54` is already live** in the site header (`VITE_GA_MEASUREMENT_ID` env var → gtag script on every page). It is **not** pending — but the property owner should confirm they can log into this GA4 property (see OWNER-ACTIONS group e).
 - Ahrefs Web Analytics: **[OWNER TO CONFIRM]** whether installed — no Ahrefs script was found in the site HTML during the Task 1 live fetch. If wanted, it is a one-script add via `__root.tsx`.
+
+## 3b. Real Google reviews — Trustindex (recommended free path)
+
+The site's "What Our Customers Say" Google-reviews section is **built and wired** (`src/components/GoogleReviews.tsx`) but renders nothing until connected — by design, it never shows fake data. Two connection modes exist: official Places API (needs Google billing) or the free-forever Trustindex widget (preferred).
+
+**OWNER ACTION REQUIRED: Create/connect Trustindex, obtain the widget ID, and add it to the Freebuff environment.**
+
+1. Create a free account at trustindex.io (free-forever plan, no card).
+2. Connect the Ride N Care Google Business Profile (GBP must be claimed/verified first).
+3. Create a widget (Google reviews source) and copy the widget ID from the embed code.
+4. Send the widget ID to Freebuff — it is set as `VITE_TRUSTINDEX_WIDGET_ID` in the Freebuff environment (the variable the component already reads; the ID is public embed data, safe client-side).
+
+Do NOT send any Google API secret — the Trustindex path needs only the widget ID. AggregateRating/review schema stays banned until real review data exists (audit rule).
 
 ## 4. Key events (conversions) in GA4
 

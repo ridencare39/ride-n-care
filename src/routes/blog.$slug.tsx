@@ -6,7 +6,36 @@ import { pageHead, formatDate } from "@/lib/head";
 import { graphForPage, articleNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 import { faqsForPostCategory } from "@/lib/service-faqs";
 import { AREAS } from "@/lib/areas";
+import { ANSWER_PAGE_SUMMARY } from "@/lib/answer-page-summary";
 import { BookingButton } from "@/components/booking/BookingButton";
+
+/**
+ * Contextual answer links for a blog post (answers internal-linking task,
+ * 2026-09-30). Keyword-overlap matching against the post's own title/excerpt/
+ * body — only genuinely related questions surface, max 4, distinct anchors,
+ * existing answer pages only. Nothing is added when nothing matches.
+ */
+function relatedAnswersForPost(slug: string, category: string, text: string): { slug: string; question: string }[] {
+  const words = text
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 4);
+  const scored = ANSWER_PAGE_SUMMARY.filter((ap) => ap.slug !== slug).map((ap) => {
+    const hay = `${ap.question} ${ap.meta} ${ap.category}`.toLowerCase();
+    let score = 0;
+    for (const w of new Set(words)) if (hay.includes(w)) score += 1;
+    const categoryMatch =
+      (category === "Car Care" && /car|brake|battery|ac |engine/.test(hay)) ||
+      (category === "Bike Care" && /bike|scooter|two-wheeler/.test(hay));
+    return { ap, score: score + (categoryMatch ? 1.5 : 0) };
+  });
+  return scored
+    .filter((s) => s.score >= 2)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4)
+    .map((s) => ({ slug: s.ap.slug, question: s.ap.question }));
+}
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
@@ -89,6 +118,24 @@ function Post() {
         {post.body.map((para, i) => <p key={i}>{para}</p>)}
       </div>
 
+      {relatedAnswersForPost(post.slug, post.category, `${post.title} ${post.excerpt} ${post.body.join(" ")}`).length > 0 && (
+        <section className="mt-12 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-xl font-bold">Common questions readers ask next</h2>
+          <ul className="mt-3 space-y-1.5">
+            {relatedAnswersForPost(post.slug, post.category, `${post.title} ${post.excerpt} ${post.body.join(" ")}`).map((ap) => (
+              <li key={ap.slug}>
+                <Link to="/answers/$slug" params={{ slug: ap.slug }} className="text-primary hover:underline">
+                  {ap.question}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link to="/answers" className="mt-3 inline-block text-sm text-muted-foreground hover:text-primary">
+            All answers →
+          </Link>
+        </section>
+      )}
+
       <section className="mt-16">
         <h2 className="text-2xl font-bold">Related services</h2>
         <p className="mt-2 text-muted-foreground">
@@ -146,7 +193,7 @@ function Post() {
       <div className="mt-16 rounded-2xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Need a service done?</h2>
         <p className="mt-2 text-primary-foreground/90">Book a doorstep visit in 60 seconds.</p>
-        <BookingButton className="mt-4 rounded-full bg-background px-6 py-3 font-semibold text-foreground hover:bg-background/90">Book Now</BookingButton>
+        <BookingButton className="btn-book mt-4 rounded-full px-6 py-3 font-semibold">Book Now</BookingButton>
       </div>
 
       {related.length > 0 && (

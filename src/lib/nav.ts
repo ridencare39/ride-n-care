@@ -33,8 +33,9 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import { SERVICES } from "@/lib/services";
-import { CAR_SERVICES } from "@/lib/car-services";
+// Slim summaries only — the full service content must stay out of the global
+// chrome bundle (see scripts/gen-data-summaries.mjs).
+import { CAR_SERVICE_SUMMARY, SERVICE_SUMMARY } from "@/lib/service-summary";
 
 export interface NavRow {
   to: string;
@@ -61,6 +62,7 @@ const BIKE_ORDER = [
   "bike-service",
   "doorstep-bike-service",
   "bike-repair",
+  "doorstep-bike-repair",
   "scooter-service",
   "engine-repair",
   "battery-service",
@@ -72,6 +74,7 @@ const BIKE_ICONS: Record<string, LucideIcon> = {
   "bike-service": Wrench,
   "doorstep-bike-service": DoorOpen,
   "bike-repair": Disc3,
+  "doorstep-bike-repair": Hammer,
   "scooter-service": Gauge,
   "engine-repair": Zap,
   "battery-service": BatteryCharging,
@@ -103,17 +106,17 @@ const CAR_ICONS: Record<string, LucideIcon> = {
   "car-electrical-repair": Lightbulb,
 };
 
-export const MENU_BIKE_ROWS: NavRow[] = BIKE_ORDER.filter((s) => SERVICES.some((x) => x.slug === s)).map((slug) => ({
+export const MENU_BIKE_ROWS: NavRow[] = BIKE_ORDER.filter((s) => SERVICE_SUMMARY.some((x) => x.slug === s)).map((slug) => ({
   to: "/$service",
   params: { service: slug },
-  label: SERVICES.find((x) => x.slug === slug)!.name,
+  label: SERVICE_SUMMARY.find((x) => x.slug === slug)!.name,
   icon: BIKE_ICONS[slug] ?? Wrench,
 }));
 
-export const MENU_CAR_ROWS: NavRow[] = CAR_ORDER.filter((s) => CAR_SERVICES.some((x) => x.slug === s)).map((slug) => ({
+export const MENU_CAR_ROWS: NavRow[] = CAR_ORDER.filter((s) => CAR_SERVICE_SUMMARY.some((x) => x.slug === s)).map((slug) => ({
   to: "/$service",
   params: { service: slug },
-  label: CAR_SERVICES.find((x) => x.slug === slug)!.name,
+  label: CAR_SERVICE_SUMMARY.find((x) => x.slug === slug)!.name,
   icon: CAR_ICONS[slug] ?? Wrench,
 }));
 

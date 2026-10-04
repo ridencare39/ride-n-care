@@ -203,3 +203,86 @@ Q1–Q13 in OWNER-QUESTIONS.md; most urgent: claim proofs (Q1–Q7) before Part 
 | GBP pack: hours section → option A (Open 24 hours, recommended only if truly dispatchable) vs B (answered hours + 24-hour line in description) | PASS |
 | Validator LIVE: 53 checks / 98 blocks / 0 errors / 0 warnings; tsc + fresh build + deploy | PASS |
 - **GBP hours decision (owner): Option A — "Open 24 hours"** recorded in docs/seo/10-gbp-pack.md (2026-09-21). Matches site copy + schema openingHoursSpecification; standing caveat to switch to option B the same day if night dispatch ever stops being true.
+
+## Batch 3 (car×area gate, brand routes, EV page, answers, blog, docs) — 2026-09-27
+
+**Wave-1 car×area gate (Parts 2–3):** canonical top-5 scorer areas = electronic-city, indiranagar, koramangala, bellandur, btm-layout. Published pairs = 4 core car services (periodic, AC, battery, brakes) × 5 areas = **20 pages**; 4 shortlisted pairs deferred to wave 2 (periodic×hsr, ac×jayanagar, battery×jp-nagar, brakes×marathahalli). Registry `src/lib/car-area-content.ts` (20 unique pair entries: areaAnswer/areaNotes/prepare/3 pair-specific FAQs); `scripts/score-car-area.py` (plan + live modes: ≥700 words, ≥3 h3 FAQs, 1 H1, noindex flag, 4-gram Jaccard <60%, local-context ratio); gate doc `docs/seo/car-area-wave-1.md`. `src/routes/$service.$area.tsx` car branch: gated by isCarAreaPublished(), entry.areaAnswer hero, prepare list, pair FAQs, WhatsApp-primary CTAs (no BookingButton — cars have no booking mapping), ctcProps wired, serviceNode description uses areaAnswer, "More services in area" includes published car pairs, car nearby links filtered to published pairs. Unpublished car×area = 404 (honest capacity), bike pairs untouched.
+
+**Brand pages (Part 4):** `src/lib/brand-services.ts` + shared `src/components/BrandServiceView.tsx` + 4 flat routes: /royal-enfield-service, /ktm-service, /honda-two-wheeler-service, /tvs-two-wheeler-service (Week 10 targets). Each: unique copy, verified model tables (vehicle-catalog), PRICE_MATRIX price tiers, independence-disclaimer FAQ (no authorised/OEM-centre claims), warranty honesty, relatedBrands cross-links, BookingButton bike + ctcProps CTAs, Service+Breadcrumb+FAQPage graph, reviewed 2026-09-27. /bikes gained a brand-page link strip; homepage EV card repointed.
+
+**EV page (Part 5):** /ev-two-wheeler-service (Week 9) — confirmed capabilities only (ELECTRIC_BIKE_PACKAGES: ₹999 general / ₹450 running repair / ₹399 jump start). Battery/BMS/motor faults explicitly routed to the manufacturer network; no battery repair, BMS, high-voltage or EV brand-coverage claims (Q4 gating respected). EV FAQ set + Service/Breadcrumb/FAQPage graph; linked from /bikes EV section and homepage card.
+
+**Answer pages (Part 6):** +4 in `src/lib/answer-pages.ts` (top of ANSWER_PAGES, unique vs the 49 existing): car-service-interval, ev-what-can-be-serviced, ktm-duke-200-service-cost, brake-warning-signs-bike (updated 2026-09-27; owner-gated topics still excluded).
+
+**Blog (Part 7):** `supabase/migrations/20260927090000_batch3-blog-posts.sql` — 2 calendar posts (how-often-to-service-a-car W9, brake-noise-causes W12), seed mechanism = the 20260824173432 INSERT pattern, ON CONFLICT (slug) DO NOTHING. **NOT APPLIED**: no SUPABASE_SERVICE_ROLE_KEY in the sandbox; RLS blocks anon INSERT (42501, verified in Batch 2) and adminSavePost needs an admin session. Owner action: apply via Supabase SQL editor / CLI. Sitemap blog listing is DB-driven, so the posts appear only after the migration is applied.
+
+**Docs (Parts 8–9):** `docs/seo/gsc-query-review.md` (weekly owner workflow, 25 target queries, promote/demote rules, Batch 3 watch table — no data invented) and `docs/seo/ai-visibility-baseline.md` (run-protocol recording template, all result fields blank until real runs).
+
+**Plumbing (Part 10):** llms.txt + EV/brand pages, +4 answers, car×area wave paragraph, blog link; sitemap: +20 car×area, +4 brand, +1 EV (all single-segment except car×area two-segment entries; staticOnly/service-area filters untouched), LASTMOD answers/carAreas/brands/ev = 2026-09-27; validate-schema.py PAGES +12 URLs (4 answers, EV, 4 brands, 4 car×area samples).
+
+**Internal linking (Part 11):** homepage EV card → /ev-two-wheeler-service; /bikes EV section link + brand-page strip; brand pages cross-link relatedBrands + /bikes; EV page links scooter-service/bike-service/EV answers.
+
+**Validation + deploy + live verification (final report, 2026-09-27, Worker version `9b6d7b9c-25a6-41d3-88a7-c28c33fbbd49`):**
+
+| Gate | Result |
+|---|---|
+| `bun tsc -b --noEmit` | PASS |
+| Production build (`vite build` + make-dist) | PASS — NOTE: `--max-old-space-size=1200` OOM-killed (exit 137) with the managed preview dev server running (~476 MB RSS on this 2 GB box); `1024` passed. Long detached runs (`setsid nohup …`) are required — harness sync commands get deadline-killed at ~2–3 min and previously killed child builds with them |
+| `scripts/validate-schema.py` dev | 66 pages / 125 blocks / 0 errors / 0 warnings |
+| `scripts/validate-schema.py` **live** | 66 pages / 125 blocks / 0 errors / 0 warnings (matches dev exactly) |
+| `scripts/score-car-area.py live` | all 20 car×area PASS: 922–1019 words, 4 h3-questions, 1 H1, indexable, same-service 4-gram overlap max 48% (< 60%) |
+| `scripts/check-area-uniqueness.py` | PASS (0 flagged pairs among indexable pages) |
+| Sitemap live (cache-busted) | 254 URLs (= 225 baseline + 20 car×area + 4 brands + 1 EV + 4 answers), homepage `<loc>` present, `/map` absent, 0 duplicates, all 20+4+1 new URLs confirmed in the XML |
+| 13 new URLs live raw-HTML | all 200 with exactly 1 H1 + 1 canonical; unpublished `/car-periodic-service/hsr-layout` correctly 404s (gate honesty) |
+| Batch 1 regressions re-checked | homepage H1 extraction = `"Trusted Bike & Car Service Doorstep Bike Car Repair in Bangalore"` (spaced, single H1); `/map` = `noindex, follow` + 0 Service JSON-LD blocks |
+| llms.txt live | EV + 4 brand links (7 hits) + 2 new answer links present |
+| purge-cache | 401 unchanged (token lacks Zone.Cache Purge scope, Q10); s-maxage=60 bounded the staleness — cache-busted fetches returned the new build immediately |
+
+**Known limits:** blog migration unapplied (owner); Trustindex widget ID still pending; Cloudflare purge-cache 401 unchanged; AI-visibility + GSC data are owner-only runs (docs ship with blank fields by design).
+
+## Batch 4 (authority, local trust, evidence pipeline, AEO consolidation, wave-2 car×area, internal links) — 2026-09-27
+
+**Wave-2 car×area gate:** all 4 Batch-3 shortlisted pairs re-scored 9.5/10 (`score-car-area.py` plan mode; intent, uniqueness, cannibalization, internal-link value and commercial meaning checked per pair) and published with fully unique entries appended to `src/lib/car-area-content.ts`: car-periodic-service/hsr-layout (1024w), car-ac-service/jayanagar (987w), car-battery-service/jp-nagar (966w), car-brake-service/marathahalli (951w). Landmarks strictly from owner-confirmed `src/lib/areas.ts` (no invented landmarks/stories/prices). Gate doc `docs/seo/car-area-wave-1.md` gained the "Wave 2 (Batch 4, 2026-09-27)" section (re-score table, per-pair uniqueness narrative); **24 published pairs total, remaining 84 combos stay behind the gate** (no mass creation).
+
+**AEO consolidation (cannibalization fix):** `/answers/how-often-car-service` (duplicated `/answers/car-service-interval` intent) removed from `src/lib/answer-pages.ts` (0 refs remain); new `CANONICAL_PATHS` map + `canonicalPathRedirect()` in `src/server.ts` chained after the canonical-host redirect serves `301` → `/answers/car-service-interval`. `car-service-interval` enriched instead of replaced: severe-use conditions in the answer, calendar-vs-odometer detail paragraph, new FAQ "Does a periodic service reset the service clock?", related links updated (what-included-car-service / car-service-cost-bangalore / how-to-prepare-car-doorstep). llms.txt already clean.
+
+**Internal links:** `src/lib/brand-services.ts` gained a `relatedAnswers` field (slugs validated against the answer bank — fixed one invalid slug before shipping) and `BrandServiceView.tsx` renders a "Useful answers for {brand} owners" block on all 4 brand pages (RE: bike-service-cost-bangalore / brake-warning-signs-bike / which-oil-for-bike / monsoon-bike-care; KTM: ktm-duke-200-service-cost / brake-warning-signs-bike / how-long-bike-service / bike-wont-start; Honda + TVS: service-interval / which-oil-for-bike / monsoon-bike-care / brake-warning-signs-bike); `/ev-two-wheeler-service` Related answers + ev-what-can-be-serviced.
+
+**Evidence + trust docs:** NEW `docs/seo/11-evidence-pipeline.md` (real-asset intake checklist: asset types, verification, where allowed, banned uses, consent/redaction, "no asset no section"); `citations-tracker.md` Batch 4 NAP code-level re-verification (call/WA/email/site consistent; **all external listings remain NOT VERIFIED — OWNER ACTION REQUIRED**); `gsc-query-review.md` Batch 4 section (**GSC API NOT CONNECTED** — env-verified; optimization backlog with 3 DONE rows + wave-2 watch table + owner-evidence rows); `ai-visibility-baseline.md` 10-prompt priority addendum + changelog (still NOT measured); `OWNER-ACTIONS.md` P2 rows added (GSC API key option, evidence assets).
+
+**Validation + deploy + live verification (final report, 2026-09-27, Worker version `eb7327da-af8b-4490-b264-a652eb983010`):**
+
+| Gate | Result |
+|---|---|
+| `bun tsc -b --noEmit` | PASS |
+| Production build | PASS at `--max-old-space-size=1300` after root-causing the Batch 3 OOM: TWO vite dev processes were running (orphan on :8080 + managed preview on :8081). Fix: `freebuff-preview stop`, kill orphan vite/esbuild PIDs, detached build (`setsid nohup`, BUILD_ALL_OK, "✓ built in 22.81s") |
+| `scripts/validate-schema.py` dev | 66 pages / 125 blocks / 0 errors / 0 warnings |
+| `scripts/validate-schema.py` **live** | 66 pages / 125 blocks / 0 errors / 0 warnings (matches dev exactly) |
+| `scripts/score-car-area.py live` | all 24 published car×area PASS; max same-service 4-gram overlap ≈48% (< 60%); wave-2 pages 951–1024 words, 1 H1, indexable |
+| Sitemap live (cache-busted) | **257 URLs** (= 254 + 4 wave-2 car×area − 1 removed duplicate answer), homepage `<loc>` present, `/map` absent, `how-often-car-service` absent, 0 duplicates, all 4 wave-2 URLs present |
+| 301 consolidation live | GET `/answers/how-often-car-service` → `301` → `https://ridencare.co.in/answers/car-service-interval` (200) |
+| 4 wave-2 URLs live raw-HTML | all 200, exactly 1 H1 + 1 canonical each; titles "Car <Service> in <Area>, Bangalore | Ride N Care" |
+| Redirects | www→apex `301` and http→https `301` intact |
+| /map | 200 + `<meta name="robots" content="noindex, follow">` (meta-robots pattern unchanged from prior batches) |
+| Homepage regressions | single H1 (`Trusted Bike & Car Service Doorstep Bike Car Repair in Bangalore`); GA4 G-EQ8P35TH54 ×2; `tel:+918069409289` ×5; `wa.me/918296950339` ×8; 0 WhatsApp-as-tel; call_click ×3; whatsapp_click ×3; security headers intact (HSTS, X-Frame-Options DENY, XCTO nosniff, referrer-policy, s-maxage=60) |
+| Smoke | `/track-booking` 200; unknown route 404; `/ktm-service` answer-links block live (4 links ×2 hits incl. client bundle) |
+| purge-cache | 401 as expected (Q10 — token lacks Cache Purge scope); s-maxage=60 bounded staleness — cache-busted fetches returned the new build immediately |
+
+**Known limits:** blog migration `20260927090000_batch3-blog-posts.sql` still unapplied (owner, RLS-blocked for anon); Trustindex widget ID still pending (GoogleReviews renders nothing unconfigured; no review schema — verified safe); purge-cache 401 unchanged; GSC API not connected (no metrics — nothing simulated); AI-visibility baseline not yet measured by owner; all external citations NOT VERIFIED.
+
+
+## Batch 5 (GSC activation attempt, indexation audit, observation setup, evidence mapping) — 2026-09-27
+
+**No new URLs. No code changes. Docs-only batch — live worker remains `eb7327da-af8b-4490-b264-a652eb983010`** (deploy intentionally skipped: nothing to ship).
+
+**GSC activation attempt (owner says connected):** re-checked every path — `freebuff-env list` (no `GOOGLE_SEARCH_CONSOLE_API_KEY`/`LOVABLE_API_KEY`), `freebuff-deploy env list` (zero production vars), app integration `src/lib/gsc.server.ts` (requires both keys via the Lovable connector gateway), direct API test (**HTTP 401 — GSC does not accept plain API keys, OAuth2 required**), SEO Monitor route (admin-session-gated). **Conclusion: the owner's connection lives in the Lovable platform and does not reach this Freebuff deployment.** No data pulled, nothing simulated. Exact unblock options documented in `gsc-query-review.md` §"Batch 5 activation attempt": add the two env keys to Freebuff production, or paste a manual 28-day Performance export.
+
+**Indexation audit (2026-09-27, live cache-busted):** 27 URLs spot-checked across homepage, hubs, areas, contact, guides/blog, answers, EV, brand, car×area (wave-1 + wave-2 samples) — all **LIVE (200) + INDEXABLE** (1 H1, self-canonical, no accidental noindex, correct sitemap inclusion; `/map` 200 + noindex,follow + excluded). **INDEXED IN GOOGLE: NOT VERIFIED — OWNER ACTION REQUIRED** (needs GSC URL Inspection / Sitemaps submitted-vs-indexed; a 200 is not proof of indexing). Full status wording + page table in new `docs/seo/car-area-performance-review.md`.
+
+**Car×area observation setup:** `car-area-performance-review.md` created — all 24 pages technically verified, GSC cells NOT MEASURED, group = "observation pending"; decision rules locked: no more car×area pages, no deletions, no copy churn without real GSC evidence; next review 2026-10-25 (~4 weeks post-Batch-4).
+
+**Evidence pipeline:** `11-evidence-pipeline.md` gained the concrete asset→website mapping (target 20–25 genuine images across homepage/hubs/brand/about/GBP; filename/alt/size/lazy rules; "only used where it genuinely depicts the service"). Repo check: **0 image assets exist** — owner collection in progress; documentation-only, not a deploy blocker.
+
+**Other owner-action states re-verified:** Trustindex widget ID still unset (component dormant-safe, no review schema); blog migration still unapplied (0 seed slugs on live /blog); purge-cache 401 unchanged (s-maxage=60 bounds staleness); citations verification owner-side (no listing URLs/evidence supplied — nothing claimed); AI-visibility runs owner-side manual (10-prompt set ready, nothing measured).
+
+**Technical health (all live checks re-run, zero regressions):** sitemap **257** (0 dupes, homepage in, /map + removed answer absent); `/answers/how-often-car-service` 301 → car-service-interval (200); www→apex + http→https 301s; security headers + s-maxage=60; homepage 1 H1, GA4 G-EQ8P35TH54 ×2, tel:+918069409289 ×5, wa.me ×8, 0 WhatsApp-as-tel, call_click ×3, whatsapp_click ×3; 404 behavior correct; /track-booking 200; booking/call/WA flows untouched.

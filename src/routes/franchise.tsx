@@ -180,7 +180,7 @@ function FranchisePage() {
   const whatsappCta = useMemo(() => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi Ride N Care, I'd like to know more about the franchise opportunity.")}`, []);
 
   return (
-    <main className="min-w-0">
+    <div className="min-w-0">
       {/* Hero */}
       <section className="bg-hero text-white">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
@@ -371,7 +371,7 @@ function FranchisePage() {
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

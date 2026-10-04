@@ -1,19 +1,22 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getService, type ServiceDef } from "@/lib/services";
-import { getCarService, CAR_SERVICES } from "@/lib/car-services";
+import { getCarService } from "@/lib/car-services";
+import { getServiceSummary, getCarServiceSummary, CAR_SERVICE_SUMMARY, type ServiceSummary } from "@/lib/service-summary";
 import { getArea, AREAS, areaRobots, isConfirmedArea, type Area } from "@/lib/areas";
-import { isCarAreaPublished, getCarAreaEntry } from "@/lib/car-area-content";
+import { isCarAreaPublished, getCarAreaEntry, carAreaLinksForService } from "@/lib/car-area-content";
 import { OG_IMAGE, SITE_URL } from "@/lib/seo";
 import { pageHead, seoTitle } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, faqNode, nearbyAreasNode, pageScripts } from "@/lib/schema";
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
 import { formatPrice, getBikePackagesForCc, getBookingServiceForSlug, getBookingServiceIdForSlug } from "@/lib/pricing";
-import { answersForService } from "@/lib/answer-pages";
+import { answersForService } from "@/lib/answer-page-summary";
 
 export const Route = createFileRoute("/$service/$area")({
   loader: ({ params }) => {
-    const service = getService(params.service) ?? getCarService(params.service);
+    // Loader resolves the slim summary; the lazy component resolves the full
+    // def, keeping detail content out of the shared route chunk.
+    const service = getServiceSummary(params.service) ?? getCarServiceSummary(params.service);
     const area = getArea(params.area);
     if (!service || !area) throw notFound();
     // Bike: template pages only for services flagged local:true.
@@ -27,13 +30,14 @@ export const Route = createFileRoute("/$service/$area")({
   },
   head: ({ params, loaderData }) => {
     if (!loaderData) return { meta: [{ title: "Page not found" }, { name: "robots", content: "noindex" }] };
-    const { service: s, area: a } = loaderData;
+    const { service, area: a } = loaderData;
+    const s = service as ServiceSummary;
     const url = `${SITE_URL}/${s.slug}/${a.slug}`;
     const isCar = isCarService(s.slug);
     const title = seoTitle(s.name, a.name);
     const desc = isCar
-      ? `${s.name} at your doorstep in ${a.name}, Bangalore — written quote before work starts, OEM-grade parts, 7-day workmanship guarantee. Call 080 6940 9289.`
-      : `${s.name} near you in ${a.name}, Bangalore at your doorstep. Background-verified mechanics, OEM parts, written quotes, 7-day guarantee. Call 080 6940 9289.`;
+      ? `${s.name} at your doorstep in ${a.name}, Bangalore — written quote before work starts, OEM-grade parts, 45-day service warranty. Call 080 6940 9289.`
+      : `${s.name} near you in ${a.name}, Bangalore at your doorstep. Background-verified mechanics, OEM parts, written quotes, 45-day warranty. Call 080 6940 9289.`;
     // Car pair pages lead with the written pair-specific answer from the gate registry.
     const entry = isCar ? getCarAreaEntry(s.slug, a.slug) : undefined;
     const nearbyAreas = AREAS.filter((x) => a.nearby?.includes(x.name)).slice(0, 5);
@@ -58,7 +62,7 @@ export const Route = createFileRoute("/$service/$area")({
           ...(nearbyAreas.length > 0 ? [nearbyAreasNode(nearbyAreas)] : []),
           // FAQPage mirrors the visible FAQ section (car: pair-specific entries;
           // bike: the service FAQ set rendered below).
-          faqNode(entry ? entry.faqs : s.faqs),
+          faqNode(entry ? entry.faqs : s.faqs), // summary faqs — mirrors the visible section
         ]),
       ),
     };
@@ -74,15 +78,23 @@ export const Route = createFileRoute("/$service/$area")({
 });
 
 function isCarService(slug: string) {
-  return CAR_SERVICES.some((c) => c.slug === slug);
+  return CAR_SERVICE_SUMMARY.some((c) => c.slug === slug);
 }
 
 function LocalServicePage() {
-  const { service: s, area: a } = Route.useLoaderData() as { service: ServiceDef; area: Area };
+  const { service, area: a } = Route.useLoaderData() as { service: ServiceSummary; area: Area };
+  // Full content def resolved inside the lazy component.
+  const s = (getService(service.slug) ?? getCarService(service.slug)) as ServiceDef;
   const isCar = isCarService(s.slug);
   const entry = isCar ? getCarAreaEntry(s.slug, a.slug) : undefined;
   const sameZone = AREAS.filter((x) => x.zone === a.zone && x.slug !== a.slug).slice(0, 6);
   const nearbyAreas = AREAS.filter((x) => a.nearby?.includes(x.name)).slice(0, 5);
+  // The zone-chip set exactly as rendered below — shared so the sibling-chip
+  // exclusion below can never duplicate a link already shown (cross-link task).
+  // Car pages keep the original published-pair gate; bikes are all local.
+  const zoneChips = sameZone
+    .filter((o) => !nearbyAreas.some((n) => n.slug === o.slug) && (!isCar || isCarAreaPublished(s.slug, o.slug)))
+    .slice(0, 3);
   const relatedAnswers = answersForService(s.slug);
   const bookingService = getBookingServiceForSlug(s.slug);
   const bookingServiceId = getBookingServiceIdForSlug(s.slug);
@@ -144,7 +156,7 @@ function LocalServicePage() {
       <div className="mt-8 grid sm:grid-cols-3 gap-4">
         <Stat v="Written quote" l="Before any work starts" />
         <Stat v="OEM-grade" l="Parts shown before fitting" />
-        <Stat v="7-day" l="Workmanship guarantee" />
+        <Stat v="45-day" l="Service warranty" />
       </div>
 
       {isCar && entry ? (
@@ -249,12 +261,30 @@ function LocalServicePage() {
                 {r.name} in {a.name}
               </Link>
             ))}
-            {CAR_SERVICES.filter((c) => isCarAreaPublished(c.slug, a.slug)).map((c) => (
+            {CAR_SERVICE_SUMMARY.filter((c) => isCarAreaPublished(c.slug, a.slug)).map((c) => (
               <Link key={c.slug} to="/$service/$area" params={{ service: c.slug, area: a.slug }} className="rounded-full border border-border bg-card px-4 py-1.5 text-sm hover:border-primary hover:text-primary">
                 {c.name} in {a.name}
               </Link>
             ))}
           </div>
+          {/* Sibling coverage for the same service (car×area cross-linking task,
+              2026-09-30): registry-driven chips to the other published localities
+              for this service — mirrors the bike-cluster pattern. Areas already
+              linked above (nearby/zone chips) are excluded to avoid duplicates. */}
+          {isCar && carAreaLinksForService(s.slug).filter((sib) => sib.slug !== a.slug).length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-muted-foreground">{s.name} in other localities</h3>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {carAreaLinksForService(s.slug)
+                  .filter((sib) => sib.slug !== a.slug && !nearbyAreas.some((n) => n.slug === sib.slug) && !zoneChips.some((z) => z.slug === sib.slug))
+                  .map((sib) => (
+                    <Link key={`sib-${sib.slug}`} to="/$service/$area" params={{ service: s.slug, area: sib.slug }} className="rounded-full border border-border bg-card px-3 py-1 text-xs hover:border-primary hover:text-primary">
+                      {sib.name}
+                    </Link>
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
         <div>
           <h2 className="text-xl font-bold">{s.name} in nearby areas</h2>
@@ -264,7 +294,7 @@ function LocalServicePage() {
                 📍 {o.name}
               </Link>
             ))}
-            {sameZone.filter((o) => !nearbyAreas.some((n) => n.slug === o.slug) && (!isCar || isCarAreaPublished(s.slug, o.slug))).slice(0, 3).map((o) => (
+            {zoneChips.map((o) => (
               <Link key={`zone-${o.slug}`} to="/$service/$area" params={{ service: s.slug, area: o.slug }} className="rounded-full border border-border bg-card px-4 py-1.5 text-sm hover:border-primary hover:text-primary">
                 {o.name}
               </Link>

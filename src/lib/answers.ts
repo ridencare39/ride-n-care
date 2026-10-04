@@ -32,7 +32,7 @@ export const ENTITY_TOPICS = [
 
 /** One-sentence entity definition. Reused verbatim so AI systems see one answer. */
 export const ENTITY_SUMMARY =
-  "Ride N Care is a doorstep bike and car service company in Bangalore, Karnataka, India. Background-verified mechanics travel to the customer's home or office to service and repair motorcycles, scooters, electric two-wheelers and cars using OEM-grade parts, quoting the price in writing before work starts and backing the job with a 7-day workmanship guarantee.";
+  "Ride N Care is a doorstep bike and car service company in Bangalore, Karnataka, India. Background-verified mechanics travel to the customer's home or office to service and repair motorcycles, scooters, electric two-wheelers and cars using OEM-grade parts, quoting the price in writing before work starts and backing the job with a 45-day service warranty.";
 
 export interface AnswerBlock {
   id: string;
@@ -101,7 +101,7 @@ export const ANSWERS: AnswerBlock[] = [
     q: "How quickly can a mechanic visit?",
     a: "Slot availability varies by day and locality. Call 080 6940 9289 or WhatsApp 82969 50339 with your pincode and we confirm the earliest open slot for your area before you commit.",
     detail:
-      "Breakdown assistance is available 24 hours — doorstep visits can be booked at any hour; the arrival window is confirmed on the call.",
+      "Breakdown assistance runs 7:00 AM to 11:30 PM, every day — doorstep visits are booked within those hours; the arrival window is confirmed on the call and actual availability may vary.",
   },
   {
     id: "repair-types",
@@ -130,7 +130,7 @@ export const ANSWERS: AnswerBlock[] = [
   {
     id: "best-bike-service",
     q: "What makes a good bike service in Bangalore?",
-    a: "Judge a bike service on four verifiable things: a written quote before work starts, OEM-grade parts with an invoice, a mechanic who explains what was replaced, and a workmanship guarantee. Ride N Care provides all four, including a 7-day workmanship guarantee on the work performed.",
+    a: "Judge a bike service on four verifiable things: a written quote before work starts, OEM-grade parts with an invoice, a mechanic who explains what was replaced, and a workmanship guarantee. Ride N Care provides all four, including a 45-day service warranty on the work performed.",
     detail:
       "We do not publish ratings or awards we cannot evidence. Ask for the parts invoice and the inspection report — any honest provider, including us, should hand both over.",
   },

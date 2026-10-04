@@ -1,19 +1,28 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageHead, pageScripts, formatDate } from "@/lib/head";
-import { graphForPage, webPageNode, breadcrumbNode } from "@/lib/schema";
-import { ShieldCheck, Phone, MessageCircle, FileText, BadgeCheck, Wrench } from "lucide-react";
+import { graphForPage, webPageNode, breadcrumbNode, faqNode } from "@/lib/schema";
+import { ShieldCheck, Phone, MessageCircle, BadgeCheck } from "lucide-react";
 import { FloatingActions } from "@/components/FloatingActions";
 
-const GUARANTEE_UPDATED = "2026-09-21";
+const WARRANTY_UPDATED = "2026-10-02";
 
 const DESCRIPTION =
-  "The Ride N Care 7-day workmanship guarantee in full: what it covers, what it excludes and how to claim it if something goes wrong after your doorstep service.";
+  "The Ride N Care 45-day service warranty in Bangalore: what eligible bike and car service work is covered, how parts are treated, what is excluded and how to claim after your doorstep service.";
+
+/** FAQPage JSON-LD + on-page FAQ — wording mirrors the approved policy exactly. */
+const FAQS: [string, string][] = [
+  ["How long is the Ride N Care warranty?", "45 days from the date the service or repair is completed, as shown on your Ride N Care invoice."],
+  ["What does the 45-day warranty cover?", "Workmanship-related issues arising from eligible service or repair work performed by Ride N Care."],
+  ["Does it cover every part?", "No. Parts supplied and installed by Ride N Care are covered only where applicable, subject to their eligibility and any relevant manufacturer or supplier warranty terms shown on the invoice."],
+  ["What is not covered?", "Normal wear and tear, consumables, accidental damage, misuse, unauthorized repairs or modifications, unrelated faults and damage caused by external factors are not automatically covered."],
+  ["How do I raise a warranty claim?", "Contact Ride N Care with your booking or invoice details and explain the issue. The team inspects the vehicle and determines whether the issue falls within the policy."],
+  ["When does the warranty start?", "On the completion date of the service or repair printed on your invoice."],
+];
 
 const head = pageHead({
-  title: "Our 7-Day Workmanship Guarantee | Ride N Care",
+  title: "45-Day Service Warranty in Bangalore | Ride N Care",
   description: DESCRIPTION,
   path: "/guarantee",
-  robots: "noindex, nofollow",
 });
 
 export const Route = createFileRoute("/guarantee")({
@@ -24,75 +33,67 @@ export const Route = createFileRoute("/guarantee")({
       graphForPage([
         webPageNode({
           url: "https://ridencare.co.in/guarantee",
-          name: "Our 7-Day Workmanship Guarantee",
+          name: "45-Day Service Warranty",
           description: DESCRIPTION,
-          dateModified: GUARANTEE_UPDATED,
+          dateModified: WARRANTY_UPDATED,
         }),
         breadcrumbNode([
           ["Home", "/"],
-          ["Our 7-Day Workmanship Guarantee", "/guarantee"],
+          ["45-Day Service Warranty", "/guarantee"],
         ]),
+        faqNode(FAQS),
       ]),
     ),
   }),
-  component: GuaranteePage,
+  component: WarrantyPage,
 });
 
 const COVERED: [string, string][] = [
   [
-    "Workmanship faults",
-    "If a fitting, adjustment or repair carried out by our mechanic does not hold — a part we fitted comes loose, a fastener was not torqued correctly, a cable was routed badly — we come back and set it right at no charge.",
+    "Workmanship coverage",
+    "Eligible repair and service work performed by Ride N Care is covered for workmanship-related issues arising from the original work — for example a fitting, adjustment or installation from our visit that does not hold. The team inspects the vehicle and determines whether the issue falls within this policy.",
   ],
   [
-    "Repeat of the same fault",
-    "If the exact symptom the job was meant to fix comes back within seven days of the visit, the return visit to diagnose and correct our work is free.",
-  ],
-  [
-    "Parts fitted by us",
-    "Parts and consumables supplied and fitted by Ride N Care are covered against fitting-related problems for the same seven days.",
+    "Parts coverage",
+    "Parts supplied and installed by Ride N Care are covered only where applicable, subject to their eligibility and any relevant manufacturer or supplier warranty terms, noted on your invoice where applicable. The 45-day warranty does not extend manufacturer or supplier warranty periods, and not every part carries a separate parts warranty.",
   ],
 ];
 
 const NOT_COVERED: [string, string][] = [
-  [
-    "Pre-existing conditions",
-    "Wear or damage that existed before the service — worn clutch plates, glazed brake pads, an aged battery — is diagnosed and quoted but not covered by this guarantee.",
-  ],
-  ["New damage from riding", "Accidents, water ingress, overheating or new impacts that happen after we hand the vehicle back."],
-  ["Owner work in between", "Repairs, adjustments or spare-part changes made by anyone else between our visit and a claim."],
-  [
-    "Consumables by design",
-    "Engine oil burn-off on older engines, tyre wear, brake pad wear from use, and fuel are not covered.",
-  ],
+  ["Wear and consumables", "Normal wear and tear and consumables are not automatically covered."],
+  ["Accidental damage and misuse", "Accidental damage, misuse, and unauthorized repairs or modifications are not automatically covered."],
+  ["Unrelated or external damage", "Faults unrelated to the original work, and damage caused by external factors, are not covered by this warranty."],
 ];
 
-function GuaranteePage() {
+function WarrantyPage() {
   return (
     <div className="min-h-screen bg-[#050b14] text-white">
-      <main className="mx-auto max-w-3xl px-4 pb-28 pt-10 md:pt-16">
+      <div className="mx-auto max-w-3xl px-4 pb-28 pt-10 md:pt-16">
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-white/50">
           <Link to="/" className="hover:text-cyan-300">
             Home
           </Link>
           <span className="mx-2">/</span>
-          <span className="text-white/80">7-day workmanship guarantee</span>
+          <span className="text-white/80">45-day service warranty</span>
         </nav>
 
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300/80">Ride N Care policy</p>
-        <h1 className="mt-2 text-3xl font-bold leading-tight md:text-4xl">Our 7-day workmanship guarantee</h1>
-        <p className="mt-3 text-sm text-white/50">Last updated: {formatDate(GUARANTEE_UPDATED)}</p>
+        <h1 className="mt-2 text-3xl font-bold leading-tight md:text-4xl">Our 45-Day Service Warranty</h1>
+        <p className="mt-3 text-sm text-white/50">Last updated: {formatDate(WARRANTY_UPDATED)}</p>
 
-        <div className="mt-8 rounded-2xl border border-amber-300/25 bg-amber-400/10 p-4 text-sm leading-relaxed text-amber-100">
-          <strong className="font-semibold">DRAFT — pending owner confirmation.</strong> The wording below
-          expands the guarantee sentence already published on our service pages. Nothing here is binding until
-          the owner reviews it.
-        </div>
+        <section className="mt-8 rounded-2xl border border-cyan-300/25 bg-cyan-400/10 p-5">
+          <h2 className="text-xl font-semibold">The warranty in one sentence</h2>
+          <p className="mt-3 leading-relaxed text-white/80">
+            Eligible service and repair work performed by Ride N Care is covered by a 45-day warranty,
+            starting from the date the service or repair is completed.
+          </p>
+        </section>
 
         <section className="mt-10">
-          <h2 className="text-xl font-semibold">The guarantee in one sentence</h2>
+          <h2 className="text-xl font-semibold">Warranty period</h2>
           <p className="mt-3 leading-relaxed text-white/80">
-            If anything we serviced or repaired plays up within seven days, we come back and put it right at no
-            charge — the same promise printed on every Ride N Care job.
+            The warranty runs for 45 days from the date the service or repair is completed, as shown on your
+            Ride N Care invoice. Your booking or invoice details are your proof of purchase.
           </p>
         </section>
 
@@ -112,6 +113,11 @@ function GuaranteePage() {
 
         <section className="mt-10">
           <h2 className="text-xl font-semibold">What is not covered</h2>
+          <p className="mt-3 leading-relaxed text-white/80">
+            Normal wear and tear, consumables, accidental damage, misuse, unauthorized repairs or
+            modifications, unrelated faults, and damage caused by external factors are not automatically
+            covered.
+          </p>
           <ul className="mt-4 space-y-3">
             {NOT_COVERED.map(([t, d]) => (
               <li key={t} className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4">
@@ -122,65 +128,65 @@ function GuaranteePage() {
               </li>
             ))}
           </ul>
-        </section>
-
-        <section className="mt-10">
-          <h2 className="text-xl font-semibold">How to claim</h2>
-          <ol className="mt-4 space-y-3 text-sm leading-relaxed text-white/80">
-            <li className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
-              <strong className="text-white">1. Contact us.</strong> Call 080 6940 9289 or WhatsApp 82969 50339
-              within seven days of the visit. Have your digital invoice ready — it lists the work done and the
-              date.
-            </li>
-            <li className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
-              <strong className="text-white">2. Describe the symptom.</strong> A short note or video on WhatsApp
-              is enough. We confirm whether the fault relates to the work we performed.
-            </li>
-            <li className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
-              <strong className="text-white">3. Free return visit.</strong> If it is our workmanship, a mechanic
-              returns and corrects it at no charge. Parts replaced under the guarantee are supplied free.
-            </li>
-          </ol>
-        </section>
-
-        <section className="mt-10 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-          <h2 className="flex items-center gap-2 text-lg font-semibold">
-            <FileText className="size-5 text-cyan-300" aria-hidden /> Your digital invoice is the record
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-white/70">
-            Every job closes with a digital invoice sent by WhatsApp or email, listing parts and labour
-            separately. It is the reference for any guarantee claim — keep it until at least seven days after
-            the visit.
+          <p className="mt-3 text-sm leading-relaxed text-white/60">
+            Pre-existing conditions identified during inspection are diagnosed and quoted separately rather
+            than covered by this warranty.
           </p>
         </section>
 
         <section className="mt-10">
-          <h2 className="text-xl font-semibold">Questions about a job?</h2>
+          <h2 className="text-xl font-semibold">How to make a claim</h2>
+          <ol className="mt-4 space-y-3">
+            {[
+              "Contact Ride N Care with your booking or invoice details and explain the issue.",
+              "The team inspects the vehicle and determines whether the issue falls within this policy.",
+              "If an eligible claim is approved, Ride N Care provides an appropriate correction or repair in accordance with this policy.",
+            ].map((step, i) => (
+              <li key={step} className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4">
+                <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-cyan-400/15 text-xs font-bold text-cyan-300">
+                  {i + 1}
+                </span>
+                <p className="text-sm leading-relaxed text-white/80">{step}</p>
+              </li>
+            ))}
+          </ol>
           <div className="mt-4 flex flex-wrap gap-3">
             <a
               href="tel:+918069409289"
-              data-ctc="call"
-              className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 font-semibold text-white"
+              className="inline-flex items-center gap-2 rounded-xl border border-cyan-300/30 bg-cyan-400/10 px-4 py-2.5 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-400/20"
             >
               <Phone className="size-4" aria-hidden /> Call 080 6940 9289
             </a>
             <a
-              href="https://wa.me/918296950339?text=Hi%20Ride%20N%20Care%2C%20I%20have%20a%20question%20about%20a%20recent%20service."
+              href="https://wa.me/918296950339"
               target="_blank"
               rel="noopener"
-              data-ctc="whatsapp"
-              className="inline-flex min-h-12 items-center gap-2 rounded-xl border border-white/20 bg-white/[0.08] px-5 font-semibold text-cyan-200"
+              className="inline-flex items-center gap-2 rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-4 py-2.5 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-400/20"
             >
               <MessageCircle className="size-4" aria-hidden /> WhatsApp 82969 50339
             </a>
           </div>
         </section>
 
-        <p className="mt-10 flex items-center gap-2 text-xs text-white/40">
-          <Wrench className="size-4" aria-hidden /> Ride N Care — Care in every mile. Doorstep bike, scooter
-          and car service across Bangalore.
+        <section className="mt-10">
+          <h2 className="text-xl font-semibold">Warranty questions</h2>
+          <div className="mt-4 divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.03]">
+            {FAQS.map(([q, a]) => (
+              <details key={q} className="group p-4">
+                <summary className="cursor-pointer list-none font-semibold text-white">{q}</summary>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <p className="mt-8 text-sm text-white/50">
+          This warranty applies to eligible service and repair work completed on or after the policy date.
+          Service pages: <Link to="/bikes" className="text-cyan-300 hover:underline">bike service</Link> ·{" "}
+          <Link to="/cars" className="text-cyan-300 hover:underline">car service</Link> ·{" "}
+          <Link to="/contact" className="text-cyan-300 hover:underline">contact & booking</Link>
         </p>
-      </main>
+      </div>
       <FloatingActions />
     </div>
   );

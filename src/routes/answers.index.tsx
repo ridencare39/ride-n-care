@@ -1,19 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnswerBlocks } from "@/components/AnswerBlocks";
 import { AI_SEARCH_FAQS, ANSWERS, BRAND, ENTITY_SUMMARY, ENTITY_TOPICS } from "@/lib/answers";
-import { ANSWER_CATEGORIES, ANSWER_PAGES, type AnswerCategory } from "@/lib/answer-pages";
+import { ANSWER_CATEGORIES, ANSWER_PAGE_SUMMARY, type AnswerCategory } from "@/lib/answer-page-summary";
 import { CONFIRMED_AREAS, COVERAGE_LINE } from "@/lib/areas";
-import { SERVICES } from "@/lib/services";
+import { SERVICE_SUMMARY } from "@/lib/service-summary";
 import { SITE_URL } from "@/lib/seo";
 import { pageHead } from "@/lib/head";
 import { graphForPage, faqNode, breadcrumbNode, pageScripts } from "@/lib/schema";
-import { GUIDES } from "@/lib/guides";
+import { GUIDE_SUMMARY } from "@/lib/guide-summary";
 import { BookingButton } from "@/components/booking/BookingButton";
 
 /** Group answer pages by category, preserving the category order. */
 const BY_CATEGORY = ANSWER_CATEGORIES.map((c) => ({
   ...c,
-  pages: ANSWER_PAGES.filter((p) => p.category === (c.id as AnswerCategory)),
+  pages: ANSWER_PAGE_SUMMARY.filter((p) => p.category === (c.id as AnswerCategory)),
 })).filter((c) => c.pages.length > 0);
 
 export const Route = createFileRoute("/answers/")({
@@ -83,7 +83,7 @@ function Answers() {
       {/* Answer hub — every question gets its own page */}
       <h2 className="mt-14 text-2xl md:text-3xl font-bold">Answers by topic</h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        {ANSWER_PAGES.length} questions, each with a direct answer, the detail behind it and the service page to book.
+        {ANSWER_PAGE_SUMMARY.length} questions, each with a direct answer, the detail behind it and the service page to book.
       </p>
       <div className="mt-6 space-y-8">
         {BY_CATEGORY.map((cat) => (
@@ -121,7 +121,7 @@ function Answers() {
 
       <h2 className="mt-14 text-2xl md:text-3xl font-bold">Bike services you can book</h2>
       <ul className="mt-4 grid sm:grid-cols-2 gap-2 text-sm">
-        {SERVICES.map((s) => (
+        {SERVICE_SUMMARY.map((s) => (
           <li key={s.slug}>
             <Link to="/$service" params={{ service: s.slug }} className="text-primary hover:underline">
               {s.name} →
@@ -148,7 +148,7 @@ function Answers() {
 
       <h2 className="mt-14 text-2xl md:text-3xl font-bold">Maintenance guides</h2>
       <ul className="mt-4 space-y-2 text-sm">
-        {GUIDES.map((g) => (
+        {GUIDE_SUMMARY.map((g) => (
           <li key={g.slug}>
             <Link to="/guides/$slug" params={{ slug: g.slug }} className="text-primary hover:underline">
               {g.h1}
@@ -159,11 +159,11 @@ function Answers() {
 
       <div className="mt-16 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Book a doorstep bike or car service</h2>
-        <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 7-day guarantee.</p>
+        <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 45-day warranty.</p>
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
           <a href="tel:+918069409289" className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Call {BRAND.phonePrimaryDisplay}</a>
           <a href={`https://wa.me/${BRAND.whatsapp}`} className="rounded-full border border-background/40 px-6 py-3 font-semibold text-primary-foreground">WhatsApp</a>
-          <BookingButton variant="outline" className="rounded-full border-background/40 bg-transparent px-6 py-3 text-primary-foreground hover:bg-background hover:text-foreground">Book Now</BookingButton>
+          <BookingButton className="btn-book rounded-full px-6 py-3 font-semibold">Book Now</BookingButton>
         </div>
       </div>
     </div>

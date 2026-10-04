@@ -11,11 +11,11 @@ import { FileText, Home, ShieldCheck, BadgeCheck, Cog, Clock, type LucideIcon } 
  */
 const POINTS: { icon: LucideIcon; title: string; line: string }[] = [
   { icon: Home, title: "Doorstep Service", line: "at your home or office" },
-  { icon: Clock, title: "Available 24 Hours", line: "doorstep visits booked at any hour" },
+  { icon: Clock, title: "Open Daily", line: "7 AM – 11:30 PM, every day" },
   { icon: FileText, title: "Written Quote First", line: "price agreed before work starts" },
   { icon: Cog, title: "OEM-Grade Parts", line: "genuine spares fitted" },
   { icon: ShieldCheck, title: "Verified Mechanics", line: "background-verified technicians" },
-  { icon: BadgeCheck, title: "7-Day Guarantee", line: "workmanship guarantee on every job" },
+  { icon: BadgeCheck, title: "45-Day Warranty", line: "on eligible service and repair work" },
 ];
 
 export function TrustPoints() {
@@ -28,7 +28,9 @@ export function TrustPoints() {
               <span className="trust-beam-inner" />
             </span>
             <Icon aria-hidden className="h-5 w-5 text-neon" />
-            <h3 className="mt-2.5 text-sm font-semibold leading-snug text-white sm:text-base">{title}</h3>
+            {/* h2: this block sits directly under the page H1 (heading-hierarchy
+                fix 2026-09-30 — was h3, skipping a level). */}
+            <h2 className="mt-2.5 text-sm font-semibold leading-snug text-white sm:text-base">{title}</h2>
             <p className="mt-1 text-xs leading-snug text-white/70 sm:text-sm">{line}</p>
           </div>
         </li>

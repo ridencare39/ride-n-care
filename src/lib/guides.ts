@@ -394,7 +394,7 @@ export const GUIDES: Guide[] = [
         h: "Cost, guarantees and paperwork",
         p: [
           "Doorstep pricing should not hide a visiting charge. Ride N Care Jump Start is ₹399, Running Repair is ₹450, and General Service starts at ₹799 for bikes up to 199cc, with parts shown separately before approval.",
-          "Ask for three things every time: the quote in writing, the invoice listing parts fitted, and the workmanship guarantee period. Ride N Care provides a 7-day workmanship guarantee on work performed.",
+          "Ask for three things every time: the quote in writing, the invoice listing parts fitted, and the warranty period. Ride N Care provides a 45-day service warranty on eligible work performed.",
         ],
       },
       {

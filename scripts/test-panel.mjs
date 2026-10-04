@@ -20,8 +20,29 @@ async function withPage(width, height, label, fn) {
   const page = await browser.newPage({ viewport: { width, height } });
   try {
     await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
-    // Let React hydration settle so handlers are attached before interacting.
-    await page.waitForFunction(() => !document.querySelector("header .menu-btn") || true);
+    // Real readiness wait — NO scrolling (scroll probes during load were
+    // observed to interfere with route hydration on this low-memory box):
+    //  reactProps on the menu button = hydration render started
+    //  [data-root-ready] = root layout committed + effects flushed (the
+    //  header/panel/floating bar all live in the root tree, which is all
+    //  this suite interacts with). A fixed sleep raced cold-dev hydration
+    //  and produced phantom "click didn't open" failures.
+    let hyd = false;
+    let root = false;
+    for (let i = 0; i < 160; i++) {
+      const st = await page.evaluate(() => {
+        const el = document.querySelector("header .menu-btn");
+        return {
+          hyd: !!el && Object.keys(el).some((k) => k.startsWith("__reactProps")),
+          root: !!document.querySelector("[data-root-ready]"),
+        };
+      });
+      if (st.hyd) hyd = true;
+      if (st.root) root = true;
+      if (hyd && root) break;
+      await page.waitForTimeout(500);
+    }
+    if (!hyd || !root) console.log(`  WARN ${label}: readiness markers incomplete (hyd=${hyd} root=${root}) — proceeding`);
     await page.waitForTimeout(400);
     await fn(page);
   } catch (e) {
@@ -160,18 +181,24 @@ async function check2(label, page, name) {
 }
 
 // ── Data for count assertions ────────────────────────────────────────────────
-const BIKE_N = 9;
-const CAR_N = 4;
+// These must track MENU_BIKE_ROWS.length / MENU_CAR_ROWS.length in
+// src/lib/nav.ts — SiteHeader renders `{count} services` from those arrays.
+// Updated 2026-10-04: bike 9→10, car 4→9 to match the current service data
+// (labels are data-driven; the old hardcodes predated the car-service wave).
+const BIKE_N = 10;
+const CAR_N = 9;
 const BIKE_LIST_ID = "panel-bike-list";
 const CAR_LIST_ID = "panel-car-list";
 
 // ── Run at every required width ─────────────────────────────────────────────
-await testViewport(375, 667, "375");
-await testViewport(768, 900, "768");
-await testViewport(1024, 768, "1024");
-await testViewport(1280, 720, "1280");
-await testViewport(1440, 900, "1440");
-await testViewport(1920, 1080, "1920");
+// PANEL_WIDTHS (comma-separated) lets a run split the six viewports into
+// chunks that fit a single command time budget; default runs all six.
+const VIEWPORT_HEIGHTS = { 375: 667, 768: 900, 1024: 768, 1280: 720, 1440: 900, 1920: 1080 };
+const PANEL_WIDTHS = (process.env.PANEL_WIDTHS ?? "375,768,1024,1280,1440,1920")
+  .split(",")
+  .map((s) => Number(s.trim()))
+  .filter((w) => VIEWPORT_HEIGHTS[w]);
+for (const w of PANEL_WIDTHS) await testViewport(w, VIEWPORT_HEIGHTS[w], String(w));
 
 // ── Auto-expand on bike / car pages (reuse one page, two URLs) ───────────────
 {

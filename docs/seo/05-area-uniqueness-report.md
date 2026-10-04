@@ -1,810 +1,1064 @@
 # Part 7 — Area page uniqueness report
-Generated: 2026-09-20 · Base: https://ridencare.co.in · Pages: 40 · Threshold: 60% (4-gram Jaccard, names/pincodes stripped)
+Generated: 2026-09-20 · Base: http://localhost:8080 · Pages: 40 · Threshold: 60% (4-gram Jaccard, names/pincodes stripped)
 
 | Page | Words | noindex |
 |---|---|---|
-| /areas/banashankari (Banashankari) | 621 | yes |
-| /areas/bannerghatta-road (Bannerghatta Road) | 639 | yes |
-| /areas/bellandur (Bellandur) | 571 | no |
-| /areas/bommanahalli (Bommanahalli) | 624 | yes |
-| /areas/brookefield (Brookefield) | 615 | yes |
-| /areas/btm-layout (BTM Layout) | 587 | no |
-| /areas/choodasandra (Choodasandra) | 617 | yes |
-| /areas/domlur (Domlur) | 620 | yes |
-| /areas/ejipura (Ejipura) | 621 | yes |
-| /areas/electronic-city (Electronic City) | 619 | no |
-| /areas/gunjur (Gunjur) | 617 | yes |
-| /areas/hal (HAL) | 624 | yes |
-| /areas/harlur (Harlur) | 621 | yes |
-| /areas/hebbal (Hebbal) | 541 | yes |
-| /areas/hsr-layout (HSR Layout) | 691 | no |
-| /areas/indiranagar (Indiranagar) | 621 | no |
-| /areas/jayanagar (Jayanagar) | 598 | no |
-| /areas/jp-nagar (JP Nagar) | 596 | no |
-| /areas/kadubeesanahalli (Kadubeesanahalli) | 617 | yes |
-| /areas/kalyan-nagar (Kalyan Nagar) | 633 | yes |
-| /areas/kanakapura-road (Kanakapura Road) | 635 | yes |
-| /areas/kasavanahalli (Kasavanahalli) | 617 | yes |
-| /areas/koramangala (Koramangala) | 624 | no |
-| /areas/kr-puram (KR Puram) | 642 | yes |
-| /areas/kudlu-gate (Kudlu Gate) | 642 | yes |
-| /areas/madiwala (Madiwala) | 628 | yes |
-| /areas/mahadevapura (Mahadevapura) | 622 | yes |
-| /areas/malleshwaram (Malleshwaram) | 613 | yes |
-| /areas/marathahalli (Marathahalli) | 589 | no |
-| /areas/mg-road (MG Road) | 632 | yes |
-| /areas/panathur-road (Panathur Road) | 636 | yes |
-| /areas/parappana-agrahara (Parappana Agrahara) | 638 | yes |
-| /areas/peenya (Peenya) | 608 | yes |
-| /areas/rajajinagar (Rajajinagar) | 614 | yes |
-| /areas/sarjapur-road (Sarjapur Road) | 590 | no |
-| /areas/singasandra (Singasandra) | 621 | yes |
-| /areas/varthur (Varthur) | 619 | yes |
-| /areas/whitefield (Whitefield) | 603 | no |
-| /areas/yelahanka (Yelahanka) | 606 | yes |
-| /areas/yeshwanthpur (Yeshwanthpur) | 615 | yes |
+| /areas/banashankari (Banashankari) | 829 | yes |
+| /areas/bannerghatta-road (Bannerghatta Road) | 847 | yes |
+| /areas/bellandur (Bellandur) | 777 | no |
+| /areas/bommanahalli (Bommanahalli) | 832 | yes |
+| /areas/brookefield (Brookefield) | 823 | yes |
+| /areas/btm-layout (BTM Layout) | 795 | no |
+| /areas/choodasandra (Choodasandra) | 825 | yes |
+| /areas/domlur (Domlur) | 828 | yes |
+| /areas/ejipura (Ejipura) | 829 | yes |
+| /areas/electronic-city (Electronic City) | 825 | no |
+| /areas/gunjur (Gunjur) | 825 | yes |
+| /areas/hal (HAL) | 832 | yes |
+| /areas/harlur (Harlur) | 829 | yes |
+| /areas/hebbal (Hebbal) | 742 | no |
+| /areas/hsr-layout (HSR Layout) | 901 | no |
+| /areas/indiranagar (Indiranagar) | 829 | no |
+| /areas/jayanagar (Jayanagar) | 806 | no |
+| /areas/jp-nagar (JP Nagar) | 806 | no |
+| /areas/kadubeesanahalli (Kadubeesanahalli) | 825 | yes |
+| /areas/kalyan-nagar (Kalyan Nagar) | 841 | yes |
+| /areas/kanakapura-road (Kanakapura Road) | 843 | yes |
+| /areas/kasavanahalli (Kasavanahalli) | 825 | yes |
+| /areas/koramangala (Koramangala) | 830 | no |
+| /areas/kr-puram (KR Puram) | 850 | yes |
+| /areas/kudlu-gate (Kudlu Gate) | 850 | yes |
+| /areas/madiwala (Madiwala) | 836 | yes |
+| /areas/mahadevapura (Mahadevapura) | 830 | yes |
+| /areas/malleshwaram (Malleshwaram) | 817 | yes |
+| /areas/marathahalli (Marathahalli) | 797 | no |
+| /areas/mg-road (MG Road) | 834 | yes |
+| /areas/panathur-road (Panathur Road) | 844 | yes |
+| /areas/parappana-agrahara (Parappana Agrahara) | 846 | yes |
+| /areas/peenya (Peenya) | 813 | yes |
+| /areas/rajajinagar (Rajajinagar) | 819 | yes |
+| /areas/sarjapur-road (Sarjapur Road) | 798 | no |
+| /areas/singasandra (Singasandra) | 829 | yes |
+| /areas/varthur (Varthur) | 827 | yes |
+| /areas/whitefield (Whitefield) | 811 | no |
+| /areas/yelahanka (Yelahanka) | 809 | yes |
+| /areas/yeshwanthpur (Yeshwanthpur) | 820 | yes |
 
 ## Flagged pairs over 60% similarity
 
-- 94% — /areas/kudlu-gate ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 94% — /areas/gunjur ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 94% — /areas/bommanahalli ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 93% — /areas/parappana-agrahara ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 93% — /areas/choodasandra ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 93% — /areas/gunjur ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 93% — /areas/bommanahalli ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 93% — /areas/bannerghatta-road ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 93% — /areas/kadubeesanahalli ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 93% — /areas/brookefield ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/brookefield ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/brookefield ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/kasavanahalli ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/kasavanahalli ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/panathur-road ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/brookefield ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/gunjur ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/brookefield ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/kudlu-gate ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/bommanahalli ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/brookefield ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/banashankari ↔ /areas/choodasandra  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/madiwala ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/mahadevapura ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/mahadevapura ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/kanakapura-road ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 92% — /areas/bommanahalli ↔ /areas/choodasandra  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/gunjur ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 95% — /areas/kudlu-gate ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 95% — /areas/gunjur ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 95% — /areas/bommanahalli ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/parappana-agrahara ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/choodasandra ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/gunjur ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/bommanahalli ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/bannerghatta-road ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/kadubeesanahalli ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/brookefield ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/brookefield ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 94% — /areas/brookefield ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/kasavanahalli ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/kasavanahalli ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/panathur-road ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/brookefield ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/gunjur ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/brookefield ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/kudlu-gate ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/bommanahalli ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/brookefield ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/banashankari ↔ /areas/choodasandra  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/madiwala ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/mahadevapura ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/mahadevapura ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/kanakapura-road ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/bommanahalli ↔ /areas/choodasandra  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/gunjur ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/kudlu-gate ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/banashankari ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/choodasandra ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/choodasandra ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/brookefield ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/banashankari ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/banashankari ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/choodasandra ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/choodasandra ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/banashankari ↔ /areas/bommanahalli  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/kasavanahalli ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/domlur ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
+- 93% — /areas/domlur ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kr-puram ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/bommanahalli ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/bannerghatta-road ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/banashankari ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/banashankari ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kr-puram ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/gunjur ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kasavanahalli ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/domlur ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/choodasandra ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/brookefield ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/gunjur ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kadubeesanahalli ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/harlur ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/harlur ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/bommanahalli ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/bommanahalli ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/banashankari ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/choodasandra ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/banashankari ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/harlur ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/ejipura ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/ejipura ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/bannerghatta-road ↔ /areas/choodasandra  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/brookefield ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kr-puram ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/ejipura ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/ejipura ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/domlur ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/bommanahalli ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/domlur ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kalyan-nagar ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/harlur ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kanakapura-road ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/harlur ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/ejipura ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/banashankari ↔ /areas/bannerghatta-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/domlur ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kalyan-nagar ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/madiwala ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/domlur ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kanakapura-road ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kanakapura-road ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kadubeesanahalli ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/kadubeesanahalli ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/gunjur ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/domlur ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/peenya ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/ejipura ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 92% — /areas/bannerghatta-road ↔ /areas/bommanahalli  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/bannerghatta-road ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/bannerghatta-road ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/bannerghatta-road ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/bannerghatta-road ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/bannerghatta-road ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/kadubeesanahalli ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/kalyan-nagar ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/kalyan-nagar ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
 - 91% — /areas/peenya ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/kudlu-gate ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/banashankari ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/choodasandra ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/choodasandra ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/peenya ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/brookefield ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/peenya ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/yelahanka ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/banashankari ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/banashankari ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/choodasandra ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/choodasandra ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/banashankari ↔ /areas/bommanahalli  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/kasavanahalli ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/domlur ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/domlur ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/kr-puram ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/mg-road ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/bommanahalli ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/bannerghatta-road ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/banashankari ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/banashankari ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/kr-puram ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/gunjur ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/kasavanahalli ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/domlur ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/choodasandra ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/brookefield ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/malleshwaram ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/gunjur ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/kadubeesanahalli ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/harlur ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/harlur ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/bommanahalli ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/bommanahalli ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/mg-road ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/banashankari ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/choodasandra ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/banashankari ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/harlur ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/ejipura ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/ejipura ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/malleshwaram ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/malleshwaram ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 91% — /areas/bannerghatta-road ↔ /areas/choodasandra  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/brookefield ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kr-puram ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/ejipura ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/ejipura ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/rajajinagar ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/domlur ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/bommanahalli ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/domlur ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kalyan-nagar ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/malleshwaram ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/harlur ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kanakapura-road ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/harlur ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/ejipura ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/banashankari ↔ /areas/bannerghatta-road  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/domlur ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kalyan-nagar ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/madiwala ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/domlur ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kanakapura-road ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kanakapura-road ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kadubeesanahalli ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kadubeesanahalli ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/gunjur ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/domlur ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/ejipura ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/bannerghatta-road ↔ /areas/bommanahalli  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/bannerghatta-road ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/bannerghatta-road ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/bannerghatta-road ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/domlur ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/hal ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/hal ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/brookefield ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/kalyan-nagar ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/kadubeesanahalli ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/gunjur ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
+- 91% — /areas/malleshwaram ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/hal ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/peenya ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
 - 90% — /areas/rajajinagar ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/bannerghatta-road ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/bannerghatta-road ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kadubeesanahalli ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kalyan-nagar ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 90% — /areas/kalyan-nagar ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/domlur ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/yelahanka ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/mg-road ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/mg-road ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/hal ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/hal ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/hal ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/malleshwaram ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/malleshwaram ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/hal ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/malleshwaram ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 90% — /areas/rajajinagar ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/kasavanahalli ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/kalyan-nagar ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/brookefield ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/panathur-road ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/gunjur ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/varthur ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/kr-puram ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
 - 89% — /areas/mg-road ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/hal ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/mg-road ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/hal ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/brookefield ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/kalyan-nagar ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/kadubeesanahalli ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/gunjur ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/malleshwaram ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 89% — /areas/hal ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 88% — /areas/hal ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 88% — /areas/hal ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 88% — /areas/hal ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 88% — /areas/hal ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 86% — /areas/choodasandra ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/harlur ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/choodasandra ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/brookefield ↔ /areas/choodasandra  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/harlur ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/brookefield ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/gunjur ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/choodasandra ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/choodasandra ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/harlur ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/banashankari ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/banashankari ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/ejipura ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/banashankari ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 85% — /areas/banashankari ↔ /areas/brookefield  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/harlur ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/ejipura ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/brookefield ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kudlu-gate ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/ejipura ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kasavanahalli ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/choodasandra ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kadubeesanahalli ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/bommanahalli ↔ /areas/brookefield  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/banashankari ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kasavanahalli ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kasavanahalli ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/choodasandra ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/brookefield ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/bommanahalli ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/harlur ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/domlur ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/madiwala ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/choodasandra ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/banashankari ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kadubeesanahalli ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/brookefield ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/brookefield ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/bommanahalli ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/bommanahalli ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kasavanahalli ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/harlur ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/gunjur ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/gunjur ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/choodasandra ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/banashankari ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/panathur-road ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kalyan-nagar ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/ejipura ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/bommanahalli ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/bannerghatta-road ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/panathur-road ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/choodasandra ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/brookefield ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/brookefield ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/domlur ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kalyan-nagar ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kalyan-nagar ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/harlur ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/gunjur ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/kanakapura-road ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/singasandra ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/ejipura ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/banashankari ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/hal ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
-- 84% — /areas/banashankari ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kanakapura-road ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kalyan-nagar ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kasavanahalli ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/madiwala ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kudlu-gate ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bommanahalli ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/banashankari ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/gunjur ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/gunjur ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bannerghatta-road ↔ /areas/brookefield  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kalyan-nagar ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/choodasandra ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/brookefield ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bommanahalli ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/parappana-agrahara ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kalyan-nagar ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bannerghatta-road ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/domlur ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bommanahalli ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bannerghatta-road ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bannerghatta-road ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kr-puram ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kr-puram ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/banashankari ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/panathur-road ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/mahadevapura ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/ejipura ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/domlur ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/domlur ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bommanahalli ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kanakapura-road ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bommanahalli ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bannerghatta-road ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/ejipura ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kasavanahalli ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/gunjur ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/madiwala ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kudlu-gate ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kr-puram ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/ejipura ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kadubeesanahalli ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/ejipura ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/domlur ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/varthur ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/panathur-road ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/brookefield ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kanakapura-road ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kadubeesanahalli ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kadubeesanahalli ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kr-puram ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/banashankari ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/gunjur ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/banashankari ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/choodasandra ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kr-puram ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kanakapura-road ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/domlur ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/bannerghatta-road ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/hal ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/hal ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
-- 83% — /areas/kalyan-nagar ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/bommanahalli ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kalyan-nagar ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/mahadevapura ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/bannerghatta-road ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/hal ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kasavanahalli ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/brookefield ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/choodasandra ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/ejipura ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/bannerghatta-road ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/singasandra ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/peenya ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/mg-road ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kasavanahalli ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/harlur ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/brookefield ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/brookefield ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/bannerghatta-road ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/banashankari ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/madiwala ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kudlu-gate ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kasavanahalli ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/gunjur ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/domlur ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/bommanahalli ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/hal ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/hal ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kasavanahalli ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/harlur ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/mahadevapura ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/ejipura ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/parappana-agrahara ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/domlur ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/panathur-road ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/madiwala ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kudlu-gate ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kr-puram ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/malleshwaram ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kalyan-nagar ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/domlur ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/choodasandra ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/brookefield ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/bommanahalli ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kr-puram ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kadubeesanahalli ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/mg-road ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/gunjur ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/peenya ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/panathur-road ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/mahadevapura ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kalyan-nagar ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/gunjur ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/ejipura ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/choodasandra ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/bannerghatta-road ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kanakapura-road ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/malleshwaram ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/hal ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/kalyan-nagar ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/gunjur ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 82% — /areas/choodasandra ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kadubeesanahalli ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/rajajinagar ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/harlur ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/banashankari ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/choodasandra ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/banashankari ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/hal ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/parappana-agrahara ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kanakapura-road ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/varthur ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/malleshwaram ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/madiwala ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kudlu-gate ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kr-puram ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/hal ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/bommanahalli ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/banashankari ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/bannerghatta-road ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/rajajinagar ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/mg-road ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/mahadevapura ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/domlur ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/bommanahalli ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/harlur ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/mahadevapura ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/harlur ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/ejipura ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/domlur ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/bommanahalli ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kadubeesanahalli ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/bannerghatta-road ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/madiwala ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kudlu-gate ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/mahadevapura ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/madiwala ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kudlu-gate ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kr-puram ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/harlur ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/ejipura ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/domlur ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/bommanahalli ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/mg-road ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kanakapura-road ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kadubeesanahalli ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/singasandra ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/mahadevapura ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/madiwala ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kudlu-gate ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kr-puram ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/ejipura ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/malleshwaram ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kanakapura-road ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kadubeesanahalli ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/parappana-agrahara ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kanakapura-road ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 81% — /areas/kadubeesanahalli ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/parappana-agrahara ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/kanakapura-road ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/bannerghatta-road ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/hal ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/hal ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/bannerghatta-road ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/hal ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/bannerghatta-road ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
-- 80% — /areas/bannerghatta-road ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/kasavanahalli ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/banashankari ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/choodasandra ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/kalyan-nagar ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 89% — /areas/panathur-road ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/mg-road ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/brookefield ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/banashankari ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kasavanahalli ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/gunjur ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/ejipura ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/singasandra ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/mg-road ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/harlur ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/brookefield ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kalyan-nagar ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/brookefield ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/banashankari ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/madiwala ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kudlu-gate ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kasavanahalli ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/gunjur ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/malleshwaram ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/domlur ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/choodasandra ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/bommanahalli ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/peenya ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/brookefield ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/mahadevapura ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/ejipura ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/parappana-agrahara ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/domlur ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kasavanahalli ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/choodasandra ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kadubeesanahalli ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/choodasandra ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/mg-road ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kasavanahalli ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/harlur ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/malleshwaram ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kalyan-nagar ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/harlur ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kanakapura-road ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/panathur-road ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/madiwala ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kudlu-gate ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kr-puram ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/hal ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/gunjur ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/domlur ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/choodasandra ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/brookefield ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/bommanahalli ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kr-puram ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/choodasandra ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/malleshwaram ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/harlur ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/gunjur ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/peenya ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/panathur-road ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/mahadevapura ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/kalyan-nagar ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 88% — /areas/ejipura ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/hal ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/madiwala ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kudlu-gate ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kr-puram ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/brookefield ↔ /areas/choodasandra  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kalyan-nagar ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/gunjur ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/choodasandra ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bommanahalli ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/banashankari ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kadubeesanahalli ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bannerghatta-road ↔ /areas/yelahanka  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/harlur ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/brookefield ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/rajajinagar ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/malleshwaram ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/banashankari ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/mg-road ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/mahadevapura ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/choodasandra ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/parappana-agrahara ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kanakapura-road ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/gunjur ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/varthur ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/hal ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/choodasandra ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/choodasandra ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/domlur ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bommanahalli ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/banashankari ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kadubeesanahalli ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/harlur ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/banashankari ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/rajajinagar ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/banashankari ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/mahadevapura ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/harlur ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/ejipura ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/mg-road ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kanakapura-road ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/ejipura ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/harlur ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/banashankari ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/madiwala ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kudlu-gate ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kr-puram ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/domlur ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bommanahalli ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/banashankari ↔ /areas/brookefield  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/harlur ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kadubeesanahalli ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bannerghatta-road ↔ /areas/peenya  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/ejipura ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/madiwala ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kudlu-gate ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/brookefield ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/mahadevapura ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/harlur ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/ejipura ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/domlur ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bommanahalli ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/malleshwaram ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kanakapura-road ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kudlu-gate ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/ejipura ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kasavanahalli ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/choodasandra ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/singasandra ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/mahadevapura ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/madiwala ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kudlu-gate ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kr-puram ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kadubeesanahalli ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/ejipura ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bommanahalli ↔ /areas/brookefield  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/banashankari ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kadubeesanahalli ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bannerghatta-road ↔ /areas/mg-road  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kasavanahalli ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kasavanahalli ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/choodasandra ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/brookefield ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/bommanahalli ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/parappana-agrahara ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/harlur ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kanakapura-road ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/kadubeesanahalli ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 87% — /areas/domlur ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/madiwala ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/choodasandra ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/banashankari ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kadubeesanahalli ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/hal ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/brookefield ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/brookefield ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bommanahalli ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bommanahalli ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kasavanahalli ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/parappana-agrahara ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kanakapura-road ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/malleshwaram  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/harlur ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/hal ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/gunjur ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/gunjur ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/choodasandra ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/banashankari ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/panathur-road ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kalyan-nagar ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/ejipura ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bommanahalli ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/panathur-road ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/choodasandra ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/brookefield ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/brookefield ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/domlur ↔ /areas/ejipura  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kalyan-nagar ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kalyan-nagar ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/harlur ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/hal ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/gunjur ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kanakapura-road ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/rajajinagar  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/singasandra ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/ejipura ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/banashankari ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/banashankari ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/hal ↔ /areas/harlur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kanakapura-road ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kalyan-nagar ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/yeshwanthpur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/madiwala ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kudlu-gate ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bommanahalli ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/banashankari ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/gunjur ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/gunjur ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/brookefield  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/choodasandra ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bommanahalli ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/parappana-agrahara ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kalyan-nagar ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/kasavanahalli  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/domlur ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bommanahalli ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/panathur-road  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/kalyan-nagar  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kr-puram ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kr-puram ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/banashankari ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/mahadevapura ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/ejipura ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/domlur ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/domlur ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bommanahalli ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kanakapura-road ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bommanahalli ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/bannerghatta-road ↔ /areas/gunjur  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/ejipura ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/madiwala ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kudlu-gate ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/kr-puram ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 86% — /areas/ejipura ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/kadubeesanahalli ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/ejipura ↔ /areas/kadubeesanahalli  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/domlur ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/kanakapura-road ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/kadubeesanahalli ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/kadubeesanahalli ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/kr-puram ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/kanakapura-road ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/domlur ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/bannerghatta-road ↔ /areas/varthur  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/hal ↔ /areas/madiwala  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/hal ↔ /areas/kudlu-gate  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/bommanahalli ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/mahadevapura ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/bannerghatta-road ↔ /areas/domlur  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/hal ↔ /areas/singasandra  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/bannerghatta-road ↔ /areas/mahadevapura  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/bannerghatta-road ↔ /areas/kr-puram  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/hal ↔ /areas/parappana-agrahara  (both noindex — acceptable until calendar uplift)
+- 85% — /areas/hal ↔ /areas/kanakapura-road  (both noindex — acceptable until calendar uplift)
+- 84% — /areas/bannerghatta-road ↔ /areas/hal  (both noindex — acceptable until calendar uplift)
 
 ## Pairs between 40% and 60% (watch list)
 
-- 94% — /areas/kudlu-gate ↔ /areas/singasandra
-- 94% — /areas/gunjur ↔ /areas/kasavanahalli
-- 94% — /areas/bommanahalli ↔ /areas/singasandra
-- 93% — /areas/parappana-agrahara ↔ /areas/singasandra
-- 93% — /areas/choodasandra ↔ /areas/harlur
-- 93% — /areas/gunjur ↔ /areas/varthur
-- 93% — /areas/bommanahalli ↔ /areas/kudlu-gate
-- 93% — /areas/bannerghatta-road ↔ /areas/kanakapura-road
-- 93% — /areas/kadubeesanahalli ↔ /areas/panathur-road
-- 93% — /areas/brookefield ↔ /areas/kasavanahalli
-- 92% — /areas/brookefield ↔ /areas/varthur
-- 92% — /areas/brookefield ↔ /areas/kr-puram
-- 92% — /areas/kasavanahalli ↔ /areas/varthur
-- 92% — /areas/kasavanahalli ↔ /areas/panathur-road
-- 92% — /areas/panathur-road ↔ /areas/varthur
-- 92% — /areas/brookefield ↔ /areas/panathur-road
-- 92% — /areas/gunjur ↔ /areas/panathur-road
-- 92% — /areas/brookefield ↔ /areas/gunjur
-- 92% — /areas/kudlu-gate ↔ /areas/madiwala
-- 92% — /areas/bommanahalli ↔ /areas/madiwala
-- 92% — /areas/brookefield ↔ /areas/mahadevapura
-- 92% — /areas/banashankari ↔ /areas/choodasandra
-- 92% — /areas/madiwala ↔ /areas/singasandra
-- 92% — /areas/mahadevapura ↔ /areas/varthur
-- 92% — /areas/mahadevapura ↔ /areas/panathur-road
-- 92% — /areas/kanakapura-road ↔ /areas/parappana-agrahara
-- 92% — /areas/bommanahalli ↔ /areas/choodasandra
-- 91% — /areas/gunjur ↔ /areas/kadubeesanahalli
+- 95% — /areas/kudlu-gate ↔ /areas/singasandra
+- 95% — /areas/gunjur ↔ /areas/kasavanahalli
+- 95% — /areas/bommanahalli ↔ /areas/singasandra
+- 94% — /areas/parappana-agrahara ↔ /areas/singasandra
+- 94% — /areas/choodasandra ↔ /areas/harlur
+- 94% — /areas/gunjur ↔ /areas/varthur
+- 94% — /areas/bommanahalli ↔ /areas/kudlu-gate
+- 94% — /areas/bannerghatta-road ↔ /areas/kanakapura-road
+- 94% — /areas/kadubeesanahalli ↔ /areas/panathur-road
+- 94% — /areas/brookefield ↔ /areas/kasavanahalli
+- 94% — /areas/brookefield ↔ /areas/varthur
+- 94% — /areas/brookefield ↔ /areas/kr-puram
+- 93% — /areas/kasavanahalli ↔ /areas/varthur
+- 93% — /areas/kasavanahalli ↔ /areas/panathur-road
+- 93% — /areas/panathur-road ↔ /areas/varthur
+- 93% — /areas/brookefield ↔ /areas/panathur-road
+- 93% — /areas/gunjur ↔ /areas/panathur-road
+- 93% — /areas/brookefield ↔ /areas/gunjur
+- 93% — /areas/kudlu-gate ↔ /areas/madiwala
+- 93% — /areas/bommanahalli ↔ /areas/madiwala
+- 93% — /areas/brookefield ↔ /areas/mahadevapura
+- 93% — /areas/banashankari ↔ /areas/choodasandra
+- 93% — /areas/madiwala ↔ /areas/singasandra
+- 93% — /areas/mahadevapura ↔ /areas/varthur
+- 93% — /areas/mahadevapura ↔ /areas/panathur-road
+- 93% — /areas/kanakapura-road ↔ /areas/parappana-agrahara
+- 93% — /areas/bommanahalli ↔ /areas/choodasandra
+- 93% — /areas/gunjur ↔ /areas/kadubeesanahalli
+- 93% — /areas/kudlu-gate ↔ /areas/parappana-agrahara
+- 93% — /areas/banashankari ↔ /areas/harlur
+- 93% — /areas/choodasandra ↔ /areas/singasandra
+- 93% — /areas/choodasandra ↔ /areas/ejipura
+- 93% — /areas/brookefield ↔ /areas/domlur
+- 93% — /areas/banashankari ↔ /areas/madiwala
+- 93% — /areas/banashankari ↔ /areas/kudlu-gate
+- 93% — /areas/choodasandra ↔ /areas/madiwala
+- 93% — /areas/choodasandra ↔ /areas/kudlu-gate
+- 93% — /areas/banashankari ↔ /areas/bommanahalli
+- 93% — /areas/kasavanahalli ↔ /areas/kr-puram
+- 93% — /areas/domlur ↔ /areas/gunjur
+- 93% — /areas/domlur ↔ /areas/kasavanahalli
+- 92% — /areas/kr-puram ↔ /areas/varthur
+- 92% — /areas/bommanahalli ↔ /areas/parappana-agrahara
+- 92% — /areas/bannerghatta-road ↔ /areas/parappana-agrahara
+- 92% — /areas/banashankari ↔ /areas/singasandra
+- 92% — /areas/banashankari ↔ /areas/ejipura
+- 92% — /areas/kr-puram ↔ /areas/panathur-road
+- 92% — /areas/gunjur ↔ /areas/mahadevapura
+- 92% — /areas/kasavanahalli ↔ /areas/mahadevapura
+- 92% — /areas/domlur ↔ /areas/panathur-road
+- 92% — /areas/choodasandra ↔ /areas/kanakapura-road
+- 92% — /areas/brookefield ↔ /areas/kadubeesanahalli
+- 92% — /areas/gunjur ↔ /areas/kr-puram
+- 92% — /areas/kadubeesanahalli ↔ /areas/kasavanahalli
+- 92% — /areas/harlur ↔ /areas/madiwala
+- 92% — /areas/harlur ↔ /areas/kudlu-gate
+- 92% — /areas/bommanahalli ↔ /areas/harlur
+- 92% — /areas/bommanahalli ↔ /areas/ejipura
+- 92% — /areas/banashankari ↔ /areas/parappana-agrahara
+- 92% — /areas/choodasandra ↔ /areas/parappana-agrahara
+- 92% — /areas/banashankari ↔ /areas/kanakapura-road
+- 92% — /areas/harlur ↔ /areas/singasandra
+- 92% — /areas/ejipura ↔ /areas/singasandra
+- 92% — /areas/ejipura ↔ /areas/harlur
+- 92% — /areas/bannerghatta-road ↔ /areas/choodasandra
+- 92% — /areas/brookefield ↔ /areas/kalyan-nagar
+- 92% — /areas/kr-puram ↔ /areas/mahadevapura
+- 92% — /areas/ejipura ↔ /areas/madiwala
+- 92% — /areas/ejipura ↔ /areas/kudlu-gate
+- 92% — /areas/domlur ↔ /areas/varthur
+- 92% — /areas/bommanahalli ↔ /areas/kanakapura-road
+- 92% — /areas/domlur ↔ /areas/kalyan-nagar
+- 92% — /areas/kalyan-nagar ↔ /areas/kasavanahalli
+- 92% — /areas/harlur ↔ /areas/parappana-agrahara
+- 92% — /areas/kanakapura-road ↔ /areas/singasandra
+- 92% — /areas/harlur ↔ /areas/kanakapura-road
+- 92% — /areas/ejipura ↔ /areas/kanakapura-road
+- 92% — /areas/banashankari ↔ /areas/bannerghatta-road
+- 92% — /areas/domlur ↔ /areas/kadubeesanahalli
+- 92% — /areas/kalyan-nagar ↔ /areas/panathur-road
+- 92% — /areas/madiwala ↔ /areas/parappana-agrahara
+- 92% — /areas/domlur ↔ /areas/mahadevapura
+- 92% — /areas/kanakapura-road ↔ /areas/madiwala
+- 92% — /areas/kanakapura-road ↔ /areas/kudlu-gate
+- 92% — /areas/kadubeesanahalli ↔ /areas/mahadevapura
+- 92% — /areas/kadubeesanahalli ↔ /areas/varthur
+- 92% — /areas/gunjur ↔ /areas/kalyan-nagar
+- 92% — /areas/domlur ↔ /areas/kr-puram
+- 92% — /areas/peenya ↔ /areas/yeshwanthpur
+- 92% — /areas/ejipura ↔ /areas/parappana-agrahara
+- 92% — /areas/bannerghatta-road ↔ /areas/bommanahalli
+- 91% — /areas/bannerghatta-road ↔ /areas/singasandra
+- 91% — /areas/bannerghatta-road ↔ /areas/harlur
+- 91% — /areas/bannerghatta-road ↔ /areas/ejipura
+- 91% — /areas/bannerghatta-road ↔ /areas/madiwala
+- 91% — /areas/bannerghatta-road ↔ /areas/kudlu-gate
+- 91% — /areas/kadubeesanahalli ↔ /areas/kr-puram
+- 91% — /areas/kalyan-nagar ↔ /areas/mahadevapura
+- 91% — /areas/kalyan-nagar ↔ /areas/varthur
 - 91% — /areas/peenya ↔ /areas/rajajinagar
-- 91% — /areas/kudlu-gate ↔ /areas/parappana-agrahara
-- 91% — /areas/banashankari ↔ /areas/harlur
-- 91% — /areas/choodasandra ↔ /areas/singasandra
-- 91% — /areas/choodasandra ↔ /areas/ejipura
-- 91% — /areas/peenya ↔ /areas/yelahanka
-- 91% — /areas/brookefield ↔ /areas/domlur
-- 91% — /areas/peenya ↔ /areas/yeshwanthpur
-- 91% — /areas/yelahanka ↔ /areas/yeshwanthpur
-- 91% — /areas/banashankari ↔ /areas/madiwala
-- 91% — /areas/banashankari ↔ /areas/kudlu-gate
-- 91% — /areas/choodasandra ↔ /areas/madiwala
-- 91% — /areas/choodasandra ↔ /areas/kudlu-gate
-- 91% — /areas/banashankari ↔ /areas/bommanahalli
-- 91% — /areas/kasavanahalli ↔ /areas/kr-puram
-- 91% — /areas/domlur ↔ /areas/gunjur
-- 91% — /areas/domlur ↔ /areas/kasavanahalli
-- 91% — /areas/kr-puram ↔ /areas/varthur
-- 91% — /areas/mg-road ↔ /areas/peenya
-- 91% — /areas/bommanahalli ↔ /areas/parappana-agrahara
-- 91% — /areas/bannerghatta-road ↔ /areas/parappana-agrahara
-- 91% — /areas/banashankari ↔ /areas/singasandra
-- 91% — /areas/banashankari ↔ /areas/ejipura
-- 91% — /areas/kr-puram ↔ /areas/panathur-road
-- 91% — /areas/gunjur ↔ /areas/mahadevapura
-- 91% — /areas/kasavanahalli ↔ /areas/mahadevapura
-- 91% — /areas/domlur ↔ /areas/panathur-road
-- 91% — /areas/choodasandra ↔ /areas/kanakapura-road
-- 91% — /areas/brookefield ↔ /areas/kadubeesanahalli
-- 91% — /areas/malleshwaram ↔ /areas/rajajinagar
-- 91% — /areas/gunjur ↔ /areas/kr-puram
-- 91% — /areas/kadubeesanahalli ↔ /areas/kasavanahalli
-- 91% — /areas/harlur ↔ /areas/madiwala
-- 91% — /areas/harlur ↔ /areas/kudlu-gate
-- 91% — /areas/bommanahalli ↔ /areas/harlur
-- 91% — /areas/bommanahalli ↔ /areas/ejipura
-- 91% — /areas/mg-road ↔ /areas/yelahanka
-- 91% — /areas/banashankari ↔ /areas/parappana-agrahara
-- 91% — /areas/choodasandra ↔ /areas/parappana-agrahara
-- 91% — /areas/banashankari ↔ /areas/kanakapura-road
-- 91% — /areas/harlur ↔ /areas/singasandra
-- 91% — /areas/ejipura ↔ /areas/singasandra
-- 91% — /areas/ejipura ↔ /areas/harlur
-- 91% — /areas/malleshwaram ↔ /areas/peenya
-- 91% — /areas/malleshwaram ↔ /areas/yelahanka
-- 91% — /areas/bannerghatta-road ↔ /areas/choodasandra
-- 90% — /areas/brookefield ↔ /areas/kalyan-nagar
-- 90% — /areas/kr-puram ↔ /areas/mahadevapura
-- 90% — /areas/ejipura ↔ /areas/madiwala
-- 90% — /areas/ejipura ↔ /areas/kudlu-gate
-- 90% — /areas/rajajinagar ↔ /areas/yelahanka
-- 90% — /areas/domlur ↔ /areas/varthur
-- 90% — /areas/bommanahalli ↔ /areas/kanakapura-road
-- 90% — /areas/domlur ↔ /areas/kalyan-nagar
-- 90% — /areas/kalyan-nagar ↔ /areas/kasavanahalli
-- 90% — /areas/malleshwaram ↔ /areas/mg-road
-- 90% — /areas/harlur ↔ /areas/parappana-agrahara
-- 90% — /areas/kanakapura-road ↔ /areas/singasandra
-- 90% — /areas/harlur ↔ /areas/kanakapura-road
-- 90% — /areas/ejipura ↔ /areas/kanakapura-road
-- 90% — /areas/banashankari ↔ /areas/bannerghatta-road
-- 90% — /areas/domlur ↔ /areas/kadubeesanahalli
-- 90% — /areas/kalyan-nagar ↔ /areas/panathur-road
-- 90% — /areas/madiwala ↔ /areas/parappana-agrahara
-- 90% — /areas/domlur ↔ /areas/mahadevapura
-- 90% — /areas/kanakapura-road ↔ /areas/madiwala
-- 90% — /areas/kanakapura-road ↔ /areas/kudlu-gate
-- 90% — /areas/kadubeesanahalli ↔ /areas/mahadevapura
-- 90% — /areas/kadubeesanahalli ↔ /areas/varthur
-- 90% — /areas/gunjur ↔ /areas/kalyan-nagar
-- 90% — /areas/domlur ↔ /areas/kr-puram
-- 90% — /areas/ejipura ↔ /areas/parappana-agrahara
-- 90% — /areas/bannerghatta-road ↔ /areas/bommanahalli
-- 90% — /areas/bannerghatta-road ↔ /areas/singasandra
-- 90% — /areas/bannerghatta-road ↔ /areas/harlur
-- 90% — /areas/bannerghatta-road ↔ /areas/ejipura
+- 91% — /areas/domlur ↔ /areas/hal
+- 91% — /areas/hal ↔ /areas/kasavanahalli
+- 91% — /areas/hal ↔ /areas/panathur-road
+- 91% — /areas/brookefield ↔ /areas/hal
+- 91% — /areas/kalyan-nagar ↔ /areas/kr-puram
+- 91% — /areas/kadubeesanahalli ↔ /areas/kalyan-nagar
+- 91% — /areas/gunjur ↔ /areas/hal
+- 91% — /areas/malleshwaram ↔ /areas/mg-road
+- 90% — /areas/hal ↔ /areas/varthur
+- 90% — /areas/peenya ↔ /areas/yelahanka
 - 90% — /areas/rajajinagar ↔ /areas/yeshwanthpur
-- 90% — /areas/bannerghatta-road ↔ /areas/madiwala
-- 90% — /areas/bannerghatta-road ↔ /areas/kudlu-gate
-- 90% — /areas/kadubeesanahalli ↔ /areas/kr-puram
-- 90% — /areas/kalyan-nagar ↔ /areas/mahadevapura
-- 90% — /areas/kalyan-nagar ↔ /areas/varthur
-- 89% — /areas/domlur ↔ /areas/hal
+- 90% — /areas/yelahanka ↔ /areas/yeshwanthpur
+- 90% — /areas/mg-road ↔ /areas/peenya
+- 90% — /areas/mg-road ↔ /areas/yelahanka
+- 90% — /areas/hal ↔ /areas/kr-puram
+- 90% — /areas/hal ↔ /areas/mahadevapura
+- 90% — /areas/hal ↔ /areas/kalyan-nagar
+- 90% — /areas/malleshwaram ↔ /areas/rajajinagar
+- 90% — /areas/malleshwaram ↔ /areas/yelahanka
+- 90% — /areas/hal ↔ /areas/kadubeesanahalli
+- 90% — /areas/malleshwaram ↔ /areas/peenya
+- 90% — /areas/rajajinagar ↔ /areas/yelahanka
+- 89% — /areas/kasavanahalli ↔ /areas/yelahanka
+- 89% — /areas/kalyan-nagar ↔ /areas/yelahanka
+- 89% — /areas/brookefield ↔ /areas/yelahanka
+- 89% — /areas/panathur-road ↔ /areas/yelahanka
+- 89% — /areas/gunjur ↔ /areas/yelahanka
+- 89% — /areas/varthur ↔ /areas/yelahanka
+- 89% — /areas/kr-puram ↔ /areas/yelahanka
 - 89% — /areas/mg-road ↔ /areas/yeshwanthpur
-- 89% — /areas/hal ↔ /areas/kasavanahalli
-- 89% — /areas/mg-road ↔ /areas/rajajinagar
-- 89% — /areas/hal ↔ /areas/panathur-road
-- 89% — /areas/brookefield ↔ /areas/hal
-- 89% — /areas/kalyan-nagar ↔ /areas/kr-puram
-- 89% — /areas/kadubeesanahalli ↔ /areas/kalyan-nagar
-- 89% — /areas/gunjur ↔ /areas/hal
-- 89% — /areas/malleshwaram ↔ /areas/yeshwanthpur
-- 89% — /areas/hal ↔ /areas/varthur
-- 88% — /areas/hal ↔ /areas/kr-puram
-- 88% — /areas/hal ↔ /areas/mahadevapura
-- 88% — /areas/hal ↔ /areas/kalyan-nagar
-- 88% — /areas/hal ↔ /areas/kadubeesanahalli
-- 86% — /areas/choodasandra ↔ /areas/kasavanahalli
-- 85% — /areas/harlur ↔ /areas/kasavanahalli
-- 85% — /areas/choodasandra ↔ /areas/gunjur
-- 85% — /areas/brookefield ↔ /areas/choodasandra
-- 85% — /areas/harlur ↔ /areas/panathur-road
-- 85% — /areas/brookefield ↔ /areas/harlur
-- 85% — /areas/gunjur ↔ /areas/harlur
-- 85% — /areas/choodasandra ↔ /areas/panathur-road
-- 85% — /areas/choodasandra ↔ /areas/kalyan-nagar
-- 85% — /areas/harlur ↔ /areas/kalyan-nagar
-- 85% — /areas/banashankari ↔ /areas/gunjur
-- 85% — /areas/banashankari ↔ /areas/kasavanahalli
-- 85% — /areas/ejipura ↔ /areas/kasavanahalli
-- 85% — /areas/banashankari ↔ /areas/panathur-road
-- 85% — /areas/banashankari ↔ /areas/brookefield
-- 84% — /areas/harlur ↔ /areas/varthur
-- 84% — /areas/ejipura ↔ /areas/kalyan-nagar
-- 84% — /areas/brookefield ↔ /areas/singasandra
-- 84% — /areas/kudlu-gate ↔ /areas/panathur-road
-- 84% — /areas/ejipura ↔ /areas/gunjur
-- 84% — /areas/kasavanahalli ↔ /areas/singasandra
-- 84% — /areas/choodasandra ↔ /areas/varthur
-- 84% — /areas/kadubeesanahalli ↔ /areas/kanakapura-road
-- 84% — /areas/bommanahalli ↔ /areas/brookefield
-- 84% — /areas/banashankari ↔ /areas/kalyan-nagar
-- 84% — /areas/kasavanahalli ↔ /areas/madiwala
-- 84% — /areas/kasavanahalli ↔ /areas/kudlu-gate
-- 84% — /areas/choodasandra ↔ /areas/domlur
-- 84% — /areas/brookefield ↔ /areas/ejipura
-- 84% — /areas/bommanahalli ↔ /areas/kasavanahalli
-- 84% — /areas/harlur ↔ /areas/kr-puram
-- 84% — /areas/domlur ↔ /areas/harlur
-- 84% — /areas/madiwala ↔ /areas/panathur-road
-- 84% — /areas/choodasandra ↔ /areas/mahadevapura
-- 84% — /areas/banashankari ↔ /areas/varthur
-- 84% — /areas/kadubeesanahalli ↔ /areas/parappana-agrahara
-- 84% — /areas/brookefield ↔ /areas/madiwala
-- 84% — /areas/brookefield ↔ /areas/kudlu-gate
-- 84% — /areas/bommanahalli ↔ /areas/panathur-road
-- 84% — /areas/bommanahalli ↔ /areas/kalyan-nagar
-- 84% — /areas/kasavanahalli ↔ /areas/parappana-agrahara
-- 84% — /areas/harlur ↔ /areas/mahadevapura
-- 84% — /areas/gunjur ↔ /areas/madiwala
-- 84% — /areas/gunjur ↔ /areas/kudlu-gate
-- 84% — /areas/choodasandra ↔ /areas/kr-puram
-- 84% — /areas/banashankari ↔ /areas/domlur
-- 84% — /areas/panathur-road ↔ /areas/singasandra
-- 84% — /areas/kalyan-nagar ↔ /areas/singasandra
-- 84% — /areas/ejipura ↔ /areas/panathur-road
-- 84% — /areas/bommanahalli ↔ /areas/gunjur
-- 84% — /areas/bannerghatta-road ↔ /areas/kadubeesanahalli
-- 84% — /areas/panathur-road ↔ /areas/parappana-agrahara
-- 84% — /areas/choodasandra ↔ /areas/kadubeesanahalli
-- 84% — /areas/brookefield ↔ /areas/parappana-agrahara
-- 84% — /areas/brookefield ↔ /areas/kanakapura-road
-- 84% — /areas/domlur ↔ /areas/ejipura
-- 84% — /areas/kalyan-nagar ↔ /areas/madiwala
-- 84% — /areas/kalyan-nagar ↔ /areas/kudlu-gate
-- 84% — /areas/harlur ↔ /areas/kadubeesanahalli
-- 84% — /areas/gunjur ↔ /areas/singasandra
-- 84% — /areas/kanakapura-road ↔ /areas/kasavanahalli
-- 84% — /areas/singasandra ↔ /areas/varthur
-- 84% — /areas/ejipura ↔ /areas/varthur
-- 84% — /areas/banashankari ↔ /areas/kr-puram
-- 84% — /areas/hal ↔ /areas/harlur
-- 84% — /areas/banashankari ↔ /areas/kadubeesanahalli
-- 83% — /areas/kanakapura-road ↔ /areas/panathur-road
-- 83% — /areas/kalyan-nagar ↔ /areas/kanakapura-road
-- 83% — /areas/kasavanahalli ↔ /areas/yelahanka
-- 83% — /areas/madiwala ↔ /areas/varthur
-- 83% — /areas/kudlu-gate ↔ /areas/varthur
-- 83% — /areas/bommanahalli ↔ /areas/varthur
-- 83% — /areas/banashankari ↔ /areas/mahadevapura
-- 83% — /areas/gunjur ↔ /areas/parappana-agrahara
-- 83% — /areas/gunjur ↔ /areas/kanakapura-road
-- 83% — /areas/bannerghatta-road ↔ /areas/brookefield
-- 83% — /areas/kalyan-nagar ↔ /areas/yelahanka
-- 83% — /areas/choodasandra ↔ /areas/hal
-- 83% — /areas/brookefield ↔ /areas/yelahanka
-- 83% — /areas/bommanahalli ↔ /areas/domlur
-- 83% — /areas/parappana-agrahara ↔ /areas/varthur
-- 83% — /areas/kalyan-nagar ↔ /areas/parappana-agrahara
-- 83% — /areas/bannerghatta-road ↔ /areas/kasavanahalli
-- 83% — /areas/domlur ↔ /areas/singasandra
-- 83% — /areas/bommanahalli ↔ /areas/mahadevapura
-- 83% — /areas/bannerghatta-road ↔ /areas/panathur-road
-- 83% — /areas/bannerghatta-road ↔ /areas/kalyan-nagar
-- 83% — /areas/kr-puram ↔ /areas/madiwala
-- 83% — /areas/kr-puram ↔ /areas/kudlu-gate
-- 83% — /areas/banashankari ↔ /areas/hal
-- 83% — /areas/panathur-road ↔ /areas/yelahanka
-- 83% — /areas/mahadevapura ↔ /areas/singasandra
-- 83% — /areas/ejipura ↔ /areas/mahadevapura
-- 83% — /areas/domlur ↔ /areas/madiwala
-- 83% — /areas/domlur ↔ /areas/kudlu-gate
-- 83% — /areas/bommanahalli ↔ /areas/kr-puram
-- 83% — /areas/kanakapura-road ↔ /areas/varthur
-- 83% — /areas/bommanahalli ↔ /areas/kadubeesanahalli
-- 83% — /areas/bannerghatta-road ↔ /areas/gunjur
-- 83% — /areas/ejipura ↔ /areas/hal
-- 83% — /areas/kasavanahalli ↔ /areas/peenya
-- 83% — /areas/gunjur ↔ /areas/yelahanka
-- 83% — /areas/madiwala ↔ /areas/mahadevapura
-- 83% — /areas/kudlu-gate ↔ /areas/mahadevapura
-- 83% — /areas/kr-puram ↔ /areas/singasandra
-- 83% — /areas/ejipura ↔ /areas/kr-puram
-- 83% — /areas/kadubeesanahalli ↔ /areas/singasandra
-- 83% — /areas/ejipura ↔ /areas/kadubeesanahalli
-- 83% — /areas/domlur ↔ /areas/kanakapura-road
-- 83% — /areas/varthur ↔ /areas/yelahanka
-- 83% — /areas/panathur-road ↔ /areas/peenya
-- 83% — /areas/brookefield ↔ /areas/peenya
-- 83% — /areas/kanakapura-road ↔ /areas/mahadevapura
-- 83% — /areas/kadubeesanahalli ↔ /areas/madiwala
-- 83% — /areas/kadubeesanahalli ↔ /areas/kudlu-gate
-- 83% — /areas/kr-puram ↔ /areas/yelahanka
-- 83% — /areas/banashankari ↔ /areas/peenya
-- 83% — /areas/gunjur ↔ /areas/peenya
-- 83% — /areas/banashankari ↔ /areas/yelahanka
-- 83% — /areas/choodasandra ↔ /areas/yelahanka
-- 83% — /areas/kr-puram ↔ /areas/parappana-agrahara
-- 83% — /areas/kanakapura-road ↔ /areas/kr-puram
-- 83% — /areas/domlur ↔ /areas/parappana-agrahara
-- 83% — /areas/bannerghatta-road ↔ /areas/varthur
-- 83% — /areas/hal ↔ /areas/madiwala
-- 83% — /areas/hal ↔ /areas/kudlu-gate
-- 83% — /areas/kalyan-nagar ↔ /areas/mg-road
-- 82% — /areas/bommanahalli ↔ /areas/hal
-- 82% — /areas/kalyan-nagar ↔ /areas/peenya
-- 82% — /areas/mahadevapura ↔ /areas/parappana-agrahara
-- 82% — /areas/bannerghatta-road ↔ /areas/domlur
-- 82% — /areas/hal ↔ /areas/singasandra
-- 82% — /areas/kasavanahalli ↔ /areas/mg-road
-- 82% — /areas/brookefield ↔ /areas/malleshwaram
-- 82% — /areas/choodasandra ↔ /areas/peenya
-- 82% — /areas/ejipura ↔ /areas/mg-road
-- 82% — /areas/bannerghatta-road ↔ /areas/mahadevapura
-- 82% — /areas/singasandra ↔ /areas/yelahanka
-- 82% — /areas/peenya ↔ /areas/varthur
-- 82% — /areas/mg-road ↔ /areas/panathur-road
-- 82% — /areas/kasavanahalli ↔ /areas/malleshwaram
-- 82% — /areas/harlur ↔ /areas/yelahanka
-- 82% — /areas/brookefield ↔ /areas/rajajinagar
-- 82% — /areas/brookefield ↔ /areas/mg-road
-- 82% — /areas/bannerghatta-road ↔ /areas/kr-puram
-- 82% — /areas/banashankari ↔ /areas/mg-road
-- 82% — /areas/madiwala ↔ /areas/yelahanka
-- 82% — /areas/kudlu-gate ↔ /areas/yelahanka
-- 82% — /areas/kasavanahalli ↔ /areas/rajajinagar
-- 82% — /areas/gunjur ↔ /areas/mg-road
-- 82% — /areas/domlur ↔ /areas/yelahanka
-- 82% — /areas/bommanahalli ↔ /areas/yelahanka
-- 82% — /areas/hal ↔ /areas/parappana-agrahara
-- 82% — /areas/hal ↔ /areas/kanakapura-road
-- 82% — /areas/kasavanahalli ↔ /areas/yeshwanthpur
-- 82% — /areas/harlur ↔ /areas/peenya
-- 82% — /areas/mahadevapura ↔ /areas/yelahanka
-- 82% — /areas/ejipura ↔ /areas/yelahanka
-- 82% — /areas/parappana-agrahara ↔ /areas/yelahanka
-- 82% — /areas/domlur ↔ /areas/mg-road
-- 82% — /areas/panathur-road ↔ /areas/yeshwanthpur
-- 82% — /areas/madiwala ↔ /areas/peenya
-- 82% — /areas/kudlu-gate ↔ /areas/peenya
-- 82% — /areas/kr-puram ↔ /areas/peenya
-- 82% — /areas/malleshwaram ↔ /areas/panathur-road
-- 82% — /areas/kalyan-nagar ↔ /areas/malleshwaram
-- 82% — /areas/domlur ↔ /areas/peenya
-- 82% — /areas/choodasandra ↔ /areas/mg-road
-- 82% — /areas/brookefield ↔ /areas/yeshwanthpur
-- 82% — /areas/bommanahalli ↔ /areas/peenya
-- 82% — /areas/kr-puram ↔ /areas/yeshwanthpur
-- 82% — /areas/kadubeesanahalli ↔ /areas/yelahanka
-- 82% — /areas/mg-road ↔ /areas/varthur
-- 82% — /areas/gunjur ↔ /areas/yeshwanthpur
-- 82% — /areas/peenya ↔ /areas/singasandra
-- 82% — /areas/panathur-road ↔ /areas/rajajinagar
-- 82% — /areas/mahadevapura ↔ /areas/peenya
-- 82% — /areas/kalyan-nagar ↔ /areas/rajajinagar
-- 82% — /areas/gunjur ↔ /areas/malleshwaram
-- 82% — /areas/ejipura ↔ /areas/peenya
-- 82% — /areas/choodasandra ↔ /areas/malleshwaram
-- 82% — /areas/bannerghatta-road ↔ /areas/hal
-- 82% — /areas/kanakapura-road ↔ /areas/yelahanka
-- 82% — /areas/malleshwaram ↔ /areas/varthur
-- 82% — /areas/hal ↔ /areas/yelahanka
-- 82% — /areas/kalyan-nagar ↔ /areas/yeshwanthpur
-- 82% — /areas/gunjur ↔ /areas/rajajinagar
-- 82% — /areas/choodasandra ↔ /areas/rajajinagar
-- 81% — /areas/kadubeesanahalli ↔ /areas/peenya
-- 81% — /areas/rajajinagar ↔ /areas/varthur
-- 81% — /areas/harlur ↔ /areas/mg-road
-- 81% — /areas/banashankari ↔ /areas/yeshwanthpur
-- 81% — /areas/choodasandra ↔ /areas/yeshwanthpur
-- 81% — /areas/banashankari ↔ /areas/malleshwaram
-- 81% — /areas/hal ↔ /areas/mg-road
-- 81% — /areas/parappana-agrahara ↔ /areas/peenya
-- 81% — /areas/kanakapura-road ↔ /areas/peenya
-- 81% — /areas/varthur ↔ /areas/yeshwanthpur
-- 81% — /areas/malleshwaram ↔ /areas/singasandra
-- 81% — /areas/madiwala ↔ /areas/mg-road
-- 81% — /areas/kudlu-gate ↔ /areas/mg-road
-- 81% — /areas/kr-puram ↔ /areas/mg-road
-- 81% — /areas/hal ↔ /areas/peenya
-- 81% — /areas/bommanahalli ↔ /areas/mg-road
-- 81% — /areas/banashankari ↔ /areas/rajajinagar
-- 81% — /areas/bannerghatta-road ↔ /areas/yelahanka
-- 81% — /areas/rajajinagar ↔ /areas/singasandra
-- 81% — /areas/mg-road ↔ /areas/singasandra
-- 81% — /areas/mahadevapura ↔ /areas/mg-road
-- 81% — /areas/domlur ↔ /areas/malleshwaram
-- 81% — /areas/bommanahalli ↔ /areas/malleshwaram
-- 81% — /areas/harlur ↔ /areas/yeshwanthpur
-- 81% — /areas/mahadevapura ↔ /areas/malleshwaram
-- 81% — /areas/harlur ↔ /areas/malleshwaram
-- 81% — /areas/ejipura ↔ /areas/malleshwaram
-- 81% — /areas/domlur ↔ /areas/rajajinagar
-- 81% — /areas/bommanahalli ↔ /areas/rajajinagar
-- 81% — /areas/kadubeesanahalli ↔ /areas/mg-road
-- 81% — /areas/bannerghatta-road ↔ /areas/peenya
-- 81% — /areas/madiwala ↔ /areas/yeshwanthpur
-- 81% — /areas/kudlu-gate ↔ /areas/yeshwanthpur
-- 81% — /areas/mahadevapura ↔ /areas/rajajinagar
-- 81% — /areas/madiwala ↔ /areas/malleshwaram
-- 81% — /areas/kudlu-gate ↔ /areas/malleshwaram
-- 81% — /areas/kr-puram ↔ /areas/malleshwaram
-- 81% — /areas/harlur ↔ /areas/rajajinagar
-- 81% — /areas/ejipura ↔ /areas/rajajinagar
-- 81% — /areas/domlur ↔ /areas/yeshwanthpur
-- 81% — /areas/bommanahalli ↔ /areas/yeshwanthpur
-- 81% — /areas/mg-road ↔ /areas/parappana-agrahara
-- 81% — /areas/kanakapura-road ↔ /areas/mg-road
-- 81% — /areas/kadubeesanahalli ↔ /areas/malleshwaram
-- 81% — /areas/singasandra ↔ /areas/yeshwanthpur
-- 81% — /areas/mahadevapura ↔ /areas/yeshwanthpur
-- 81% — /areas/madiwala ↔ /areas/rajajinagar
-- 81% — /areas/kudlu-gate ↔ /areas/rajajinagar
-- 81% — /areas/kr-puram ↔ /areas/rajajinagar
-- 81% — /areas/ejipura ↔ /areas/yeshwanthpur
-- 81% — /areas/malleshwaram ↔ /areas/parappana-agrahara
-- 81% — /areas/kanakapura-road ↔ /areas/malleshwaram
-- 81% — /areas/kadubeesanahalli ↔ /areas/rajajinagar
-- 81% — /areas/parappana-agrahara ↔ /areas/rajajinagar
-- 81% — /areas/kanakapura-road ↔ /areas/rajajinagar
-- 81% — /areas/kadubeesanahalli ↔ /areas/yeshwanthpur
-- 80% — /areas/parappana-agrahara ↔ /areas/yeshwanthpur
-- 80% — /areas/kanakapura-road ↔ /areas/yeshwanthpur
-- 80% — /areas/bannerghatta-road ↔ /areas/mg-road
-- 80% — /areas/hal ↔ /areas/yeshwanthpur
-- 80% — /areas/hal ↔ /areas/malleshwaram
-- 80% — /areas/bannerghatta-road ↔ /areas/malleshwaram
-- 80% — /areas/hal ↔ /areas/rajajinagar
-- 80% — /areas/bannerghatta-road ↔ /areas/rajajinagar
-- 80% — /areas/bannerghatta-road ↔ /areas/yeshwanthpur
+- 89% — /areas/kasavanahalli ↔ /areas/peenya
+- 89% — /areas/banashankari ↔ /areas/yelahanka
+- 89% — /areas/choodasandra ↔ /areas/yelahanka
+- 89% — /areas/kalyan-nagar ↔ /areas/mg-road
+- 89% — /areas/panathur-road ↔ /areas/peenya
+- 88% — /areas/mg-road ↔ /areas/rajajinagar
+- 88% — /areas/brookefield ↔ /areas/peenya
+- 88% — /areas/banashankari ↔ /areas/peenya
+- 88% — /areas/kasavanahalli ↔ /areas/mg-road
+- 88% — /areas/gunjur ↔ /areas/peenya
+- 88% — /areas/ejipura ↔ /areas/mg-road
+- 88% — /areas/singasandra ↔ /areas/yelahanka
+- 88% — /areas/mg-road ↔ /areas/panathur-road
+- 88% — /areas/harlur ↔ /areas/yelahanka
+- 88% — /areas/brookefield ↔ /areas/malleshwaram
+- 88% — /areas/kalyan-nagar ↔ /areas/peenya
+- 88% — /areas/brookefield ↔ /areas/mg-road
+- 88% — /areas/banashankari ↔ /areas/mg-road
+- 88% — /areas/madiwala ↔ /areas/yelahanka
+- 88% — /areas/kudlu-gate ↔ /areas/yelahanka
+- 88% — /areas/kasavanahalli ↔ /areas/malleshwaram
+- 88% — /areas/gunjur ↔ /areas/mg-road
+- 88% — /areas/malleshwaram ↔ /areas/yeshwanthpur
+- 88% — /areas/domlur ↔ /areas/yelahanka
+- 88% — /areas/choodasandra ↔ /areas/peenya
+- 88% — /areas/bommanahalli ↔ /areas/yelahanka
+- 88% — /areas/peenya ↔ /areas/varthur
+- 88% — /areas/brookefield ↔ /areas/rajajinagar
+- 88% — /areas/mahadevapura ↔ /areas/yelahanka
+- 88% — /areas/ejipura ↔ /areas/yelahanka
+- 88% — /areas/parappana-agrahara ↔ /areas/yelahanka
+- 88% — /areas/domlur ↔ /areas/mg-road
+- 88% — /areas/kasavanahalli ↔ /areas/rajajinagar
+- 88% — /areas/choodasandra ↔ /areas/mg-road
+- 88% — /areas/kadubeesanahalli ↔ /areas/yelahanka
+- 88% — /areas/choodasandra ↔ /areas/kasavanahalli
+- 88% — /areas/mg-road ↔ /areas/varthur
+- 88% — /areas/kasavanahalli ↔ /areas/yeshwanthpur
+- 88% — /areas/harlur ↔ /areas/peenya
+- 88% — /areas/malleshwaram ↔ /areas/panathur-road
+- 88% — /areas/kalyan-nagar ↔ /areas/malleshwaram
+- 88% — /areas/harlur ↔ /areas/kasavanahalli
+- 88% — /areas/kanakapura-road ↔ /areas/yelahanka
+- 88% — /areas/panathur-road ↔ /areas/yeshwanthpur
+- 88% — /areas/madiwala ↔ /areas/peenya
+- 88% — /areas/kudlu-gate ↔ /areas/peenya
+- 88% — /areas/kr-puram ↔ /areas/peenya
+- 88% — /areas/hal ↔ /areas/yelahanka
+- 88% — /areas/gunjur ↔ /areas/malleshwaram
+- 88% — /areas/domlur ↔ /areas/peenya
+- 88% — /areas/choodasandra ↔ /areas/malleshwaram
+- 88% — /areas/brookefield ↔ /areas/yeshwanthpur
+- 88% — /areas/bommanahalli ↔ /areas/peenya
+- 88% — /areas/kr-puram ↔ /areas/yeshwanthpur
+- 88% — /areas/choodasandra ↔ /areas/gunjur
+- 88% — /areas/malleshwaram ↔ /areas/varthur
+- 88% — /areas/harlur ↔ /areas/mg-road
+- 88% — /areas/gunjur ↔ /areas/yeshwanthpur
+- 88% — /areas/peenya ↔ /areas/singasandra
+- 88% — /areas/panathur-road ↔ /areas/rajajinagar
+- 88% — /areas/mahadevapura ↔ /areas/peenya
+- 88% — /areas/kalyan-nagar ↔ /areas/rajajinagar
+- 88% — /areas/ejipura ↔ /areas/peenya
+- 87% — /areas/hal ↔ /areas/mg-road
+- 87% — /areas/madiwala ↔ /areas/mg-road
+- 87% — /areas/kudlu-gate ↔ /areas/mg-road
+- 87% — /areas/kr-puram ↔ /areas/mg-road
+- 87% — /areas/brookefield ↔ /areas/choodasandra
+- 87% — /areas/kalyan-nagar ↔ /areas/yeshwanthpur
+- 87% — /areas/gunjur ↔ /areas/rajajinagar
+- 87% — /areas/choodasandra ↔ /areas/rajajinagar
+- 87% — /areas/bommanahalli ↔ /areas/mg-road
+- 87% — /areas/banashankari ↔ /areas/malleshwaram
+- 87% — /areas/kadubeesanahalli ↔ /areas/peenya
+- 87% — /areas/bannerghatta-road ↔ /areas/yelahanka
+- 87% — /areas/harlur ↔ /areas/panathur-road
+- 87% — /areas/brookefield ↔ /areas/harlur
+- 87% — /areas/rajajinagar ↔ /areas/varthur
+- 87% — /areas/malleshwaram ↔ /areas/singasandra
+- 87% — /areas/banashankari ↔ /areas/yeshwanthpur
+- 87% — /areas/mg-road ↔ /areas/singasandra
+- 87% — /areas/mahadevapura ↔ /areas/mg-road
+- 87% — /areas/choodasandra ↔ /areas/yeshwanthpur
+- 87% — /areas/parappana-agrahara ↔ /areas/peenya
+- 87% — /areas/kanakapura-road ↔ /areas/peenya
+- 87% — /areas/gunjur ↔ /areas/harlur
+- 87% — /areas/varthur ↔ /areas/yeshwanthpur
+- 87% — /areas/hal ↔ /areas/peenya
+- 87% — /areas/choodasandra ↔ /areas/panathur-road
+- 87% — /areas/choodasandra ↔ /areas/kalyan-nagar
+- 87% — /areas/domlur ↔ /areas/malleshwaram
+- 87% — /areas/bommanahalli ↔ /areas/malleshwaram
+- 87% — /areas/banashankari ↔ /areas/rajajinagar
+- 87% — /areas/kadubeesanahalli ↔ /areas/mg-road
+- 87% — /areas/harlur ↔ /areas/kalyan-nagar
+- 87% — /areas/banashankari ↔ /areas/gunjur
+- 87% — /areas/rajajinagar ↔ /areas/singasandra
+- 87% — /areas/banashankari ↔ /areas/kasavanahalli
+- 87% — /areas/mahadevapura ↔ /areas/malleshwaram
+- 87% — /areas/harlur ↔ /areas/malleshwaram
+- 87% — /areas/ejipura ↔ /areas/malleshwaram
+- 87% — /areas/mg-road ↔ /areas/parappana-agrahara
+- 87% — /areas/kanakapura-road ↔ /areas/mg-road
+- 87% — /areas/ejipura ↔ /areas/kasavanahalli
+- 87% — /areas/harlur ↔ /areas/yeshwanthpur
+- 87% — /areas/banashankari ↔ /areas/panathur-road
+- 87% — /areas/madiwala ↔ /areas/malleshwaram
+- 87% — /areas/kudlu-gate ↔ /areas/malleshwaram
+- 87% — /areas/kr-puram ↔ /areas/malleshwaram
+- 87% — /areas/domlur ↔ /areas/rajajinagar
+- 87% — /areas/bommanahalli ↔ /areas/rajajinagar
+- 87% — /areas/banashankari ↔ /areas/brookefield
+- 87% — /areas/harlur ↔ /areas/varthur
+- 87% — /areas/kadubeesanahalli ↔ /areas/malleshwaram
+- 87% — /areas/bannerghatta-road ↔ /areas/peenya
+- 87% — /areas/ejipura ↔ /areas/kalyan-nagar
+- 87% — /areas/madiwala ↔ /areas/yeshwanthpur
+- 87% — /areas/kudlu-gate ↔ /areas/yeshwanthpur
+- 87% — /areas/brookefield ↔ /areas/singasandra
+- 87% — /areas/mahadevapura ↔ /areas/rajajinagar
+- 87% — /areas/harlur ↔ /areas/rajajinagar
+- 87% — /areas/ejipura ↔ /areas/rajajinagar
+- 87% — /areas/domlur ↔ /areas/yeshwanthpur
+- 87% — /areas/bommanahalli ↔ /areas/yeshwanthpur
+- 87% — /areas/malleshwaram ↔ /areas/parappana-agrahara
+- 87% — /areas/kanakapura-road ↔ /areas/malleshwaram
+- 87% — /areas/kudlu-gate ↔ /areas/panathur-road
+- 87% — /areas/ejipura ↔ /areas/gunjur
+- 87% — /areas/kasavanahalli ↔ /areas/singasandra
+- 87% — /areas/choodasandra ↔ /areas/varthur
+- 87% — /areas/singasandra ↔ /areas/yeshwanthpur
+- 87% — /areas/mahadevapura ↔ /areas/yeshwanthpur
+- 87% — /areas/madiwala ↔ /areas/rajajinagar
+- 87% — /areas/kudlu-gate ↔ /areas/rajajinagar
+- 87% — /areas/kr-puram ↔ /areas/rajajinagar
+- 87% — /areas/kadubeesanahalli ↔ /areas/kanakapura-road
+- 87% — /areas/ejipura ↔ /areas/yeshwanthpur
+- 87% — /areas/bommanahalli ↔ /areas/brookefield
+- 87% — /areas/banashankari ↔ /areas/kalyan-nagar
+- 87% — /areas/kadubeesanahalli ↔ /areas/rajajinagar
+- 87% — /areas/bannerghatta-road ↔ /areas/mg-road
+- 87% — /areas/kasavanahalli ↔ /areas/madiwala
+- 87% — /areas/kasavanahalli ↔ /areas/kudlu-gate
+- 87% — /areas/choodasandra ↔ /areas/domlur
+- 87% — /areas/brookefield ↔ /areas/ejipura
+- 87% — /areas/bommanahalli ↔ /areas/kasavanahalli
+- 87% — /areas/parappana-agrahara ↔ /areas/rajajinagar
+- 87% — /areas/harlur ↔ /areas/kr-puram
+- 87% — /areas/kanakapura-road ↔ /areas/rajajinagar
+- 87% — /areas/kadubeesanahalli ↔ /areas/yeshwanthpur
+- 87% — /areas/domlur ↔ /areas/harlur
+- 86% — /areas/madiwala ↔ /areas/panathur-road
+- 86% — /areas/choodasandra ↔ /areas/mahadevapura
+- 86% — /areas/banashankari ↔ /areas/varthur
+- 86% — /areas/kadubeesanahalli ↔ /areas/parappana-agrahara
+- 86% — /areas/hal ↔ /areas/malleshwaram
+- 86% — /areas/brookefield ↔ /areas/madiwala
+- 86% — /areas/brookefield ↔ /areas/kudlu-gate
+- 86% — /areas/bommanahalli ↔ /areas/panathur-road
+- 86% — /areas/bommanahalli ↔ /areas/kalyan-nagar
+- 86% — /areas/kasavanahalli ↔ /areas/parappana-agrahara
+- 86% — /areas/parappana-agrahara ↔ /areas/yeshwanthpur
+- 86% — /areas/kanakapura-road ↔ /areas/yeshwanthpur
+- 86% — /areas/bannerghatta-road ↔ /areas/malleshwaram
+- 86% — /areas/harlur ↔ /areas/mahadevapura
+- 86% — /areas/hal ↔ /areas/yeshwanthpur
+- 86% — /areas/gunjur ↔ /areas/madiwala
+- 86% — /areas/gunjur ↔ /areas/kudlu-gate
+- 86% — /areas/choodasandra ↔ /areas/kr-puram
+- 86% — /areas/banashankari ↔ /areas/domlur
+- 86% — /areas/panathur-road ↔ /areas/singasandra
+- 86% — /areas/kalyan-nagar ↔ /areas/singasandra
+- 86% — /areas/ejipura ↔ /areas/panathur-road
+- 86% — /areas/bommanahalli ↔ /areas/gunjur
+- 86% — /areas/bannerghatta-road ↔ /areas/kadubeesanahalli
+- 86% — /areas/panathur-road ↔ /areas/parappana-agrahara
+- 86% — /areas/choodasandra ↔ /areas/kadubeesanahalli
+- 86% — /areas/brookefield ↔ /areas/parappana-agrahara
+- 86% — /areas/brookefield ↔ /areas/kanakapura-road
+- 86% — /areas/domlur ↔ /areas/ejipura
+- 86% — /areas/kalyan-nagar ↔ /areas/madiwala
+- 86% — /areas/kalyan-nagar ↔ /areas/kudlu-gate
+- 86% — /areas/harlur ↔ /areas/kadubeesanahalli
+- 86% — /areas/hal ↔ /areas/rajajinagar
+- 86% — /areas/gunjur ↔ /areas/singasandra
+- 86% — /areas/kanakapura-road ↔ /areas/kasavanahalli
+- 86% — /areas/bannerghatta-road ↔ /areas/rajajinagar
+- 86% — /areas/singasandra ↔ /areas/varthur
+- 86% — /areas/ejipura ↔ /areas/varthur
+- 86% — /areas/banashankari ↔ /areas/kr-puram
+- 86% — /areas/banashankari ↔ /areas/kadubeesanahalli
+- 86% — /areas/hal ↔ /areas/harlur
+- 86% — /areas/kanakapura-road ↔ /areas/panathur-road
+- 86% — /areas/kalyan-nagar ↔ /areas/kanakapura-road
+- 86% — /areas/bannerghatta-road ↔ /areas/yeshwanthpur
+- 86% — /areas/madiwala ↔ /areas/varthur
+- 86% — /areas/kudlu-gate ↔ /areas/varthur
+- 86% — /areas/bommanahalli ↔ /areas/varthur
+- 86% — /areas/banashankari ↔ /areas/mahadevapura
+- 86% — /areas/gunjur ↔ /areas/parappana-agrahara
+- 86% — /areas/gunjur ↔ /areas/kanakapura-road
+- 86% — /areas/bannerghatta-road ↔ /areas/brookefield
+- 86% — /areas/choodasandra ↔ /areas/hal
+- 86% — /areas/bommanahalli ↔ /areas/domlur
+- 86% — /areas/parappana-agrahara ↔ /areas/varthur
+- 86% — /areas/kalyan-nagar ↔ /areas/parappana-agrahara
+- 86% — /areas/bannerghatta-road ↔ /areas/kasavanahalli
+- 86% — /areas/domlur ↔ /areas/singasandra
+- 86% — /areas/bommanahalli ↔ /areas/mahadevapura
+- 86% — /areas/bannerghatta-road ↔ /areas/panathur-road
+- 86% — /areas/bannerghatta-road ↔ /areas/kalyan-nagar
+- 86% — /areas/kr-puram ↔ /areas/madiwala
+- 86% — /areas/kr-puram ↔ /areas/kudlu-gate
+- 86% — /areas/banashankari ↔ /areas/hal
+- 86% — /areas/mahadevapura ↔ /areas/singasandra
+- 86% — /areas/ejipura ↔ /areas/mahadevapura
+- 86% — /areas/domlur ↔ /areas/madiwala
+- 86% — /areas/domlur ↔ /areas/kudlu-gate
+- 86% — /areas/bommanahalli ↔ /areas/kr-puram
+- 86% — /areas/kanakapura-road ↔ /areas/varthur
+- 86% — /areas/bommanahalli ↔ /areas/kadubeesanahalli
+- 86% — /areas/bannerghatta-road ↔ /areas/gunjur
+- 86% — /areas/ejipura ↔ /areas/hal
+- 86% — /areas/madiwala ↔ /areas/mahadevapura
+- 86% — /areas/kudlu-gate ↔ /areas/mahadevapura
+- 86% — /areas/kr-puram ↔ /areas/singasandra
+- 86% — /areas/ejipura ↔ /areas/kr-puram
+- 85% — /areas/kadubeesanahalli ↔ /areas/singasandra
+- 85% — /areas/ejipura ↔ /areas/kadubeesanahalli
+- 85% — /areas/domlur ↔ /areas/kanakapura-road
+- 85% — /areas/kanakapura-road ↔ /areas/mahadevapura
+- 85% — /areas/kadubeesanahalli ↔ /areas/madiwala
+- 85% — /areas/kadubeesanahalli ↔ /areas/kudlu-gate
+- 85% — /areas/kr-puram ↔ /areas/parappana-agrahara
+- 85% — /areas/kanakapura-road ↔ /areas/kr-puram
+- 85% — /areas/domlur ↔ /areas/parappana-agrahara
+- 85% — /areas/bannerghatta-road ↔ /areas/varthur
+- 85% — /areas/hal ↔ /areas/madiwala
+- 85% — /areas/hal ↔ /areas/kudlu-gate
+- 85% — /areas/bommanahalli ↔ /areas/hal
+- 85% — /areas/mahadevapura ↔ /areas/parappana-agrahara
+- 85% — /areas/bannerghatta-road ↔ /areas/domlur
+- 85% — /areas/hal ↔ /areas/singasandra
+- 85% — /areas/bannerghatta-road ↔ /areas/mahadevapura
+- 85% — /areas/bannerghatta-road ↔ /areas/kr-puram
+- 85% — /areas/hal ↔ /areas/parappana-agrahara
+- 85% — /areas/hal ↔ /areas/kanakapura-road
+- 84% — /areas/bannerghatta-road ↔ /areas/hal
+- 46% — /areas/bellandur ↔ /areas/hebbal
+- 45% — /areas/btm-layout ↔ /areas/jp-nagar
+- 45% — /areas/hebbal ↔ /areas/jp-nagar
+- 44% — /areas/bellandur ↔ /areas/sarjapur-road
+- 44% — /areas/bellandur ↔ /areas/marathahalli
+- 44% — /areas/hebbal ↔ /areas/yelahanka
+- 44% — /areas/btm-layout ↔ /areas/jayanagar
+- 44% — /areas/sarjapur-road ↔ /areas/whitefield
+- 44% — /areas/jayanagar ↔ /areas/jp-nagar
+- 44% — /areas/marathahalli ↔ /areas/sarjapur-road
+- 44% — /areas/electronic-city ↔ /areas/parappana-agrahara
+- 44% — /areas/kasavanahalli ↔ /areas/sarjapur-road
+- 43% — /areas/hebbal ↔ /areas/sarjapur-road
+- 43% — /areas/jayanagar ↔ /areas/singasandra
+- 43% — /areas/banashankari ↔ /areas/jayanagar
+- 43% — /areas/jayanagar ↔ /areas/madiwala
+- 43% — /areas/choodasandra ↔ /areas/jayanagar
+- 43% — /areas/hebbal ↔ /areas/peenya
+- 43% — /areas/ejipura ↔ /areas/jayanagar
+- 43% — /areas/hebbal ↔ /areas/jayanagar
+- 43% — /areas/electronic-city ↔ /areas/jp-nagar
+- 43% — /areas/jayanagar ↔ /areas/kudlu-gate
+- 43% — /areas/btm-layout ↔ /areas/sarjapur-road
+- 43% — /areas/bommanahalli ↔ /areas/jayanagar
+- 43% — /areas/bannerghatta-road ↔ /areas/jayanagar
+- 43% — /areas/banashankari ↔ /areas/jp-nagar
+- 43% — /areas/harlur ↔ /areas/jayanagar
+- 43% — /areas/hebbal ↔ /areas/mg-road
+- 43% — /areas/jayanagar ↔ /areas/parappana-agrahara
+- 43% — /areas/electronic-city ↔ /areas/singasandra
+- 43% — /areas/jayanagar ↔ /areas/kanakapura-road
+- 43% — /areas/hebbal ↔ /areas/malleshwaram
+- 43% — /areas/btm-layout ↔ /areas/hebbal
+- 43% — /areas/electronic-city ↔ /areas/kudlu-gate
+- 43% — /areas/hebbal ↔ /areas/rajajinagar
+- 43% — /areas/jp-nagar ↔ /areas/sarjapur-road
+- 43% — /areas/hebbal ↔ /areas/marathahalli
+- 43% — /areas/hebbal ↔ /areas/yeshwanthpur
+- 43% — /areas/choodasandra ↔ /areas/jp-nagar
+- 43% — /areas/electronic-city ↔ /areas/kanakapura-road
+- 43% — /areas/hebbal ↔ /areas/kasavanahalli
+- 43% — /areas/bellandur ↔ /areas/whitefield
+- 43% — /areas/hebbal ↔ /areas/panathur-road
+- 43% — /areas/hebbal ↔ /areas/kalyan-nagar
+- 42% — /areas/jp-nagar ↔ /areas/singasandra
+- 42% — /areas/hebbal ↔ /areas/varthur
+- 42% — /areas/gunjur ↔ /areas/hebbal
+- 42% — /areas/bellandur ↔ /areas/panathur-road
+- 42% — /areas/brookefield ↔ /areas/hebbal
+- 42% — /areas/jp-nagar ↔ /areas/kudlu-gate
+- 42% — /areas/bommanahalli ↔ /areas/electronic-city
+- 42% — /areas/bannerghatta-road ↔ /areas/electronic-city
+- 42% — /areas/bommanahalli ↔ /areas/jp-nagar
+- 42% — /areas/banashankari ↔ /areas/hebbal
+- 42% — /areas/harlur ↔ /areas/jp-nagar
+- 42% — /areas/ejipura ↔ /areas/jp-nagar
+- 42% — /areas/hebbal ↔ /areas/kr-puram
+- 42% — /areas/btm-layout ↔ /areas/madiwala
+- 42% — /areas/choodasandra ↔ /areas/hebbal
+- 42% — /areas/jp-nagar ↔ /areas/madiwala
+- 42% — /areas/kalyan-nagar ↔ /areas/sarjapur-road
+- 42% — /areas/bannerghatta-road ↔ /areas/jp-nagar
+- 42% — /areas/brookefield ↔ /areas/sarjapur-road
+- 42% — /areas/hebbal ↔ /areas/mahadevapura
+- 42% — /areas/harlur ↔ /areas/hebbal
+- 42% — /areas/hebbal ↔ /areas/madiwala
+- 42% — /areas/hebbal ↔ /areas/kudlu-gate
+- 42% — /areas/jp-nagar ↔ /areas/parappana-agrahara
+- 42% — /areas/bellandur ↔ /areas/varthur
+- 42% — /areas/domlur ↔ /areas/hebbal
+- 42% — /areas/bommanahalli ↔ /areas/hebbal
+- 42% — /areas/bellandur ↔ /areas/kadubeesanahalli
+- 42% — /areas/hebbal ↔ /areas/singasandra
+- 42% — /areas/ejipura ↔ /areas/hebbal
+- 42% — /areas/jp-nagar ↔ /areas/kanakapura-road
+- 42% — /areas/choodasandra ↔ /areas/electronic-city
+- 42% — /areas/hal ↔ /areas/hebbal
+- 42% — /areas/panathur-road ↔ /areas/sarjapur-road
+- 42% — /areas/kr-puram ↔ /areas/sarjapur-road
+- 42% — /areas/sarjapur-road ↔ /areas/varthur
+- 42% — /areas/gunjur ↔ /areas/sarjapur-road
+- 42% — /areas/banashankari ↔ /areas/electronic-city
+- 42% — /areas/bellandur ↔ /areas/jp-nagar
+- 42% — /areas/hebbal ↔ /areas/parappana-agrahara
+- 42% — /areas/hebbal ↔ /areas/kadubeesanahalli
+- 42% — /areas/btm-layout ↔ /areas/choodasandra
+- 42% — /areas/bannerghatta-road ↔ /areas/btm-layout
+- 42% — /areas/electronic-city ↔ /areas/harlur
+- 42% — /areas/ejipura ↔ /areas/electronic-city
+- 42% — /areas/hebbal ↔ /areas/kanakapura-road
+- 42% — /areas/btm-layout ↔ /areas/koramangala
+- 42% — /areas/domlur ↔ /areas/sarjapur-road
+- 42% — /areas/btm-layout ↔ /areas/singasandra
+- 42% — /areas/btm-layout ↔ /areas/ejipura
+- 42% — /areas/electronic-city ↔ /areas/madiwala
+- 42% — /areas/banashankari ↔ /areas/btm-layout
+- 42% — /areas/bellandur ↔ /areas/kasavanahalli
+- 42% — /areas/mahadevapura ↔ /areas/sarjapur-road
+- 42% — /areas/btm-layout ↔ /areas/kudlu-gate
+- 42% — /areas/bommanahalli ↔ /areas/btm-layout
+- 42% — /areas/bannerghatta-road ↔ /areas/hebbal
+- 42% — /areas/indiranagar ↔ /areas/sarjapur-road
+- 42% — /areas/bellandur ↔ /areas/btm-layout
+- 42% — /areas/bellandur ↔ /areas/brookefield
+- 42% — /areas/btm-layout ↔ /areas/harlur
+- 42% — /areas/marathahalli ↔ /areas/whitefield
+- 42% — /areas/btm-layout ↔ /areas/electronic-city
+- 42% — /areas/brookefield ↔ /areas/indiranagar
+- 42% — /areas/bellandur ↔ /areas/kr-puram
+- 42% — /areas/hebbal ↔ /areas/whitefield
+- 42% — /areas/indiranagar ↔ /areas/kasavanahalli
+- 42% — /areas/bellandur ↔ /areas/gunjur
+- 42% — /areas/harlur ↔ /areas/hsr-layout
+- 42% — /areas/kadubeesanahalli ↔ /areas/sarjapur-road
+- 41% — /areas/brookefield ↔ /areas/marathahalli
+- 41% — /areas/btm-layout ↔ /areas/parappana-agrahara
+- 41% — /areas/bellandur ↔ /areas/kalyan-nagar
+- 41% — /areas/electronic-city ↔ /areas/hebbal
+- 41% — /areas/electronic-city ↔ /areas/sarjapur-road
+- 41% — /areas/btm-layout ↔ /areas/kanakapura-road
+- 41% — /areas/jayanagar ↔ /areas/whitefield
+- 41% — /areas/indiranagar ↔ /areas/panathur-road
+- 41% — /areas/indiranagar ↔ /areas/kalyan-nagar
+- 41% — /areas/jp-nagar ↔ /areas/koramangala
+- 41% — /areas/indiranagar ↔ /areas/kr-puram
+- 41% — /areas/marathahalli ↔ /areas/varthur
+- 41% — /areas/indiranagar ↔ /areas/varthur
+- 41% — /areas/jayanagar ↔ /areas/sarjapur-road
+- 41% — /areas/bellandur ↔ /areas/mahadevapura
+- 41% — /areas/gunjur ↔ /areas/indiranagar
+- 41% — /areas/jayanagar ↔ /areas/yelahanka
+- 41% — /areas/domlur ↔ /areas/indiranagar
+- 41% — /areas/jayanagar ↔ /areas/peenya
+- 41% — /areas/electronic-city ↔ /areas/jayanagar
+- 41% — /areas/bellandur ↔ /areas/indiranagar
+- 41% — /areas/bellandur ↔ /areas/domlur
+- 41% — /areas/jayanagar ↔ /areas/mg-road
+- 41% — /areas/indiranagar ↔ /areas/mahadevapura
+- 41% — /areas/marathahalli ↔ /areas/panathur-road
+- 41% — /areas/choodasandra ↔ /areas/hsr-layout
+- 41% — /areas/kasavanahalli ↔ /areas/marathahalli
+- 41% — /areas/jayanagar ↔ /areas/malleshwaram
+- 41% — /areas/hal ↔ /areas/sarjapur-road
+- 41% — /areas/kr-puram ↔ /areas/marathahalli
+- 41% — /areas/indiranagar ↔ /areas/kadubeesanahalli
+- 41% — /areas/gunjur ↔ /areas/marathahalli
+- 41% — /areas/jayanagar ↔ /areas/rajajinagar
+- 41% — /areas/hsr-layout ↔ /areas/singasandra
+- 41% — /areas/jp-nagar ↔ /areas/peenya
+- 41% — /areas/banashankari ↔ /areas/hsr-layout
+- 41% — /areas/jp-nagar ↔ /areas/marathahalli
+- 41% — /areas/btm-layout ↔ /areas/whitefield
+- 41% — /areas/mahadevapura ↔ /areas/marathahalli
+- 41% — /areas/hsr-layout ↔ /areas/kudlu-gate
+- 41% — /areas/bellandur ↔ /areas/hal
+- 41% — /areas/brookefield ↔ /areas/jayanagar
+- 41% — /areas/kalyan-nagar ↔ /areas/marathahalli
+- 41% — /areas/bommanahalli ↔ /areas/hsr-layout
+- 41% — /areas/jp-nagar ↔ /areas/mg-road
+- 41% — /areas/jayanagar ↔ /areas/kasavanahalli
+- 41% — /areas/jp-nagar ↔ /areas/yelahanka
+- 41% — /areas/ejipura ↔ /areas/hsr-layout
+- 41% — /areas/btm-layout ↔ /areas/marathahalli
+- 41% — /areas/brookefield ↔ /areas/whitefield
+- 41% — /areas/jayanagar ↔ /areas/yeshwanthpur
+- 41% — /areas/hsr-layout ↔ /areas/madiwala
+- 41% — /areas/jayanagar ↔ /areas/varthur
+- 41% — /areas/jayanagar ↔ /areas/koramangala
+- 41% — /areas/kr-puram ↔ /areas/whitefield
+- 41% — /areas/indiranagar ↔ /areas/whitefield
+- 41% — /areas/koramangala ↔ /areas/madiwala
+- 41% — /areas/bellandur ↔ /areas/jayanagar
+- 41% — /areas/domlur ↔ /areas/marathahalli
+- 41% — /areas/jayanagar ↔ /areas/panathur-road
+- 41% — /areas/jayanagar ↔ /areas/kalyan-nagar
+- 41% — /areas/sarjapur-road ↔ /areas/yelahanka
+- 41% — /areas/hsr-layout ↔ /areas/parappana-agrahara
+- 40% — /areas/bellandur ↔ /areas/electronic-city
+- 40% — /areas/gunjur ↔ /areas/jayanagar
+- 40% — /areas/kasavanahalli ↔ /areas/whitefield
+- 40% — /areas/jp-nagar ↔ /areas/whitefield
+- 40% — /areas/hal ↔ /areas/indiranagar
+- 40% — /areas/indiranagar ↔ /areas/marathahalli
+- 40% — /areas/hsr-layout ↔ /areas/kanakapura-road
+- 40% — /areas/panathur-road ↔ /areas/whitefield
+- 40% — /areas/hal ↔ /areas/marathahalli
+- 40% — /areas/kadubeesanahalli ↔ /areas/marathahalli
+- 40% — /areas/varthur ↔ /areas/whitefield
+- 40% — /areas/jp-nagar ↔ /areas/malleshwaram
+- 40% — /areas/bannerghatta-road ↔ /areas/hsr-layout
+- 40% — /areas/domlur ↔ /areas/jayanagar
+- 40% — /areas/kalyan-nagar ↔ /areas/whitefield
+- 40% — /areas/jayanagar ↔ /areas/mahadevapura
+- 40% — /areas/jp-nagar ↔ /areas/rajajinagar
+- 40% — /areas/harlur ↔ /areas/sarjapur-road
+- 40% — /areas/gunjur ↔ /areas/whitefield
+- 40% — /areas/jayanagar ↔ /areas/kr-puram
+- 40% — /areas/electronic-city ↔ /areas/hsr-layout
+- 40% — /areas/jp-nagar ↔ /areas/yeshwanthpur
+- 40% — /areas/hebbal ↔ /areas/indiranagar
+- 40% — /areas/peenya ↔ /areas/sarjapur-road
+- 40% — /areas/malleshwaram ↔ /areas/sarjapur-road
+- 40% — /areas/brookefield ↔ /areas/jp-nagar
+- 40% — /areas/jp-nagar ↔ /areas/kasavanahalli
+- 40% — /areas/mg-road ↔ /areas/sarjapur-road
+- 40% — /areas/rajajinagar ↔ /areas/sarjapur-road
+- 40% — /areas/jp-nagar ↔ /areas/panathur-road
+- 40% — /areas/jp-nagar ↔ /areas/kalyan-nagar
+- 40% — /areas/domlur ↔ /areas/whitefield
+- 40% — /areas/hal ↔ /areas/jayanagar
+- 40% — /areas/gunjur ↔ /areas/jp-nagar
+- 40% — /areas/jayanagar ↔ /areas/kadubeesanahalli
+- 40% — /areas/mahadevapura ↔ /areas/whitefield
+- 40% — /areas/ejipura ↔ /areas/koramangala
+- 40% — /areas/hebbal ↔ /areas/koramangala
+- 40% — /areas/electronic-city ↔ /areas/koramangala
+- 40% — /areas/choodasandra ↔ /areas/koramangala
+- 40% — /areas/bellandur ↔ /areas/yelahanka
+- 40% — /areas/jp-nagar ↔ /areas/varthur
+- 40% — /areas/sarjapur-road ↔ /areas/yeshwanthpur
+- 40% — /areas/electronic-city ↔ /areas/yelahanka
+- 40% — /areas/koramangala ↔ /areas/singasandra
+- 40% — /areas/choodasandra ↔ /areas/sarjapur-road
+- 40% — /areas/domlur ↔ /areas/jp-nagar
+- 40% — /areas/banashankari ↔ /areas/koramangala
+- 40% — /areas/koramangala ↔ /areas/kudlu-gate
+- 40% — /areas/jp-nagar ↔ /areas/mahadevapura
+- 40% — /areas/btm-layout ↔ /areas/yelahanka
+- 40% — /areas/sarjapur-road ↔ /areas/singasandra
+- 40% — /areas/kadubeesanahalli ↔ /areas/whitefield
+- 40% — /areas/banashankari ↔ /areas/sarjapur-road
+- 40% — /areas/jp-nagar ↔ /areas/kr-puram
+- 40% — /areas/bommanahalli ↔ /areas/koramangala
+- 40% — /areas/indiranagar ↔ /areas/yelahanka
+- 40% — /areas/indiranagar ↔ /areas/peenya
+- 40% — /areas/harlur ↔ /areas/koramangala
+- 40% — /areas/hsr-layout ↔ /areas/jayanagar
+- 40% — /areas/bommanahalli ↔ /areas/sarjapur-road
+- 40% — /areas/ejipura ↔ /areas/sarjapur-road
+- 40% — /areas/indiranagar ↔ /areas/mg-road
+- 40% — /areas/btm-layout ↔ /areas/peenya
+- 40% — /areas/madiwala ↔ /areas/sarjapur-road
+- 40% — /areas/kudlu-gate ↔ /areas/sarjapur-road
+- 40% — /areas/hal ↔ /areas/jp-nagar
+- 40% — /areas/bellandur ↔ /areas/peenya
+- 40% — /areas/jp-nagar ↔ /areas/kadubeesanahalli
+- 40% — /areas/electronic-city ↔ /areas/peenya
+- 40% — /areas/btm-layout ↔ /areas/mg-road
+- 40% — /areas/electronic-city ↔ /areas/malleshwaram
+- 40% — /areas/electronic-city ↔ /areas/kadubeesanahalli
+- 40% — /areas/hal ↔ /areas/whitefield
+- 40% — /areas/koramangala ↔ /areas/parappana-agrahara
+- 40% — /areas/bellandur ↔ /areas/mg-road
+- 40% — /areas/electronic-city ↔ /areas/mg-road
 
 ## Thin pages (<300 words)
 

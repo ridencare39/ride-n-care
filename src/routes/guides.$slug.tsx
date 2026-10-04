@@ -1,19 +1,25 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { GUIDES, getGuide } from "@/lib/guides";
-import { getService } from "@/lib/services";
+// Component-side lookup only (this route's lazy chunk); the loader uses a
+// dynamic import so the shared bundle never carries the guide content.
+import { getGuide } from "@/lib/guides";
+import { getServiceSummary } from "@/lib/service-summary";
 import { BRAND } from "@/lib/answers";
 import { SITE_URL } from "@/lib/seo";
 import { formatDate, pageHead } from "@/lib/head";
 import { graphForPage, articleNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
 
 export const Route = createFileRoute("/guides/$slug")({
-  loader: ({ params }) => {
-    const guide = getGuide(params.slug);
+  loader: async ({ params }) => {
+    // Dynamic import: route loaders/heads are compiled into the shared bundle,
+    // so the full guide content must load as its own chunk.
+    const { getGuide: lookup } = await import("@/lib/guides");
+    const guide = lookup(params.slug);
     if (!guide) throw notFound();
     return { guide };
   },
   head: ({ params, loaderData }) => {
-    const g = loaderData?.guide ?? GUIDES[0]!;
+    const g = loaderData?.guide;
+    if (!g) return { meta: [{ title: "Guide not found" }, { name: "robots", content: "noindex" }] };
     const url = `${SITE_URL}/guides/${params.slug}`;
     return {
       ...pageHead({
@@ -48,7 +54,7 @@ export const Route = createFileRoute("/guides/$slug")({
 
 function GuidePage() {
   const { guide: g } = Route.useLoaderData();
-  const services = g.services.map((s) => getService(s)).filter(Boolean);
+  const services = g.services.map((s) => getServiceSummary(s)).filter(Boolean);
 
   return (
     <article className="mx-auto max-w-3xl px-4 sm:px-6 py-16">

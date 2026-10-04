@@ -20,6 +20,13 @@ PAGES = [
     "/answers/bike-service-cost-bangalore", "/answers/car-service-cost-bangalore",
     "/answers/doorstep-vs-garage-bike", "/answers/how-long-bike-service",
     "/answers/areas-covered", "/answers/ev-service-different",
+    # Batch 3: new answers, EV page, brand pages, car×area wave-1 pairs
+    "/answers/car-service-interval", "/answers/ev-what-can-be-serviced",
+    "/answers/ktm-duke-200-service-cost", "/answers/brake-warning-signs-bike",
+    "/ev-two-wheeler-service",
+    "/royal-enfield-service", "/ktm-service", "/honda-two-wheeler-service", "/tvs-two-wheeler-service",
+    "/car-periodic-service/electronic-city", "/car-ac-service/koramangala",
+    "/car-battery-service/indiranagar", "/car-brake-service/btm-layout",
     "/about", "/contact", "/franchise", "/privacy", "/terms",
     "/guarantee", "/sample-invoice",
 ]
@@ -28,11 +35,12 @@ CALL = "+918069409289"
 WA_TEL_BAD = re.compile(r"tel:(08296950339|\+?918296950339)")
 UNVERIFIED = [
     "12000", "12,000", "4.8", "150+", "50+", "₹200 off", "200 off", "same-day slots", "30 minutes",
-    # Owner update 21 Sep 2026: hours wording is "Doorstep visits available 24 hours".
-    # These variants/contradictions must not return:
-    "24x7", "open 24 hours", "seven days a week", "any time you call",
-    "8 AM", "9 PM", "next morning", "not workable",
-    # No rating anywhere until the owner fills value + count (never schema-marked):
+    # Owner update 2 Oct 2026: official hours are 7:00 AM–11:30 PM, 7 days a week.
+    # Old 24-hour availability wording must never return — any variant:
+    "24x7", "24 hours", "24-hour", "open 24 hours", "seven days a week", "any time you call",
+    "at any hour", "any hour", "8 AM", "9 PM", "next morning", "not workable",
+    # No rating anywhere except the owner-confirmed 4.8/5 on / (lifted below);
+    # ratings are never schema-marked (AggregateRating stays banned):
     "4.7", "4.9", "4.7★", "4.9★", " on Google (",
     # Part 8B claim sweep — these must not return without owner approval (Q37–Q45):
     "seven days a week", "uniformed", "typically attended within",
@@ -41,8 +49,9 @@ UNVERIFIED = [
     "usually costs the same or less", "printed invoice", "printed warranty",
     "standard manufacturer warranty", "Brakes & Suspension", "free towing", "minutes away",
     # Combined task Task D — banned from new copy (ProcessGuide, homepage):
-    # NOTE: bare "seven days" is NOT banned — the live 7-day workmanship
-    # guarantee copy legitimately spells it out. The availability claim form is.
+    # NOTE: bare "seven days" is NOT banned as a token, but the live copy now
+    # uses the approved 45-day service warranty wording; the availability
+    # claim form is what's banned.
     "certified pros", "live updates", "on time", "on-time", "free pickup & drop",
     "open seven days", "uniformed", "printed price list",
     # Task 1 — the private Gmail must never appear public again (Q51):
@@ -153,6 +162,11 @@ for page in PAGES:
     else:
         # on / and /about the 12,000 ban is lifted; everything else stays banned
         _claims = [c for c in UNVERIFIED if c not in ("12000", "12,000")]
+        if page == "/":
+            # Owner confirmed 4.8/5 in the Google Business Profile on 2 Oct 2026 —
+            # homepage trust strip only, display text only. The schema scan below
+            # still bans "4.8", so AggregateRating can never slip in.
+            _claims = [c for c in _claims if c != "4.8"]
     for claim in _claims:
         if claim.lower() in _vis.lower():
             rec["errors"].append(f"banned claim '{claim}' in page text")

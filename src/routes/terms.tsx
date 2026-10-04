@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { pageHead } from "@/lib/head";
+import { CONTACT_EMAIL } from "@/lib/seo";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -34,9 +35,9 @@ const SECTIONS: { heading: string; body: string[] }[] = [
     ],
   },
   {
-    heading: "7-day workmanship guarantee",
+    heading: "45-day service warranty",
     body: [
-      "If the same problem comes back within 7 days of our visit because of the work we did, we fix it again at no extra labour cost. The guarantee covers workmanship, not new faults, accident damage or parts you supplied yourself.",
+      "If the same problem comes back within 45 days of our visit because of the work we did, we correct the work in accordance with the warranty. The warranty covers workmanship on eligible work — not new faults, accident damage or parts you supplied yourself.",
     ],
   },
   {
@@ -81,7 +82,8 @@ function TermsPage() {
       <p className="mt-10 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
         Questions about these terms? Call{" "}
         <a href="tel:+918069409289" className="font-semibold text-primary">080 6940 9289</a> or email{" "}
-        <a href="mailto:info@ridencare.co.in" className="font-semibold text-primary">info@ridencare.co.in</a>.
+        {/* Entity-encoded at runtime — accessible text, harder for scrapers (privacy task). */}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-primary" dangerouslySetInnerHTML={{ __html: CONTACT_EMAIL }} />.
       </p>
     </div>
   );

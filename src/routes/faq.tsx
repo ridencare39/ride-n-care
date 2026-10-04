@@ -11,7 +11,11 @@ const SECTIONS: { id: string; title: string; faqs: [string, string][] }[] = [
     faqs: [
       ["Do you really come to my home?", "Yes. Our mechanics arrive at your doorstep with tools, diagnostics and OEM-grade spares — across confirmed Bangalore localities. See the areas page for the full list."],
       ["Which areas do you cover in Bangalore?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar, Marathahalli and Sarjapur Road, among 40 confirmed localities — see our service areas page for the full list."],
-      ["What are your working hours?", "Doorstep visits are available 24 hours. Call 080 6940 9289 or WhatsApp 82969 50339 at any hour; the arrival window is confirmed when you book."],
+      ["What are Ride N Care's operating hours?", "Ride N Care is open 7:00 AM to 11:30 PM, 7 days a week, for doorstep bike and car service in Bangalore. Call 080 6940 9289 or WhatsApp 82969 50339 within those hours to book — actual booking and mechanic availability may vary, and the arrival window is confirmed when you book."],
+      ["Is Ride N Care open on Sundays?", "Yes. Ride N Care is open every day of the week, Sundays included, from 7:00 AM to 11:30 PM. Sunday and holiday slots are confirmed when you book; actual mechanic availability may vary."],
+      ["Can I book a bike service at night?", "You can request a booking until 11:30 PM — Ride N Care operates 7:00 AM to 11:30 PM, every day. Requests sent after closing are answered when the team resumes at 7:00 AM, and actual mechanic availability at any given time may vary."],
+      ["What time does Ride N Care close?", "Ride N Care closes at 11:30 PM every day and opens at 7:00 AM. Booking requests are taken up to closing time; anything later is confirmed for the following day where availability allows."],
+      ["Is doorstep bike service available every day in Bangalore?", "Yes — doorstep bike repair in Bangalore runs every day from 7:00 AM to 11:30 PM across the confirmed service areas. Book by call or WhatsApp and the arrival window is confirmed when you book; actual mechanic availability may vary."],
       ["Is doorstep service safe?", "All mechanics are background-verified and trained. Every visit runs on a written quote first, and you receive a digital invoice listing the parts fitted."],
     ],
   },
@@ -51,7 +55,7 @@ const SECTIONS: { id: string; title: string; faqs: [string, string][] }[] = [
     faqs: [
       ["How do I book a service?", "Tap Book Now and fill the short form, or WhatsApp 82969 50339. You'll get a written quote with the slot details before anything is dispatched."],
       ["How quickly can I get a slot?", "Availability varies by day and locality — call 080 6940 9289 or WhatsApp 82969 50339 and we confirm the earliest open slot for your area."],
-      ["What if a problem appears after service?", "Every job carries a 7-day workmanship guarantee. We revisit and fix at zero cost."],
+      ["What if a problem appears after service?", "Every job carries a 45-day service warranty. We inspect the work and correct it in accordance with the warranty."],
       ["Do you offer pickup & drop?", "Pickup and drop is arranged when a job genuinely needs the workshop — such as an engine rebuild or wheel alignment — with the estimate approved before the vehicle moves."],
     ],
   },
@@ -64,7 +68,7 @@ export const Route = createFileRoute("/faq")({
     ...pageHead({
       title: "FAQ | Doorstep Bike Service Bangalore | Ride N Care",
       description:
-        "Answers about doorstep bike & car service in Bangalore: booking, timing, parts, payments, coverage and the 7-day workmanship guarantee — all in one place.",
+        "Answers about doorstep bike & car service in Bangalore: booking, timing, parts, payments, coverage and the 45-day service warranty — all in one place.",
       path: "/faq",
       extraMeta: [
       { property: "og:title", content: "FAQ — Ride N Care" },

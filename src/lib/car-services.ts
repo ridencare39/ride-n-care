@@ -66,7 +66,7 @@ export const CAR_SERVICES: ServiceDef[] = [
       ["No service-centre Saturday", "No driving across town or leaving the car for the day — the workshop comes to your parking spot."],
       ["Watch every step", "Each part is shown before it goes in and after it comes out. Nothing is swapped out of sight."],
       ["Service record kept", "A dated digital record of what was done, with a reminder when the next interval is due."],
-      ["7-day workmanship guarantee", "If a serviced item plays up within a week, we return and set it right free."],
+      ["45-day service warranty", "If an issue related to our work appears within 45 days, we inspect and correct it under the warranty."],
     ],
     pricing:
       "Car periodic service is priced by your car's make, model and engine — the oil grade and capacity, filter type and brake condition all change the quote, so we confirm the exact amount in writing after you share the model. Consumables and any extra parts are billed only after your approval.",
@@ -222,7 +222,7 @@ export const CAR_SERVICES: ServiceDef[] = [
       ["Measured, not guessed", "Wear numbers shown before replacement."],
       ["Old parts returned", "Proof the replacement actually happened."],
       ["Doorstep service", "Full brake work done at your parking bay."],
-      ["7-day guarantee", "A 7-day workmanship guarantee on the brake work performed."],
+      ["45-day warranty", "A 45-day service warranty on the brake work performed."],
     ],
     pricing:
       "Brake inspection is free. Pads, discs and fluid are priced by your car's model and quoted at MRP before fitting — the total, including labour, is confirmed in writing before work starts. Call 080 6940 9289 or WhatsApp 82969 50339 with your model.",
@@ -238,7 +238,7 @@ export const CAR_SERVICES: ServiceDef[] = [
       ["Why do my brakes squeal?", "Usually glazed pads or dust build-up; sometimes a wear indicator telling you the pads are due. Cleaning and correct bedding-in solves most cases; a worn pad is replaced."],
       ["Do you change brake fluid?", "Yes — typically every two years, or sooner if the pedal feels spongy. Fluid condition is checked during the inspection."],
       ["Can brake work be done in my parking spot?", "Yes — pad, disc and fluid work is fully doorstep-capable, and the finished work is inspected with you before you pay."],
-      ["Is there a warranty?", "A 7-day workmanship guarantee on the brake work, plus the manufacturer warranty on the parts fitted."],
+      ["Is there a warranty?", "A 45-day service warranty on the brake work, plus the manufacturer warranty on the parts fitted."],
       ["What do I need to provide?", "Parking space and ideally a plug point — that is all."],
     ],
     relatedGuides: [],
@@ -277,7 +277,7 @@ export const CAR_SERVICES: ServiceDef[] = [
       ["Correct grade, no guesswork", "The mechanic matches the oil specification to your car's make and engine before quoting."],
       ["Sealed pack, shown to you", "Oil is shown sealed before pouring — you see exactly what goes into your engine."],
       ["No mess left behind", "Used oil and the old filter are sealed and removed for disposal."],
-      ["7-day workmanship guarantee", "If a leak or a fitting issue shows up within a week, we return and set it right free."],
+      ["45-day service warranty", "If a leak or a fitting issue shows up within 45 days, we inspect and correct it under the warranty."],
     ],
     pricing:
       "The price depends on the oil grade and quantity your engine needs and the filter type — synthetic grades and larger engines cost more. Share your car's model and we confirm the exact amount in writing before work starts.",
@@ -435,7 +435,7 @@ export const CAR_SERVICES: ServiceDef[] = [
       ["Diagnosis before spend", "You approve the cause and the fix, not a vague 'general service'."],
       ["Honest verdicts", "If the repair needs a workshop, the finding says so — no pretending it fits a driveway."],
       ["Watch the work", "The repair happens in front of you; old parts are shown after removal."],
-      ["7-day workmanship guarantee", "If a repaired item plays up within a week, we return and set it right free."],
+      ["45-day service warranty", "If a repaired item plays up within 45 days, we inspect and correct it under the warranty."],
     ],
     pricing:
       "Repairs are priced by the diagnosed fault and the parts it needs — the diagnosis is shared first, then the repair is quoted in writing and starts only after your approval.",
@@ -451,7 +451,7 @@ export const CAR_SERVICES: ServiceDef[] = [
       ["How does doorstep car repair start?", "With diagnosis: the mechanic checks the symptom, shares the cause and the repair scope in writing, and starts only after you approve the written quote."],
       ["What if my car needs a workshop?", "You get the finding in writing with the reason. We arrange pickup to our partner workshop and the estimate is shared before any work happens."],
       ["Can you repair on the roadside?", "Safety comes first — busy roads and highways are not work sites. If the car is safe to move, we repair where it is parked; if not, we advise recovery to a safer location first."],
-      ["Do you give a warranty on repairs?", "Every job carries the 7-day workmanship guarantee that applies to all Ride N Care work — if something related to the work done goes wrong within 7 days, we come back and set it right."],
+      ["Do you give a warranty on repairs?", "Every job carries the 45-day service warranty that applies to all Ride N Care work — if something related to the work done goes wrong within 45 days, we come back and set it right."],
       ["How much will my repair cost?", "It depends entirely on the diagnosed fault and parts. The written quote after diagnosis is the number — we do not publish price ranges we cannot source."],
     ],
     relatedGuides: [],
@@ -519,17 +519,9 @@ export const getCarService = (slug: string) => CAR_SERVICES.find((s) => s.slug =
 export const CAR_SERVICE_SLUGS = CAR_SERVICES.map((s) => s.slug);
 
 /** Everything the /cars hub needs, in one place. */
-export const CAR_HUB = {
-  h1: "Car Service at Home in Bangalore",
-  title: "Doorstep Car Service in Bangalore | Ride N Care",
-  description:
-    "Doorstep car service in Bangalore — periodic service, AC, battery and brakes at your home or office by background-verified mechanics. Written quote first.",
-  summary:
-    "Ride N Care services cars at your home or office across Bangalore — periodic maintenance, AC service, battery replacement and brakes — with a written quote before work starts and a 7-day workmanship guarantee on every job.",
-  detail: [
-    "From hatchbacks to SUVs, our mobile workshop arrives with diagnostic tools, OEM-grade spares and zero shortcuts. You approve a written quote before work starts, watch every part come out, and pay by UPI, card or cash after checking the work.",
-  ],
-} as const;
+// CAR_HUB lives in its own module (route heads import it directly — see
+// src/lib/car-hub.ts); re-exported here for existing consumers.
+export { CAR_HUB } from "@/lib/car-hub";
 
 /** Homepage icon map for the car services. */
 export const CAR_SERVICE_ICONS: Record<string, string> = {

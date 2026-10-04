@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { GUIDES } from "@/lib/guides";
+import { GUIDE_SUMMARY } from "@/lib/guide-summary";
 import { BRAND } from "@/lib/answers";
 import { SITE_URL } from "@/lib/seo";
 import { pageHead } from "@/lib/head";
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/guides/")({
         {
           "@type": "ItemList",
           name: "Ride N Care bike maintenance guides",
-          itemListElement: GUIDES.map((g, i) => ({
+          itemListElement: GUIDE_SUMMARY.map((g, i) => ({
             "@type": "ListItem",
             position: i + 1,
             name: g.h1,
@@ -55,7 +55,7 @@ function GuidesIndex() {
       </p>
 
       <div className="mt-10 grid gap-4 md:grid-cols-2">
-        {GUIDES.map((g) => (
+        {GUIDE_SUMMARY.map((g) => (
           <Link
             key={g.slug}
             to="/guides/$slug"

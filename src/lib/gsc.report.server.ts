@@ -1,8 +1,10 @@
 import { SITE_URL } from "@/lib/seo";
+import { getOAuthCreds, getAccessToken } from "@/lib/gsc-oauth.server";
 import {
   resolveSiteUrl,
   searchAnalyticsByDate,
   topRows,
+  queryPageRows,
   listSitemaps,
   inspectUrl,
 } from "@/lib/gsc.server";
@@ -12,9 +14,10 @@ function ymd(d: Date) {
 }
 
 export type SeoMonitorReport =
-  | { status: "not_connected"; message: string }
+  | { status: "not_configured"; message: string; missing: string[] }
+  | { status: "not_connected"; message: string; connectUrl: string }
   | { status: "no_property"; message: string }
-  | { status: "selection_required"; candidates: string[] }
+  | { status: "selection_required"; message: string; candidates: string[] }
   | {
       status: "ok";
       siteUrl: string;
@@ -24,6 +27,7 @@ export type SeoMonitorReport =
       previousTotals: { clicks: number; impressions: number; ctr: number; position: number };
       topQueries: { key: string; clicks: number; impressions: number; ctr: number; position: number }[];
       topPages: { key: string; clicks: number; impressions: number; ctr: number; position: number }[];
+      nearMeBaseline: NearMeBaselineRow[];
       sitemaps: {
         path: string;
         lastSubmitted?: string;
@@ -55,6 +59,26 @@ export type SeoMonitorReport =
       }[];
     };
 
+/** One baseline row: a target query's real 28-day performance from the API. */
+export type NearMeBaselineRow = {
+  query: string;
+  matched: "exact" | "variant";
+  source: "gsc-api";
+  clicks: number;
+  impressions: number;
+  ctr: number;
+  position: number;
+  landingPages: { page: string; clicks: number; impressions: number; ctr: number; position: number }[];
+};
+
+/** Owner's four priority "near me" queries (Part 2, docs/seo/35). */
+const NEAR_ME_TARGETS = [
+  "bike service near me",
+  "bike repair near me",
+  "doorstep bike service near me",
+  "doorstep bike repair near me",
+];
+
 const MONITORED_URLS = [`${SITE_URL}/`, `${SITE_URL}/bikes`, `${SITE_URL}/cars`, `${SITE_URL}/areas`, `${SITE_URL}/blog`];
 
 function sum(rows: { clicks: number; impressions: number; position: number }[]) {
@@ -64,17 +88,79 @@ function sum(rows: { clicks: number; impressions: number; position: number }[]) 
   return { clicks, impressions, ctr: impressions ? clicks / impressions : 0, position };
 }
 
-export async function buildSeoMonitorReport(selectedSiteUrl?: string): Promise<SeoMonitorReport> {
-  if (!process.env["LOVABLE_API_KEY"] || !process.env["GOOGLE_SEARCH_CONSOLE_API_KEY"]) {
-    return { status: "not_connected", message: "Google Search Console is not connected for this project yet." };
+function buildNearMeBaseline(rows: { query: string; page: string; clicks: number; impressions: number; ctr: number; position: number }[]): NearMeBaselineRow[] {
+  const norm = (q: string) => q.trim().toLowerCase().replace(/\s+/g, " ");
+  const out: NearMeBaselineRow[] = [];
+  for (const target of NEAR_ME_TARGETS) {
+    const exact = rows.filter((r) => norm(r.query) === target);
+    const variants = rows.filter((r) => norm(r.query) !== target && norm(r.query).includes(target));
+    const matched = exact.length ? exact : variants;
+    if (!matched.length) {
+      // No rows in range — GSC can drop/threshold very low-impression queries.
+      out.push({
+        query: target,
+        matched: "exact",
+        source: "gsc-api",
+        clicks: 0,
+        impressions: 0,
+        ctr: 0,
+        position: 0,
+        landingPages: [],
+      });
+      continue;
+    }
+    const agg = sum(matched);
+    const pages = new Map<string, { page: string; clicks: number; impressions: number; ctr: number; position: number }>();
+    for (const r of matched) {
+      const p = pages.get(r.page);
+      if (p) {
+        p.clicks += r.clicks;
+        p.impressions += r.impressions;
+        p.ctr = p.impressions ? p.clicks / p.impressions : 0;
+        p.position = (p.position + r.position) / 2;
+      } else {
+        pages.set(r.page, { page: r.page, clicks: r.clicks, impressions: r.impressions, ctr: r.ctr, position: r.position });
+      }
+    }
+    out.push({
+      query: target,
+      matched: exact.length ? "exact" : "variant",
+      source: "gsc-api",
+      clicks: agg.clicks,
+      impressions: agg.impressions,
+      ctr: agg.ctr,
+      position: agg.position,
+      landingPages: [...pages.values()].sort((a, b) => b.clicks - a.clicks),
+    });
+  }
+  return out;
+}
+
+export async function buildSeoMonitorReport(refreshToken: string | null, selectedSiteUrl?: string): Promise<SeoMonitorReport> {
+  if (!getOAuthCreds()) {
+    const missing = ["GOOGLE_OAUTH_CLIENT_ID", "GOOGLE_OAUTH_CLIENT_SECRET"].filter((k) => !process.env[k]);
+    return {
+      status: "not_configured",
+      message: "The OAuth client is not configured for this deployment yet — add the two Google OAuth keys to the environment.",
+      missing,
+    };
+  }
+  if (!refreshToken) {
+    return {
+      status: "not_connected",
+      message: "Google Search Console is not connected yet. Connect the verified property with a read-only (webmasters.readonly) authorization to load live performance, sitemap and indexing data.",
+      connectUrl: "/gsc/connect",
+    };
   }
 
-  const resolution = await resolveSiteUrl(SITE_URL, selectedSiteUrl);
+  const accessToken = await getAccessToken(refreshToken);
+
+  const resolution = await resolveSiteUrl(accessToken, SITE_URL, selectedSiteUrl);
   if (resolution.status === "no_property") {
     return { status: "no_property", message: "No verified Search Console property covers this site yet." };
   }
   if (resolution.status === "selection_required") {
-    return { status: "selection_required", candidates: resolution.candidates };
+    return { status: "selection_required", message: "Multiple verified properties match this site.", candidates: resolution.candidates };
   }
   const siteUrl = resolution.siteUrl;
 
@@ -85,14 +171,15 @@ export async function buildSeoMonitorReport(selectedSiteUrl?: string): Promise<S
   const prevStart = new Date(prevEnd.getTime() - 27 * 86400000);
   const recentStart = new Date(end.getTime() - 27 * 86400000);
 
-  const [series, recent, previous, topQueries, topPages, sitemapList, ...inspections] = await Promise.all([
-    searchAnalyticsByDate(siteUrl, ymd(start), ymd(end)),
-    searchAnalyticsByDate(siteUrl, ymd(recentStart), ymd(end)),
-    searchAnalyticsByDate(siteUrl, ymd(prevStart), ymd(prevEnd)),
-    topRows(siteUrl, "query", ymd(recentStart), ymd(end)),
-    topRows(siteUrl, "page", ymd(recentStart), ymd(end)),
-    listSitemaps(siteUrl),
-    ...MONITORED_URLS.map((u) => inspectUrl(siteUrl, u).catch(() => ({}))),
+  const [series, recent, previous, topQueries, topPages, qpRows, sitemapList, ...inspections] = await Promise.all([
+    searchAnalyticsByDate(accessToken, siteUrl, ymd(start), ymd(end)),
+    searchAnalyticsByDate(accessToken, siteUrl, ymd(recentStart), ymd(end)),
+    searchAnalyticsByDate(accessToken, siteUrl, ymd(prevStart), ymd(prevEnd)),
+    topRows(accessToken, siteUrl, "query", ymd(recentStart), ymd(end)),
+    topRows(accessToken, siteUrl, "page", ymd(recentStart), ymd(end)),
+    queryPageRows(accessToken, siteUrl, ymd(recentStart), ymd(end)),
+    listSitemaps(accessToken, siteUrl),
+    ...MONITORED_URLS.map((u) => inspectUrl(accessToken, siteUrl, u).catch(() => ({}))),
   ]);
 
   const sitemaps = sitemapList.map((s) => {
@@ -163,6 +250,7 @@ export async function buildSeoMonitorReport(selectedSiteUrl?: string): Promise<S
     previousTotals: sum(previous),
     topQueries,
     topPages,
+    nearMeBaseline: buildNearMeBaseline(qpRows),
     sitemaps,
     coverage,
     history,

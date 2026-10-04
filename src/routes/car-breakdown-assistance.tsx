@@ -146,7 +146,7 @@ function CarBreakdown() {
             <h3 className="mt-3 text-lg font-bold">Bike or Scooter Breakdown</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
               Roadside diagnosis, jump-start, puncture and cable fixes, and recovery to the workshop when the bike cannot be
-              made rideable. Doorstep visits available 24 hours.
+              made rideable. Open 7:00 AM to 11:30 PM, every day.
             </p>
             <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-300">
               Bike breakdown assistance <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -154,7 +154,7 @@ function CarBreakdown() {
           </Link>
         </div>
         <div className="mt-5">
-          <BookingButton vehicle="car" className="rounded-full bg-grad-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow">
+          <BookingButton vehicle="car" className="btn-book rounded-full px-6 py-3 font-semibold">
             Book Now
           </BookingButton>
         </div>
@@ -264,7 +264,7 @@ function CarBreakdown() {
       {/* CTA band */}
       <div className="mt-8 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Car broken down right now?</h2>
-        <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 7-day guarantee.</p>
+        <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 45-day warranty.</p>
         <div className="mt-4 flex flex-wrap justify-center gap-3">
           <a
             href="tel:+918069409289"

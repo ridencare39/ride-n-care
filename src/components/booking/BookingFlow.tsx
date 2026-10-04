@@ -4,8 +4,8 @@ import { Bike, Car, Check, ChevronLeft, Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { BIKE_CC_TIERS, CAR_PACKAGES, ELECTRIC_BIKE_PACKAGES, formatPrice, getBikeCcTier, getBikePackage, getBikePackageForServiceCc, getBikePackagesForCc, getServicePackage, type BikePackage, type BikeServiceId, type CarPackage } from "@/lib/pricing";
-import { bikeCatalogBrands, bikeCatalogModels, getBikeModel } from "@/lib/vehicle-catalog";
-import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, bookingIssues, carModels, clearBookingDraft, copyBookingDetails, isValidIndianMobile, loadBookingDraft, openWhatsAppUrl, reserveWhatsAppWindow, saveBookingDraft, whatsappBookingUrl, whatsappFallbackUrl, withTimeout,  type Booking, type PowerType, type ManualVehicleInfo } from "@/lib/booking";
+import { bikeCatalogBrands, bikeCatalogModels, bikeCatalogStats, getBikeModel } from "@/lib/vehicle-catalog";
+import { CALL_NUMBER, CAR_BRANDS, CAR_FUEL_OPTIONS, PREFERRED_TIME_SLOTS, bookingIssues, carCatalogStats, carModels, clearBookingDraft, copyBookingDetails, isValidIndianMobile, loadBookingDraft, openWhatsAppUrl, reserveWhatsAppWindow, saveBookingDraft, whatsappBookingUrl, whatsappFallbackUrl, withTimeout,  type Booking, type PowerType, type ManualVehicleInfo } from "@/lib/booking";
 import { createBooking } from "@/lib/bookings.functions";
 import { trackCtc } from "@/lib/analytics";
 
@@ -116,31 +116,38 @@ export function BookingFlow({ initialVehicle, initialPackageId, initialServiceId
 
     {step === "vehicle" && <Screen title="Choose Your Vehicle" note="Select the vehicle you want serviced">
       <div className="grid grid-cols-2 gap-3">
-        <Choice icon={<Car />} label="Car" onClick={() => { set({ vehicle: "car", power: undefined, brand: undefined, model: undefined, engineCc: null, variant: undefined }); go("brand"); }} />
-        <Choice icon={<Bike />} label="Bike" onClick={() => { set({ vehicle: "bike", brand: undefined, model: undefined, engineCc: null, variant: undefined }); go("power"); }} />
+        <Choice icon={<Car />} label="Car" note={`${carCatalogStats().brands} brands · ${carCatalogStats().models} models`} onClick={() => { set({ vehicle: "car", power: undefined, brand: undefined, model: undefined, engineCc: null, variant: undefined }); go("brand"); }} />
+        <Choice icon={<Bike />} label="Bike" note={`${bikeCatalogStats().brands} brands · ${bikeCatalogStats().models} models`} onClick={() => { set({ vehicle: "bike", brand: undefined, model: undefined, engineCc: null, variant: undefined }); go("power"); }} />
       </div>
     </Screen>}
 
     {step === "power" && <Screen title="Choose Bike Type" note="Select the power type">
       <div className="grid grid-cols-2 gap-3">
-        <Choice label="Non-Electric" active={booking.power === "non-electric"} onClick={() => { set({ power: "non-electric", brand: undefined, model: undefined, engineCc: null, packageId: undefined, packageName: undefined, price: undefined, mrp: null, includes: undefined }); go("brand"); }} />
-        <Choice label="Electric" active={booking.power === "electric"} onClick={() => { set({ power: "electric", brand: undefined, model: undefined, engineCc: null, packageId: undefined, packageName: undefined, price: undefined, mrp: null, includes: undefined }); go("brand"); }} />
+        <Choice label="Non-Electric" note={`${bikeCatalogStats("non-electric").brands} brands · ${bikeCatalogStats("non-electric").models} models`} active={booking.power === "non-electric"} onClick={() => { set({ power: "non-electric", brand: undefined, model: undefined, engineCc: null, packageId: undefined, packageName: undefined, price: undefined, mrp: null, includes: undefined }); go("brand"); }} />
+        <Choice label="Electric" note={`${bikeCatalogStats("electric").brands} brands · ${bikeCatalogStats("electric").models} models`} active={booking.power === "electric"} onClick={() => { set({ power: "electric", brand: undefined, model: undefined, engineCc: null, packageId: undefined, packageName: undefined, price: undefined, mrp: null, includes: undefined }); go("brand"); }} />
       </div>
     </Screen>}
 
-    {step === "brand" && <Screen title="Select Brand" note={`Choose your ${booking.vehicle === "car" ? "car" : "bike"} brand`}>
+    {step === "brand" && (() => {
+      const bike = booking.vehicle === "bike";
+      const stats = bike ? bikeCatalogStats(power) : carCatalogStats();
+      const allStats = bike && power === undefined ? bikeCatalogStats() : stats;
+      return <Screen title="Select Brand" note={`Choose your ${bike ? "bike" : "car"} brand — ${allStats.brands} brands · ${allStats.models} models available`}>
       <SearchBox value={search} onChange={setSearch} placeholder="Search brand" />
       <div className="mt-4 grid max-h-[48vh] grid-cols-2 gap-3 overflow-y-auto pr-1 sm:grid-cols-3">
-        {(booking.vehicle === "bike" ? bikeCatalogBrands(power) : CAR_BRANDS.map((item) => ({ ...item, mark: item.name.slice(0, 2).toUpperCase() })))
+        {(bike ? bikeCatalogBrands(power) : CAR_BRANDS.map((item) => ({ ...item, mark: item.name.slice(0, 2).toUpperCase() })))
           .filter((item) => item.name.toLowerCase().includes(search.toLowerCase())).map((item) =>
           <Choice key={item.name} label={item.name} mark={item.mark} active={booking.brand === item.name} onClick={() => { set({ brand: item.name, model: undefined, engineCc: null, packageId: undefined, packageName: undefined, price: undefined, mrp: null, includes: undefined }); go("model"); }} />)}
       </div>
-    </Screen>}
+    </Screen>;
+    })()}
 
-    {step === "model" && <Screen title="Select Model" note={booking.brand}>
+    {step === "model" && (() => {
+      const models = booking.vehicle === "bike" ? bikeCatalogModels(power, booking.brand ?? "") : carModels(booking.brand ?? "").map((name) => ({ name, cc: null }));
+      return <Screen title="Select Model" note={`${booking.brand} — ${models.length} models available`}>
       <SearchBox value={search} onChange={setSearch} placeholder="Search model" />
       <div className="mt-4 grid max-h-[42vh] grid-cols-2 gap-3 overflow-y-auto pr-1">
-        {(booking.vehicle === "bike" ? bikeCatalogModels(power, booking.brand ?? "") : carModels(booking.brand ?? "").map((name) => ({ name, cc: null })))
+        {models
           .filter((item) => item.name.toLowerCase().includes(search.toLowerCase())).map((item) =>
           <Choice key={item.name} label={item.name} note={item.cc ? `${item.cc}cc` : undefined} active={booking.model === item.name} onClick={() => {
             set({ model: item.name, engineCc: item.cc, variant: item.cc ? getBikeCcTier(item.cc)?.label : undefined, packageId: undefined, packageName: undefined, price: undefined, mrp: null, includes: undefined });
@@ -148,7 +155,8 @@ export function BookingFlow({ initialVehicle, initialPackageId, initialServiceId
           }} />)}
       </div>
       {booking.vehicle === "bike" && <Button type="button" variant="outline" className="mt-4 h-11 w-full rounded-full" onClick={() => go("manual")}>Can’t find your bike? Enter Brand &amp; Model Manually</Button>}
-    </Screen>}
+    </Screen>;
+    })()}
 
     {step === "manual" && <ManualVehicleStep booking={booking} power={power} onBack={back} onSubmit={(info, cc) => {
       set({ brand: info.brand, model: info.model, manualVehicle: info, engineCc: cc, variant: cc ? getBikeCcTier(cc)?.label : undefined, packageId: undefined, packageName: undefined, price: undefined, mrp: null, includes: undefined });

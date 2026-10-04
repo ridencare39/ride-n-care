@@ -10,7 +10,7 @@
  *   uniqueness script (name-stripped) stays well under the 60% flag line.
  * - Operational promises stay limited to the established set: background-
  *   verified mechanics, written quote before work starts, OEM-grade parts,
- *   7-day workmanship guarantee, digital invoice on WhatsApp.
+ *   45-day service warranty, digital invoice on WhatsApp.
  */
 import type { Area } from "@/lib/areas";
 
@@ -24,13 +24,13 @@ export interface AreaContent {
   faqs: [string, string][];
 }
 
-const GUARANTEE = "a 7-day workmanship guarantee on the job";
+const GUARANTEE = "a 45-day service warranty on the job";
 
 export const AREA_CONTENT: Record<string, AreaContent> = {
   "hsr-layout": {
     slug: "hsr-layout",
     intro:
-      "HSR Layout runs on the 27th Main spine and its sector grid, with Agara Lake at one end and the Harlur Road side at the other. Ride N Care sends a background-verified mechanic to your sector with tools and OEM-grade spares, confirms the price in writing before any part is opened, and backs the work with a 7-day guarantee — bikes and cars, at your gate.",
+      "HSR Layout runs on the 27th Main spine and its sector grid, with Agara Lake at one end and the Harlur Road side at the other. Ride N Care sends a background-verified mechanic to your sector with tools and OEM-grade spares, confirms the price in writing before any part is opened, and backs the work with a 45-day warranty — bikes and cars, at your gate.",
     how: [
       "Booking is one message: your vehicle model, the service, and your sector and gate number. You receive a written quote on WhatsApp, and the mechanic is assigned from the unit nearest to you with the arrival window confirmed when you book.",
       "Most HSR apartment complexes have visitor or basement bays that fit the job — one bay is all the work needs, and a plug point helps for battery and electrical checks. Security desks usually want the mechanic's ID noted at the gate, which our mechanics carry.",
@@ -64,7 +64,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   indiranagar: {
     slug: "indiranagar",
     intro:
-      "From the 100 Feet Road café strip to CMH Road and the 12th Main lanes, Indiranagar mixes old bungalows with new apartment blocks. Ride N Care brings bike and car service to your doorstep — background-verified mechanics, OEM-grade parts, a written quote before work starts and a 7-day workmanship guarantee.",
+      "From the 100 Feet Road café strip to CMH Road and the 12th Main lanes, Indiranagar mixes old bungalows with new apartment blocks. Ride N Care brings bike and car service to your doorstep — background-verified mechanics, OEM-grade parts, a written quote before work starts and a 45-day service warranty.",
     how: [
       "Bungalow driveways are the easiest worksites in Indiranagar; apartment basements need one free bay. Parking on the 100 Feet Road side is tight, so the work happens in your building or driveway, never on the main road.",
       "The whole layout from the Indiranagar metro station down to Old Airport Road is covered, including the HAL-side streets. If your gate security needs the mechanic's ID, they carry one.",
@@ -81,7 +81,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   whitefield: {
     slug: "whitefield",
     intro:
-      "Whitefield's day starts and ends on Varthur Road and the ITPL stretch — and nobody wants to spend a Saturday driving across town to a service centre. Ride N Care does bike and car service at your gate in Whitefield: written quote first, OEM-grade parts, background-verified mechanics and a 7-day workmanship guarantee.",
+      "Whitefield's day starts and ends on Varthur Road and the ITPL stretch — and nobody wants to spend a Saturday driving across town to a service centre. Ride N Care does bike and car service at your gate in Whitefield: written quote first, OEM-grade parts, background-verified mechanics and a 45-day service warranty.",
     how: [
       "Gated communities around ITPL and Phoenix Marketcity have security desks — we send your booking reference on WhatsApp so gate entry is smooth. The job needs one allotted parking bay; a plug point helps for battery and electrical work.",
       "Office-parking visits in the EPIP zone are equally workable with your office's permission. Varthur, Brookefield and the Gunjur side are served from the nearest unit.",
@@ -98,7 +98,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   "electronic-city": {
     slug: "electronic-city",
     intro:
-      "Electronic City runs long — Phase 1 to Phase 2 along Hosur Road, tech-park gates at one end and Neeladri Road at the other. Ride N Care sends a background-verified mechanic to your phase with a written quote before work starts, OEM-grade parts and a 7-day workmanship guarantee, for bikes and cars alike.",
+      "Electronic City runs long — Phase 1 to Phase 2 along Hosur Road, tech-park gates at one end and Neeladri Road at the other. Ride N Care sends a background-verified mechanic to your phase with a written quote before work starts, OEM-grade parts and a 45-day service warranty, for bikes and cars alike.",
     how: [
       "The area is a long haul, so the mechanic is assigned from the unit nearest to you and your arrival window is confirmed when you book — no guesswork about when anyone shows up.",
       "Campus and complex parking works with security's permission: one bay, tools and consumables carried in, the space left clean. Office-parking jobs are among the most common bookings here.",
@@ -115,7 +115,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   marathahalli: {
     slug: "marathahalli",
     intro:
-      "Marathahalli squeezes apartment blocks, market lanes and the Outer Ring Road bridge into one busy square kilometre. Ride N Care keeps bike and car care at home here — a background-verified mechanic, a written quote before work starts, OEM-grade parts and a 7-day workmanship guarantee.",
+      "Marathahalli squeezes apartment blocks, market lanes and the Outer Ring Road bridge into one busy square kilometre. Ride N Care keeps bike and car care at home here — a background-verified mechanic, a written quote before work starts, OEM-grade parts and a 45-day service warranty.",
     how: [
       "Share a landmark for the arrival — Marathahalli Bridge, Kundalahalli Gate or your AECS Layout cross street — and the mechanic finds you without a dozen phone calls. If a lane is too narrow for the van, the last stretch is covered on foot.",
       "Basement bays fit car work; bikes are usually done at the doorstep itself. The market-lane side is covered the same way — landmark in, quote in writing, work after your approval.",
@@ -132,7 +132,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   bellandur: {
     slug: "bellandur",
     intro:
-      "Bellandur sits where the Outer Ring Road meets the Sarjapur Road corridor — office towers, gated communities and the lake in between. Ride N Care services bikes and cars at your doorstep here: written quote before work, background-verified mechanics, OEM-grade parts and a 7-day workmanship guarantee.",
+      "Bellandur sits where the Outer Ring Road meets the Sarjapur Road corridor — office towers, gated communities and the lake in between. Ride N Care services bikes and cars at your doorstep here: written quote before work, background-verified mechanics, OEM-grade parts and a 45-day service warranty.",
     how: [
       "Both halves of Bellandur life are covered: office-parking jobs near the RMZ Ecospace / Iblur Junction side with the building's permission, and home visits in the gated communities off the main road.",
       "ORR traffic is a given, so your arrival window is confirmed when you book rather than promised in minutes. The invoice lands on WhatsApp before you pay.",
@@ -149,7 +149,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   "btm-layout": {
     slug: "btm-layout",
     intro:
-      "BTM Layout packs its 1st and 2nd Stage lanes between Silk Board Junction and Madiwala Checkpost — dense, busy and famously short on parking. Ride N Care does bike and car service at your doorstep with a written quote before work starts, background-verified mechanics and a 7-day workmanship guarantee.",
+      "BTM Layout packs its 1st and 2nd Stage lanes between Silk Board Junction and Madiwala Checkpost — dense, busy and famously short on parking. Ride N Care does bike and car service at your doorstep with a written quote before work starts, background-verified mechanics and a 45-day service warranty.",
     how: [
       "One-ways and narrow streets are the norm here, so bookings use a landmark — your 16th Main cross or the nearest main-road junction — and the mechanic walks in where a van can't.",
       "Two-wheeler jobs are the quickest doorstep wins in BTM; car jobs need a bay, which most complexes in both stages have. Clutch, chain and brake work are all doorstep-friendly.",
@@ -166,7 +166,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   jayanagar: {
     slug: "jayanagar",
     intro:
-      "Jayanagar's block grid — the 4th Block shopping stretch down to South End Circle — is one of Bangalore's easiest neighbourhoods to service at the gate: driveways, wide main roads and steady parking. Ride N Care brings bike and car service home with a written quote first and a 7-day workmanship guarantee.",
+      "Jayanagar's block grid — the 4th Block shopping stretch down to South End Circle — is one of Bangalore's easiest neighbourhoods to service at the gate: driveways, wide main roads and steady parking. Ride N Care brings bike and car service home with a written quote first and a 45-day service warranty.",
     how: [
       "Every block from 1st to 9th is covered, with the Jayanagar metro station and 11th Main as easy landmarks for the arrival. Older homes with open driveways make car work genuinely simple here.",
       "Stilt parking and basement bays both work — one bay with some light is enough, and a plug point helps for battery and electrical checks. Banashankari and JP Nagar are served from the nearest unit.",
@@ -176,14 +176,14 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
       ["Can you work in my stilt parking?", "Yes — one bay with a bit of light is enough; a plug point helps for battery and electrical checks."],
       ["Is the Banashankari side covered too?", "Yes — Banashankari and JP Nagar are served from the nearest unit."],
       ["What does a bike service cost here?", "Packages start from the prices on our /bikes page; the exact quote depends on your engine size and is confirmed in writing before work starts."],
-      ["Do you give a warranty?", "A 7-day workmanship guarantee on every job, plus the manufacturer warranty on parts fitted."],
+      ["Do you give a warranty?", "A 45-day service warranty on every job, plus the manufacturer warranty on parts fitted."],
     ],
   },
 
   "jp-nagar": {
     slug: "jp-nagar",
     intro:
-      "JP Nagar spreads from Jayadeva Hospital to the Bannerghatta Road side — phase after phase of houses, apartments and hospitals in between. Ride N Care does bike and car service at your phase: written quote before work starts, background-verified mechanics, OEM-grade parts and a 7-day workmanship guarantee.",
+      "JP Nagar spreads from Jayadeva Hospital to the Bannerghatta Road side — phase after phase of houses, apartments and hospitals in between. Ride N Care does bike and car service at your phase: written quote before work starts, background-verified mechanics, OEM-grade parts and a 45-day service warranty.",
     how: [
       "Book with your phase and a landmark — Jayadeva Hospital, Puttenahalli Lake or the metro station side — and the mechanic is assigned from the nearest unit with the window confirmed on WhatsApp.",
       "Bannerghatta Road traffic is real, so arrival windows are confirmed at booking rather than promised in minutes. Car brake work, battery replacement and AC service are all doorstep-capable in a basement bay.",
@@ -200,7 +200,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   "sarjapur-road": {
     slug: "sarjapur-road",
     intro:
-      "Sarjapur Road links the ORR to the tech parks out past Wipro Gate, and its weekends belong to Harlur Road traffic. Ride N Care keeps vehicle care at home here: bike and car service at your gate, a written quote before work starts, background-verified mechanics and a 7-day workmanship guarantee.",
+      "Sarjapur Road links the ORR to the tech parks out past Wipro Gate, and its weekends belong to Harlur Road traffic. Ride N Care keeps vehicle care at home here: bike and car service at your gate, a written quote before work starts, background-verified mechanics and a 45-day service warranty.",
     how: [
       "The corridor is a string of apartment clusters off the main road, so bookings use a landmark — Wipro Gate, Kaikondrahalli Lake or your Harlur Road cross street — and the mechanic is assigned from the nearest unit.",
       "Office-campus visits work with permission: one bay, tools carried in, invoice on WhatsApp before payment. Harlur, Kasavanahalli and the Choodasandra side are covered the same way.",
@@ -217,7 +217,7 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   hebbal: {
     slug: "hebbal",
     intro:
-      "Hebbal's flyover is the gate between the city and the airport road, with Manyata Tech Park, Hebbal Lake and Esteem Mall marking its corners. Ride N Care services bikes and cars at your doorstep here: written quote before work starts, background-verified mechanics, OEM-grade parts and a 7-day workmanship guarantee.",
+      "Hebbal's flyover is the gate between the city and the airport road, with Manyata Tech Park, Hebbal Lake and Esteem Mall marking its corners. Ride N Care services bikes and cars at your doorstep here: written quote before work starts, background-verified mechanics, OEM-grade parts and a 45-day service warranty.",
     how: [
       "North-side visits are assigned from the unit nearest to you, with your arrival window confirmed at booking — the honest way to handle flyover traffic.",
       "Manyata-side office parking works with the building's permission, and home visits across Hebbal's blocks need just one bay. Yelahanka and the Kalyan Nagar side are covered nearby.",

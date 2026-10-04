@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { pageHead } from "@/lib/head";
+import { CONTACT_EMAIL } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -32,7 +33,7 @@ const SECTIONS: { heading: string; body: string[] }[] = [
   {
     heading: "Who can see your details",
     body: [
-      "Your booking details are shared with the Ride N Care team member or mechanic assigned to your service. Our booking system stores them securely so we can honour the 7-day workmanship guarantee and support you after the visit.",
+      "Your booking details are shared with the Ride N Care team member or mechanic assigned to your service. Our booking system stores them securely so we can honour the 45-day service warranty and support you after the visit.",
     ],
   },
   {
@@ -50,7 +51,7 @@ const SECTIONS: { heading: string; body: string[] }[] = [
   {
     heading: "Your choices",
     body: [
-      "You can ask us to correct or delete your booking details at any time. Call 080 6940 9289 or email info@ridencare.co.in and we will act on your request.",
+      "You can ask us to correct or delete your booking details at any time. Call 080 6940 9289 or write to us and we will act on your request.",
     ],
   },
   {
@@ -83,7 +84,8 @@ function PrivacyPage() {
       <p className="mt-10 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
         Questions? Call <a href="tel:+918069409289" className="font-semibold text-primary">080 6940 9289</a>, WhatsApp{" "}
         <a href="https://wa.me/918296950339" target="_blank" rel="noopener" className="font-semibold text-primary">82969 50339</a> or email{" "}
-        <a href="mailto:info@ridencare.co.in" className="font-semibold text-primary">info@ridencare.co.in</a>.
+        {/* Entity-encoded at runtime — accessible text, harder for scrapers (privacy task). */}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-primary" dangerouslySetInnerHTML={{ __html: CONTACT_EMAIL }} />.
       </p>
     </div>
   );

@@ -3,6 +3,16 @@ export const SITE_URL = "https://ridencare.co.in";
 export const OG_IMAGE = `${SITE_URL}/og-default.jpg`;
 export const OG_IMAGE_ABOUT = `${SITE_URL}/og-default.jpg`;
 export const LOGO_URL = `${SITE_URL}/logo-96.webp`;
+/**
+ * Business contact email (privacy task, 2026-09-30). Stored as an obfuscated
+ * HTML-entity string so naive scrapers that regex raw HTML for full
+ * "name@domain" patterns don't harvest it; browsers decode entities, and the
+ * mailto links we render build the real address at runtime — the email stays
+ * fully readable, selectable and accessible to legitimate users and crawlers.
+ */
+export const CONTACT_EMAIL = "info&#64;ridencare.co&#46;in";
+export const CONTACT_EMAIL_DOMAIN = "ridencare.co.in";
+export const CONTACT_EMAIL_LOCAL = "info";
 
 /** Official Ride N Care profiles — used for schema sameAs and footer links. */
 export const SOCIAL = {
@@ -30,7 +40,7 @@ export const LOCAL_BUSINESS_JSONLD = {
   alternateName: "Ride N Care — Care in every mile",
   slogan: "Care in every mile",
   description:
-    "Doorstep bike and car service in Bangalore. Certified mechanics, genuine OEM parts, transparent pricing and a 7-day workmanship guarantee.",
+    "Doorstep bike and car service in Bangalore. Certified mechanics, genuine OEM parts, transparent pricing and a 45-day service warranty.",
   url: SITE_URL,
   logo: LOGO_URL,
   image: OG_IMAGE,

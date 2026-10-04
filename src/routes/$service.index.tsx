@@ -1,5 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { getService, type ServiceDef, TRUST_POINTS, BIKE_BRANDS } from "@/lib/services";
+import { getServiceSummary, getCarServiceSummary, SERVICE_SUMMARY, CAR_SERVICE_SUMMARY, type ServiceSummary } from "@/lib/service-summary";
+// Full catalogues are imported by THIS lazy component only (content render);
+// the shared route definition (head/loader) uses slim summaries.
+import { SERVICES as SERVICES_LIST, getService, TRUST_POINTS, BIKE_BRANDS, type ServiceDef } from "@/lib/services";
 import { CAR_SERVICES, getCarService, CAR_BRAND_LIST } from "@/lib/car-services";
 import { AREAS, PRIORITY_AREAS } from "@/lib/areas";
 import { SITE_URL } from "@/lib/seo";
@@ -8,13 +11,27 @@ import { graphForPage, serviceNode, breadcrumbNode, faqNode, pageScripts } from 
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
 import { formatPrice, getBikePackagesForCc, getBookingServiceForSlug, getBookingServiceIdForSlug } from "@/lib/pricing";
-import { GUIDES } from "@/lib/guides";
-import { answersForService } from "@/lib/answer-pages";
+import { GUIDE_SUMMARY } from "@/lib/guide-summary";
+import { answersForService } from "@/lib/answer-page-summary";
 import { carAreaLinksForService } from "@/lib/car-area-content";
+import { PHOTOS, PHOTO_CAPTIONS, type Photo } from "@/lib/photos";
 
-const ALL_SERVICES: ServiceDef[] = [...SERVICES_LIST, ...CAR_SERVICES];
-// bike catalogue import kept separate to avoid a circular import at module init
-import { SERVICES as SERVICES_LIST } from "@/lib/services";
+/**
+ * Owner photos (src/assets/uploads → src/assets/photos) shown once per service
+ * page, right under the above-the-fold CTAs. Each slug gets exactly one photo,
+ * matched to what the image actually shows — motorcycle-only shots never land
+ * on car pages, and no image is duplicated across pages.
+ */
+const SERVICE_PHOTOS: Partial<Record<string, { photo: Photo; caption: string }>> = {
+  "bike-service": { photo: PHOTOS.reAtHome, caption: PHOTO_CAPTIONS.reAtHome },
+  "bike-repair": { photo: PHOTOS.workshopRepair, caption: PHOTO_CAPTIONS.workshopRepair },
+  "doorstep-bike-service": { photo: PHOTOS.doorstepRe, caption: PHOTO_CAPTIONS.doorstepRe },
+  "scooter-service": { photo: PHOTOS.scooterRepair, caption: PHOTO_CAPTIONS.scooterRepair },
+};
+
+// Full bike catalogue is only needed by the lazy component below (content
+// render); the shared route definition uses slim summaries.
+const ALL_SERVICES = [...SERVICE_SUMMARY, ...CAR_SERVICE_SUMMARY];
 
 /**
  * The Ride N Care Difference — comparison table (only on /doorstep-bike-service).
@@ -45,7 +62,7 @@ const COMPARISON_FAQS: [string, string][] = [
 
 export const Route = createFileRoute("/$service/")({
   head: ({ params }) => {
-    const s = getService(params.service) ?? getCarService(params.service);
+    const s = getServiceSummary(params.service) ?? getCarServiceSummary(params.service);
     if (!s) return { meta: [{ title: "Page not found" }, { name: "robots", content: "noindex" }] };
     return {
       ...pageHead({
@@ -79,7 +96,9 @@ export const Route = createFileRoute("/$service/")({
     };
   },
   loader: ({ params }) => {
-    const service = getService(params.service) ?? getCarService(params.service);
+    // Loader returns the slim summary; the lazy component resolves the full
+    // def itself, keeping detail content out of the shared bundle.
+    const service = getServiceSummary(params.service) ?? getCarServiceSummary(params.service);
     if (!service) throw notFound();
     return { service };
   },
@@ -100,15 +119,19 @@ export const Route = createFileRoute("/$service/")({
 });
 
 function ServiceLanding() {
-  const { service: s } = Route.useLoaderData() as { service: ServiceDef };
+  const { service: summary } = Route.useLoaderData() as { service: ServiceSummary };
+  // Resolve the full content def inside the lazy component (detail data stays
+  // out of the shared route chunk). The loader guarantees a match exists.
+  const s = (getService(summary.slug) ?? getCarService(summary.slug)) as ServiceDef;
   const isCar = CAR_SERVICES.some((c) => c.slug === s.slug);
   const vehicleType = isCar ? "car" : "bike";
   const related = s.related.map((slug) => getService(slug) ?? getCarService(slug)).filter(Boolean) as ServiceDef[];
-  const relatedGuides = s.relatedGuides.map((slug) => GUIDES.find((g) => g.slug === slug)).filter(Boolean);
+  const relatedGuides = s.relatedGuides.map((slug) => GUIDE_SUMMARY.find((g) => g.slug === slug)).filter(Boolean);
   const relatedAnswers = answersForService(s.slug);
   const bookingService = getBookingServiceForSlug(s.slug);
   const bookingServiceId = getBookingServiceIdForSlug(s.slug);
   const examplePackage = bookingServiceId ? getBikePackagesForCc(199).find((item) => item.serviceId === bookingServiceId) : undefined;
+  const servicePhoto = SERVICE_PHOTOS[s.slug];
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-16">
       <nav className="text-xs text-muted-foreground">
@@ -138,11 +161,32 @@ function ServiceLanding() {
           href="https://wa.me/918296950339"
           target="_blank" rel="noopener"
           {...ctcProps("whatsapp_click", { vehicle_type: vehicleType, service: s.slug })}
-          className="rounded-full border border-emerald-500/50 bg-emerald-500/10 px-6 py-3 font-semibold text-emerald-600 hover:bg-emerald-500/20 dark:text-emerald-400"
+          className="rounded-full border border-emerald-600/50 bg-emerald-500/10 px-6 py-3 font-semibold text-emerald-700 hover:bg-emerald-500/20 dark:text-emerald-400"
         >
           WhatsApp 82969 50339
         </a>
       </div>
+
+      {/* Below-the-fold owner photo matched to this service — 4:3 with pinned
+          width/height (no CLS), lazy + async decode, srcset for mobile/desktop. */}
+      {servicePhoto && (
+        <figure className="mt-8">
+          <img
+            src={servicePhoto.photo.src}
+            srcSet={servicePhoto.photo.srcSet}
+            sizes="(min-width: 928px) 864px, calc(100vw - 32px)"
+            alt={servicePhoto.photo.alt}
+            width={servicePhoto.photo.width}
+            height={servicePhoto.photo.height}
+            loading="lazy"
+            decoding="async"
+            className="aspect-[4/3] w-full rounded-3xl border border-border object-cover shadow-card ring-1 ring-primary/10"
+          />
+          <figcaption className="mt-3 text-sm text-muted-foreground">
+            {servicePhoto.caption}
+          </figcaption>
+        </figure>
+      )}
 
       {/* Body copy */}
       <div className="mt-10 space-y-4 text-muted-foreground leading-relaxed">
@@ -267,6 +311,9 @@ function ServiceLanding() {
           </div>
         ))}
       </div>
+      <p className="mt-3 text-sm text-muted-foreground">
+        Full cover details: <Link to="/guarantee" className="text-primary hover:underline">45-Day Service Warranty</Link>.
+      </p>
 
       {/* Related services + guides */}
       <div className="mt-12 grid sm:grid-cols-2 gap-6">
@@ -360,9 +407,9 @@ function DoorstepVsWorkshop() {
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">The Ride N Care Difference</p>
       <h2 id="rnc-difference" className="mt-2 text-2xl font-bold">Ride N Care vs. Traditional Bike Workshop in Bangalore</h2>
       <p className="mt-3 text-muted-foreground leading-relaxed">
-        Looking for bike service in Bangalore? Ride N Care provides convenient{" "}
-        <Link to="/$service" params={{ service: "doorstep-bike-service" }} className="text-primary hover:underline">doorstep bike service in Bangalore</Link>{" "}
-        and repair at selected locations, while a traditional workshop requires you to take your bike to the workshop.
+        Ride N Care brings{" "}
+        <Link to="/$service" params={{ service: "doorstep-bike-service" }} className="text-primary hover:underline">doorstep bike service</Link>{" "}
+        to your home or office in covered Bangalore areas, while a traditional workshop means taking the bike to them.
       </p>
 
       {/* Desktop comparison grid */}

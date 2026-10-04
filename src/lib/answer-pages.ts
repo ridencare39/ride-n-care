@@ -346,14 +346,14 @@ export const ANSWER_PAGES: AnswerPage[] = [
     question: "Do you provide bike service on weekends and holidays?",
     category: "time",
     answer:
-      "Yes. Doorstep visits are available 24 hours, weekends and holidays included. Share your preferred day on 080 6940 9289 or WhatsApp 82969 50339 and the arrival window is confirmed when you book.",
-    meta: "Doorstep bike service in Bangalore is available 24 hours, weekends and holidays included — book by call or WhatsApp and the arrival window is confirmed when you book.",
+      "Yes. Ride N Care is open 7:00 AM to 11:30 PM, 7 days a week — weekends and holidays included. Share your preferred day on 080 6940 9289 or WhatsApp 82969 50339 and the arrival window is confirmed when you book; actual mechanic availability may vary.",
+    meta: "Doorstep bike service in Bangalore runs 7:00 AM to 11:30 PM, every day including weekends and holidays — book by call or WhatsApp and the arrival window is confirmed when you book.",
     detail: [
       "Popular slots fill first, so sharing a second-choice window at booking makes confirmation faster. For routine service, a mid-week booking is usually the easiest way to get the exact window you want.",
     ],
     faqs: [
-      ["Are you available late at night?", "Yes — doorstep visits are available 24 hours. Book by call or WhatsApp at any hour; the arrival window is confirmed when you book."],
-      ["Do you service on public holidays?", "Yes — doorstep visits are available 24 hours, including holidays. Availability is confirmed when you book."],
+      ["Are you available late at night?", "Bookings are taken 7:00 AM to 11:30 PM, every day. Book by call or WhatsApp before 11:30 PM; the arrival window is confirmed when you book, and actual mechanic availability may vary."],
+      ["Do you service on public holidays?", "Yes — Ride N Care operates 7:00 AM to 11:30 PM, every day, public holidays included. Availability is confirmed when you book."],
     ],
     related: ["how-to-book", "bike-wont-start", "emergency-cost"],
     services: ["emergency-bike-repair", "doorstep-bike-service"],
@@ -387,7 +387,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
       "A Ride N Care General Service covers air filter cleaning, battery voltage check, brake service, cables and levers adjustment, chain tension check, clutch adjustment, dry wash, electrical check-up, engine oil check, greasing and lubrication, oil leakage check and spark plug cleaning — with engine oil replacement added in the oil package.",
     meta: "A bike General Service covers filters, brakes, chain, clutch, cables, battery, electricals and a dry wash — with every item ticked off in front of you.",
     detail: [
-      "Every job ends with the checklist items ticked in front of you and anything worn photographed and quoted separately. The invoice lists parts and labour separately, and the work carries a 7-day workmanship guarantee.",
+      "Every job ends with the checklist items ticked in front of you and anything worn photographed and quoted separately. The invoice lists parts and labour separately, and the work carries a 45-day service warranty.",
     ],
     faqs: [
       ["Is engine oil included in General Service?", "General Service checks the oil level and condition; replacement is the separate General Service + Engine Oil package, starting at ₹1,249 up to 199cc."],
@@ -460,12 +460,12 @@ export const ANSWER_PAGES: AnswerPage[] = [
     category: "trust",
     answer:
       "Yes — because the work happens in the open, in front of you. You see every part that comes off and every part that goes on, you approve the written quote first, and the digital invoice lists everything fitted. Most customers find that more transparent than leaving a bike at a workshop.",
-    meta: "Doorstep service is safe because it happens in front of you — written quote first, parts shown, digital invoice, 7-day workmanship guarantee.",
+    meta: "Doorstep service is safe because it happens in front of you — written quote first, parts shown, digital invoice, 45-day service warranty.",
     detail: [
       "Where a job does need the workshop — an engine rebuild, wheel truing, paint work — the bike is assessed on site first, moved only with your approval, and the workshop estimate is shared before work begins. You always know where your vehicle is and what is being done to it.",
     ],
     faqs: [
-      ["What if something is damaged during the service?", "The work carries a 7-day workmanship guarantee — raise it on 080 6940 9289 and a mechanic comes back to put it right."],
+      ["What if something is damaged during the service?", "The work carries a 45-day service warranty — raise it on 080 6940 9289 and a mechanic comes back to put it right."],
       ["Is it safe to let a stranger work in my building?", "The mechanic works in the open parking area, not inside your home, and the whole visit is quotable: written quote, visible work, digital invoice."],
     ],
     related: ["are-mechanics-verified", "what-to-prepare", "apartment-basement"],
@@ -477,14 +477,14 @@ export const ANSWER_PAGES: AnswerPage[] = [
     question: "Is there a guarantee on the work?",
     category: "trust",
     answer:
-      "Yes. Every job carries a 7-day workmanship guarantee: if anything Ride N Care serviced or repaired plays up within seven days, a mechanic comes back and puts it right at no charge. Parts fitted also carry the manufacturer's own warranty, which is shown on the invoice.",
-    meta: "Every job carries a 7-day workmanship guarantee: if serviced work plays up within seven days, a mechanic returns and puts it right at no charge.",
+      "Yes. Every job carries a 45-day service warranty: if an issue related to our work appears within 45 days, we inspect the vehicle and correct it in accordance with the warranty. Parts fitted also carry the manufacturer's own warranty, which is shown on the invoice.",
+    meta: "Every job carries a 45-day service warranty: if an issue related to our work appears within 45 days, we inspect and correct it in accordance with the warranty.",
     detail: [
       "The guarantee covers the work performed — a chain adjusted, brakes bled, a battery fitted. It is separate from the manufacturer warranty on the part itself, and both are on the invoice so there is no argument later.",
     ],
     faqs: [
-      ["How do I claim the guarantee?", "Call or WhatsApp 080 6940 9289 / 82969 50339 within seven days with your invoice, and the follow-up visit is scheduled."],
-      ["Does the guarantee cover parts?", "Parts carry the manufacturer's own warranty, noted on the invoice; the 7-day guarantee covers the workmanship."],
+      ["How do I raise a warranty claim?", "Call or WhatsApp 080 6940 9289 / 82969 50339 with your booking or invoice details, and the inspection is scheduled."],
+      ["Does the warranty cover parts?", "Parts carry the manufacturer's own warranty, noted on the invoice; the 45-day service warranty covers workmanship on eligible work."],
     ],
     related: ["written-quote", "payment-options", "genuine-parts"],
     services: ["bike-service", "bike-repair"],
@@ -632,7 +632,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     ],
     faqs: [
       ["Is the callout charge separate from the repair?", "The callout is quoted on the phone before dispatch; the Running Repair package and any parts are the repair-side charges, approved before work."],
-      ["Do you charge extra for night calls?", "Doorstep visits are available 24 hours. Any night charge would be stated in the written quote before work starts — there are no surprise surcharges."],
+      ["Do you charge extra for night calls?", "Visits are booked 7:00 AM to 11:30 PM, every day. Any night charge would be stated in the written quote before work starts — there are no surprise surcharges."],
     ],
     related: ["bike-wont-start", "bike-service-cost-bangalore", "recovery-after-breakdown"],
     services: ["emergency-bike-repair"],

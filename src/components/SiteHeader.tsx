@@ -78,7 +78,9 @@ export function SiteHeader() {
       if (active) move(active);
       else pill.style.opacity = "0";
     };
-    move(nav.querySelector<HTMLElement>(".nav-item-active"));
+    // Defer the initial measurement to the next frame so hydration does not
+    // force a synchronous layout read (SEOmator Part 1: avoid forced reflow).
+    const raf = requestAnimationFrame(() => move(nav.querySelector<HTMLElement>(".nav-item-active")));
     const onOver = (e: MouseEvent) => {
       const item = (e.target as HTMLElement).closest<HTMLElement>(".nav-item");
       if (item) move(item);
@@ -86,6 +88,7 @@ export function SiteHeader() {
     nav.addEventListener("mouseover", onOver);
     nav.addEventListener("mouseleave", hide);
     return () => {
+      cancelAnimationFrame(raf);
       nav.removeEventListener("mouseover", onOver);
       nav.removeEventListener("mouseleave", hide);
     };
@@ -97,9 +100,18 @@ export function SiteHeader() {
   };
 
   // Shrinking header + "Process" section highlight (homepage only).
+  // Only re-render when the boolean actually flips — a plain
+  // `setScrolled(window.scrollY > 8)` re-runs on every scroll event.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
+    let current = window.scrollY > 8;
+    setScrolled(current);
+    const onScroll = () => {
+      const next = window.scrollY > 8;
+      if (next !== current) {
+        current = next;
+        setScrolled(next);
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -224,7 +236,8 @@ export function SiteHeader() {
           {/* Logo */}
           <Link to="/" className="flex shrink-0 items-center gap-2 group" aria-label="Ride N Care — home">
             <span className="relative inline-flex rounded-full ring-1 ring-neon/40 ring-offset-2 ring-offset-transparent transition group-hover:ring-neon/80">
-              <img src={logo} alt="" width={40} height={40} fetchPriority="high" decoding="async" className="rounded-full bg-plate p-0.5" />
+              {/* Header mark is decorative: the link's own aria-label names it. */}
+            <img src={logo} alt="" width={40} height={40} fetchPriority="high" decoding="async" className="rounded-full bg-plate p-0.5" />
               <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full bg-neon/10 opacity-0 transition group-hover:opacity-100" />
             </span>
             {/* Wordmark + tagline visible at every width (320px up) — responsive font, never hidden. */}
@@ -309,7 +322,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => openBooking()}
-              className="btn-shine hidden rounded-full bg-grad-accent px-5 py-2 text-[15px] font-semibold text-white shadow-glow-strong transition hover:brightness-110 active:scale-[0.98] md:inline-flex"
+              className="btn-book btn-shine hidden rounded-full px-5 py-2 text-[15px] font-semibold md:inline-flex"
             >
               Book Now
             </button>
@@ -412,7 +425,7 @@ export function SiteHeader() {
                 closeMenu();
                 openBooking();
               }}
-              className="btn-shine shrink-0 rounded-full bg-grad-accent px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-glow-strong transition hover:brightness-110 active:scale-[0.98]"
+              className="btn-book btn-shine shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-semibold"
             >
               Book Now
             </button>
@@ -467,7 +480,7 @@ export function SiteHeader() {
                 target="_blank"
                 rel="noopener"
                 {...ctcProps("whatsapp_click", { vehicle_type: "unknown" })}
-                className="hero-cta hero-cta-glass"
+                className="hero-cta hero-cta-glass text-white"
               >
                 <MessageCircle aria-hidden className="h-5 w-5 shrink-0 text-neon" />
                 82969 50339

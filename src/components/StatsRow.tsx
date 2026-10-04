@@ -8,7 +8,7 @@
 const STATS: [string, string, string][] = [
   ["✓", "Written quote first", "text-neon"],
   ["✓", "OEM-grade parts", "text-emerald-400"],
-  ["✓", "7-day guarantee", "text-sky-400"],
+  ["✓", "45-day warranty", "text-sky-400"],
   ["✓", "Verified mechanics", "text-amber-400"],
 ];
 

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageHead, pageScripts, formatDate } from "@/lib/head";
+import { CONTACT_EMAIL } from "@/lib/seo";
 import { graphForPage, webPageNode, breadcrumbNode } from "@/lib/schema";
 import { Phone, MessageCircle, FileCheck2, Info } from "lucide-react";
 import { FloatingActions } from "@/components/FloatingActions";
@@ -53,7 +54,7 @@ function Row({ label, detail, amount }: { label: string; detail: string; amount:
 function SampleInvoicePage() {
   return (
     <div className="min-h-screen bg-[#050b14] text-white">
-      <main className="mx-auto max-w-3xl px-4 pb-28 pt-10 md:pt-16">
+      <div className="mx-auto max-w-3xl px-4 pb-28 pt-10 md:pt-16">
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-white/50">
           <Link to="/" className="hover:text-cyan-300">
             Home
@@ -79,7 +80,9 @@ function SampleInvoicePage() {
               <p className="mt-2 text-xs leading-relaxed text-white/60">
                 Doorstep bike &amp; car service · Bangalore
                 <br />
-                080 6940 9289 · info@ridencare.co.in
+                080 6940 9289 ·
+                {/* Entity-encoded at runtime — accessible text, harder for scrapers (privacy task). */}
+                <span dangerouslySetInnerHTML={{ __html: ` ${CONTACT_EMAIL}` }} />
               </p>
             </div>
             <div className="text-right text-xs leading-relaxed text-white/60">
@@ -139,7 +142,7 @@ function SampleInvoicePage() {
           <div className="mt-4 flex flex-wrap gap-3">
             <a
               href="tel:+918069409289"
-              data-ctc="call"
+              data-ctc="call_click"
               className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 font-semibold text-white"
             >
               <Phone className="size-4" aria-hidden /> Call 080 6940 9289
@@ -148,14 +151,14 @@ function SampleInvoicePage() {
               href="https://wa.me/918296950339?text=Hi%20Ride%20N%20Care%2C%20I%27d%20like%20to%20book%20a%20doorstep%20service."
               target="_blank"
               rel="noopener"
-              data-ctc="whatsapp"
+              data-ctc="whatsapp_click"
               className="inline-flex min-h-12 items-center gap-2 rounded-xl border border-white/20 bg-white/[0.08] px-5 font-semibold text-cyan-200"
             >
               <MessageCircle className="size-4" aria-hidden /> WhatsApp 82969 50339
             </a>
           </div>
         </section>
-      </main>
+      </div>
       <FloatingActions />
     </div>
   );

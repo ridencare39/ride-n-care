@@ -8,6 +8,7 @@ import { CAR_AREA_WAVE_1 } from "@/lib/car-area-content";
 import { BRAND_SERVICES } from "@/lib/brand-services";
 import { SITE_URL } from "@/lib/seo";
 import { GUIDES } from "@/lib/guides";
+import { PHOTOS, PHOTO_CAPTIONS, type PhotoKey } from "@/lib/photos";
 import { ANSWER_PAGES } from "@/lib/answer-pages";
 
 const BASE_URL = SITE_URL;
@@ -38,6 +39,7 @@ const staticEntries: Entry[] = [
   { path: "/about", priority: "0.6", changefreq: "yearly", lastmod: LASTMOD.core },
   { path: "/blog", priority: "0.8", changefreq: "weekly", lastmod: LASTMOD.core },
   { path: "/faq", priority: "0.7", changefreq: "monthly", lastmod: LASTMOD.core },
+  { path: "/guarantee", priority: "0.7", changefreq: "monthly", lastmod: "2026-10-02" },
   { path: "/contact", priority: "0.8", changefreq: "yearly", lastmod: LASTMOD.core },
   { path: "/franchise", priority: "0.7", changefreq: "monthly", lastmod: "2026-09-18" },
   { path: "/breakdown-assistance", priority: "0.9", changefreq: "monthly", lastmod: LASTMOD.breakdown },
@@ -83,16 +85,44 @@ const staticEntries: Entry[] = [
   ...AREAS.filter(isAreaIndexed).map((a) => ({ path: `/areas/${a.slug}`, priority: "0.7", changefreq: "monthly", lastmod: LASTMOD.areas })),
 ];
 
+/**
+ * Image sitemap entries (Google sitemap-image extension) for the owner photos
+ * that are actually rendered on indexable pages. Discovery otherwise happens
+ * through the on-page <img srcset> markup; these entries just make the mapping
+ * explicit for crawlers. One entry per photo — no image is claimed twice.
+ */
+const PHOTOS_BY_PATH: Partial<Record<string, PhotoKey[]>> = {
+  "/": ["doorstepApartment", "toolsTray"],
+  "/bike-service": ["reAtHome"],
+  "/bike-repair": ["workshopRepair"],
+  "/doorstep-bike-service": ["doorstepRe"],
+  "/scooter-service": ["scooterRepair"],
+  "/about": ["workshopSignage"],
+};
+
+function imageBlock(key: PhotoKey) {
+  const p = PHOTOS[key];
+  return [
+    "    <image:image>",
+    `      <image:loc>${SITE_URL}${p.src}</image:loc>`,
+    `      <image:title>${p.alt}</image:title>`,
+    `      <image:caption>${PHOTO_CAPTIONS[key]}</image:caption>`,
+    "    </image:image>",
+  ].join("\n");
+}
+
 function urlset(entries: Entry[]) {
   return entries
     .map((e) => {
       const loc = `${BASE_URL}${e.path}`;
+      const images = PHOTOS_BY_PATH[e.path]?.map(imageBlock) ?? [];
       return [
         "  <url>",
         `    <loc>${loc}</loc>`,
         e.lastmod ? `    <lastmod>${e.lastmod}</lastmod>` : null,
         `    <changefreq>${e.changefreq}</changefreq>`,
         `    <priority>${e.priority}</priority>`,
+        ...images,
         "  </url>",
       ]
         .filter(Boolean)
@@ -166,7 +196,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         return xmlResponse(
           [
             `<?xml version="1.0" encoding="UTF-8"?>`,
-            `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
+            `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`,
             urlset(all),
             `</urlset>`,
           ].join("\n"),

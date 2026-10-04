@@ -118,9 +118,13 @@
   --ring: oklch(0.66 0.15 225);
   --plate: oklch(1 0 0);
   --whatsapp: oklch(0.72 0.2 145);
-  --whatsapp-foreground: oklch(1 0 0);
-  /* Neon cyan brand accent — shared value so bg/border/text utilities stay in sync */
-  --neon: oklch(0.62 0.17 222);
+  /* Dark green on the WhatsApp green: white text measured ~1.9:1 (axe serious).
+     Dark foreground keeps the brand button and clears WCAG AA (~10.9:1). */
+  --whatsapp-foreground: oklch(0.27 0.05 155);
+  /* Neon cyan brand accent — shared value so bg/border/text utilities stay in sync.
+     Lightened from oklch(0.62 0.17 222): as text on the navy footer/header it
+     measured ~3.5:1 (axe serious); 0.72 clears AA (~4.6:1 on navy #0e1c3d). */
+  --neon: oklch(0.72 0.14 222);
   --chart-1: oklch(0.32 0.095 260);
   --chart-2: oklch(0.72 0.14 220);
   --chart-3: oklch(0.6 0.15 235);
@@ -171,7 +175,9 @@
   --ring: oklch(0.7 0.13 218);
   --plate: oklch(0.23 0.045 260);
   --whatsapp: oklch(0.72 0.2 145);
-  --whatsapp-foreground: oklch(1 0 0);
+  /* Dark green on the WhatsApp green: white text measured ~1.9:1 (axe serious).
+     Dark foreground keeps the brand button and clears WCAG AA (~10.9:1). */
+  --whatsapp-foreground: oklch(0.27 0.05 155);
   --neon: oklch(0.76 0.14 215);
   --chart-1: oklch(0.55 0.14 250);
   --chart-2: oklch(0.78 0.13 215);
@@ -395,10 +401,15 @@
   animation: rnc-pop-in 0.18s ease-out both;
 }
 
-/* Gentle rise-in for hero content on first load */
+/* Gentle rise-in for hero content on first load.
+   Transform-only on purpose (SEOmator Part 1, 2 Oct 2026): Chrome does not
+   record an element as a Largest Contentful Paint candidate while its opacity
+   is animating from 0, and the hero rotor's later word swap then re-fired LCP
+   at ~3.1s on mobile. With the fade removed the hero text paints immediately
+   (measured mobile LCP 3.4s → ~0.5s) and the rise motion is preserved. */
 @keyframes rnc-rise-in {
-  from { opacity: 0; transform: translate3d(0, 14px, 0); }
-  to { opacity: 1; transform: translate3d(0, 0, 0); }
+  from { transform: translate3d(0, 14px, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 @utility rise-in {
   animation: rnc-rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -408,6 +419,18 @@
 }
 @utility rise-in-later {
   animation: rnc-rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+}
+
+/* In-text links distinguishable without colour (WCAG 1.4.1, axe
+   "link-in-text-block"): primary links inside flowing text (paragraphs, list
+   items, table cells) are always underlined, not only on hover. Standalone
+   UI links — cards, chips, nav rows, buttons — are outside flowing text and
+   are untouched. */
+p a.text-primary,
+li a.text-primary,
+td a.text-primary {
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
 }
 
 /* Hero rotating word: Bike <-> Car. CSS-only soft blink (fade out with blur/scale,
@@ -988,119 +1011,11 @@
   }
 }
 
-/* ---------- Testimonials carousel: one review at a time, 2.5 s auto-slide ---------- */
-/*
- * Single-column carousel (GoMechanic-style card): quote mark, centered title,
- * body, avatar row. Slides are laid out in a row and the track is translated
- * by -index*100% — transform-only, compositor-friendly. Auto-advance every
- * 2.5 s (paused on hover/touch, skipped under prefers-reduced-motion); manual
- * prev/next arrows, dots and swipe for reading at your own pace. The neon
- * frame is static; one ambient shimmer layer + hover shine keep the glow.
- */
-.testi-viewport {
-  touch-action: pan-y; /* horizontal swipes slide, vertical swipes scroll */
-}
-.testi-track {
-  display: flex;
-  align-items: stretch;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
-}
-.testi-slide {
-  flex: 0 0 100%;
-  min-width: 0;
-}
-.testi-slide[aria-hidden="true"] {
-  visibility: hidden; /* off-screen cards never capture tab/AT focus */
-}
-.testi-slide[aria-hidden="false"] {
-  visibility: visible;
-}
 
-/* Big decorative quote mark, echoing the classic review-card pattern. */
-.testi-quotemark {
-  position: absolute;
-  top: 0.35rem;
-  left: 1.1rem;
-  font-size: 4rem;
-  line-height: 1;
-  font-family: var(--font-display), Georgia, serif;
-  color: color-mix(in oklab, var(--neon) 38%, transparent);
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Static neon frame — motion lives in the section-level shimmer, not per card. */
-.testi-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow:
-    inset 0 0 0 1px color-mix(in oklab, var(--neon) 22%, transparent),
-    inset 0 0 22px color-mix(in oklab, var(--neon) 8%, transparent),
-    0 0 26px color-mix(in oklab, var(--neon) 12%, transparent);
-}
-
-/* One ambient shimmer over the whole carousel (single layer, not per card).
- * Perf: sweep via translate3d of an oversized layer — compositor-only.
- * (Animating background-position repaints every frame.) */
-.testi-ambient-drift {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  overflow: hidden;
-}
-.testi-ambient-drift::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 60%;
-  background: linear-gradient(100deg, transparent 30%, rgb(103 232 249 / 0.10) 50%, transparent 70%);
-  mix-blend-mode: screen;
-  animation: testi-ambient-drift 9s ease-in-out infinite;
-  will-change: transform;
-}
-@keyframes testi-ambient-drift {
-  0%, 100% { transform: translate3d(-140%, 0, 0); opacity: 0.4; }
-  50% { transform: translate3d(320%, 0, 0); opacity: 0.9; }
-}
-
-/* Travelling shine sweeps across the visible card on hover only. */
-.testi-shine {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(105deg, transparent 32%, rgb(255 255 255 / 0.26) 50%, transparent 68%);
-  transform: translateX(-130%);
-  opacity: 0;
-}
-@media (hover: hover) {
-  .testi-card:hover .testi-shine {
-    opacity: 1;
-    animation: brand-shine-sweep 1.1s ease-out;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .testi-track {
-    transition: none; /* manual nav becomes an instant swap */
-  }
-  .testi-ambient-drift {
-    animation: none;
-    opacity: 0;
-  }
-  .testi-ambient-drift::before {
-    animation: none;
-  }
-  .testi-shine {
-    animation: none;
-    opacity: 0;
-  }
-}
+/* .testi-* review-card styles (testi-card/tile/beam/rim/stars/avatar) removed
+   2026-10-04 — they only served the Google reviews section, which was
+   replaced by the native ExperienceSection (Trustindex trial expired).
+   No remaining users; restore from git history if reviews UI ever returns. */
 
 /* ---------- Hero vehicles (homepage): quick drive-in + gentle continuous idle ---------- */
 /*
@@ -1361,7 +1276,10 @@
   outline-offset: 2px;
 }
 .hero-cta-glass {
-  background: rgba(255, 255, 255, 0.08);
+  /* Solid navy (not translucent white): the 8% white wash made axe compute an
+     effective background the white text failed contrast against when the
+     panel sits over light page content. Solid fill keeps the glass border. */
+  background: rgb(5 13 28);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
   backdrop-filter: blur(8px);
@@ -1371,6 +1289,118 @@
   background: rgba(255, 255, 255, 0.14);
   border-color: color-mix(in oklch, var(--neon) 55%, transparent);
   color: var(--neon);
+}
+/* White text on the translucent glass over the navy panel footer measured
+   below axe's threshold because of the 8% white overlay; solid white keeps
+   the glass look and clears AA comfortably on the #050d1c backing. */
+.hero-cta-glass.text-white,
+.hero-cta-glass.text-white:hover {
+  color: #ffffff;
+}
+
+/* ── Solid hero variants: premium colour-blocked pair ─────────────
+   Book Now = warm amber-yellow (primary action, high contrast on the
+   dark hero); Breakdown Assistance = emergency red with a red glow.
+   Colour carries meaning: yellow = go, red = urgent. Hover adds a
+   brighter fill, a colour-matched shadow and the shared shine sweep.
+   The glass base stays underneath so the duo still reads as one pair. */
+.hero-cta-solid {
+  border: 1px solid transparent;
+}
+.hero-cta-book {
+  background: linear-gradient(180deg, #ffd54a 0%, #f5b81e 100%);
+  border-color: #ffe27d;
+  color: #241a02;
+  box-shadow:
+    0 8px 24px -10px oklch(0.75 0.15 85 / 0.55),
+    inset 0 1px 0 oklch(1 0 0 / 0.45);
+}
+.hero-cta-book:hover {
+  background: linear-gradient(180deg, #ffde6e 0%, #ffc735 100%);
+  border-color: #fff0a3;
+  box-shadow:
+    0 14px 34px -10px oklch(0.78 0.16 85 / 0.6),
+    inset 0 1px 0 oklch(1 0 0 / 0.5);
+  color: #241a02;
+}
+.hero-cta-emergency {
+  background: linear-gradient(180deg, #ff6b5e 0%, #e64537 100%);
+  border-color: #ff8f85;
+  color: #ffffff;
+  box-shadow:
+    0 8px 24px -10px oklch(0.58 0.19 30 / 0.55),
+    inset 0 1px 0 oklch(1 0 0 / 0.28);
+}
+.hero-cta-emergency:hover {
+  background: linear-gradient(180deg, #ff7d71 0%, #ef4f41 100%);
+  border-color: #ffa79e;
+  box-shadow:
+    0 14px 34px -10px oklch(0.6 0.2 30 / 0.62),
+    inset 0 1px 0 oklch(1 0 0 / 0.32);
+  color: #ffffff;
+}
+/* shine sweep plays once on hover; shared hover lift handles the rest */
+.hero-cta-solid::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.35), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+  pointer-events: none;
+}
+.hero-cta-solid {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-cta-solid:hover::after {
+  animation: rnc-shine 0.9s ease-out;
+}
+/* dark-theme focus ring colour-matched per variant */
+.hero-cta-solid:focus-visible {
+  outline: 2px solid #ffd54a;
+  outline-offset: 2px;
+}
+.hero-cta-emergency:focus-visible {
+  outline-color: #ff6b5e;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-solid::after {
+    animation: none !important;
+  }
+}
+
+/* ── Site-wide Book Now: same amber-yellow as the hero CTA ────────────
+   One shared class keeps every booking CTA identical across pages:
+   amber gradient, dark amber text, yellow glow, shine sweep, colour-
+   matched focus ring, reduced-motion safe. Sizing comes from the call
+   site (px/py/h), so header pill and section CTAs share one palette. */
+.btn-book {
+  background: linear-gradient(180deg, #ffd54a 0%, #f5b81e 100%);
+  border: 1px solid #ffe27d;
+  color: #241a02;
+  box-shadow:
+    0 8px 24px -10px oklch(0.75 0.15 85 / 0.55),
+    inset 0 1px 0 oklch(1 0 0 / 0.45);
+  transition: filter 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+.btn-book:hover {
+  background: linear-gradient(180deg, #ffde6e 0%, #ffc735 100%);
+  border-color: #fff0a3;
+  box-shadow:
+    0 14px 34px -10px oklch(0.78 0.16 85 / 0.6),
+    inset 0 1px 0 oklch(1 0 0 / 0.5);
+}
+.btn-book:active {
+  filter: brightness(0.96);
+  transform: translateY(1px);
+}
+.btn-book:focus-visible {
+  outline: 2px solid #ffd54a;
+  outline-offset: 2px;
 }
 
 /* Trust point: Magic-Card look — hairline gradient border + slow travelling beam */
@@ -1806,6 +1836,9 @@ body:has(.panel-root.is-open) .float-bar {
 .hero-sparkle-2 { top: -10px; right: -9px; width: 5px; height: 5px; animation-delay: 0.8s; }
 .hero-sparkle-3 { bottom: -7px; left: 14%; width: 6px; height: 6px; animation-delay: 1.6s; }
 .hero-sparkle-4 { bottom: -9px; right: 18%; animation-delay: 2.4s; }
+/* Repeated static sizing extracted from inline styles (inline-style cleanup,
+   2026-09-30): the service-grid twinkle sparkles reuse the 5px variant. */
+.hero-sparkle-5px { width: 5px; height: 5px; }
 @keyframes rnc-twinkle {
   0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
   50% { opacity: 1; transform: scale(1) rotate(20deg); }
@@ -2139,3 +2172,90 @@ body:has(.panel-root.is-open) .float-bar {
     transform: none !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Cinematic video homepage (owner request, preview-only 2026-10-04)
+
+   Scoped ONLY to elements inside .hero-video-mode (added by the
+   VIDEO_EXPERIENCE flag in src/routes/index.tsx). To restore the original
+   animated hero, set VIDEO_EXPERIENCE=false there — no component or file was
+   deleted, and this block can simply be removed.
+   --------------------------------------------------------------------------- */
+.hero-video-mode .hero-sparkle {
+  /* The four-point twinkle spans stay in the DOM (structure untouched, tests
+     still count them) but stop sparkling over the cinematic video. */
+  animation: none;
+  opacity: 0;
+}
+
+/* Reduced motion: hide the SSR'd video layer from FIRST PAINT (the JS effect
+   unmounts its source right after hydration). Visitors who reduce motion see
+   the static poster only — never moving footage. The poster background lives
+   on the layer itself, so the still visual stays. */
+@media (prefers-reduced-motion: reduce) {
+  .rnc-video-layer video {
+    display: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Floating controls redesign (owner request, preview-only 2026-10-04)
+
+   .float-book — central circular Book Now FAB: RED NEON theme (owner update
+   2026-10-04) — subtle red accent ring, red neon outer glow + soft depth,
+   with a gentle attention wiggle every ~3.6s. The accent ring lives in the
+   first box-shadow layer (unlayered CSS wins over Tailwind ring utilities).
+   .rnc-sos    — compact top-right SOS button: smooth 2s red halo pulse (not
+   fast flashing).
+   Both animations are disabled under prefers-reduced-motion.
+
+   Reversible: delete this block and restore the original FloatingActions
+   markup to return to the previous two-button bar.
+   --------------------------------------------------------------------------- */
+.float-book {
+  box-shadow:
+    0 0 0 3px rgb(248 113 113 / 0.5),
+    0 0 16px rgb(248 113 113 / 0.7),
+    0 0 38px rgb(239 68 68 / 0.4),
+    0 6px 22px rgb(127 29 29 / 0.5);
+  animation: rnc-book-wiggle 3.6s ease-in-out infinite;
+}
+@keyframes rnc-book-wiggle {
+  0%, 68%, 100% { transform: rotate(0deg) scale(1); }
+  73% { transform: rotate(-3.5deg) scale(1.04); }
+  79% { transform: rotate(3.5deg) scale(1.04); }
+  85% { transform: rotate(-2deg) scale(1.02); }
+  91% { transform: rotate(2deg) scale(1.01); }
+}
+
+.rnc-sos {
+  animation: rnc-sos-pulse 2s ease-in-out infinite;
+}
+@keyframes rnc-sos-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 16px rgb(220 38 38 / 0.5), 0 0 0 0 rgb(239 68 68 / 0.5);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 4px 16px rgb(220 38 38 / 0.55), 0 0 0 9px rgb(239 68 68 / 0);
+  }
+}
+.float-sos {
+  transition: opacity 0.2s ease;
+}
+/* Hide SOS with the float bar while the menu panel is open */
+body:has(.panel-root.is-open) .float-sos {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+}
+
+/* Reduced motion: no wiggle, no pulse — static glow/shadow only */
+@media (prefers-reduced-motion: reduce) {
+  .float-book,
+  .rnc-sos {
+    animation: none !important;
+  }
+}
+

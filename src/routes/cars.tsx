@@ -2,7 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import car from "@/assets/services/car-engine-maintenance.webp";
 import { formatDate, pageHead } from "@/lib/head";
 import { graphForPage, serviceNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
-import { CAR_SERVICES, CAR_BRAND_LIST, CAR_HUB } from "@/lib/car-services";
+import { CAR_SERVICES, CAR_BRAND_LIST } from "@/lib/car-services";
+// Head copy from its own module — importing it from car-services.ts would pull
+// the full catalogue into the shared bundle (route heads are not code-split).
+import { CAR_HUB } from "@/lib/car-hub";
 import { AREAS, PRIORITY_AREAS } from "@/lib/areas";
 import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
@@ -13,7 +16,7 @@ const HUB_FAQS: [string, string][] = [
   ["How long will the mechanic be at my place?", "The arrival window is confirmed at booking, and the visit runs until the checklist is complete and you have inspected the work — we do not quote job durations we cannot guarantee."],
   ["How much does car service at home cost in Bangalore?", "Pricing depends on your car's make, model and engine — oil grade and capacity, filter type and parts condition change the quote. Share your model and we confirm the exact amount in writing before work starts."],
   ["Do you offer pickup and drop for car service?", "Doorstep work happens in your parking bay, so most jobs need no pickup at all. When a workshop job is genuinely required, pickup and drop are arranged and the estimate is shared first."],
-  ["Are your car mechanics verified?", "Yes — every technician is background-verified, and every job starts with a written quote and ends with a 7-day workmanship guarantee."],
+  ["Are your car mechanics verified?", "Yes — every technician is background-verified, and every job starts with a written quote and ends with a 45-day service warranty."],
   ["Which areas of Bangalore do you cover?", "Whitefield, Koramangala, HSR Layout, Indiranagar, Electronic City, Jayanagar and more across east, south, north, west and central Bangalore. The full list with pincodes is on our service areas page."],
 ];
 
@@ -24,6 +27,8 @@ export const Route = createFileRoute("/cars")({
       description: CAR_HUB.description,
       path: "/cars",
       ogImage: car,
+      // This hero image is the mobile LCP element on /cars — preload it.
+      preloadImage: car,
       extraMeta: [
         { property: "og:title", content: CAR_HUB.title },
       ],
@@ -67,8 +72,8 @@ function Cars() {
           <h1 className="mt-2 text-4xl md:text-5xl font-bold">{CAR_HUB.h1}</h1>
           <p className="mt-4 text-muted-foreground leading-relaxed">{CAR_HUB.summary}</p>
           <p className="mt-3 text-sm text-muted-foreground">
-            Call <a href="tel:+918069409289" {...ctcProps("call_click", { vehicle_type: "car" })} className="text-primary hover:underline">080 6940 9289</a> or WhatsApp{" "}
-            <a href="https://wa.me/918296950339" target="_blank" rel="noopener" {...ctcProps("whatsapp_click", { vehicle_type: "car" })} className="text-primary hover:underline">82969 50339</a> — the price is confirmed in writing before work starts.
+            Call <a href="tel:+918069409289" {...ctcProps("call_click", { vehicle_type: "car" })} className="text-primary underline underline-offset-2">080 6940 9289</a> or WhatsApp{" "}
+            <a href="https://wa.me/918296950339" target="_blank" rel="noopener" {...ctcProps("whatsapp_click", { vehicle_type: "car" })} className="text-primary underline underline-offset-2">82969 50339</a> — the price is confirmed in writing before work starts.
           </p>
           <BookingButton vehicle="car" className="mt-6 h-12 rounded-full bg-grad-primary px-6 font-semibold text-primary-foreground shadow-glow">Book a Car Service</BookingButton>
         </div>
@@ -125,7 +130,7 @@ function Cars() {
       <p className="mt-3 text-sm text-muted-foreground">
         Not listed? We cover {AREAS.length} localities — see all <Link to="/areas" className="text-primary">service areas</Link>.
       </p>
-      <p className="mt-2 text-sm text-muted-foreground">Doorstep visits available 24 hours — book by call or WhatsApp at any hour.</p>
+      <p className="mt-2 text-sm text-muted-foreground">Car service in Bangalore, open daily — 7 AM to 11:30 PM, every day. Book by call or WhatsApp.</p>
 
       {/* FAQs — same array drives the FAQPage JSON-LD above */}
       <h2 className="mt-16 text-3xl font-bold">Car service FAQs</h2>
@@ -147,7 +152,7 @@ function Cars() {
         <p className="mt-2 text-primary-foreground/90">The price is confirmed in writing before any work starts.</p>
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
           <a href="tel:+918069409289" {...ctcProps("call_click", { vehicle_type: "car" })} className="rounded-full bg-background px-6 py-3 font-semibold text-foreground">Call 080 6940 9289</a>
-          <BookingButton vehicle="car" variant="outline" className="rounded-full border-background/40 bg-transparent px-6 py-3 text-primary-foreground hover:bg-background hover:text-foreground">Book Now</BookingButton>
+          <BookingButton vehicle="car" className="btn-book rounded-full px-6 py-3 font-semibold">Book Now</BookingButton>
         </div>
       </div>
 

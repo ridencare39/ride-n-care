@@ -1,7 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ANSWER_PAGES, ANSWER_CATEGORIES, getAnswerPage } from "@/lib/answer-pages";
-import { SERVICES } from "@/lib/services";
-import { CAR_SERVICES } from "@/lib/car-services";
+// Component-side lookup only (this route's lazy chunk); the loader uses a
+// dynamic import so the shared bundle never carries the answer content.
+import { getAnswerPage } from "@/lib/answer-pages";
+import { ANSWER_CATEGORIES } from "@/lib/answer-page-summary";
+import { getCarServiceSummary, getServiceSummary } from "@/lib/service-summary";
 import { SITE_URL } from "@/lib/seo";
 import { pageHead, formatDate } from "@/lib/head";
 import { graphForPage, webPageNode, breadcrumbNode, faqNode, pageScripts } from "@/lib/schema";
@@ -10,13 +12,17 @@ import { BookingButton } from "@/components/booking/BookingButton";
 import { ctcProps } from "@/lib/analytics";
 
 export const Route = createFileRoute("/answers/$slug")({
-  loader: ({ params }) => {
-    const page = getAnswerPage(params.slug);
+  loader: async ({ params }) => {
+    // Dynamic import: route loaders/heads are compiled into the shared bundle,
+    // so the full answer content must load as its own chunk.
+    const { getAnswerPage: lookup } = await import("@/lib/answer-pages");
+    const page = lookup(params.slug);
     if (!page) throw notFound();
     return { page };
   },
   head: ({ params, loaderData }) => {
-    const p = loaderData?.page ?? ANSWER_PAGES[0]!;
+    const p = loaderData?.page;
+    if (!p) return { meta: [{ title: "Answer not found" }, { name: "robots", content: "noindex" }] };
     const url = `${SITE_URL}/answers/${params.slug}`;
     return {
       ...pageHead({
@@ -59,7 +65,7 @@ function AnswerPageView() {
   const category = ANSWER_CATEGORIES.find((c) => c.id === p.category);
   const related = p.related.map((slug) => getAnswerPage(slug)).filter(Boolean);
   const services = p.services
-    .map((slug) => SERVICES.find((s) => s.slug === slug) ?? CAR_SERVICES.find((s) => s.slug === slug))
+    .map((slug) => getServiceSummary(slug) ?? getCarServiceSummary(slug))
     .filter(Boolean);
 
   return (
@@ -199,7 +205,7 @@ function AnswerPageView() {
       {/* CTA band */}
       <div className="mt-14 rounded-3xl bg-grad-primary p-8 text-center shadow-glow">
         <h2 className="text-2xl font-bold text-primary-foreground">Want this handled for you?</h2>
-        <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 7-day guarantee.</p>
+        <p className="mt-2 text-primary-foreground/90">Written quote first. OEM-grade parts, digital invoice, 45-day warranty.</p>
         <div className="mt-4 flex justify-center gap-3 flex-wrap">
           <a
             href="tel:+918069409289"
