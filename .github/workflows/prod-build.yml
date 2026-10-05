@@ -57,10 +57,10 @@ jobs:
       - name: Verify .output is a COMPLETE Nitro Worker build (never ship partial)
         run: |
           echo "── .output top level ──"; ls -la .output
-          test -s .output/server/index.js || { echo "::error::Nitro server entry missing — build incomplete"; exit 1; }
+          test -s .output/server/index.mjs || { echo "::error::Nitro server entry missing — build incomplete"; exit 1; }
           test -d .output/public          || { echo "::error::public assets missing"; exit 1; }
           echo "── completion markers ──"
-          ls .output/wrangler.json .output/nitro.json 2>/dev/null || true
+          ls .output/server/wrangler.json .output/nitro.json 2>/dev/null || true
           echo "server files: $(find .output/server -type f | wc -l)"
 
       - name: Report build result
