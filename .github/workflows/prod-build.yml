@@ -80,3 +80,4 @@ jobs:
           path: .output/
           retention-days: 5
           if-no-files-found: error
+          include-hidden-files: true
