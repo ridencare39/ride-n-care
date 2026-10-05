@@ -1,0 +1,82 @@
+# Stage 1B clean production build. Manual trigger only. Cannot deploy, cannot push.
+name: Production build (Nitro clean build)
+
+on:
+  workflow_dispatch:            # runs ONLY when you press Run — never on push/PR/schedule
+
+permissions:
+  contents: read                # read-only token: cannot push, cannot alter the repo
+
+jobs:
+  build:
+    name: bun run build:prod
+    runs-on: ubuntu-latest      # GitHub-hosted standard runner: 4 vCPU / 16 GB RAM (>= 4 GB required)
+    timeout-minutes: 30
+    env:
+      # Public, browser-shipped build config — GitHub Repository VARIABLES (no secrets used).
+      # Injected into the build; never printed by any step in this workflow.
+      VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
+      VITE_GTM_ID: ${{ vars.VITE_GTM_ID }}
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+
+    steps:
+      - name: Verify required build Variables are set (names only — values never logged)
+        run: |
+          missing=""
+          for v in VITE_GA_MEASUREMENT_ID VITE_SUPABASE_URL VITE_SUPABASE_PUBLISHABLE_KEY; do
+            if [ -z "${!v}" ]; then missing="$missing $v"; fi
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository Variables (values not shown):$missing"
+            exit 1
+          fi
+          echo "All 3 required build Variables present (values not displayed)."
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Bun 1.4.2 (version that maintains this repo's bun.lock)
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.2"
+
+      - name: Set up Node 22 (matches local Node used to run Vite)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies exactly as locked
+        run: bun install --frozen-lockfile        # honours bun.lock; repo bunfig.toml applies
+
+      - name: Production build (client + SSR + Nitro — exactly as configured)
+        run: bun run build:prod
+        # NODE_OPTIONS untouched (script's own --max-old-space-size=1200 applies).
+        # No build splitting, no Nitro bypass, no bun run deploy anywhere in this workflow.
+
+      - name: Verify .output is a COMPLETE Nitro Worker build (never ship partial)
+        run: |
+          echo "── .output top level ──"; ls -la .output
+          test -s .output/server/index.js || { echo "::error::Nitro server entry missing — build incomplete"; exit 1; }
+          test -d .output/public          || { echo "::error::public assets missing"; exit 1; }
+          echo "── completion markers ──"
+          ls .output/wrangler.json .output/nitro.json 2>/dev/null || true
+          echo "server files: $(find .output/server -type f | wc -l)"
+
+      - name: Report build result
+        if: always()
+        run: |
+          {
+            echo "### Production build result"
+            echo "- Status: **${{ job.status }}**"
+            echo "- Command: \`bun run build:prod\` (unmodified) — no deploy performed"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload verified .output (handoff artifact for a later owner-authorized deploy)
+        if: success()                      # only after the completeness gate passes
+        uses: actions/upload-artifact@v4
+        with:
+          name: nitro-worker-output
+          path: .output/
+          retention-days: 5
+          if-no-files-found: error
