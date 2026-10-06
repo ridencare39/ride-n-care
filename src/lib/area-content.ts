@@ -1,5 +1,6 @@
 /**
- * Unique, locality-specific copy for the 12 priority area pages (Part 7).
+ * Unique, locality-specific copy for every priority area page
+ * (the 12 Part-7 guides + the 5 approved P0 guides added 2026-10-05).
  *
  * Rules:
  * - Only verifiable local context: real roads, junctions, lakes, malls, tech
@@ -10,9 +11,12 @@
  *   uniqueness script (name-stripped) stays well under the 60% flag line.
  * - Operational promises stay limited to the established set: background-
  *   verified mechanics, written quote before work starts, OEM-grade parts,
- *   45-day service warranty, digital invoice on WhatsApp.
+ *   45-Day Warranty (On eligible repairs), digital invoice on WhatsApp, and
+ *   the ₹299 visiting charge imported from @/lib/pricing (never restated as a
+ *   literal string, never described as free).
  */
 import type { Area } from "@/lib/areas";
+import { VISITING_CHARGE } from "@/lib/pricing";
 
 export interface AreaContent {
   slug: string;
@@ -20,11 +24,9 @@ export interface AreaContent {
   intro: string;
   /** "How doorstep service works here" — 1–2 unique paragraphs. */
   how: string[];
-  /** 4–5 area-specific FAQs. */
+  /** Area-specific FAQs (5–8) — rendered visibly and mirrored by the FAQPage schema. */
   faqs: [string, string][];
 }
-
-const GUARANTEE = "a 45-day service warranty on the job";
 
 export const AREA_CONTENT: Record<string, AreaContent> = {
   "hsr-layout": {
@@ -217,17 +219,110 @@ export const AREA_CONTENT: Record<string, AreaContent> = {
   hebbal: {
     slug: "hebbal",
     intro:
-      "Hebbal's flyover is the gate between the city and the airport road, with Manyata Tech Park, Hebbal Lake and Esteem Mall marking its corners. Ride N Care services bikes and cars at your doorstep here: written quote before work starts, background-verified mechanics, OEM-grade parts and a 45-day service warranty.",
+      "Hebbal is the gate between the city and the airport road: the flyover, the lake, Manyata Tech Park and Esteem Mall mark its corners, and Ride N Care keeps vehicle care at home across the blocks between them. A background-verified mechanic comes to your gate with tools and OEM-grade spares, the full price is confirmed in writing before any part is opened, and eligible work is covered by a 45-Day Warranty (On eligible repairs).",
     how: [
-      "North-side visits are assigned from the unit nearest to you, with your arrival window confirmed at booking — the honest way to handle flyover traffic.",
-      "Manyata-side office parking works with the building's permission, and home visits across Hebbal's blocks need just one bay. Yelahanka and the Kalyan Nagar side are covered nearby.",
+      "Give your block, your street and one landmark — Hebbal Flyover, the lake side or the Manyata gate — and the mechanic is assigned from the nearest unit with your arrival window confirmed when you book, which is the honest way to plan around flyover traffic. The written quote reaches your WhatsApp before work starts and shows the ₹299 visiting charge on its own line, separate from the package price.",
+      "Home visits need one bay — basement, stilt or open parking — ideally with a plug point for battery and electrical checks. Manyata-side office parking works with the building's permission: forward the booking reference to your security desk so the gate clears the mechanic. Engine rebuilds and paint are workshop jobs — we say so at diagnosis, arrange pickup and share a written estimate before anything moves.",
     ],
     faqs: [
-      ["Do you cover the Manyata Tech Park side?", "Yes — with the office's permission, one parking bay. Home visits across Hebbal's blocks are equally covered."],
-      ["Is Yelahanka included?", "Yelahanka is nearby and covered — book with your street and a landmark."],
-      ["Can you do car AC work in my society basement?", "Yes — coil cleaning, cabin filter and gas check, with a leak diagnosis before any refill."],
-      ["What's your guarantee?", GUARANTEE + ", plus the manufacturer warranty on parts."],
-      ["How is the price confirmed?", "In writing, on WhatsApp, before any work starts."],
+      ["Do you cover the Manyata Tech Park side?", "Yes — office parking there works with the building's permission, one bay being enough for most jobs. Home visits across Hebbal's blocks are covered the same way."],
+      ["Can you service at my Manyata office?", "Yes, with your building's permission and a parking slot. We send mechanic details on WhatsApp so your security desk can clear the gate, and the job runs in your bay."],
+      ["Is scooter service available in Hebbal?", "Yes — periodic service, brake work and battery testing for scooters as well as motorcycles, done where the vehicle stands."],
+      ["Can I get bike repair at home in Hebbal?", "Yes — the mechanic diagnoses the fault at your parking spot and quotes the repair in writing first; jobs that need workshop equipment are transported with your approval and an estimate."],
+      ["What is the visiting charge?", `A ₹${VISITING_CHARGE} visiting charge applies to the visit and is listed separately in the written quote you approve before work starts. Package prices are the same as our workshop rates.`],
+      ["What warranty applies to my repair?", "A 45-Day Warranty (On eligible repairs) covers our work, plus the manufacturer warranty on any part fitted — full terms and exclusions are on our guarantee page."],
+      ["Is Yelahanka included?", "Yelahanka is nearby and covered — book with your street and a landmark and we confirm the arrival window with you."],
+      ["How is the price confirmed?", "In writing, on WhatsApp, before any work starts. Nothing extra is fitted without your approval."],
+    ],
+  },
+
+  "kr-puram": {
+    slug: "kr-puram",
+    intro:
+      "KR Puram sits where the Old Madras Road corridor meets the railway station, the Tin Factory junction and the bridge — three approaches that all end at your doorstep. Ride N Care sends a background-verified mechanic to your street with tools and OEM-grade spares, confirms the full price in writing before any part is opened, and covers eligible work with a 45-Day Warranty (On eligible repairs).",
+    how: [
+      "Booking starts on WhatsApp or by phone: your vehicle model, the service you need, and your street with a landmark — the station side, Tin Factory or the bridge. The written quote that follows lists the ₹299 visiting charge on its own line, separate from any package price, and your arrival window is confirmed when you book.",
+      "Bikes and scooters are usually serviced where they stand; car work needs one parking bay, basement or visitor slot, ideally near a plug point. KR Puram's side lanes fill up through the day, so the work happens in your building or driveway rather than on the main road. Jobs that need a hoist or paint booth move to the workshop, with pickup arranged and an estimate you approve first.",
+    ],
+    faqs: [
+      ["Do you provide doorstep bike service in KR Puram?", "Yes. We serve the station side, the Old Madras Road layouts and the streets off the bridge junction. Share your street and a landmark while booking and your arrival window comes back confirmed."],
+      ["Can I get bike repair at home in KR Puram?", "Yes — the mechanic diagnoses the fault at your parking spot and quotes the repair in writing before anything is fitted. Work that needs workshop equipment is transported with your approval and a written estimate first."],
+      ["What is the visiting charge?", `A ₹${VISITING_CHARGE} visiting charge applies to the visit and appears as a separate line in the written quote you approve before work starts. Package prices are the same as our workshop rates.`],
+      ["Which landmark should I share when booking?", "Any one of them pins the arrival: KR Puram Railway Station, Tin Factory Junction, Old Madras Road or the bridge. Add your gate or building name and the mechanic comes straight to you."],
+      ["Is scooter service available in KR Puram?", "Yes — periodic service, brake work and battery testing for scooters as well as motorcycles, all done where the vehicle is parked."],
+      ["What warranty applies?", "A 45-Day Warranty (On eligible repairs) covers the work we do, plus the manufacturer warranty on any part fitted. The full terms are on our guarantee page."],
+    ],
+  },
+
+  mahadevapura: {
+    slug: "mahadevapura",
+    intro:
+      "Mahadevapura ward runs along the Outer Ring Road between the KR Puram gateway and the Whitefield side, with Doddanekkundi at one edge and dense residential lanes at the other. Ride N Care brings bike, scooter and car service to your parking bay here — background-verified mechanics, OEM-grade parts, a written quote before work starts and a 45-Day Warranty (On eligible repairs).",
+    how: [
+      "Share your building, your cross street and a landmark — the Doddanekkundi side, Varthur Road or the ORR stretch — and the mechanic is assigned from the unit nearest to you. Your written quote reaches WhatsApp before any work begins and shows the ₹299 visiting charge separately from the package price; the arrival window is confirmed when you book rather than promised in minutes, which matters on this corridor.",
+      "At home, one parking bay is enough and a plug point helps with battery and electrical checks. Office parking along the ORR works with the building's permission. Anything needing a hoist or a paint booth is diagnosed honestly at your gate and moved to the workshop with pickup arranged and an estimate you approve first.",
+    ],
+    faqs: [
+      ["Do you serve both homes and offices in Mahadevapura?", "Yes. Home visits need one parking bay; office parking along the corridor works with the building's permission. Share your floor and parking level when you book so the mechanic arrives prepared."],
+      ["Is Doddanekkundi covered?", "Yes — Doddanekkundi, the Varthur Road side and the Outer Ring Road stretch through Mahadevapura are all served. Give your cross street and the nearest landmark to pin the arrival."],
+      ["What is the visiting charge?", `A ₹${VISITING_CHARGE} visiting charge applies to the visit and is shown separately in the written quote you approve before work starts. It is never folded into a package price.`],
+      ["How does the mechanic reach me with ORR traffic?", "Your arrival window is confirmed when you book, and navigation starts from the landmark you share rather than a guess. If the last lane is too narrow for the vehicle, the mechanic walks in with the tool kit."],
+      ["Can one visit cover both my bike and my car?", "Yes — book both together and the visit is planned for it, with one written quote covering each vehicle."],
+      ["What warranty applies?", "A 45-Day Warranty (On eligible repairs) covers our work, plus the manufacturer warranty on parts fitted — full terms are on our guarantee page."],
+    ],
+  },
+
+  madiwala: {
+    slug: "madiwala",
+    intro:
+      "Madiwala packs its market lanes, the Checkpost junction and the side streets toward St. John's into a few busy square kilometres, and parking is rarely generous. Ride N Care services bikes and scooters at your doorstep here: background-verified mechanics, a written quote before work starts, OEM-grade parts and a 45-Day Warranty (On eligible repairs) — cars the same way, wherever a bay can be found.",
+    how: [
+      "Tell us your cross street and one landmark — Madiwala Market, the Checkpost or St. John's Hospital — plus your gate number. The mechanic is assigned from the nearest unit, the written quote arrives on WhatsApp with the ₹299 visiting charge listed separately from any package price, and your arrival window is confirmed when you book.",
+      "Two-wheeler jobs fit comfortably at the doorstep itself. Car work needs one bay: a basement or visitor slot with the security's permission keeps the job out of the crowded lanes. Chain, brake and clutch work are doorstep-friendly; engine rebuilds and paint are not, and for those we arrange workshop pickup with an estimate you approve first.",
+    ],
+    faqs: [
+      ["Can you reach the lanes around Madiwala Market?", "Yes — share your cross street and a landmark such as the market, the Checkpost or St. John's, and the mechanic covers the last stretch on foot if a vehicle cannot get through."],
+      ["Do you service scooters in Madiwala?", "Yes — scooters are a large share of what we work on here: periodic service, CVT and brake work and battery testing, all at your parking spot."],
+      ["Can I get bike repair at home in Madiwala?", "Yes. The mechanic diagnoses at your parking spot, quotes the repair in writing before parts go on, and workshop-only jobs are moved with your approval and a written estimate."],
+      ["What is the visiting charge?", `A ₹${VISITING_CHARGE} visiting charge applies to the visit and is written separately in the quote you approve before work starts. Package prices stay the same as workshop rates.`],
+      ["Where does the mechanic work if I park on the street?", "In your building's assigned bay or a legal parking spot — the job is never done on the carriageway. For bikes, the doorstep or your building's parking area is usually enough."],
+      ["What warranty applies?", "A 45-Day Warranty (On eligible repairs) applies to the work we do, plus the manufacturer warranty on any part fitted."],
+    ],
+  },
+
+  banashankari: {
+    slug: "banashankari",
+    intro:
+      "Banashankari stretches stage after stage from the temple side down to the Kanakapura Road junction, with the metro station anchoring one end of the layout. Ride N Care brings bike and scooter service to your gate in Banashankari — background-verified mechanics, a written quote before work starts, OEM-grade parts and a 45-Day Warranty (On eligible repairs) — and car service wherever your parking bay is.",
+    how: [
+      "Book with your stage, your street and one landmark: Banashankari Temple, the metro station side or the Kanakapura Road junction. The written quote on WhatsApp itemises the job and lists the ₹299 visiting charge on a separate line from any package price, and your arrival window is confirmed when you book.",
+      "Older houses with open driveways make the work straightforward; apartment bays need one free slot and, ideally, a plug point for battery checks. Gate security sometimes notes the mechanic's ID — they carry one. Jobs that need a bench or a paint booth go to the workshop, with pickup arranged and an estimate you approve first.",
+    ],
+    faqs: [
+      ["Which parts of Banashankari do you cover?", "Share your stage and a landmark — the temple, the metro station side or the Kanakapura Road junction — and we confirm coverage and your arrival window when you book. One line on WhatsApp settles it before anything is scheduled."],
+      ["Is doorstep service available near Banashankari Metro?", "Yes — the streets around the station are served like the rest of the layout. Name the station side while booking so the mechanic picks the right approach."],
+      ["What is the visiting charge?", `A ₹${VISITING_CHARGE} visiting charge applies to the visit and appears separately in the written quote you approve before work starts.`],
+      ["Is scooter service available?", "Yes — periodic service, brakes, clutch and battery work for scooters and motorcycles, done where the vehicle is parked."],
+      ["What does a regular bike service include?", "Engine oil and filter care, brake service, chain and clutch adjustment, battery and electrical checks and a dry wash, finished with a multi-point report — the same checklist as our workshop service, done at your gate."],
+      ["What warranty applies?", "A 45-Day Warranty (On eligible repairs) covers the work we do, plus the manufacturer warranty on any part fitted."],
+    ],
+  },
+
+  "mg-road": {
+    slug: "mg-road",
+    intro:
+      "MG Road is central Bengaluru's office strip — Brigade Road, the metro station and Trinity Junction inside a kilometre — and kerbside parking is rarely an option. Ride N Care is a service-area business with no walk-in workshop: a background-verified mechanic comes to your office basement or residential parking with tools and OEM-grade spares, quotes the work in writing first, and covers eligible jobs with a 45-Day Warranty (On eligible repairs).",
+    how: [
+      "For workplace bookings, share your building name, parking level and a landmark — MG Road Metro Station, Trinity Junction or Brigade Road — and let security know to expect the mechanic. The written quote on WhatsApp lists the ₹299 visiting charge separately from any package price, and your arrival window is confirmed when you book so the visit fits around your day.",
+      "Work happens in your bay, never on a live road: basements and visitor slots need one free space, ideally near a plug point for battery and electrical checks. Bikes and scooters are simpler still and are usually done where they stand. Engine rebuilds, denting and paint are workshop jobs — we diagnose at your location, arrange pickup and send the estimate for your approval before anything moves.",
+    ],
+    faqs: [
+      ["Can you service my bike at my office on MG Road?", "Yes, with your building's permission — one parking bay covers most jobs. Bring your building name and parking level into the booking and security gets the mechanic's details in advance."],
+      ["Is there a walk-in counter at MG Road?", "No. Ride N Care is a service-area business with no walk-in workshop or storefront — the mechanic comes to your office or home parking at the time you book."],
+      ["What is the visiting charge?", `A ₹${VISITING_CHARGE} visiting charge applies to the visit and is shown as a separate line in the written quote you approve before work starts.`],
+      ["Where does the work happen if parking is tight?", "In your building's basement or allotted visitor bay, never on the road. For bikes and scooters the doorstep or your building's parking area is normally enough."],
+      ["Do you service scooters and motorcycles on MG Road?", "Yes — scooters and motorcycles both, and car periodic, AC, battery and brake work at your parking bay."],
+      ["What warranty applies?", "A 45-Day Warranty (On eligible repairs) covers the work we do, plus the manufacturer warranty on parts fitted."],
     ],
   },
 };

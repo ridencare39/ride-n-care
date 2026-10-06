@@ -22,7 +22,7 @@ const LASTMOD = {
   breakdown: "2026-09-20",
   services: "2026-09-18",
   carServices: "2026-09-19",
-  areas: "2026-09-20",
+  areas: "2026-10-05",
   guides: "2026-09-18",
   answers: "2026-09-27",
   carAreas: "2026-09-27",

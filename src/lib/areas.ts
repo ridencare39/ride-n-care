@@ -9,12 +9,14 @@
  * - `landmarks` are only well-known roads, metro stations, lakes, malls or
  *   tech parks (3–5, no invented claims). Every landmark is listed in
  *   docs/seo/OWNER-QUESTIONS.md for the owner's local verification.
- * - Coverage for ALL localities below is owner-confirmed (Q3, 21 Sep 2026).
- *   north/west/central localities). Their pages stay live but are noindexed
- *   and excluded from areaServed/sitemap until the owner flips the flag.
- * - `tier: "priority"` = the owner's 12 fully-detailed localities with unique
- *   copy (src/lib/area-content.ts). Everything else is "basic" (data-driven,
- *   scheduled for uplift in docs/seo/03-content-calendar.md).
+ * - Coverage for ALL localities below is owner-confirmed (Q3, 21 Sep 2026;
+ *   owner answered Q33). Indexability depends only on `tier`: priority pages
+ *   are indexable and listed in the sitemap; basic pages stay noindex,follow
+ *   and out of the sitemap until they are uplifted.
+ * - `tier: "priority"` = localities with unique copy in
+ *   src/lib/area-content.ts (the 12 Part-7 guides plus the 5 approved P0
+ *   guides added 2026-10-05). Everything else is "basic" (data-driven; see
+ *   docs/seo/03-content-calendar.md).
  */
 export interface Area {
   slug: string;
@@ -51,10 +53,10 @@ export const AREAS: Area[] = [
   { slug: "kalyan-nagar", name: "Kalyan Nagar", zone: "East", pincode: "560043",
     nearby: ["KR Puram", "Hebbal", "Indiranagar"],
     landmarks: ["Hennur Main Road", "Banaswadi", "HRBR Layout"], lat: 13.0246, lng: 77.6408 },
-  { slug: "mahadevapura", name: "Mahadevapura", zone: "East", pincode: "560048",
+  { slug: "mahadevapura", name: "Mahadevapura", zone: "East", pincode: "560048", tier: "priority",
     nearby: ["KR Puram", "Whitefield", "Marathahalli", "Brookefield", "Kadubeesanahalli"],
     landmarks: ["Doddanekkundi", "Varthur Road", "Outer Ring Road (Mahadevapura stretch)"], lat: 12.991, lng: 77.6994 },
-  { slug: "kr-puram", name: "KR Puram", zone: "East", pincode: "560036",
+  { slug: "kr-puram", name: "KR Puram", zone: "East", pincode: "560036", tier: "priority",
     nearby: ["Mahadevapura", "Kalyan Nagar", "Whitefield"],
     landmarks: ["KR Puram Railway Station", "Tin Factory Junction", "Old Madras Road", "KR Puram Bridge"], lat: 13.0076, lng: 77.6952 },
   { slug: "hal", name: "HAL", zone: "East", pincode: "560017",
@@ -101,7 +103,7 @@ export const AREAS: Area[] = [
   { slug: "electronic-city", name: "Electronic City", zone: "South", pincode: "560100", tier: "priority", confirmed: true,
     nearby: ["Bommanahalli", "Singasandra", "Parappana Agrahara", "Kudlu Gate", "HSR Layout"],
     landmarks: ["Infosys Gate (Phase 1)", "Wipro Gate (Electronic City)", "Electronic City Flyover", "Hosur Road", "Neeladri Road"], lat: 12.8452, lng: 77.6602 },
-  { slug: "banashankari", name: "Banashankari", zone: "South", pincode: "560070",
+  { slug: "banashankari", name: "Banashankari", zone: "South", pincode: "560070", tier: "priority",
     nearby: ["JP Nagar", "Jayanagar", "Kanakapura Road"],
     landmarks: ["Banashankari Temple", "Kanakapura Road junction", "Banashankari Metro Station"], lat: 12.925, lng: 77.546 },
   { slug: "bannerghatta-road", name: "Bannerghatta Road", zone: "South", pincode: "560076",
@@ -119,7 +121,7 @@ export const AREAS: Area[] = [
   { slug: "kudlu-gate", name: "Kudlu Gate", zone: "South", pincode: "560068",
     nearby: ["Bommanahalli", "Singasandra", "Parappana Agrahara", "HSR Layout", "Electronic City"],
     landmarks: ["Kudlu Gate", "Hosur Road", "Parappana Agrahara"], lat: 12.8843, lng: 77.6462 },
-  { slug: "madiwala", name: "Madiwala", zone: "South", pincode: "560068",
+  { slug: "madiwala", name: "Madiwala", zone: "South", pincode: "560068", tier: "priority",
     nearby: ["BTM Layout", "Koramangala", "HSR Layout", "Ejipura", "Bommanahalli"],
     landmarks: ["Madiwala Checkpost", "Madiwala Market", "Silk Board Junction", "St. John's Hospital"], lat: 12.9223, lng: 77.6199 },
   { slug: "harlur", name: "Harlur", zone: "South", pincode: "560102",
@@ -150,7 +152,7 @@ export const AREAS: Area[] = [
   { slug: "malleshwaram", name: "Malleshwaram", zone: "Central", pincode: "560003", confirmed: true,
     nearby: ["Rajajinagar", "Yeshwanthpur", "MG Road"],
     landmarks: ["Mantri Square", "Sankey Tank", "Malleshwaram 8th Cross", "Margosa Road"], lat: 13.0035, lng: 77.5709 },
-  { slug: "mg-road", name: "MG Road", zone: "Central", pincode: "560001", confirmed: true,
+  { slug: "mg-road", name: "MG Road", zone: "Central", pincode: "560001", tier: "priority", confirmed: true,
     nearby: ["Malleshwaram", "Domlur", "Indiranagar"],
     landmarks: ["MG Road Metro Station", "Trinity Junction", "Brigade Road", "Chinnaswamy Stadium"], lat: 12.9752, lng: 77.606 },
   { slug: "yeshwanthpur", name: "Yeshwanthpur", zone: "West", pincode: "560022", confirmed: true,
@@ -163,10 +165,11 @@ export const AREAS: Area[] = [
 
 export const getArea = (slug: string) => AREAS.find((a) => a.slug === slug);
 
-/** The owner's 12 fully-detailed localities (Part 7 step 6). */
+/** Fully-detailed localities: the 12 Part-7 guides + the 5 approved P0 guides (2026-10-05). */
 export const PRIORITY_AREA_SLUGS = [
   "hsr-layout", "koramangala", "indiranagar", "whitefield", "electronic-city", "marathahalli",
   "bellandur", "btm-layout", "sarjapur-road", "jp-nagar", "jayanagar", "hebbal",
+  "kr-puram", "mahadevapura", "madiwala", "banashankari", "mg-road",
 ] as const;
 
 export const PRIORITY_AREAS = PRIORITY_AREA_SLUGS

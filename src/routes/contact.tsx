@@ -110,7 +110,7 @@ function Contact() {
           <Link to="/areas" className="font-semibold text-primary hover:underline">service areas page</Link>.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
-          {CONFIRMED_AREAS.filter((a) => a.tier === "priority").slice(0, 12).map((a) => (
+          {CONFIRMED_AREAS.filter((a) => a.tier === "priority").map((a) => (
             <Link
               key={a.slug}
               to="/areas/$slug"

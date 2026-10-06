@@ -1,4 +1,13 @@
 /** One source of truth for every Ride N Care package, price and inclusion. */
+
+/**
+ * Flat doorstep visiting charge — owner decision (4 Oct 2026): ₹299, separate
+ * from every service/package price.
+ * Never imply it is included in a service price; always disclose it in the
+ * written quote before work begins.
+ */
+export const VISITING_CHARGE = 299;
+
 export interface BikeTier { name: string; cc: string; price: number }
 export interface CarTier { name: string; desc: string; price: number | null }
 
