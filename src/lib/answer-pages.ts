@@ -14,6 +14,8 @@
  * - updated = real last-reviewed date.
  */
 
+import { VISITING_CHARGE } from "@/lib/pricing";
+
 export type AnswerCategory =
   | "cost"
   | "time"
@@ -1057,7 +1059,7 @@ export const ANSWER_PAGES: AnswerPage[] = [
     ],
     faqs: [
       ["How do I know which category my job is in?", "Describe the symptom when you book — the answer, and the honest category, come back before any visit is scheduled."],
-      ["Is doorstep car work more expensive?", "No doorstep surcharge is added — the quote you approve in writing is the price you pay."],
+      ["Is doorstep car work more expensive?", `The service price is the same as the workshop — a ₹${VISITING_CHARGE} visiting charge applies separately and is listed in the quote you approve in writing before any work starts.`],
     ],
     related: ["doorstep-vs-workshop-car", "what-included-car-service"],
     services: ["cars", "car-periodic-service"],

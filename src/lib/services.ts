@@ -66,6 +66,7 @@ const BOOK_STEPS: [string, string][] = [
 ];
 
 import { DISPATCH_STEPS } from "@/lib/dispatch-steps";
+import { VISITING_CHARGE } from "@/lib/pricing";
 export { DISPATCH_STEPS };
 
 export const SERVICES: ServiceDef[] = [
@@ -164,7 +165,7 @@ export const SERVICES: ServiceDef[] = [
       ["City-wide coverage", "From HSR Layout and Koramangala to Whitefield and Electronic City — the mechanic is assigned from the unit nearest you."],
     ],
     pricing:
-      "General Service starts at ₹799 for bikes up to 199cc (₹1,249 with engine oil replacement) and scales by engine size; Jump Start is ₹399 and Running Repair ₹450 across all sizes. There is no doorstep surcharge — you pay the same package price as the workshop.",
+      `General Service starts at ₹799 for bikes up to 199cc (₹1,249 with engine oil replacement) and scales by engine size; Jump Start is ₹399 and Running Repair ₹450 across all sizes. A ₹${VISITING_CHARGE} visiting charge applies separately from the package price and is shown in your written quote before work starts — you pay the same package price as the workshop.`,
     limits: [
       "Engine rebuilds, accident repair and frame work — moved to the workshop with free transport and a written estimate.",
       "Wheel truing, rim repair and painting — workshop-only jobs.",

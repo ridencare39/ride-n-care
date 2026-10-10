@@ -1,0 +1,314 @@
+# Stage 2 — manual-only production deploy of the VERIFIED build.
+#
+# Why this file exists: prod-build.yml produces (but never deploys) the artifact
+# "nitro-worker-output" from run 37467559647 at commit
+# 0735af295663d9eef4e825a5e58388f2044d7894. This workflow deploys THAT artifact
+# after re-validating it — it never rebuilds the app, never edits source, and
+# can only be started by a human pressing Run (workflow_dispatch only).
+#
+# Safety properties:
+#   * trigger: workflow_dispatch ONLY (never push / pull_request / schedule)
+#   * confirmation input must equal the Worker name exactly, otherwise exit 1
+#   * build run must be completed + successful and built from the expected SHA
+#   * artifact name/id/expiry are checked before download
+#   * .output structure and wrangler config are validated BEFORE any deploy
+#   * secrets are read from GitHub secrets and never echoed (no set -x, no print)
+#   * cache purge is an explicit input, default OFF
+#
+# Status when written: NOT committed, NOT pushed, NOT triggered.
+
+name: Production deploy (verified artifact, manual only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Type the Worker name exactly to confirm — ridencare39-ride-n-care"
+        required: true
+        type: string
+      source_run_id:
+        description: "Verified build run that produced nitro-worker-output"
+        required: false
+        type: string
+        default: "37467559647"
+      artifact_id:
+        description: "Expected artifact id (identity check against source run)"
+        required: false
+        type: string
+        default: "11415387394"
+      expected_sha:
+        description: "Commit the artifact must have been built from (full or abbreviated SHA)"
+        required: false
+        type: string
+        default: "0735af295663d9eef4e825a5e58388f2044d7894"
+      purge_cache:
+        description: "Purge the Cloudflare cache after a successful deploy (optional — default OFF)"
+        required: false
+        type: boolean
+        default: false
+
+# Read-only token for the repo + read-only Actions access for artifact download.
+# This workflow can never push, never edit the repo, never trigger other workflows.
+permissions:
+  contents: read
+  actions: read
+
+# One production deploy at a time; a queued run is never cancelled mid-deploy.
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: deploy verified artifact to ridencare39-ride-n-care
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      EXPECTED_WORKER: ridencare39-ride-n-care
+      RUN_ID: ${{ inputs.source_run_id }}
+      EXPECTED_ARTIFACT_ID: ${{ inputs.artifact_id }}
+      EXPECTED_SHA: ${{ inputs.expected_sha }}
+      ARTIFACT_NAME: nitro-worker-output
+      GH_TOKEN: ${{ github.token }}
+      # Cloudflare credentials come from GitHub Secrets. Values are only ever
+      # passed to wrangler / purge-cache via the environment — never printed,
+      # never interpolated into a command line, never written to a log.
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+    steps:
+      # ── 1. Confirmation gate ────────────────────────────────────────────────
+      # The input is passed via env (never ${{ }}-interpolated into the script),
+      # so a crafted value cannot break out of the quoting.
+      - name: "1 · Confirmation gate — exact Worker name required"
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          set -euo pipefail
+          if [ "$CONFIRMATION" != "$EXPECTED_WORKER" ]; then
+            echo "::error::Confirmation mismatch — type ridencare39-ride-n-care exactly."
+            exit 1
+          fi
+          echo "Confirmation accepted for Worker: $EXPECTED_WORKER"
+
+      # ── 2. Secrets present (names only — values are never displayed) ───────
+      - name: "2 · Verify Cloudflare secrets exist (names only)"
+        run: |
+          set -euo pipefail
+          missing=""
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then missing="$missing CLOUDFLARE_API_TOKEN"; fi
+          if [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then missing="$missing CLOUDFLARE_ACCOUNT_ID"; fi
+          if [ -n "$missing" ]; then
+            echo "::error::Missing GitHub secrets (values not shown):$missing"
+            exit 1
+          fi
+          echo "Both Cloudflare secrets are set (values not displayed)."
+
+      # ── 3. Source run must be a successful build of the expected commit ────
+      - name: "3 · Verify build status and source commit"
+        run: |
+          set -euo pipefail
+          run_json=$(gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}")
+          status=$(jq -r '.status // empty' <<<"$run_json")
+          conclusion=$(jq -r '.conclusion // empty' <<<"$run_json")
+          head_sha=$(jq -r '.head_sha // empty' <<<"$run_json")
+          workflow=$(jq -r '.name // empty' <<<"$run_json")
+          created=$(jq -r '.created_at // empty' <<<"$run_json")
+          echo "run id:      $RUN_ID"
+          echo "workflow:    $workflow"
+          echo "created:     $created"
+          echo "status:      $status"
+          echo "conclusion:  $conclusion"
+          echo "source head: $head_sha"
+          if [ "$status" != "completed" ]; then
+            echo "::error::Build run $RUN_ID is not completed (status=$status)."
+            exit 1
+          fi
+          if [ "$conclusion" != "success" ]; then
+            echo "::error::Build run $RUN_ID conclusion is '$conclusion', not success."
+            exit 1
+          fi
+          case "$head_sha" in
+            "$EXPECTED_SHA"|"$EXPECTED_SHA"*) echo "Source commit matches expected $EXPECTED_SHA" ;;
+            *) echo "::error::Artifact source commit $head_sha does not match expected $EXPECTED_SHA"; exit 1 ;;
+          esac
+
+      # ── 4. Artifact identity: exact name, exact id, not expired ────────────
+      - name: "4 · Verify artifact identity on that run"
+        run: |
+          set -euo pipefail
+          art_json=$(gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/artifacts")
+          art=$(jq -c --arg n "$ARTIFACT_NAME" '.artifacts[]? | select(.name == $n)' <<<"$art_json")
+          if [ -z "$art" ]; then
+            echo "::error::Artifact '$ARTIFACT_NAME' not found on run $RUN_ID."
+            exit 1
+          fi
+          art_id=$(jq -r '.id' <<<"$art")
+          expired=$(jq -r '.expired' <<<"$art")
+          size=$(jq -r '.size_in_bytes' <<<"$art")
+          created=$(jq -r '.created_at' <<<"$art")
+          echo "artifact:     $ARTIFACT_NAME"
+          echo "artifact id:  $art_id"
+          echo "created:      $created"
+          echo "size bytes:   $size"
+          echo "expired:      $expired"
+          if [ "$art_id" != "$EXPECTED_ARTIFACT_ID" ]; then
+            echo "::error::Artifact id $art_id does not match expected $EXPECTED_ARTIFACT_ID."
+            exit 1
+          fi
+          if [ "$expired" != "false" ]; then
+            echo "::error::Artifact $ARTIFACT_NAME has expired and must be rebuilt."
+            exit 1
+          fi
+
+      # ── 5. Toolchain (install only — NO build step exists in this job) ─────
+      - name: "5 · Checkout the verified commit (no build performed)"
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.expected_sha }}
+          persist-credentials: false   # read-only checkout; never writes back
+
+      - name: "5b · Bun 1.4.2 + pinned dependencies (install only, never build:prod)"
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.2"
+
+      - name: "5c · Install exactly as locked (wrangler comes from bun.lock)"
+        run: bun install --frozen-lockfile
+
+      # ── 6. Download the exact artifact into .output/ ───────────────────────
+      - name: "6 · Download artifact nitro-worker-output from run ${{ inputs.source_run_id }}"
+        run: |
+          set -euo pipefail
+          rm -rf .output
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --name "$ARTIFACT_NAME" --dir .output
+          if [ ! -d .output ]; then
+            echo "::error::Artifact download produced no .output directory."
+            exit 1
+          fi
+          echo "Downloaded $(find .output -type f | wc -l) files into .output/"
+
+      # ── 7. Validate the four required paths (task 5) ───────────────────────
+      - name: "7 · Validate .output structure"
+        run: |
+          set -euo pipefail
+          fail() { echo "::error::$1"; exit 1; }
+          test -s .output/server/index.mjs   || fail ".output/server/index.mjs missing or empty"
+          test -s .output/server/wrangler.json || fail ".output/server/wrangler.json missing or empty"
+          test -s .output/nitro.json         || fail ".output/nitro.json missing or empty"
+          test -d .output/public             || fail ".output/public/ missing"
+          pub_files=$(find .output/public -type f | wc -l)
+          [ "$pub_files" -gt 0 ]             || fail ".output/public/ is empty"
+          preset=$(jq -r '.preset // empty' .output/nitro.json)
+          [ "$preset" = "cloudflare-module" ] || fail "nitro.json preset is '$preset', expected cloudflare-module"
+          echo "index.mjs:     $(stat -c%s .output/server/index.mjs) bytes"
+          echo "wrangler.json: $(stat -c%s .output/server/wrangler.json) bytes"
+          echo "nitro.json:    $(stat -c%s .output/nitro.json) bytes"
+          echo "public files:  $pub_files"
+          echo "nitro preset:  $preset"
+
+      # ── 8. Validate Worker name, main entry and assets path (task 6) ───────
+      - name: "8 · Validate wrangler config before deploying"
+        run: |
+          set -euo pipefail
+          CFG=.output/server/wrangler.json
+          fail() { echo "::error::$1"; exit 1; }
+          name=$(jq -r '.name // empty' "$CFG")
+          main=$(jq -r '.main // empty' "$CFG")
+          assets=$(jq -r '.assets.directory // empty' "$CFG")
+          binding=$(jq -r '.assets.binding // empty' "$CFG")
+          cdate=$(jq -r '.compatibility_date // empty' "$CFG")
+          flags=$(jq -r '[.compatibility_flags[]?] | join(",")' "$CFG")
+          echo "name:                  $name"
+          echo "main:                  $main"
+          echo "assets.directory:      $assets"
+          echo "assets.binding:        $binding"
+          echo "compatibility_date:    $cdate"
+          echo "compatibility_flags:   $flags"
+          [ "$name" = "$EXPECTED_WORKER" ] || fail "Worker name is '$name', expected $EXPECTED_WORKER"
+          [ "$main" = "index.mjs" ]        || fail "main is '$main', expected index.mjs"
+          [ "$assets" = "../public" ]      || fail "assets.directory is '$assets', expected ../public"
+          case ",$flags," in
+            *,nodejs_compat,*) : ;;
+            *) fail "compatibility flag nodejs_compat missing" ;;
+          esac
+          # The referenced entry point and asset dir must really exist.
+          test -f ".output/server/$main" || fail "entry point .output/server/$main not found"
+          test -d ".output/server/$assets" || fail "assets dir .output/server/$assets not found"
+          echo "wrangler config OK — name/main/assets/flags verified."
+
+      # ── 9. Deploy (no rebuild: ships the downloaded artifact as-is) ────────
+      - name: "9 · Deploy to Cloudflare Workers (artifact as-is, no rebuild)"
+        run: |
+          set -euo pipefail
+          WRANGLER="$(pwd)/node_modules/.bin/wrangler"
+          test -x "$WRANGLER" || { echo "::error::wrangler binary not found after install"; exit 1; }
+          echo "Deploying Worker $EXPECTED_WORKER from .output (secrets read from env, never printed)."
+          "$WRANGLER" deploy --config .output/server/wrangler.json
+          echo "wrangler deploy finished."
+
+      # ── 10. Optional cache purge — OFF by default (task 10) ────────────────
+      - name: "10 · Purge Cloudflare cache (optional, only when explicitly enabled)"
+        if: ${{ inputs.purge_cache }}
+        run: |
+          set -euo pipefail
+          echo "purge_cache input = true → running scripts/purge-cache.mjs"
+          node scripts/purge-cache.mjs
+          echo "Purge step finished (the script skips itself if the token lacks Zone.Cache Purge scope)."
+
+      - name: "10b · Cache purge skipped (default)"
+        if: ${{ !inputs.purge_cache }}
+        run: echo "purge_cache = false → no cache purge performed."
+
+      # ── 11. Post-deploy smoke check (no secrets involved) ──────────────────
+      - name: "11 · Smoke check production"
+        run: |
+          set -euo pipefail
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://ridencare.co.in/)
+          echo "https://ridencare.co.in/ → HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::Production homepage returned HTTP $code after deploy."
+            exit 1
+          fi
+          robots=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://ridencare.co.in/robots.txt)
+          echo "https://ridencare.co.in/robots.txt → HTTP $robots"
+          if [ "$robots" != "200" ]; then
+            echo "::error::robots.txt returned HTTP $robots after deploy."
+            exit 1
+          fi
+
+      # ── 12. Record what happened (never secrets, never token values) ───────
+      # Input values reach the script through env, so no expression is ever
+      # interpolated into shell text (keeps the scripts injection-free).
+      - name: "12 · Step summary (success)"
+        if: ${{ success() }}
+        env:
+          SUMMARY_RUN_ID: ${{ inputs.source_run_id }}
+          SUMMARY_ARTIFACT_ID: ${{ inputs.artifact_id }}
+          SUMMARY_SHA: ${{ inputs.expected_sha }}
+          SUMMARY_PURGE: ${{ inputs.purge_cache }}
+        run: |
+          {
+            echo "### Production deploy — success"
+            echo "- Worker: \`$EXPECTED_WORKER\`"
+            echo "- Source run: \`$SUMMARY_RUN_ID\` (artifact \`$ARTIFACT_NAME\`)"
+            echo "- Artifact id: \`$SUMMARY_ARTIFACT_ID\`"
+            echo "- Commit: \`$SUMMARY_SHA\`"
+            echo "- Cache purge: \`$SUMMARY_PURGE\`"
+            echo "- Rebuild performed: **no** (artifact shipped as-is)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: "12b · Step summary (failure)"
+        if: ${{ failure() }}
+        env:
+          SUMMARY_RUN_ID: ${{ inputs.source_run_id }}
+          SUMMARY_ARTIFACT_ID: ${{ inputs.artifact_id }}
+          SUMMARY_SHA: ${{ inputs.expected_sha }}
+        run: |
+          {
+            echo "### Production deploy — FAILED (no step reported success for this job)"
+            echo "- Worker: \`$EXPECTED_WORKER\`"
+            echo "- Source run: \`$SUMMARY_RUN_ID\` (artifact \`$ARTIFACT_NAME\`)"
+            echo "- Artifact id: \`$SUMMARY_ARTIFACT_ID\`"
+            echo "- Commit: \`$SUMMARY_SHA\`"
+          } >> "$GITHUB_STEP_SUMMARY"
